@@ -36,7 +36,7 @@ const NewCustomerForm = () => {
 
               <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-6 border rounded-md shadow-md'>
                 {/* First Name and Last Name */}
-                <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* First Name */}
                   <div>
                     <label
@@ -77,7 +77,7 @@ const NewCustomerForm = () => {
                 </div>
 
                 {/* Phone and Email */}
-                <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* Phone */}
                   <div>
                     <label
@@ -175,7 +175,7 @@ const NewCustomerForm = () => {
                       name='state'
                       defaultValue='CA'
                       disabled
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
 
@@ -246,7 +246,7 @@ const NewCustomerForm = () => {
               {/* Right Side of the Form Column */}
               <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 border rounded-md shadow-md'>
                 {/* Purchase Order + Store ID */}
-                <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* Purchase Order */}
                   <div className='p-0'>
                     <label
@@ -278,7 +278,7 @@ const NewCustomerForm = () => {
                     <select
                       name='storeId'
                       id='storeId'
-                      className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                      className='mt-1 w-full rounded-md shadow-sm sm:text-sm text-gray-500 bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={'DEFAULT'}
                     >
                       <option value='DEFAULT' disabled>
@@ -294,7 +294,7 @@ const NewCustomerForm = () => {
                 </div>
 
                 {/* PO Date and Amount Paid */}
-                <div className='grid grid-cols-1 gap-4 lg:grid-cols-12 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 lg:gap-x-6'>
                   {/* Purchase Order Date */}
                   <div className='col-span-4'>
                     <label
@@ -309,7 +309,7 @@ const NewCustomerForm = () => {
                       id='purchaseOrderDate'
                       name='purchaseOrderDate'
                       placeholder='Purchase order date'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
 
@@ -351,9 +351,9 @@ const NewCustomerForm = () => {
                 </div>
 
                 {/* Purchase Order Info - Material Brand + Thickness + Color */}
-                <div className='grid grid-cols-1 gap-4 lg:grid-cols-12 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12 px-4 lg:gap-x-6'>
                   {/* Material Type */}
-                  <div className='col-span-3'>
+                  <div className='lg:col-span-3'>
                     <label
                       htmlFor='materialType'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -383,7 +383,7 @@ const NewCustomerForm = () => {
                   </div>
 
                   {/* Material Thickness */}
-                  <div className='col-span-2'>
+                  <div className='lg:col-span-3'>
                     <label
                       htmlFor='thickness'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -409,7 +409,7 @@ const NewCustomerForm = () => {
                   </div>
 
                   {/* Material Brand */}
-                  <div className='col-span-3'>
+                  <div className='lg:col-span-3'>
                     <label
                       htmlFor='materialBrand'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -446,7 +446,7 @@ const NewCustomerForm = () => {
                   </div>
 
                   {/* Material Name */}
-                  <div className='md:col-span-4'>
+                  <div className='lg:col-span-3'>
                     <label
                       htmlFor='materialColor'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'

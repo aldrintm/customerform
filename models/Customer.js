@@ -23,7 +23,6 @@ const CustomerSchema = new Schema(
       city: String,
       state: String,
       zipcode: String,
-      requited: [true, 'Address is required'],
     },
     contractorName: {
       type: String,
@@ -31,11 +30,46 @@ const CustomerSchema = new Schema(
     contractorPhone: {
       type: String,
     },
-    images: [
+    purchaseOrderNumber: [
       {
         type: String,
       },
     ],
+    storeId: {
+      type: String,
+    },
+    purchaseOrderDate: {
+      type: Date,
+    },
+    purchaseOrderAmount: {
+      type: Number,
+    },
+    squareFeet: {
+      type: Number,
+    },
+    materialType: {
+      type: String,
+    },
+    materialThickness: {
+      type: String,
+    },
+    materialBrand: {
+      type: String,
+    },
+    materialColor: {
+      type: String,
+    },
+    orderNotes: {
+      type: String,
+    },
+    is_flagged: {
+      type: Boolean,
+      default: false,
+    },
+    is_featured: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

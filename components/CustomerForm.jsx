@@ -1,3 +1,5 @@
+import addCustomer from '@/app/actions/addCustomer'
+
 const NewCustomerForm = () => {
   return (
     <section className='bg-white mx-auto px-2 h-screen'>
@@ -30,7 +32,10 @@ const NewCustomerForm = () => {
           </div>
 
           {/* Form Starts Here */}
-          <form className='container mx-auto my-2 justify-center'>
+          <form
+            action={addCustomer}
+            className='container mx-auto my-2 justify-center'
+          >
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-4 pb-2'>
               {/* Left Side of Form Column */}
 
@@ -212,8 +217,8 @@ const NewCustomerForm = () => {
 
                     <input
                       type='text'
-                      id='contractor_name'
-                      name='contractor_name'
+                      id='contractorName'
+                      name='contractorName'
                       placeholder='Name of contractor or on-site contact'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -222,7 +227,7 @@ const NewCustomerForm = () => {
                   {/* Contractor Phone */}
                   <div>
                     <label
-                      htmlFor='contractor_phone'
+                      htmlFor='contractorPhone'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Contractor Phone
@@ -230,8 +235,8 @@ const NewCustomerForm = () => {
 
                     <input
                       type='text'
-                      id='contractor_phone'
-                      name='contractor_phone'
+                      id='contractorPhone'
+                      name='contractorPhone'
                       placeholder='Contractor or on-site contact'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -250,16 +255,16 @@ const NewCustomerForm = () => {
                   {/* Purchase Order */}
                   <div className='p-0'>
                     <label
-                      htmlFor='purchaseOrder'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Purchase Order
+                      Purchase Order No:
                     </label>
 
                     <input
                       type='text'
-                      id='purchaseOrder'
-                      name='purchaseOrder'
+                      id='purchaseOrderNumber'
+                      name='purchaseOrderNumber'
                       placeholder='Purchase Order #'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -385,15 +390,15 @@ const NewCustomerForm = () => {
                   {/* Material Thickness */}
                   <div className='lg:col-span-3'>
                     <label
-                      htmlFor='thickness'
+                      htmlFor='materialThickness'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Thickness
                     </label>
 
                     <select
-                      name='thickness'
-                      id='thickness'
+                      name='materialThickness'
+                      id='materialThickness'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={'default'}
                     >
@@ -469,7 +474,7 @@ const NewCustomerForm = () => {
                   {/* Text Area for Special Notes with Customer */}
                   <div className='col-span-4'>
                     <label
-                      htmlFor='OrderNotes'
+                      htmlFor='orderNotes'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       {' '}
@@ -477,7 +482,8 @@ const NewCustomerForm = () => {
                     </label>
 
                     <textarea
-                      id='OrderNotes'
+                      id='orderNotes'
+                      name='orderNotes'
                       rows='5'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter any additional order notes...'

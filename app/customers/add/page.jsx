@@ -324,14 +324,14 @@ const NewCustomerForm = () => {
                       htmlFor='purchaseOrderAmount'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Purchase Amount
+                      PO Amount
                     </label>
 
                     <input
                       type='text'
                       name='purchaseOrderAmount'
                       id='purchaseOrderAmount'
-                      placeholder='PO cost?'
+                      placeholder='How much did the customer paid?'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>

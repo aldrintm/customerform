@@ -28,7 +28,7 @@ const CustomerSchema = new Schema(
       type: String,
     },
     contractorPhone: {
-      type: String,
+      type: Number,
     },
     purchaseOrderNumber: [
       {

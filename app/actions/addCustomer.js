@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 // this action is added to the form to perform tasks
 async function addCustomer(formData) {
   // connect to DB
-  //   await connectDB()
+  await connectDB()
 
   const customerData = {
     firstName: formData.get('firstName'),
@@ -39,7 +39,7 @@ async function addCustomer(formData) {
   // lets plug all the date using the property model
   const newCustomer = new Customer(customerData)
   // save it in our DB
-  //await newCustomer.save()
+  await newCustomer.save()
 
   console.log(newCustomer)
 
@@ -47,7 +47,7 @@ async function addCustomer(formData) {
   revalidatePath('/', 'layout')
 
   // redirect to newly created thank you page details
-  redirect(`/customer`)
+  redirect(`/customers/${newCustomer._id}`)
 }
 
 export default addCustomer

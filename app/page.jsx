@@ -27,7 +27,7 @@ const HomePage = () => {
         </Link>
 
         <Link
-          href='/customer'
+          href='/customers'
           className='inline-flex items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-3 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
         >
           <span className='text-sm font-medium text-center mx-auto'>

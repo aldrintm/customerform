@@ -2,8 +2,8 @@ import addCustomer from '@/app/actions/addCustomer'
 
 const NewCustomerForm = () => {
   return (
-    <section className='bg-white mx-auto px-2 h-screen'>
-      <div className='md:container max-w-4xl mx-auto text-left mt-20 px-15 rounded-2xl'>
+    <section className='bg-white'>
+      <div className='md:container max-w-4xl mx-auto text-left mt-10 px-15 md:rounded-2xl'>
         <div className='mx-auto text-center pt-4 pb-4 text-2xl md:text-4xl text-blue-500 font-bold'>
           Customer Details
           <p className='text-center text-base md:text2xl px-2 text-gray-600 font-bold'>
@@ -16,7 +16,7 @@ const NewCustomerForm = () => {
           <span className='h-px flex-1 bg-gray-500'></span>
         </span>
 
-        <div className='isolate bg-white px-6 py-1 sm:py-1 lg:px-8'>
+        <div className='isolate bg-white px-4 py-1 sm:py-1 lg:px-0'>
           <div
             aria-hidden='true'
             className='absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]'
@@ -34,12 +34,12 @@ const NewCustomerForm = () => {
           {/* Form Starts Here */}
           <form
             action={addCustomer}
-            className='container mx-auto my-2 justify-center'
+            className='container mx-auto my-4 justify-center'
           >
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-4 pb-2'>
               {/* Left Side of Form Column */}
 
-              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-6 border rounded-md shadow-md'>
+              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-6 md:border md:rounded-md md:shadow-md'>
                 {/* First Name and Last Name */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* First Name */}
@@ -249,7 +249,7 @@ const NewCustomerForm = () => {
               {/* Break */}
 
               {/* Right Side of the Form Column */}
-              <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 border rounded-md shadow-md'>
+              <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 md:border md:rounded-md md:shadow-md'>
                 {/* Purchase Order + Store ID */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* Purchase Order */}

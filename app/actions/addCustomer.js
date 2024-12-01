@@ -10,7 +10,7 @@ async function addCustomer(formData) {
   await connectDB()
 
   const customerData = {
-    firstName: formData.get('firstName'),
+    firstName: formData.get('firstName').toLowerCase(),
     lastName: formData.get('lastName'),
     phone: formData.get('phone'),
     email: formData.get('email'),
@@ -47,7 +47,10 @@ async function addCustomer(formData) {
   revalidatePath('/', 'layout')
 
   // redirect to newly created thank you page details
-  redirect(`/customers/${newCustomer._id}`)
+  // redirect(`/customers/${newCustomer._id}`)
+
+  // redirect to the main table
+  redirect(`/customers`)
 }
 
 export default addCustomer

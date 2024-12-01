@@ -1,23 +1,95 @@
+'use client'
+
 import addCustomer from '@/app/actions/addCustomer'
+import Link from 'next/link'
 
 const NewCustomerForm = () => {
   return (
-    <section className='bg-white'>
-      <div className='md:container max-w-4xl mx-auto text-left mt-10 px-15 md:rounded-2xl'>
-        <div className='mx-auto text-center pt-4 pb-4 text-2xl md:text-4xl text-blue-500 font-bold'>
-          Customer Details
-          <p className='text-center text-base md:text2xl px-2 text-gray-600 font-bold'>
-            (fill out all the forms)
-          </p>
+    <section className='bg-sky-50'>
+      <div className='md:container max-w-4xl mx-auto text-left px-15 md:rounded-2xl'>
+        {/*  */}
+        {/* Temporary Static Breadcrumb - Must create every page> no waaaaaaay - need to find a dynamic way as a component */}
+        {/* <nav aria-label='breadcrumb' className='hidden md:flex pl-4'>
+          <ol className='flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5'>
+            <li className='inline-flex items-center gap-1.5'>
+              <Link
+                className='transition-colors hover:text-foreground'
+                href='#'
+              >
+                Main
+              </Link>
+            </li>
+            <li
+              role='presentation'
+              aria-hidden='true'
+              className='[&amp;>svg]:size-3.5'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='lucide lucide-chevron-right'
+              >
+                <path d='m9 18 6-6-6-6'></path>
+              </svg>
+            </li>
+            <li className='inline-flex items-center gap-1.5'>
+              <Link
+                className='transition-colors hover:text-foreground'
+                href='#'
+              >
+                Customers
+              </Link>
+            </li>
+            <li
+              role='presentation'
+              aria-hidden='true'
+              className='[&amp;>svg]:size-3.5'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='lucide lucide-chevron-right'
+              >
+                <path d='m9 18 6-6-6-6'></path>
+              </svg>
+            </li>
+            <li className='inline-flex items-center gap-1.5'>
+              <span
+                role='link'
+                aria-disabled='true'
+                aria-current='page'
+                className='font-normal text-foreground'
+              >
+                Table
+              </span>
+            </li>
+          </ol>
+        </nav> */}
+        <div className='mx-auto text-left pl-2 py-2 text-xl md:text-2xl text-blue-500 font-bold'>
+          New Customer Details
         </div>
 
         {/* Divider to Form */}
-        <span className='flex items-center px-8 pb-2'>
+        {/* <span className='flex items-center px-8 pb-2'>
           <span className='h-px flex-1 bg-gray-500'></span>
-        </span>
+        </span> */}
 
-        <div className='isolate bg-white px-4 py-1 sm:py-1 lg:px-0'>
-          <div
+        <div className='isolate px-4 sm:pb-2 lg:px-0'>
+          {/* <div
             aria-hidden='true'
             className='absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]'
           >
@@ -29,7 +101,7 @@ const NewCustomerForm = () => {
               }}
               className='relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]'
             />
-          </div>
+          </div> */}
 
           {/* Form Starts Here */}
           <form
@@ -39,7 +111,7 @@ const NewCustomerForm = () => {
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-4 pb-2'>
               {/* Left Side of Form Column */}
 
-              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-6 md:border md:rounded-md md:shadow-md'>
+              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-2 md:border border-gray-300 md:rounded-md'>
                 {/* First Name and Last Name */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* First Name */}
@@ -249,7 +321,7 @@ const NewCustomerForm = () => {
               {/* Break */}
 
               {/* Right Side of the Form Column */}
-              <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 md:border md:rounded-md md:shadow-md'>
+              <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 md:border md:rounded-md border-gray-300'>
                 {/* Purchase Order + Store ID */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* Purchase Order */}
@@ -306,7 +378,7 @@ const NewCustomerForm = () => {
                       htmlFor='purchaseOrderDate'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Date customer paid?
+                      Date paid:
                     </label>
 
                     <input
@@ -324,14 +396,14 @@ const NewCustomerForm = () => {
                       htmlFor='purchaseOrderAmount'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Purchase Amount
+                      Purchase amount
                     </label>
 
                     <input
-                      type='text'
+                      type='number'
                       name='purchaseOrderAmount'
                       id='purchaseOrderAmount'
-                      placeholder='PO cost?'
+                      placeholder='PO cost ...'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -342,14 +414,14 @@ const NewCustomerForm = () => {
                       htmlFor='squareFeet'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Paid Sq Ft.
+                      Paid sq ft.
                     </label>
 
                     <input
-                      type='text'
+                      type='number'
                       id='squareFeet'
                       name='squareFeet'
-                      placeholder='How many SqFt?'
+                      placeholder='How many sqft?'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -370,7 +442,7 @@ const NewCustomerForm = () => {
                       id='materialType'
                       name='materialType'
                       defaultValue={'default'}
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      className='mt-1 w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-sky-50'
                     >
                       <option value='default' disabled>
                         ---
@@ -463,7 +535,7 @@ const NewCustomerForm = () => {
                       type='text'
                       id='materialColor'
                       name='materialColor'
-                      placeholder='Material color?'
+                      placeholder='Color name'
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -478,7 +550,7 @@ const NewCustomerForm = () => {
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       {' '}
-                      Order notes{' '}
+                      Special Notes{' '}
                     </label>
 
                     <textarea

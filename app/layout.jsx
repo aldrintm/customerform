@@ -9,8 +9,8 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html>
-      <body>
+    <html lang='en'>
+      <body className='flex min-h-screen w-full flex-col'>
         <main>{children}</main>
       </body>
     </html>

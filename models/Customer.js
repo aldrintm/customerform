@@ -62,6 +62,9 @@ const CustomerSchema = new Schema(
     orderNotes: {
       type: String,
     },
+    status: {
+      type: String,
+    },
     is_flagged: {
       type: Boolean,
       default: false,

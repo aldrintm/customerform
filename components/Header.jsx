@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <section>
       {/* Header Page */}
-      <div className='flex flex-col sm:gap-4 sm:py-4 sm:pl-14'>
+      <div className='flex flex-col sm:gap-4 sm:py-4 sm:ml-14'>
         <header className='sticky top-0 z-30 bg-blue-500 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
           <button
             className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 sm:hidden'

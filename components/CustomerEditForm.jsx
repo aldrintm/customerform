@@ -1,21 +1,21 @@
-import addCustomer from '@/app/actions/addCustomer'
+import updateCustomer from '@/app/actions/updateCustomer'
 import Link from 'next/link'
 
-const NewCustomerForm = () => {
+const CustomerEditForm = () => {
   return (
     <section className='bg-white'>
       <div className='container mx-auto px-15 md:rounded-2xl'>
-        <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
+        <div className='mx-auto text-left pl-1 py-2 text-sm md:text-md text-blue-500 font-bold'>
           New Customer Details
         </div>
 
         <div className='isolate px-4 sm:pb-2 lg:px-0'>
           {/* Form Starts Here */}
           <form
-            action={addCustomer}
+            action={updateCustomer}
             className='container mx-auto my-4 justify-center'
           >
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 pb-2'>
+            <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-4 pb-2'>
               {/* Left Side of Form Column */}
 
               <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-2 md:border border-gray-300 md:rounded-md'>
@@ -492,4 +492,4 @@ const NewCustomerForm = () => {
     </section>
   )
 }
-export default NewCustomerForm
+export default CustomerEditForm

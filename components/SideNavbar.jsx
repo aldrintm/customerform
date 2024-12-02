@@ -78,7 +78,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
-              href='#'
+              href='/asdlkfjasldfjk'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -97,12 +97,12 @@ const SideNavbar = () => {
                 <path d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'></path>
               </svg> */}
               <ArrowDownToLine className='h-5 w-5 text-blue-500' />
-              <span className='sr-only'>Orders</span>
+              <span className='sr-only'>Files</span>
             </Link>
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 bg-accent text-black'
               data-state='closed'
-              href='/'
+              href='/inventory'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -127,7 +127,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
-              href='/customers'
+              href='/customers/add'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'

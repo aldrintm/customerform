@@ -30,7 +30,14 @@ const Dashboard = () => {
             </p>
           </div>
         </div>
-        <TableComponentPage />
+        <div className='grid grid-cols-12 gap-6'>
+          <div className='container px-2 col-span-9'>
+            <TableComponentPage />
+          </div>
+          <div className='container px-2 col-span-3'>
+            <TableComponentPage />
+          </div>
+        </div>
       </div>
     </>
   )

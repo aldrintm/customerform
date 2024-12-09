@@ -22,10 +22,9 @@ const DateAndTime = () => {
   return (
     <section>
       <div className='bg-white grid grid-cols-1 h-20 border border-gray-300 rounded-lg p-4 m-2'>
-        <p className='text-sm my-auto mx-auto text-gray-700 flex items-center'>
-          {date}
-          <span className='font-md text-xl px-4'>@ {time}</span>
-        </p>
+        <span className='text-sm my-auto mx-auto text-gray-700 flex items-center'>
+          {new Date().toDateString()} @ {time}
+        </span>
       </div>
     </section>
   )

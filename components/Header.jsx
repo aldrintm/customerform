@@ -4,6 +4,7 @@ import { FaRegUser } from 'react-icons/fa'
 import Link from 'next/link'
 import Image from 'next/image'
 import Breadcrumb from './BreadCrumb'
+import OpenMapButton from '@/app/actions/openMapButton'
 
 const Header = () => {
   return (
@@ -39,6 +40,8 @@ const Header = () => {
 
           {/* I created this breadcrumb to see what dynamic breadcrumbing looks like */}
           <Breadcrumb />
+
+          <OpenMapButton />
 
           {/* Static Breadcrumb - Must create every page ahhhhhhh */}
           {/* <nav aria-label='breadcrumb' className='hidden md:flex'>

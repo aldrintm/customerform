@@ -1,4 +1,5 @@
 import '@/assets/styles/globals.css'
+import AuthProvider from '@/components/AuthProvider'
 
 export const metadata = {
   title: 'CRM',
@@ -9,11 +10,13 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html lang='en'>
-      <body className='flex min-h-screen w-full flex-col'>
-        <main>{children}</main>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang='en'>
+        <body className='flex min-h-screen w-full flex-col'>
+          <main>{children}</main>
+        </body>
+      </html>
+    </AuthProvider>
   )
 }
 

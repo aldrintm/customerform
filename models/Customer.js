@@ -35,8 +35,11 @@ const CustomerSchema = new Schema(
         type: String,
       },
     ],
-    storeId: {
+    storeName: {
       type: String,
+    },
+    storeId: {
+      type: Number,
     },
     purchaseOrderDate: {
       type: Date,

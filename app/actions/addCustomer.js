@@ -23,6 +23,7 @@ async function addCustomer(formData) {
     contractorName: formData.get('contractorName'),
     contractorPhone: formData.get('contractorPhone'),
     purchaseOrderNumber: formData.get('purchaseOrderNumber'),
+    storeName: formData.get('storeName'),
     storeId: formData.get('storeId'),
     purchaseOrderDate: formData.get('purchaseOrderDate'),
     purchaseOrderAmount: formData.get('purchaseOrderAmount'),
@@ -32,6 +33,7 @@ async function addCustomer(formData) {
     materialBrand: formData.get('materialBrand'),
     materialColor: formData.get('materialColor'),
     orderNotes: formData.get('orderNotes'),
+    status: 'will call',
   }
 
   // lets check the server to see all items uploaded to the DB

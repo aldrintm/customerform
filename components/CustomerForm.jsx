@@ -230,9 +230,9 @@ const NewCustomerForm = () => {
               {/* Right Side of the Form Column */}
               <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 md:border md:rounded-md border-gray-300'>
                 {/* Purchase Order + Store ID */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 lg:gap-x-6'>
                   {/* Purchase Order */}
-                  <div className='p-0'>
+                  <div className='col-span-4'>
                     <label
                       htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -250,18 +250,17 @@ const NewCustomerForm = () => {
                   </div>
 
                   {/* Store ID */}
-                  <div>
+                  <div className='col-span-4'>
                     <label
-                      htmlFor='storeId'
+                      htmlFor='storeName'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      {' '}
-                      Store Id{' '}
+                      Store Name:
                     </label>
 
                     <select
-                      name='storeId'
-                      id='storeId'
+                      name='storeName'
+                      id='storeName'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm text-gray-500 bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={'DEFAULT'}
                     >
@@ -274,6 +273,23 @@ const NewCustomerForm = () => {
                       <option value='Builder'>Builder</option>
                       <option value='KandB'>Kitchen and Bath</option>
                     </select>
+                  </div>
+                  {/* Purchase Order */}
+                  <div className='col-span-4'>
+                    <label
+                      htmlFor='storeId'
+                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                    >
+                      Store ID:
+                    </label>
+
+                    <input
+                      type='text'
+                      id='storeId'
+                      name='storeId'
+                      placeholder='Store Id'
+                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                    />
                   </div>
                 </div>
 
@@ -367,7 +383,7 @@ const NewCustomerForm = () => {
                   </div>
 
                   {/* Material Thickness */}
-                  <div className='lg:col-span-3'>
+                  <div className='lg:col-span-2'>
                     <label
                       htmlFor='materialThickness'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -430,7 +446,7 @@ const NewCustomerForm = () => {
                   </div>
 
                   {/* Material Name */}
-                  <div className='lg:col-span-3'>
+                  <div className='lg:col-span-4'>
                     <label
                       htmlFor='materialColor'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -451,7 +467,7 @@ const NewCustomerForm = () => {
                 {/* Textarea for Order Notes */}
                 <div className='grid grid-cols-1 md:gap-4 lg:grid-cols-6 px-4 lg:gap-x-6'>
                   {/* Text Area for Special Notes with Customer */}
-                  <div className='col-span-4'>
+                  <div className='lg:col-span-4'>
                     <label
                       htmlFor='orderNotes'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -469,15 +485,15 @@ const NewCustomerForm = () => {
                     ></textarea>
                   </div>
                   {/* col-span-2 */}
-                  <div className='col-span-2 my-auto'>
-                    <div className='text-center'>
+                  <div className='lg:col-span-2 content-end pb-2'>
+                    <span className=''>
                       <button
                         className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
                         type='submit'
                       >
                         Submit
                       </button>
-                    </div>
+                    </span>
                   </div>
                 </div>
               </div>

@@ -4,17 +4,25 @@ import Link from 'next/link'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 import { Eye } from 'lucide-react'
+import Button from './Button'
 
 const TableComponentPage = async ({ params }) => {
   await connectDB()
-  const customers = await Customer.find({}).lean()
+  const customers = await Customer.find({})
+    .sort({ createdAt: -1 })
+    .limit(14)
+    .lean()
 
   return (
     <section>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
-        <div className='container text-left pl-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
-          Customers List
+        <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
+          <h1>Customers List</h1>
+          <Link href={`/customers/add`}>
+            <Button>Create New</Button>
+          </Link>
         </div>
+
         <div className='container mx-auto px-4 m-6 border border-gray-300 rounded-lg'>
           <div className='overflow-x-auto'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
@@ -97,16 +105,16 @@ const TableComponentPage = async ({ params }) => {
                       {customer.email}
                     </td> */}
                     <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
-                      {customer.storeId}
+                      {customer.storeName} {customer.storeId}
                     </td>
 
                     <td className='whitespace-nowrap px-4 py-2 text-xs font-sm'>
                       <Link
                         href={`/customers/${customer._id}`}
-                        className='inline-block rounded-md px-2 py-1 text-xs text-white border hover:border hover:border-blue-400 hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+                        className='inline-block rounded-full p-1 text-xs text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
                       >
                         <span className='text-xs font-sm'>
-                          {/* <svg
+                          <svg
                             className='size-5 rtl:rotate-180'
                             xmlns='http://www.w3.org/2000/svg'
                             fill='none'
@@ -116,11 +124,11 @@ const TableComponentPage = async ({ params }) => {
                             <path
                               strokeLinecap='round'
                               strokeLinejoin='round'
-                              strokeWidth='1'
+                              strokeWidth='1.5'
                               d='M17 8l4 4m0 0l-4 4m4-4H3'
                             />
-                          </svg> */}
-                          <Eye className='h-4 w-4 text-xs text-blue-500 text-bold' />
+                          </svg>
+                          {/* <Eye className='h-4 w-4 text-xs text-blue-500 text-bold' /> */}
                         </span>
                       </Link>
                     </td>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Paperclip } from 'lucide-react'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
+import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
 const CustomerDetails = ({ customer }) => {
   const formattedDate = customer.purchaseOrderDate.toDateString()
@@ -17,12 +18,25 @@ const CustomerDetails = ({ customer }) => {
         </div>
         {/* Customer Quick Contact Details*/}
         <div className='grid grid-cols-1 gap-4 md:gap-8 mx-4 md:mx-0'>
-          <div className='grid grid-cols-1 h-40 border border-gray-300 rounded-lg p-4'>
-            <p className='text-sm my-auto mx-auto'>
-              Customer Quick Contact Details Box
-            </p>
+          <div className='grid grid-flow-row border border-gray-300 rounded-lg p-2 md:p-6 shadow-md'>
+            <div className='container'>
+              <div className='text-lg md:text-3xl font-semibold text-blue-500'>
+                {customerWithCapitalizedNames(customer.firstName)}{' '}
+                {customerWithCapitalizedNames(customer.lastName)}
+              </div>
+            </div>
+            <div className='container flex gap-4'>
+              <div className='text-sm md:text-base font-normal text-gray-600'>
+                {customer.address.street} {customer.address.city}{' '}
+                {customer.address.state} {customer.address.zipcode}
+              </div>
+              <div className='text-sm md:text-base font-normal text-gray-600'>
+                {formatPhoneNumber(customer.phone)}
+              </div>
+            </div>
           </div>
         </div>
+        {/* Break */}
         {/* Customer Full Order Details */}
         <div className='grid grid-cols-2 gap-4 md:gap-8 mx-4 md:mx-0'>
           <div className='grid grid-cols-1 border border-gray-300 rounded-lg p-4'>

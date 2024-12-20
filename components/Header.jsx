@@ -1,12 +1,24 @@
 'use client'
-
-import { FaRegUser } from 'react-icons/fa'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { FaRegUser, FaGoogle } from 'react-icons/fa'
+import { usePathname } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 import Breadcrumb from './BreadCrumb'
 import OpenMapButton from '@/app/actions/openMapButton'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Header = () => {
+  // get data as session from useSession from next-auth
+  const { data: session } = useSession()
+
+  // set state here
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const [isLoggedin, setIsLoggedIn] = useState(false)
+  const [providers, setProviders] = useState(null)
+
+  const pathname = usePathname()
+
   return (
     <section>
       {/* Header Page */}

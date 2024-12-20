@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Dashboard from '@/components/Dashboard'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
+import Login from '@/components/Login'
 
 const HomePage = () => {
   return (

@@ -26,7 +26,7 @@ async function addCustomer(formData) {
     storeName: formData.get('storeName'),
     storeId: formData.get('storeId'),
     purchaseOrderDate: formData.get('purchaseOrderDate'),
-    purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+    purchaseOrderAmount: formData.get('purchaseOrderAmount'),     
     squareFeet: formData.get('squareFeet'),
     materialType: formData.get('materialType'),
     materialThickness: formData.get('materialThickness'),
@@ -38,7 +38,7 @@ async function addCustomer(formData) {
 
   // lets check the server to see all items uploaded to the DB
 
-  // lets plug all the date using the property model
+  // lets plug all the date using the property model  
   const newCustomer = new Customer(customerData)
   // save it in our DB
   await newCustomer.save()
@@ -52,7 +52,7 @@ async function addCustomer(formData) {
   // redirect(`/customers/${newCustomer._id}`)
 
   // redirect to the main table
-  redirect(`/customers`)
+  redirect(`/dashboard/customers`)
 }
 
 export default addCustomer

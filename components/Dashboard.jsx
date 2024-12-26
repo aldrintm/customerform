@@ -2,7 +2,7 @@ import TotalCustomer from './TotalCustomer'
 import DateAndTime from './DateAndTime'
 import TableComponentPage from './TableComponent'
 
-const Dashboard = () => {
+const Dashboard = ({ customers }) => {
   return (
     <>
       <div className='container mx-auto grid grid-flow-row'>
@@ -18,7 +18,7 @@ const Dashboard = () => {
             <p className='text-sm my-auto mx-auto'>Put Current Weather Here</p>
           </div>
 
-          <TotalCustomer />
+          <TotalCustomer customers={customers} />
         </div>
         <div className='hidden md:grid grid-cols-1 gap-4 lg:gap-4 py-4'>
           <div className='bg-white border border-gray-300 rounded-lg p-4 m-2'>
@@ -32,11 +32,9 @@ const Dashboard = () => {
         </div>
         <div className='grid grid-cols-1 xl:grid-cols-12 gap-6'>
           <div className='container px-2 col-span-9'>
-            <TableComponentPage />
+            <TableComponentPage customers={customers} />
           </div>
-          <div className='hidden xl:block container px-2 col-span-3'>
-            <TableComponentPage />
-          </div>
+          <div className='hidden xl:block container px-2 col-span-3'></div>
         </div>
       </div>
     </>

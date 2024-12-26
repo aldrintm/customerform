@@ -1,16 +1,16 @@
-import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
 import Link from 'next/link'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
-import { Eye } from 'lucide-react'
+import connectDB from '@/config/db'
+import Customer from '@/models/Customer'
 import Button from './Button'
+import { getSession } from 'next-auth/react'
 
-const TableComponentPage = async ({ params }) => {
+const TableComponentPage = async ({}) => {
   await connectDB()
   const customers = await Customer.find({})
     .sort({ createdAt: -1 })
-    .limit(14)
+    .limit(10)
     .lean()
 
   return (
@@ -136,11 +136,33 @@ const TableComponentPage = async ({ params }) => {
                 ))}
               </tbody>
             </table>
+            <div className='container m-auto border-t'>
+              <Link href={'/dashboard/customers'}>
+                <p className='flex p-6 justify-center text-xs md:text-sm'>
+                  view more
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </section>
   )
+}
+
+export const getServerSideProps = async (context) => {
+  // Check for user session
+  const session = await getSession({ req: context.req })
+
+  // If no session, redirect to the home page
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
 }
 
 export default TableComponentPage

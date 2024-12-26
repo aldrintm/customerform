@@ -46,7 +46,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
-              href='/'
+              href='/dashboard'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -70,7 +70,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
-              href='/customers'
+              href='/dashboard/customers'
             >
               <Files className='h-5 w-5 text-blue-500' />
               <span className='sr-only'>Customers</span>
@@ -102,7 +102,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 bg-accent text-black'
               data-state='closed'
-              href='/inventory'
+              href='/dashboard/inventory'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -127,7 +127,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
-              href='/customers/add'
+              href='/dashboard/customers/add'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'

@@ -1,5 +1,7 @@
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import SideNavbar from '@/components/SideNavbar'
+import Header from '@/components/Header'
 import CustomerDetails from '@/components/CustomerDetails'
 
 const CustomerPage = async ({ params }) => {
@@ -8,6 +10,8 @@ const CustomerPage = async ({ params }) => {
   return (
     <>
       <div className='flex min-h-screen w-full flex-col'>
+        <Header />
+        <SideNavbar />
         <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
           <CustomerDetails customer={customer} />
         </main>

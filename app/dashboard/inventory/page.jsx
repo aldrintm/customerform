@@ -1,5 +1,6 @@
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
+import Card from '@/components/Card'
 
 const InventoryPage = () => {
   return (
@@ -12,6 +13,10 @@ const InventoryPage = () => {
             <h1 className='text-2xl font-bold sm:text-3xl'>Inventory Page</h1>
 
             <p className='mt-4 text-gray-500'>(need to work on this)</p>
+          </div>
+          <div className=''>
+            <Card />
+            <Card />
           </div>
         </main>
       </section>

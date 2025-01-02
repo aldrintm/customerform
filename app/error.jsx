@@ -1,25 +1,23 @@
-import Skater from '@/assets/images/skate-skateboard.gif'
-import Image from 'next/image'
+'use client'
+
+import { TriangleAlert } from 'lucide-react'
+import Link from 'next/link'
 import Button from '@/components/Button'
 import { Undo2 } from 'lucide-react'
-import Link from 'next/link'
 
-const NotFoundpage = () => {
+const ErrorPage = ({ error }) => {
   return (
     <>
-      {/*
-    Graphic from https://www.opendoodles.com/
-*/}
-
       <div className='grid h-screen place-content-center bg-white px-4'>
-        <Image src={Skater} alt='Page Not Found' className='rounded-3xl' />
-        <div className='text-center'>
+        <div className='grid grid-cols justify-items-center'>
+          <TriangleAlert className='w-24 h-24 text-orange-500' />
+
           <h1 className='mt-6 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
-            Uh-oh!
+            Something Went Wrong
           </h1>
 
-          <p className='p-6 text-gray-500'>We can't find that page.</p>
-          <Link href='/'>
+          <p className='mt-4 text-gray-500'>{error.toString()}</p>
+          <Link href='/' className='p-8'>
             <Button
               icon={<Undo2 className='h-4 w-4 text-xs hover:text-white' />}
             >
@@ -32,4 +30,4 @@ const NotFoundpage = () => {
   )
 }
 
-export default NotFoundpage
+export default ErrorPage

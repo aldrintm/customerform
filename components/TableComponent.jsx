@@ -5,6 +5,7 @@ import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
 import Button from './Button'
 import { getSession } from 'next-auth/react'
+import { Plus } from 'lucide-react'
 
 const TableComponentPage = async ({}) => {
   await connectDB()
@@ -18,8 +19,12 @@ const TableComponentPage = async ({}) => {
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
         <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
           <h1>Customers List</h1>
-          <Link href={`/customers/add`}>
-            <Button>Create New</Button>
+          <Link href={`/dashboard/customers/add`}>
+            <Button
+              icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+            >
+              Create New
+            </Button>
           </Link>
         </div>
 
@@ -110,7 +115,7 @@ const TableComponentPage = async ({}) => {
 
                     <td className='whitespace-nowrap px-4 py-2 text-xs font-sm'>
                       <Link
-                        href={`/customers/${customer._id}`}
+                        href={`/dashboard/customers/${customer._id}`}
                         className='inline-block rounded-full p-1 text-xs text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
                       >
                         <span className='text-xs font-sm'>

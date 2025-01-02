@@ -8,6 +8,7 @@ import {
   UserRoundPlus,
   ArrowDownToLine,
   Archive,
+  ClipboardList,
   LineChart,
   Package,
   Package2,
@@ -78,7 +79,7 @@ const SideNavbar = () => {
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
-              href='/asdlkfjasldfjk'
+              href='/dashboard/files'
             >
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -146,6 +147,14 @@ const SideNavbar = () => {
                 <path d='M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3'></path>
               </svg> */}
               <UserRoundPlus className='h-5 w-5 text-blue-500' />
+            </Link>
+            <Link
+              className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+              data-state='closed'
+              href='/tasks'
+            >
+              <ClipboardList className='h-5 w-5 text-blue-500' />
+              <span className='sr-only'>Task To Do</span>
             </Link>
             <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'

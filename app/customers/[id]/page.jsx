@@ -3,8 +3,8 @@ import Customer from '@/models/Customer'
 import CustomerDetails from '@/components/CustomerDetails'
 
 const CustomerPage = async ({ params }) => {
-  await connectDB()
-  const customer = await Customer.findById(params.id).lean()
+  // await connectDB()
+  // const customer = await Customer.findById(params.id).lean()
   return (
     <>
       <div className='flex min-h-screen w-full flex-col'>

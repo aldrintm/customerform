@@ -1,7 +1,7 @@
 import updateCustomer from '@/app/actions/updateCustomer'
 import Link from 'next/link'
 
-const CustomerEditForm = () => {
+const CustomerEditForm = ({ customers }) => {
   return (
     <section className='bg-white'>
       <div className='container mx-auto px-15 md:rounded-2xl'>

@@ -14,7 +14,10 @@ const InventoryPage = () => {
 
             <p className='mt-4 text-gray-500'>(need to work on this)</p>
           </div>
-          <div className=''>
+          <div className='grid grid-cols-4 gap-6'>
+            <Card />
+            <Card />
+            <Card />
             <Card />
             <Card />
           </div>

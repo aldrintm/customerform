@@ -23,6 +23,10 @@ const UserSchema = new Schema(
         ref: 'Customer',
       },
     ],
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -3,6 +3,7 @@ import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import { convertToSerializeableObject } from '@/utils/convertToObject'
 
 const newCustomerForm = async () => {
   await connectDB()

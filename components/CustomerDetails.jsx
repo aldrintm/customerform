@@ -1,12 +1,42 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
 import { Paperclip, PhoneIncoming, Store, ShieldAlert } from 'lucide-react'
-
+import Button from './Button'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
+import deleteCustomer from '@/app/actions/deleteCustomer'
+import { convertToSerializeableObject } from '@/utils/convertToObject'
 
-const CustomerDetails = ({ customer }) => {
-  const formattedDate = customer.purchaseOrderDate.toDateString()
+const CustomerDetails = ({ customer: initialCustomers }) => {
+  const [customer, setCustomers] = useState(initialCustomers)
+
+  const dateObj = new Date(customer.purchaseOrderDate)
+
+  // Extract the month, date, and year
+  const month = dateObj.toLocaleString('default', { month: 'long' }) // Full month name (e.g., "January")
+  const day = dateObj.getDate() // Day of the month (e.g., 1, 2, etc.)
+  const year = dateObj.getFullYear() // Full year (e.g., 2025)
+
+  // Format the string as needed
+  const formattedDate = `${month} ${day}, ${year}`
+
+  const handleDelete = async (customerId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this customer?'
+    )
+
+    if (!confirmed) return
+
+    await deleteCustomer(customerId)
+
+    const updatedCustomers = customer.filter(
+      (customer) => customerId !== customer._id
+    )
+
+    setCustomers(updatedCustomers)
+  }
 
   return (
     <>
@@ -14,14 +44,14 @@ const CustomerDetails = ({ customer }) => {
         {/* Customer Page Details Title */}
         <div className='grid grid-cols-1'>
           <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
-            Customer Details
+            Customer Details Page
           </div>
         </div>
-        {/* Customer Quick Contact Details*/}
+        {/* Customer Quick Top Contact Details*/}
         <div className='grid grid-cols-1 gap-4 md:gap-8 mx-4 md:mx-0'>
-          <div className='grid grid-cols-2 md:grid-cols-3 border border-gray-300 rounded-lg p-2 md:p-6 shadow-md'>
+          <div className='grid grid-cols-2 md:grid-cols-3 border border-gray-300 rounded-lg p-2 md:p-4'>
             <div className='grid grid-cols gap-4 align-middle'>
-              <div className='text-lg md:text-3xl font-semibold text-blue-500 underline'>
+              <div className='text-lg md:text-2xl font-semibold text-blue-500 underline'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
                 {customerWithCapitalizedNames(customer.lastName)}
               </div>
@@ -36,7 +66,6 @@ const CustomerDetails = ({ customer }) => {
               <div className='text-lg md:text-3xl font-semibold text-white'>
                 <span className='inline-flex items-center justify-center align-middle rounded-full border border-amber-500 mr-3 px-2.5 py-0.5 text-amber-600'>
                   <Store className='h-4 w-4' />
-
                   <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
                     {customer.storeName} {customer.storeId}
                   </p>
@@ -53,11 +82,20 @@ const CustomerDetails = ({ customer }) => {
                 )}
 
                 {customer.is_flagged && (
-                  <span className='inline-flex items-center justify-center align-middle rounded-full border border-red-500 px-2.5 py-0.5 text-red-600'>
+                  <span className='inline-flex items-center justify-center align-middle rounded-full border border-red-500 mr-3 px-2.5 py-0.5 text-red-600'>
                     <ShieldAlert className='h-4 w-4' />
 
                     <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
                       Critical
+                    </p>
+                  </span>
+                )}
+                {customer.is_featured && (
+                  <span className='inline-flex items-center justify-center align-middle rounded-full border border-fuchsia-500 px-2.5 py-0.5 text-fuchsia-600'>
+                    <ShieldAlert className='h-4 w-4' />
+
+                    <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
+                      Important Customer
                     </p>
                   </span>
                 )}
@@ -77,155 +115,202 @@ const CustomerDetails = ({ customer }) => {
             </div>
           </div>
         </div>
+
+        {/* Break */}
+        {/* Break */}
         {/* Break */}
         {/* Customer Full Order Details */}
         <div className='grid grid-cols-2 gap-4 md:gap-8 mx-4 md:mx-0'>
-          <div className='grid grid-cols-1 border border-gray-300 rounded-lg p-4'>
-            <div className='p-4'>
-              <div className='px-4 sm:px-0 flex justify-between'>
-                <h3 className='text-base font-semibold text-gray-700'>
-                  Customer Order Details
-                </h3>
-                <button>Edit</button>
+          <div className='grid grid-flow-row gap-4 md:gap-8'>
+            <div className='grid grid-cols-1 border border-gray-300 rounded-lg p-4'>
+              <div className='p-4'>
+                <div className='px-4 sm:px-0 flex justify-between'>
+                  <h3 className='text-base font-semibold text-gray-700'>
+                    Customer Order Details
+                  </h3>
+                  <div className='flex gap-3'>
+                    <Link href={`/dashboard/customers/${customer._id}/edit`}>
+                      <Button>Edit</Button>
+                    </Link>
+                    <Button onClick={() => handleDelete(customer._id)}>
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+                <div className='mt-4 border-t border-gray-100'>
+                  <dl className=''>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Purchase Order Number:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.purchaseOrderNumber}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Puchase Order Date:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {formattedDate}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Customer Name:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customerWithCapitalizedNames(customer.firstName)}{' '}
+                        {customerWithCapitalizedNames(customer.lastName)}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Address:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.address.street}, {customer.address.city}{' '}
+                        {customer.address.state} {customer.address.zipcode}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm/6 font-medium text-gray-900'>
+                        Phone:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {formatPhoneNumber(customer.phone)}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Email:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.email}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Contractor:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.contractorName} @{' '}
+                        {formatPhoneNumber(customer.contractorPhone)}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Order Notes:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.orderNotes}
+                      </dd>
+                    </div>
+
+                    {/* Order Summary - Just a Divider */}
+                    {/* <span className='flex items-center py-6'>
+                    <span className='h-px flex-1 bg-gray-300'></span>
+                    <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
+                    <span className='h-px flex-1 bg-gray-300'></span>
+                  </span> */}
+                  </dl>
+                </div>
               </div>
-              <div className='mt-4 border-t border-gray-100'>
-                <dl className=''>
-                  <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      Purchase Order Number:
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      {customer.purchaseOrderNumber}
-                    </dd>
+            </div>
+            {/* 2nd Purchase Order Details */}
+            <div className='grid grid-cols-1 border border-gray-300 rounded-lg p-4'>
+              <div className='p-4'>
+                <div className='px-4 sm:px-0 flex justify-between'>
+                  <h3 className='text-base font-semibold text-gray-700'>
+                    Customer Order Details
+                  </h3>
+                  <div className='flex gap-3'>
+                    <Link href={`/dashboard/customers/edit/${customer._id}`}>
+                      <Button>Edit</Button>
+                    </Link>
+                    <Button onClick={() => handleDelete(customer._id)}>
+                      Delete
+                    </Button>
                   </div>
-                  <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      Puchase Order Date:
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      {formattedDate}
-                    </dd>
-                  </div>
-                  <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      Customer Name:
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      {customerWithCapitalizedNames(customer.firstName)}{' '}
-                      {customerWithCapitalizedNames(customer.lastName)}
-                    </dd>
-                  </div>
-                  <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      Address:
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      {customer.address.street}, {customer.address.city}{' '}
-                      {customer.address.state} {customer.address.zipcode}
-                    </dd>
-                  </div>
-                  <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm/6 font-medium text-gray-900'>
-                      Phone:
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      {formatPhoneNumber(customer.phone)}
-                    </dd>
-                  </div>
-                  <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      Email:
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      {customer.email}
-                    </dd>
-                  </div>
+                </div>
+                <div className='mt-4 border-t border-gray-100'>
+                  <dl className=''>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Purchase Order Number:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.purchaseOrderNumber}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Puchase Order Date:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {formattedDate}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Customer Name:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customerWithCapitalizedNames(customer.firstName)}{' '}
+                        {customerWithCapitalizedNames(customer.lastName)}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Address:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.address.street}, {customer.address.city}{' '}
+                        {customer.address.state} {customer.address.zipcode}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm/6 font-medium text-gray-900'>
+                        Phone:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {formatPhoneNumber(customer.phone)}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Email:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.email}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Contractor:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.contractorName} @{' '}
+                        {formatPhoneNumber(customer.contractorPhone)}
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Order Notes:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        {customer.orderNotes}
+                      </dd>
+                    </div>
 
-                  {/* Order Summary */}
-                  <span className='flex items-center py-6'>
+                    {/* Order Summary - Just a Divider */}
+                    {/* <span className='flex items-center py-6'>
                     <span className='h-px flex-1 bg-gray-300'></span>
-                    <span className='shrink-0 px-6 text-base font-semibold text-gray-700'>
-                      Order Summary
-                    </span>
+                    <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
                     <span className='h-px flex-1 bg-gray-300'></span>
-                  </span>
-
-                  {/* About */}
-                  {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      About
-                    </dt>
-                    <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                      Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
-                      anim incididunt cillum culpa consequat. Excepteur qui
-                      ipsum aliquip consequat sint. Sit id mollit nulla mollit
-                      nostrud in ea officia proident. Irure nostrud pariatur
-                      mollit ad adipisicing reprehenderit deserunt qui eu.
-                    </dd>
-                  </div> */}
-                  {/* Attachment */}
-                  {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                    <dt className='text-sm font-medium text-gray-900'>
-                      Attachments
-                    </dt>
-                    <dd className='mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0'>
-                      <ul
-                        role='list'
-                        className='divide-y divide-gray-100 rounded-md border border-gray-200'
-                      >
-                        <li className='flex items-center justify-between py-4 pl-4 pr-5 text-sm'>
-                          <div className='flex w-0 flex-1 items-center'>
-                            <Paperclip
-                              aria-hidden='true'
-                              className='size-5 shrink-0 text-gray-400'
-                            />
-
-                            <div className='ml-4 flex min-w-0 flex-1 gap-2'>
-                              <span className='truncate font-medium'>
-                                resume_back_end_developer.pdf
-                              </span>
-                              <span className='shrink-0 text-gray-400'>
-                                2.4mb
-                              </span>
-                            </div>
-                          </div>
-                          <div className='ml-4 shrink-0'>
-                            <a
-                              href='#'
-                              className='font-medium text-indigo-600 hover:text-indigo-500'
-                            >
-                              Download
-                            </a>
-                          </div>
-                        </li>
-                        <li className='flex items-center justify-between py-4 pl-4 pr-5 text-sm'>
-                          <div className='flex w-0 flex-1 items-center'>
-                            <Paperclip
-                              aria-hidden='true'
-                              className='size-5 shrink-0 text-gray-400'
-                            />
-                            <div className='ml-4 flex min-w-0 flex-1 gap-2'>
-                              <span className='truncate font-medium'>
-                                signed
-                              </span>
-                              <span className='shrink-0 text-gray-400'>
-                                4.5mb
-                              </span>
-                            </div>
-                          </div>
-                          <div className='ml-4 shrink-0'>
-                            <a
-                              href='#'
-                              className='font-medium text-indigo-600 hover:text-indigo-500'
-                            >
-                              Download
-                            </a>
-                          </div>
-                        </li>
-                      </ul>
-                    </dd>
-                  </div> */}
-                </dl>
+                  </span> */}
+                  </dl>
+                </div>
               </div>
             </div>
           </div>

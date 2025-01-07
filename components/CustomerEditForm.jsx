@@ -2,6 +2,8 @@ import updateCustomer from '@/app/actions/updateCustomer'
 import Link from 'next/link'
 
 const CustomerEditForm = ({ customer }) => {
+  const updateCustomerById = updateCustomer.bind(null, customer._id)
+
   return (
     <section className='bg-white'>
       <div className='container mx-auto px-15 md:rounded-2xl'>
@@ -12,7 +14,7 @@ const CustomerEditForm = ({ customer }) => {
         <div className='isolate px-4 sm:pb-2 lg:px-0'>
           {/* Form Starts Here */}
           <form
-            action={updateCustomer}
+            action={updateCustomerById}
             className='container mx-auto my-4 justify-center'
           >
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 pb-2'>
@@ -36,6 +38,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='firstName'
                       required
                       placeholder='First name'
+                      defaultValue={customer.firstName}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -55,6 +58,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='lastName'
                       required
                       placeholder='Last name'
+                      defaultValue={customer.lastName}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -77,6 +81,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='phone'
                       required
                       placeholder='(408) xxx xxxx'
+                      defaultValue={customer.phone}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -96,6 +101,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='email'
                       required
                       placeholder='Email'
+                      defaultValue={customer.email}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -118,6 +124,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='street'
                       required
                       placeholder='Example: 33100 Transit Ave.'
+                      defaultValue={customer.address.street}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -140,6 +147,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='city'
                       required
                       placeholder='City'
+                      defaultValue={customer.address.city}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -178,6 +186,7 @@ const CustomerEditForm = ({ customer }) => {
                       name='zipcode'
                       required
                       placeholder='Zipcode'
+                      defaultValue={customer.address.zipcode}
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -198,7 +207,8 @@ const CustomerEditForm = ({ customer }) => {
                       type='text'
                       id='contractorName'
                       name='contractorName'
-                      placeholder='Name of contractor or on-site contact'
+                      placeholder='Contractor or on-site contact'
+                      defaultValue={customer.contractorName}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -217,6 +227,7 @@ const CustomerEditForm = ({ customer }) => {
                       id='contractorPhone'
                       name='contractorPhone'
                       placeholder='Contractor or on-site contact'
+                      defaultValue={customer.contractorPhone}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>

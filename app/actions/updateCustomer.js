@@ -1,13 +1,32 @@
 'use server'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 // this action is added to the form to perform tasks
-async function updateCustomer(formData) {
+async function updateCustomer(customerId, formData) {
   // connect to DB
   await connectDB()
+
+  // lets check for user session
+  const sessionUser = await getSessionUser()
+
+  if (!sessionUser || !sessionUser.userId) {
+    throw new Error('User ID is required')
+  }
+
+  // lets get the userId then
+  const { userId } = sessionUser
+
+  const existingCustomer = await Customer.findById(customerId)
+  console.log(existingCustomer)
+
+  // verify ownership - we do not need this?
+  // if (existingCustomer.owner.toString() !== userId) {
+  //   throw new Error('Current user is not allowed to edit this customer')
+  // }
 
   const customerData = {
     firstName: formData.get('firstName').toLowerCase(),
@@ -34,14 +53,13 @@ async function updateCustomer(formData) {
     orderNotes: formData.get('orderNotes'),
   }
 
-  // lets check the server to see all items uploaded to the DB
+  // lets allocate the data above to the customerId in this profile and update it.
+  const updatedCustomer = await Customer.findByIdAndUpdate(
+    customerId,
+    customerData
+  )
 
-  // lets plug all the date using the property model
-  const newCustomer = new Customer(customerData)
-  // save it in our DB
-  await newCustomer.save()
-
-  console.log(newCustomer)
+  console.log(updatedCustomer)
 
   // this will clear cached data in our form/memory
   revalidatePath('/', 'layout')
@@ -50,7 +68,7 @@ async function updateCustomer(formData) {
   // redirect(`/customers/${newCustomer._id}`)
 
   // redirect to the main table
-  redirect(`/customers`)
+  redirect(`/dashboard/customers/${updatedCustomer._id}`)
 }
 
 export default updateCustomer

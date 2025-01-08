@@ -8,6 +8,7 @@ import AppleTouch from '@/assets/images/apple-touch-icon.png'
 import Breadcrumb from './BreadCrumb'
 import OpenMapButton from '@/app/actions/openMapButton'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import CustomerSearchForm from './CustomerSearchForm'
 
 const Header = () => {
   // get data as session from useSession from next-auth
@@ -65,35 +66,8 @@ const Header = () => {
           {/* <OpenMapButton /> */}
           {/* Add a Google Button if NOT logged in */}
           {/* Search Form Starts Here */}
-          {session && (
-            <form
-              className='hidden sm:block relative ml-auto flex-1 md:grow-0'
-              action="javascript:throw new Error('React form unexpectedly submitted.')"
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                className='lucide lucide-search absolute left-2.5 top-[.75rem] h-4 w-4 text-muted-foreground'
-              >
-                <circle cx='11' cy='11' r='8'></circle>
-                <path d='m21 21-4.3-4.3'></path>
-              </svg>
-
-              <input
-                type='search'
-                name='q'
-                placeholder='Search for customers...'
-                className='flex h-10 mt-1 w-full rounded-md border border-input border-gray-300 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 bg-background pl-8 md:w-[200px] lg:w-[336px]'
-              />
-            </form>
-          )}
+          {/* Search Form Here */}
+          {session && <CustomerSearchForm />}
           {/*  Right Side Menu (Logged Out) Google Button */}
 
           {/* Google Button */}

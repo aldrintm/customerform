@@ -2,12 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import CalacattaGold from '@/public/images/Calacatta-Gold.jpg'
 
-const Card = () => {
+const Card = ({ customer }) => {
   return (
     <>
       <div className='p-6'>
         <Link
-          href='#'
+          href={`/dashboard/customers/${customer._id}`}
           className='block rounded-lg p-4 shadow-sm shadow-indigo-100'
         >
           <Image
@@ -74,7 +74,7 @@ const Card = () => {
                 <div className='mt-1.5 sm:mt-0'>
                   <p className='text-gray-500'>Thickness</p>
 
-                  <p className='font-medium'>2cm</p>
+                  <p className='font-medium'>{customer.materialThickness}</p>
                 </div>
               </div>
 
@@ -95,9 +95,9 @@ const Card = () => {
                 </svg>
 
                 <div className='mt-1.5 sm:mt-0'>
-                  <p className='text-gray-500'>Finish</p>
+                  <p className='text-gray-500'>Name</p>
 
-                  <p className='font-medium'>Polished</p>
+                  <p className='font-medium'>{customer.materialColor}</p>
                 </div>
               </div>
             </div>

@@ -1,8 +1,12 @@
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 import Card from '@/components/Card'
+import connectDB from '@/config/db'
+import Customer from '@/models/Customer'
 
-const InventoryPage = () => {
+const InventoryPage = async () => {
+  await connectDB()
+  const customers = await Customer.find({}).lean()
   return (
     <div className='flex min-h-screen w-full flex-col'>
       <SideNavbar />
@@ -15,11 +19,9 @@ const InventoryPage = () => {
             <p className='mt-4 text-gray-500'>(need to work on this)</p>
           </div>
           <div className='grid grid-cols-4 gap-6'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {customers.map((customer) => (
+              <Card key={customer._id} customer={customer} />
+            ))}
           </div>
         </main>
       </section>

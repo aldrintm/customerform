@@ -12,7 +12,7 @@ const CustomerSearchForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (search === '') {
-      router.push('/dashboard')
+      router.push('/dashboard/customers')
     } else {
       const query = `?search=${search}`
       router.push(`/dashboard/customers/search-results${query}`)

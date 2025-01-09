@@ -43,7 +43,7 @@ const SearchResults = async ({ searchParams: { search } }) => {
         <SideNavbar />
         <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
           <div className='max-w-7xl px-4 flex flex-col items-start sm:px-6 lg:px-8'>
-            <Link href='/' className='p-4'>
+            <Link href='/dashboard/customers' className='p-4'>
               <Button
                 icon={
                   <CircleArrowLeft className='h-4 w-4 text-xs hover:text-white' />

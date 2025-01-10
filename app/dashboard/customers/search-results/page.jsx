@@ -34,7 +34,7 @@ const SearchResults = async ({ searchParams: { search } }) => {
 
   const customersArray = Array.isArray(customers) ? customers : []
 
-  // console.log(customersArray)
+  // console.log(customersArray) <-- this isnt used because we already got an array with customers.
 
   return (
     <>

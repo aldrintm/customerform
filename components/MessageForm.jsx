@@ -72,7 +72,7 @@ const MessageForm = () => {
                       id='message'
                       name='message'
                       rows='5'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm'
+                      className='hidden md:block mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter your message...'
                     ></textarea>
                   </div>

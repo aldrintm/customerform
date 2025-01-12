@@ -80,7 +80,7 @@ const MessageForm = () => {
                   <div className='lg:col-span-2 content-end pb-2'>
                     <span className=''>
                       <button
-                        className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+                        className='w-full hover:bg-gray items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
                         type='submit'
                       >
                         Submit

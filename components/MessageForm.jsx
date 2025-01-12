@@ -60,6 +60,22 @@ const MessageForm = () => {
                       placeholder='Enter your message...'
                     ></textarea>
                   </div>
+                  <div className='lg:col-span-4'>
+                    <label
+                      htmlFor='orderNotes'
+                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                    >
+                      Message:
+                    </label>
+
+                    <textarea
+                      id='message'
+                      name='message'
+                      rows='5'
+                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm'
+                      placeholder='Enter your message...'
+                    ></textarea>
+                  </div>
                   {/* col-span-2 */}
                   <div className='lg:col-span-2 content-end pb-2'>
                     <span className=''>

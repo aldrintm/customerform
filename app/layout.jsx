@@ -1,5 +1,7 @@
 import '@/assets/styles/globals.css'
 import AuthProvider from '@/components/AuthProvider'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const metadata = {
   title: 'CRM',
@@ -14,6 +16,7 @@ const MainLayout = ({ children }) => {
       <html lang='en'>
         <body className='flex min-h-screen w-full flex-col'>
           <main>{children}</main>
+          <ToastContainer />
         </body>
       </html>
     </AuthProvider>

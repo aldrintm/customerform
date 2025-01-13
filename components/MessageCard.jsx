@@ -1,4 +1,7 @@
+'use client'
+
 import { Link } from 'lucide-react'
+import { useState } from 'react'
 
 const MessageCard = ({ message }) => {
   return (

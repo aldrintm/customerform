@@ -8,6 +8,7 @@ import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 import deleteCustomer from '@/app/actions/deleteCustomer'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
+import { toast } from 'react-toastify'
 
 const CustomerDetails = ({ customer: initialCustomers }) => {
   const [customer, setCustomers] = useState(initialCustomers)
@@ -36,6 +37,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
     )
 
     setCustomers(updatedCustomers)
+    toast.success(`${customerId} is DELETED!`)
   }
 
   return (

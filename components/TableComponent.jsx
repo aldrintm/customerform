@@ -10,30 +10,12 @@ import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 import deleteCustomer from '@/app/actions/deleteCustomer'
 
-const TableComponentPage = ({ customers: initialCustomers }) => {
-  const [customers, setCustomers] = useState(initialCustomers)
+const TableComponentPage = ({ customers }) => {
   // await connectDB()
   // const customers = await Customer.find({})
   //   .sort({ createdAt: -1 })
   //   .limit(10)
   // .lean()
-
-  const handleDeleteCustomer = async (customerId) => {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this customer?'
-    )
-
-    if (!confirmed) return
-
-    await deleteCustomer(customerId)
-
-    const updatedCustomers = customers.filter(
-      (customer) => customerId !== customer._id
-    )
-
-    setCustomers(updatedCustomers)
-    toast.success(`${customerId} is DELETED!`)
-  }
 
   return (
     <section>
@@ -162,15 +144,10 @@ const TableComponentPage = ({ customers: initialCustomers }) => {
                     <td className='whitespace-nowrap px-4 py-2 text-xs font-sm'>
                       <div className='flex gap-3'>
                         <Link
-                          href={`/dashboard/customers/edit/${customer._id}`}
+                          href={`/dashboard/customers/${customer._id}/edit`}
                         >
                           <Button>Edit</Button>
                         </Link>
-                        <Button
-                          onClick={() => handleDeleteCustomer(customer._id)}
-                        >
-                          Delete
-                        </Button>
                       </div>
                     </td>
                   </tr>

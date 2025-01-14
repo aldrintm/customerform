@@ -37,7 +37,7 @@ async function deleteCustomer(customerId, email) {
   await customer.deleteOne()
 
   // this will clear cached data in our form/memory
-  revalidatePath('/', 'layout')
+  revalidatePath('/dashboard/customers', 'page')
 
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)

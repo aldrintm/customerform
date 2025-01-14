@@ -1,18 +1,39 @@
+'use client'
+
 import Link from 'next/link'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
-import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
 import Button from './Button'
 import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
+import deleteCustomer from '@/app/actions/deleteCustomer'
 
-const TableComponentPage = async ({}) => {
-  await connectDB()
-  const customers = await Customer.find({})
-    .sort({ createdAt: -1 })
-    .limit(10)
-    .lean()
+const TableComponentPage = ({ customers: initialCustomers }) => {
+  const [customers, setCustomers] = useState(initialCustomers)
+  // await connectDB()
+  // const customers = await Customer.find({})
+  //   .sort({ createdAt: -1 })
+  //   .limit(10)
+  // .lean()
+
+  const handleDeleteCustomer = async (customerId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this customer?'
+    )
+
+    if (!confirmed) return
+
+    await deleteCustomer(customerId)
+
+    const updatedCustomers = customers.filter(
+      (customer) => customerId !== customer._id
+    )
+
+    setCustomers(updatedCustomers)
+    toast.success(`${customerId} is DELETED!`)
+  }
 
   return (
     <section>
@@ -58,6 +79,7 @@ const TableComponentPage = async ({}) => {
                   </th>
 
                   <th className='px-4 py-2'>View</th>
+                  <th className='px-4 py-2'>Action</th>
                 </tr>
               </thead>
 
@@ -136,6 +158,20 @@ const TableComponentPage = async ({}) => {
                           {/* <Eye className='h-4 w-4 text-xs text-blue-500 text-bold' /> */}
                         </span>
                       </Link>
+                    </td>
+                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm'>
+                      <div className='flex gap-3'>
+                        <Link
+                          href={`/dashboard/customers/edit/${customer._id}`}
+                        >
+                          <Button>Edit</Button>
+                        </Link>
+                        <Button
+                          onClick={() => handleDeleteCustomer(customer._id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}

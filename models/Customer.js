@@ -76,6 +76,10 @@ const CustomerSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: 'Project',
+    },
   },
   {
     timestamps: true,

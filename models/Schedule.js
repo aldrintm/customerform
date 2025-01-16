@@ -6,13 +6,13 @@ const ScheduleSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    project: {
-      type: Schema.Types.ObjectId,
-      ref: 'Project',
-    },
     customer: {
       type: Schema.Types.ObjectId,
       ref: 'Customer',
+    },
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: 'Project',
     },
     description: {
       type: String,

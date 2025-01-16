@@ -6,16 +6,16 @@ const ProjectSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    customer: {
+      type: Schema.Types.ObjectId,
+      ref: 'Customer',
+    },
     schedule: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Schedule',
       },
     ],
-    customer: {
-      type: Schema.Types.ObjectId,
-      ref: 'Customer',
-    },
     area: {
       type: String,
     },

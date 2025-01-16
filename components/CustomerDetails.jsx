@@ -128,7 +128,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               <div className='p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
-                    Customer Order Details
+                    Customer Profile Details
                   </h3>
                   <div className='flex gap-3'>
                     <Link href={`/dashboard/customers/${customer._id}/edit`}>
@@ -141,22 +141,22 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                 </div>
                 <div className='mt-4 border-t border-gray-100'>
                   <dl className=''>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Purchase Order Number:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
                         {customer.purchaseOrderNumber}
                       </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    </div> */}
+                    {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Puchase Order Date:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
                         {formattedDate}
                       </dd>
-                    </div>
+                    </div> */}
                     <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Customer Name:
@@ -224,7 +224,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               <div className='p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
-                    Customer Order Details
+                    Project Order Details
                   </h3>
                   <div className='flex gap-3'>
                     <Link href={`/dashboard/customers/edit/${customer._id}`}>
@@ -237,41 +237,41 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                 </div>
                 <div className='mt-4 border-t border-gray-100'>
                   <dl className=''>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Purchase Order Number:
+                        PO Number:
                       </dt>
-                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
                         {customer.purchaseOrderNumber}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Puchase Order Date:
+                        PO Date:
                       </dt>
-                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
                         {formattedDate}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Customer Name:
+                        Name:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
                         {customerWithCapitalizedNames(customer.firstName)}{' '}
                         {customerWithCapitalizedNames(customer.lastName)}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Address:
                       </dt>
-                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
                         {customer.address.street}, {customer.address.city}{' '}
                         {customer.address.state} {customer.address.zipcode}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm/6 font-medium text-gray-900'>
                         Phone:
                       </dt>
@@ -279,7 +279,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         {formatPhoneNumber(customer.phone)}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Email:
                       </dt>
@@ -287,7 +287,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         {customer.email}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Contractor:
                       </dt>
@@ -296,7 +296,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         {formatPhoneNumber(customer.contractorPhone)}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Order Notes:
                       </dt>

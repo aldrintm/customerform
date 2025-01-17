@@ -2,7 +2,7 @@ import NewCustomerForm from '@/components/CustomerForm'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 
-const AddCustomer = () => {
+const AddCustomerPage = () => {
   return (
     <section>
       <SideNavbar />
@@ -13,4 +13,4 @@ const AddCustomer = () => {
     </section>
   )
 }
-export default AddCustomer
+export default AddCustomerPage

@@ -2,7 +2,7 @@ import ProjectForm from '@/components/ProjectForm'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 
-const AddCustomer = () => {
+const AddProjectPage = () => {
   return (
     <section>
       <SideNavbar />
@@ -13,4 +13,4 @@ const AddCustomer = () => {
     </section>
   )
 }
-export default AddCustomer
+export default AddProjectPage

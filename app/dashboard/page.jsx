@@ -15,8 +15,6 @@ const DashboardPage = async () => {
 
   const customers = customerDocs.map(convertToSerializeableObject)
 
-  console.log(customers)
-
   return (
     <div className='flex min-h-screen w-full flex-col'>
       <SideNavbar />

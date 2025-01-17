@@ -19,9 +19,9 @@ const ProjectForm = () => {
               {/* Break */}
 
               {/* Main Side of the Form Column */}
-              <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white py-6 md:border md:rounded-md border-gray-300'>
+              <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white p-4 md:border md:rounded-md border-gray-300'>
                 {/* Purchase Order + Store ID */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-2 lg:gap-x-6'>
                   {/* Purchase Order */}
                   <div className='col-span-4'>
                     <label
@@ -85,7 +85,7 @@ const ProjectForm = () => {
                 </div>
 
                 {/* PO Date and Amount Paid */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-2 lg:gap-x-6'>
                   {/* Purchase Order Date */}
                   <div className='col-span-4'>
                     <label
@@ -142,7 +142,7 @@ const ProjectForm = () => {
                 </div>
 
                 {/* Purchase Order Info - Material Brand + Thickness + Color */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12 px-4 py-2 lg:gap-x-6'>
                   {/* Material Type */}
                   <div className='lg:col-span-3'>
                     <label
@@ -256,9 +256,9 @@ const ProjectForm = () => {
                 </div>
 
                 {/* Textarea for Order Notes */}
-                <div className='grid grid-cols-1 md:gap-4 lg:grid-cols-6 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 lg:grid-cols-1 px-4 py-2'>
                   {/* Text Area for Special Notes with Customer */}
-                  <div className='lg:col-span-4'>
+                  <div className=''>
                     <label
                       htmlFor='orderNotes'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -271,13 +271,13 @@ const ProjectForm = () => {
                       id='orderNotes'
                       name='orderNotes'
                       rows='5'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm'
+                      className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter any additional order notes...'
                     ></textarea>
                   </div>
                   {/* col-span-2 */}
-                  <div className='lg:col-span-2 content-end pb-2'>
-                    <span className=''>
+                  <div className='lg:col-span-2 content-end py-4'>
+                    <span>
                       <button
                         className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
                         type='submit'

@@ -4,9 +4,9 @@ import Link from 'next/link'
 const MessageForm = () => {
   return (
     <section className='bg-white'>
-      <div className='container mx-auto px-15 md:rounded-2xl'>
+      <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
         <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-          Send a Message Here
+          Send a Message Box
         </div>
 
         <div className='isolate px-4 sm:pb-2 lg:px-0'>
@@ -15,10 +15,10 @@ const MessageForm = () => {
             action={addMessage}
             className='container mx-auto my-4 justify-center'
           >
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6 pb-2'>
+            <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
               {/* Left Side of Form Column */}
 
-              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-2 md:border border-gray-300 md:rounded-md'>
+              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white p-4 md:border border-gray-300 md:rounded-md'>
                 {/* First Name and Last Name */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* Name */}

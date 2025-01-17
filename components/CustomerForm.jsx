@@ -18,7 +18,7 @@ const NewCustomerForm = () => {
             <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
               {/* Left Side of Form Column */}
 
-              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white py-2 md:border border-gray-300 md:rounded-md'>
+              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white p-4 md:border border-gray-300 md:rounded-md'>
                 {/* First Name and Last Name */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* First Name */}

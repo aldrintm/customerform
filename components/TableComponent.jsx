@@ -8,7 +8,6 @@ import { toast } from 'react-toastify'
 import Button from './Button'
 import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
-import deleteCustomer from '@/app/actions/deleteCustomer'
 
 const TableComponentPage = ({ customers }) => {
   // await connectDB()
@@ -166,21 +165,6 @@ const TableComponentPage = ({ customers }) => {
       </div>
     </section>
   )
-}
-
-export const getServerSideProps = async (context) => {
-  // Check for user session
-  const session = await getSession({ req: context.req })
-
-  // If no session, redirect to the home page
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    }
-  }
 }
 
 export default TableComponentPage

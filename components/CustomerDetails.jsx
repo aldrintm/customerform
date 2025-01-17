@@ -42,7 +42,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
 
   return (
     <>
-      <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8'>
+      <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Page Details Title */}
         <div className='grid grid-cols-1'>
           <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
@@ -242,7 +242,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         PO Number:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
-                        {customer.purchaseOrderNumber}
+                        project.purchaseOrderNumber
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
@@ -250,50 +250,72 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         PO Date:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
-                        {formattedDate}
+                        project.purchaseOrderDate
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Name:
+                        Description:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        {customerWithCapitalizedNames(customer.firstName)}{' '}
-                        {customerWithCapitalizedNames(customer.lastName)}
+                        project.description
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Address:
+                        Material:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
-                        {customer.address.street}, {customer.address.city}{' '}
-                        {customer.address.state} {customer.address.zipcode}
+                        project.materialThickness .materialBrand .materialColor
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm/6 font-medium text-gray-900'>
-                        Phone:
+                        Finish:
                       </dt>
-                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        {formatPhoneNumber(customer.phone)}
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
+                        project.materialFinish =
+                        Polished/Honed/Matte/Leather/Silk Etc
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Email:
+                        Edge:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        {customer.email}
+                        project.edge
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
-                        Contractor:
+                        Sink:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        {customer.contractorName} @{' '}
-                        {formatPhoneNumber(customer.contractorPhone)}
+                        project.sinkQuantity + project.sinkType
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Stove:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        project.stoveQuantity + project.stoveType
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Splash:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        project.splash
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
+                      <dt className='text-sm font-medium text-gray-900'>
+                        Window Sill:
+                      </dt>
+                      <dd className='mt-1 text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
+                        if(project.windowsill) then its a YES or checkmark
                       </dd>
                     </div>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
@@ -301,7 +323,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         Order Notes:
                       </dt>
                       <dd className='mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        {customer.orderNotes}
+                        project.orderNotes
                       </dd>
                     </div>
 

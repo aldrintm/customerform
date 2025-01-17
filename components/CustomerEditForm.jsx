@@ -494,6 +494,7 @@ const CustomerEditForm = ({ customer }) => {
                       rows='5'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter any additional order notes...'
+                      defaultValue={customer.orderNotes}
                     ></textarea>
                   </div>
                   {/* col-span-2 */}

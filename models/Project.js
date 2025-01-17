@@ -34,17 +34,24 @@ const ProjectSchema = new Schema(
     materialName: {
       type: String,
     },
+    materialFinish: {
+      type: String,
+    },
     edge: [
       {
         type: String,
       },
     ],
-    sink: [
-      {
-        type: String,
-      },
-    ],
+    sinkQuantity: {
+      type: String,
+    },
+    sinkType: {
+      type: String,
+    },
     sinkLocation: {
+      type: String,
+    },
+    sinkInfo: {
       type: String,
     },
     stove: {
@@ -56,7 +63,7 @@ const ProjectSchema = new Schema(
       },
     ],
     windowSill: {
-      type: String,
+      type: Boolean,
     },
     notes: {
       type: String,

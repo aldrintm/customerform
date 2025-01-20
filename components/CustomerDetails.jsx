@@ -52,7 +52,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
         </div>
         <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:block'>
           {/* Customer Quick Top Contact Details*/}
-          <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 sm:px-4'>
+          <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
             <div className='grid grid-cols gap-2 align-middle'>
               <div className='text-sm md:text-2xl font-semibold text-blue-500 underline'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
@@ -117,10 +117,10 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               </div>
             </div>
             <div className='grid grid-cols gap-2 text-right'>
-              <div className='text-md md:text-2xl font-semibold text-gray-500'>
+              <div className='text-md md:text-xl font-semibold text-gray-500'>
                 Template: Jan 3, 2025
               </div>
-              <div className='text-md md:text-2xl font-semibold text-gray-500'>
+              <div className='text-md md:text-xl font-semibold text-gray-500'>
                 <span className='items-center align-middle'>
                   Install: Jan 25, 2025
                 </span>
@@ -240,7 +240,9 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                   </h3>
                   <div className='flex gap-4'>
                     <Button>
-                      <Link href={`/dashboard/customers/edit/${customer._id}`}>
+                      <Link
+                        href={`/dashboard/customers/${customer._id}/project`}
+                      >
                         Edit
                       </Link>
                     </Button>
@@ -279,7 +281,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                         <span className='pr-2 underline'>Cambria</span>
                         {/* <span className='pr-2 underline'>Quartz</span>
                         <span className='pr-2 underline'>Polished</span> */}
-                        <span className='inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
+                        <span className='inline-flex items-center rounded-md sm:mr-2 bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
                           {/* <span className='inline-block w-2.5 h-2.5 mr-2 bg-red-500 rounded-full'></span> */}
                           Quartz
                         </span>
@@ -346,6 +348,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               <Image
                 src={Map}
                 alt='map'
+                priority={true}
                 className='object-cover w-full h-full grayscale'
               />
               {/* <p className='text-sm my-auto mx-auto'>
@@ -360,9 +363,9 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
         {/* ... */}
         {/* Break */}
         {/* Template and Install Dates + Signature */}
-        <div className='hidden md:grid md:grid-cols-2 py-4 text-sm gap-0 md:gap-8 mx-4 md:mx-0 sm:block print:block'>
+        <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block print:block'>
           {customer.status === 'will call' ? (
-            <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'>
+            <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2'>
               <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                 <span className=''>Template Date: Jan 3, 2025</span>
                 <span>Measured By: Anilber Pena</span>
@@ -374,24 +377,36 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               </div>
             </div>
           ) : customer.status === 'for install' ? (
-            <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'>
-              <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                <span className=''>Install Date: Jan 25, 2025</span>
-                <span>Installed By: Ruben Oronia</span>
+            <>
+              <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden'>
+                <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                  <span className=''>Template Date: Jan 3, 2025</span>
+                  <span>Measured By: Anilber Pena</span>
+                </div>
+                <div className='sm:p-4 md:col-span-2'>
+                  Template Notes: There's no sink on site, I only took the sink
+                  template. Contractor present and approved all overhangs
+                </div>
               </div>
+              <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'>
+                <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                  <span className=''>Install Date: Jan 25, 2025</span>
+                  <span>Installed By: Ruben Oronia</span>
+                </div>
 
-              <div className='sm:p-4 md:col-span-2'>
-                Installation Notes: Contractor want to preserve the tiles,
-                please protect the floor as much as you can. They will keep the
-                sink so try to save it.
+                <div className='sm:p-4 md:col-span-2'>
+                  Installation Notes: Contractor want to preserve the tiles,
+                  please protect the floor as much as you can. They will keep
+                  the sink so try to save it.
+                </div>
+                <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                  <span className=''>
+                    Sign On Install: ________________________
+                  </span>
+                  <span>Print Name: ________________________</span>
+                </div>
               </div>
-              <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                <span className=''>
-                  Sign On Install: ________________________
-                </span>
-                <span>Print Name: ________________________</span>
-              </div>
-            </div>
+            </>
           ) : null}
         </div>
       </div>

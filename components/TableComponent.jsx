@@ -35,47 +35,51 @@ const TableComponentPage = ({ customers }) => {
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>
                 <tr>
-                  <th className='whitespace-nowrap px-4 py-2 text-sm text-gray-700 font-semibold'>
+                  <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
                     First Name
                   </th>
-                  <th className='whitespace-nowrap px-4 py-2 font-sm text-gray-700'>
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Last Name
                   </th>
-                  <th className='whitespace-nowrap px-4 py-2 text-center font-sm text-gray-700'>
+                  <th className='whitespace-nowrap px-4 py-3 text-center font-sm text-gray-600'>
                     Status
                   </th>
 
-                  <th className='whitespace-nowrap px-4 py-2 pl-8 font-sm text-gray-700'>
+                  <th className='whitespace-nowrap px-4 py-3 pl-8 font-sm text-gray-600'>
                     Address
                   </th>
-                  <th className='whitespace-nowrap px-4 py-2 font-sm text-gray-700'>
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Phone/Email
                   </th>
                   {/* <th className='whitespace-nowrap px-4 py-2 font-sm text-gray-700'>
                     Email
                   </th> */}
 
-                  <th className='whitespace-nowrap px-4 py-2 font-sm text-gray-700'>
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Store
                   </th>
 
-                  <th className='px-4 py-2'>View</th>
-                  <th className='px-4 py-2'>Action</th>
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                    View
+                  </th>
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                    Action
+                  </th>
                 </tr>
               </thead>
 
               <tbody className='divide-y divide-gray-200'>
                 {customers.map((customer) => (
                   <tr key={customer._id}>
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
+                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       {customerWithCapitalizedNames(customer.firstName)}
                     </td>
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
+                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       {customerWithCapitalizedNames(customer.lastName)}
                     </td>
-                    <td className='whitespace-nowrap px-0 py-0 text-xs font-sm'>
+                    <td className='whitespace-nowrap px-0 py-0 text-sm'>
                       {customer.status === 'will call' ? (
-                        <div className='px-0 py-1 text-center font-normal md:text-sm bg-green-100 text-green-500 rounded-full'>
+                        <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                           will call
                         </div>
                       ) : customer.status === 'templated' ? (
@@ -93,7 +97,7 @@ const TableComponentPage = ({ customers }) => {
                       ) : null}
                     </td>
 
-                    <td className='whitespace-nowrap px-4 py-2 pl-8 text-xs font-sm text-gray-700'>
+                    <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
                       <div className='grid grid-rows-2'>
                         <p>{customer.address.street}</p>
                         <p>
@@ -102,7 +106,7 @@ const TableComponentPage = ({ customers }) => {
                         </p>
                       </div>
                     </td>
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
+                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <div className='grid grid-rows-2'>
                         <p>{customer.email}</p>
                         <p>{formatPhoneNumber(customer.phone)}</p>
@@ -112,14 +116,14 @@ const TableComponentPage = ({ customers }) => {
                     {/* <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
                       {customer.email}
                     </td> */}
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
+                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       {customer.storeName} {customer.storeId}
                     </td>
 
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm'>
+                    <td className='whitespace-nowrap px-4 py-2 text-sm'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}
-                        className='inline-block rounded-full p-1 text-xs text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
+                        className='inline-block rounded-full p-1 text-sm text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
                       >
                         <span className='text-xs font-sm'>
                           <svg
@@ -140,7 +144,7 @@ const TableComponentPage = ({ customers }) => {
                         </span>
                       </Link>
                     </td>
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm'>
+                    <td className='whitespace-nowrap px-4 py-2 text-sm'>
                       <div className='flex gap-3'>
                         <Link
                           href={`/dashboard/customers/${customer._id}/edit`}

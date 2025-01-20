@@ -1,4 +1,4 @@
-import NewCustomerForm from '@/components/CustomerForm'
+import CustomerForm from '@/components/CustomerForm'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 
@@ -8,7 +8,7 @@ const AddCustomerPage = () => {
       <SideNavbar />
       <Header />
       <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
-        <NewCustomerForm />
+        <CustomerForm />
       </main>
     </section>
   )

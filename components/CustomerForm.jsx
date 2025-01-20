@@ -1,7 +1,7 @@
 import addCustomer from '@/app/actions/addCustomer'
 import Link from 'next/link'
 
-const NewCustomerForm = () => {
+const CustomerForm = () => {
   return (
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
@@ -220,16 +220,16 @@ const NewCustomerForm = () => {
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  <div className='lg:col-span-2 content-end pb-2'>
-                    <span className=''>
-                      <button
-                        className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
-                        type='submit'
-                      >
-                        Submit
-                      </button>
-                    </span>
-                  </div>
+                </div>
+                <div className='p-4'>
+                  <span className=''>
+                    <button
+                      className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+                      type='submit'
+                    >
+                      Submit
+                    </button>
+                  </span>
                 </div>
               </div>
 
@@ -247,4 +247,4 @@ const NewCustomerForm = () => {
     </section>
   )
 }
-export default NewCustomerForm
+export default CustomerForm

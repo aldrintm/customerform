@@ -21,7 +21,7 @@ import {
 const SideNavbar = () => {
   return (
     <>
-      <section>
+      <section className='print:hidden'>
         {/* Desktop Navbar */}
         <aside className='fixed inset-y-0 py-2 left-0 z-10 w-14 hidden flex-col border-r sm:flex'>
           <nav className='flex flex-col items-center gap-6 px-2 sm:py-5 sm:pt-14'>

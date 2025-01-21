@@ -82,9 +82,9 @@ const TableComponentPage = ({ customers }) => {
                         <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                           will call
                         </div>
-                      ) : customer.status === 'templated' ? (
+                      ) : customer.status === 'for template' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
-                          templated
+                          for template
                         </div>
                       ) : customer.status === 'pending' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
@@ -93,6 +93,14 @@ const TableComponentPage = ({ customers }) => {
                       ) : customer.status === 'for install' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                           for install
+                        </div>
+                      ) : customer.status === 'service' ? (
+                        <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
+                          service
+                        </div>
+                      ) : customer.status === 'completed' ? (
+                        <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
+                          completed
                         </div>
                       ) : null}
                     </td>

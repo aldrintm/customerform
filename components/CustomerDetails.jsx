@@ -54,7 +54,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
           {/* Customer Quick Top Contact Details*/}
           <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
             <div className='grid grid-cols gap-2 align-middle'>
-              <div className='text-sm md:text-2xl font-semibold text-blue-500 underline'>
+              <div className='text-md md:text-2xl font-semibold text-blue-500 underline'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
                 {customerWithCapitalizedNames(customer.lastName)}
               </div>
@@ -117,10 +117,10 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               </div>
             </div>
             <div className='grid grid-cols gap-2 text-right'>
-              <div className='text-md md:text-xl font-semibold text-gray-500'>
+              <div className='text-sm md:text-md font-semibold text-gray-500'>
                 Template: Jan 3, 2025
               </div>
-              <div className='text-md md:text-xl font-semibold text-gray-500'>
+              <div className='text-sm md:text-md font-semibold text-gray-500'>
                 <span className='items-center align-middle'>
                   Install: Jan 25, 2025
                 </span>
@@ -130,8 +130,8 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
         </div>
         {/* Break */}
         {/* Customer Profile Details */}
-        <div className='flex flex-col-reverse pt-2 sm:px-4 md:p-0 md:grid md:grid-cols-2 gap-0 md:gap-8 mx-4 md:mx-0'>
-          <div className='grid grid-flow-row gap-4 md:gap-8'>
+        <div className='flex flex-col pt-2 sm:px-4 md:p-0 md:grid md:grid-row gap-0 md:gap-8 mx-4 md:mx-0'>
+          <div className='grid lg:grid-flow-col gap-4 md:gap-8'>
             <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
@@ -232,7 +232,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
             </div>
 
             {/* 2nd Purchase Order Details */}
-            <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4'>
+            <div className='hidden md:grid md:grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:hidden'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
@@ -342,22 +342,135 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               </div>
             </div>
           </div>
-          {/* Mapbox to be done later */}
-          <div className='hidden md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative'>
-            <div className=''>
-              <Image
-                src={Map}
-                alt='map'
-                priority={true}
-                className='object-cover w-full h-full grayscale'
-              />
-              {/* <p className='text-sm my-auto mx-auto'>
+          {/* 2nd Row - Project + Mapbox */}
+          <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
+            {/* Project Order Details Box */}
+            <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4'>
+              <div className='pb-4 sm:p-4'>
+                <div className='px-4 sm:px-0 flex justify-between'>
+                  <h3 className='text-base font-semibold text-gray-700'>
+                    Project Order Details
+                  </h3>
+                  <div className='flex gap-4'>
+                    <Button>
+                      <Link
+                        href={`/dashboard/customers/${customer._id}/project`}
+                      >
+                        Edit
+                      </Link>
+                    </Button>
+
+                    <Button onClick={() => handleDelete(customer._id)}>
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+                <div className='mt-4 border-t border-gray-100'>
+                  <dl className=''>
+                    <div className='px-4 py-1 mt-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        PO Number:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 flex justify-between'>
+                        <span>47628374 87346782 26374090</span>
+                        <span>Dec 2, 2024</span>
+                        <span>$14,529</span>
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Description:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
+                        Kitchen Countertops w/ Island and Waterfall
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Material:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 md:flex md:justify-between'>
+                        <span className='pr-2'>2cm Brittanica Warm Gold</span>
+                        <span className='pr-2 underline'>Cambria</span>
+                        {/* <span className='pr-2 underline'>Quartz</span>
+                        <span className='pr-2 underline'>Polished</span> */}
+                        <span className='inline-flex items-center rounded-md sm:mr-2 bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
+                          {/* <span className='inline-block w-2.5 h-2.5 mr-2 bg-red-500 rounded-full'></span> */}
+                          Quartz
+                        </span>
+                        <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                          Polished
+                        </span>
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Edge:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        1 1/2" Laminated Eased Edge
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Sink:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        2 Undermount Sinks - Sink @ House
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Stove:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        1 Slide-in Range
+                      </dd>
+                    </div>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Splash:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        6" Splash and 36" x 33" behind stove
+                      </dd>
+                    </div>
+
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                      <dt className='text-sm font-medium text-gray-900 pr-2'>
+                        Order Notes:
+                      </dt>
+                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                        Bring a small truck
+                      </dd>
+                    </div>
+                    {/* Order Summary - Just a Divider */}
+                    {/* <span className='flex items-center py-6'>
+                    <span className='h-px flex-1 bg-gray-300'></span>
+                    <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
+                    <span className='h-px flex-1 bg-gray-300'></span>
+                  </span> */}
+                  </dl>
+                </div>
+              </div>
+            </div>
+            {/* Mapbox Div */}
+            <div className='hidden md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative'>
+              <div className=''>
+                <Image
+                  src={Map}
+                  alt='map'
+                  priority={true}
+                  className='object-cover w-full h-full grayscale'
+                />
+                {/* <p className='text-sm my-auto mx-auto'>
               Let's place a quick snapshot here of the site
             </p> */}
+              </div>
+              <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl text-gray-500 font-extrabold'>
+                add map later
+              </p>
             </div>
-            <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl text-gray-500 font-extrabold'>
-              add map later
-            </p>
           </div>
         </div>
         {/* ... */}

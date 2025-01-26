@@ -129,9 +129,10 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
           </div>
         </div>
         {/* Break */}
-        {/* Customer Profile Details */}
+        {/* Main Box */}
         <div className='flex flex-col pt-2 sm:px-4 md:p-0 md:grid md:grid-row gap-0 md:gap-8 mx-4 md:mx-0'>
-          <div className='grid lg:grid-flow-col gap-4 md:gap-8'>
+          <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
+            {/* Customer Profile Details */}
             <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>

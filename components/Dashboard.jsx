@@ -1,8 +1,14 @@
 import TotalCustomer from './TotalCustomer'
 import DateAndTime from './DateAndTime'
 import TableComponentPage from './TableComponent'
+import DashboardTable from './DashboardTable'
+import { format } from 'date-fns'
+import { Calendar, Users } from 'lucide-react'
+import WeatherNow from './WeatherNow'
 
 const Dashboard = ({ customers }) => {
+  const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
+
   return (
     <>
       <div className='container mx-auto grid grid-flow-row'>
@@ -12,13 +18,21 @@ const Dashboard = ({ customers }) => {
           </div>
         </div>
 
-        <div className='hidden md:grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-4'>
-          <DateAndTime />
-          <div className='bg-white grid grid-cols-1 h-20 border border-gray-300 rounded-lg p-4 m-2'>
-            <p className='text-sm my-auto mx-auto'>Put Current Weather Here</p>
+        <div className='hidden sm:grid grid-cols-1 gap-4 sm:grid-cols-3 lg:gap-6 mx-2'>
+          {/* <DateAndTime /> OLD TIME AND DATE*/}
+          <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg shadow-sm'>
+            <Calendar className='w-6 h-6 text-blue-500' />
+            <span className='text-lg font-semibold text-gray-700'>
+              {currentDate}
+            </span>
           </div>
-
-          <TotalCustomer customers={customers} />
+          <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
+            <WeatherNow />
+          </div>
+          <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
+            <Users className='w-6 h-6 text-blue-500' />
+            <TotalCustomer customers={customers} />
+          </div>
         </div>
         <div className='hidden md:grid grid-cols-1 gap-4 lg:gap-4 py-4'>
           <div className='bg-white border border-gray-300 rounded-lg p-4 m-2'>
@@ -30,11 +44,13 @@ const Dashboard = ({ customers }) => {
             </p>
           </div>
         </div>
-        <div className='grid grid-cols-1 xl:grid-cols-12 gap-6'>
-          <div className='container px-2 col-span-9'>
-            <TableComponentPage customers={customers} />
+        <div className='grid grid-cols-1 xl:grid-cols-12 lg:gap-4'>
+          <div className='container px-2 col-span-8'>
+            <DashboardTable customers={customers} />
           </div>
-          <div className='hidden xl:block container px-2 col-span-3'></div>
+          <div className='hidden md:block container px-2 col-span-4 overflow-x-hidden'>
+            <DashboardTable customers={customers} />
+          </div>
         </div>
       </div>
     </>

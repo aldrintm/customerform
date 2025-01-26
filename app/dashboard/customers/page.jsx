@@ -11,7 +11,7 @@ const newCustomerForm = async () => {
 
   const customerDocs = await Customer.find({})
     .sort({ createdAt: -1 })
-    .limit(10)
+    .limit(20)
     .lean()
 
   const customers = customerDocs.map(convertToSerializeableObject)

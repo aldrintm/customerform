@@ -3,7 +3,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Map from '@/assets/images/mapbox.webp'
 import { useState } from 'react'
-import { Paperclip, PhoneIncoming, Store, ShieldAlert } from 'lucide-react'
+import {
+  Paperclip,
+  PhoneIncoming,
+  Store,
+  ShieldAlert,
+  Plus,
+} from 'lucide-react'
 import Button from './Button'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
@@ -132,7 +138,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
         {/* Main Box */}
         <div className='flex flex-col pt-2 sm:px-4 md:p-0 md:grid md:grid-row gap-0 md:gap-8 mx-4 md:mx-0'>
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
-            {/* Customer Profile Details */}
+            {/* 1st - Customer Profile Details */}
             <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
@@ -232,118 +238,79 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               </div>
             </div>
 
-            {/* 2nd Purchase Order Details */}
+            {/* 2nd - Purchase Order Details */}
             <div className='hidden md:grid md:grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:hidden'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
-                    Project Order Details
+                    Internal Office Staff Notes
                   </h3>
                   <div className='flex gap-4'>
-                    <Button>
-                      <Link
-                        href={`/dashboard/customers/${customer._id}/project`}
-                      >
-                        Edit
+                    <Button
+                      icon={
+                        <Plus className='h-4 w-4 text-xs hover:text-white' />
+                      }
+                    >
+                      <Link href={`/dashboard/customers/${customer._id}/notes`}>
+                        Add
                       </Link>
                     </Button>
 
-                    <Button onClick={() => handleDelete(customer._id)}>
+                    {/* <Button onClick={() => handleDelete(customer._id)}>
                       Delete
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
                 <div className='mt-4 border-t border-gray-100'>
-                  <dl className=''>
-                    <div className='px-4 py-1 mt-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        PO Number:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 flex justify-between'>
-                        <span>47628374 87346782 26374090</span>
-                        <span>Dec 2, 2024</span>
-                        <span>$14,529</span>
-                      </dd>
+                  <dl className=' mt-2'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'>
+                      <div className='flex'>
+                        <dt className='text-sm font-medium text-gray-900 pr-5'>
+                          Date: Jan 13, 2025
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          By: Dana
+                        </dd>
+                      </div>
+                      <div className='flex sm:border-b sm:pb-3'>
+                        <dt className='text-sm font-medium text-gray-900 pr-5'>
+                          Notes: The customer does not currently have a sink
+                          installed in their space but is still want to get an
+                          install date. Please be aware that this customer is
+                          NOT the best sandwich in the bag. Contractor doesn't
+                          answer calls.
+                        </dt>
+                      </div>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Description:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
-                        Kitchen Countertops w/ Island and Waterfall
-                      </dd>
+                    {/* Break */}
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'>
+                      <div className='flex'>
+                        <dt className='text-sm font-medium text-gray-900 pr-5'>
+                          Date: Jan 13, 2025
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          By: Dana
+                        </dd>
+                      </div>
+                      <div className='flex sm:border-b sm:pb-3'>
+                        <dt className='text-sm font-medium text-gray-900 pr-5'>
+                          Notes: Customer will bring the sink to the office next
+                          week. I scheduled this for 01-31 for install.
+                        </dt>
+                      </div>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Material:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 md:flex md:justify-between'>
-                        <span className='pr-2'>2cm Brittanica Warm Gold</span>
-                        <span className='pr-2 underline'>Cambria</span>
-                        {/* <span className='pr-2 underline'>Quartz</span>
-                        <span className='pr-2 underline'>Polished</span> */}
-                        <span className='inline-flex items-center rounded-md sm:mr-2 bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
-                          {/* <span className='inline-block w-2.5 h-2.5 mr-2 bg-red-500 rounded-full'></span> */}
-                          Quartz
-                        </span>
-                        <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                          Polished
-                        </span>
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Edge:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        1 1/2" Laminated Eased Edge
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Sink:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        2 Undermount Sinks - Sink @ House
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Stove:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        1 Slide-in Range
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Splash:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        6" Splash and 36" x 33" behind stove
-                      </dd>
-                    </div>
-
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Order Notes:
-                      </dt>
-                      <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                        Bring a small truck
-                      </dd>
-                    </div>
-                    {/* Order Summary - Just a Divider */}
-                    {/* <span className='flex items-center py-6'>
-                    <span className='h-px flex-1 bg-gray-300'></span>
-                    <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
-                    <span className='h-px flex-1 bg-gray-300'></span>
-                  </span> */}
+                    {/* Divider */}
+                    {/* <span className='flex items-center py-2'>
+                      <span className='h-px flex-1 bg-gray-300'></span>
+                      <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
+                      <span className='h-px flex-1 bg-gray-300'></span>
+                    </span> */}
                   </dl>
                 </div>
               </div>
             </div>
           </div>
-          {/* 2nd Row - Project + Mapbox */}
+          {/* 2nd Main Box - Project + Mapbox */}
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* Project Order Details Box */}
             <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4'>

@@ -11,7 +11,7 @@ const NotFoundpage = () => {
     Graphic from https://www.opendoodles.com/
 */}
 
-      <div className='grid h-screen place-content-center bg-white px-4'>
+      <div className='grid h-screen place-content-center bg-white'>
         <Image src={Skater} alt='Page Not Found' className='rounded-3xl' />
         <div className='text-center'>
           <h1 className='mt-6 text-2xl font-semibold tracking-tight text-gray-500 sm:text-4xl'>

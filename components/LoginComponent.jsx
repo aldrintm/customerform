@@ -20,11 +20,11 @@ const LoginComponent = () => {
   }, [])
 
   return (
-    <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
+    <div className='mx-auto max-w-screen-md px-4 py-20 md:py-36'>
       <div className='mx-auto max-w-lg text-center'>
-        <h1 className='text-2xl font-bold sm:text-3xl'>Goodmorning!</h1>
+        <h1 className='text-2xl font-bold sm:text-4xl'>Goodmorning!</h1>
 
-        <p className='mt-4 text-gray-500'>Ready to login?</p>
+        <p className='mt-2 text-gray-700'>Ready to login?</p>
       </div>
 
       <form action='#' className='mx-auto mb-0 mt-8 max-w-md space-y-4'>
@@ -97,15 +97,15 @@ const LoginComponent = () => {
         </div>
 
         {/* Google Button */}
-        <div className='flex items-center justify-center'>
-          <div className='hidden md:block'>
+        <div className='flex items-center justify-center bg-white dark:bg-gray-900 border border-gray-300 rounded-md shadow-md px-8 py-3 text-base font-medium text-gray-800 dark:text-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'>
+          <div className=''>
             <div className='flex items-center'>
               {providers &&
                 Object.values(providers).map((provider, index) => (
                   <button
                     key={index}
                     onClick={() => signIn(provider._id)}
-                    className='flex items-center bg-white dark:bg-gray-900 border border-gray-300 rounded-md shadow-md px-6 py-3 text-base font-medium text-gray-800 dark:text-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500'
+                    className='flex items-center '
                   >
                     {/* <FaGoogle className='text-blue-500 mr-2' /> */}
                     <svg

@@ -33,14 +33,24 @@ const DateAndWeather = () => {
 
         // Map OpenWeather condition to Skycons types
         const skyconMap = {
-          Clear: 'CLEAR_DAY',
+          '01d': 'CLEAR_DAY',
+          '01n': 'CLEAR_NIGHT',
+          '02d': 'PARTLY_CLOUDY_DAY',
+          '02n': 'PARTLY_CLOUDY_NIGHT',
+          '03d': 'CLOUDY',
+          '03n': 'CLOUDY',
           '04d': 'PARTLY_CLOUDY_DAY',
-          '02d': 'RAIN',
-          Drizzle: 'SHOWERS_DAY',
-          Thunderstorm: 'THUNDER_RAIN',
-          Snow: 'SNOW',
-          Mist: 'FOG',
-          Haze: 'FOG',
+          '04n': 'PARTLY_CLOUDY_NIGHT',
+          '10d': 'RAIN',
+          '10n': 'SLEET',
+          '09d': 'SHOWERS_DAY',
+          '09n': 'SHOWERS_NIGHT',
+          '11d': 'THUNDER_SHOWERS_DAY',
+          '11n': 'THUNDER_RAIN',
+          '13d': 'SNOW',
+          '13n': 'SNOW',
+          '50d': 'FOG',
+          '50n': 'FOG',
           Smoke: 'FOG',
           Dust: 'FOG',
           Fog: 'FOG',
@@ -82,8 +92,8 @@ const DateAndWeather = () => {
       <div className='flex items-center gap-2 p-4 bg-white'>
         <Skycons
           type={weather.icon} // Pass the Skycons type
-          color='gold'
-          size={48} // Adjust size as needed
+          color='#0096FF'
+          size={36} // Adjust size as needed
           animate={true}
         />
 

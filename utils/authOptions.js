@@ -14,7 +14,7 @@ export const authOptions = {
           prompt: 'consent',
           access_type: 'offline',
           response_type: 'code',
-          redirect_uri: process.env.NEXTAUTH_URL + '/api/auth/callback/google',
+          // redirect_uri: process.env.NEXTAUTH_URL + '/api/auth/callback/google',
         },
       },
     }),
@@ -29,7 +29,7 @@ export const authOptions = {
       const userExists = await User.findOne({ email: profile.email })
       // 3. if not, add the user in the db manually through the dashboard by the admin user only
       if (!userExists) {
-        redirect('/login')
+        redirect('/')
         // if we need to create below - Truncate username if  too long
         // const username = profile.name.slice(0, 20)
         // await User.create({

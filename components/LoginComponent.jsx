@@ -19,6 +19,9 @@ const LoginComponent = () => {
     setAuthProviders()
   }, [])
 
+  console.log('now')
+  console.log(providers)
+
   return (
     <div className='mx-auto max-w-screen-md px-4 py-20 md:py-36'>
       <div className='mx-auto max-w-lg text-center'>

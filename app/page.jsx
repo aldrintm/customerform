@@ -11,9 +11,9 @@ import Button from '@/components/Button'
 const HomePage = () => {
   const { data: session, status } = useSession()
 
-  const handleLogin = () => {
-    signIn('google', { callbackUrl: '/' })
-  }
+  // const handleLogin = () => {
+  //   signIn('google', { callbackUrl: '/' })
+  // }
 
   if (status === 'loading') {
     return (
@@ -25,8 +25,7 @@ const HomePage = () => {
   }
 
   if (!session) {
-    // return <LoginComponent /> // Call LoginComponent
-    return <Button onClick={() => handleLogin()}> Google </Button>
+    return <LoginComponent /> // Call LoginComponent
   }
 
   return redirect('/dashboard')

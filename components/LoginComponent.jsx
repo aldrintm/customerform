@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import Greeting from './Greeting'
 
 const LoginComponent = () => {
   // initialize session
@@ -25,7 +26,9 @@ const LoginComponent = () => {
   return (
     <div className='mx-auto max-w-screen-md px-4 py-20 md:py-36'>
       <div className='mx-auto max-w-lg text-center'>
-        <h1 className='text-2xl font-bold sm:text-4xl'>Goodmorning!</h1>
+        <div className='text-2xl font-bold sm:text-4xl'>
+          <Greeting />
+        </div>
 
         <p className='mt-2 text-gray-700'>Ready to login?</p>
       </div>

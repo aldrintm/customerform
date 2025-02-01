@@ -1,6 +1,6 @@
 'use server'
 import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
+import Customer from '@/models/OldCustomer'
 import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'

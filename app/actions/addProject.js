@@ -1,6 +1,6 @@
 'use server'
 import connectDB from '@/config/db'
-import Project from '@/models/Project'
+import Project from '@/models/OldProject'
 import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'

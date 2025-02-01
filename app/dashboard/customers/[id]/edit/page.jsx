@@ -3,7 +3,7 @@ import SideNavbar from '@/components/SideNavbar'
 
 import CustomerEditForm from '@/components/CustomerEditForm'
 import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
+import Customer from '@/models/OldCustomer'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
 const CustomerEditPage = async ({ params }) => {

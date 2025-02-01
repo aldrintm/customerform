@@ -2,31 +2,23 @@ import { Schema, model, models } from 'mongoose'
 
 const ProjectSchema = new Schema(
   {
-    customerType: {
-      type: String,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
-    storeId: {
-      type: Number,
+    customer: {
+      type: Schema.Types.ObjectId,
+      ref: 'Customer',
     },
-    status: {
-      type: String,
-    },
-    purchaseOrders: [
+    schedule: [
       {
-        purchaseOrderNumber: {
-          type: String,
-        },
-        purchaseOrderDate: {
-          type: Date,
-        },
-        squareFeet: {
-          type: Number,
-        },
-        purchaseOrderAmount: {
-          type: Number,
-        },
+        type: Schema.Types.ObjectId,
+        ref: 'Schedule',
       },
     ],
+    area: {
+      type: String,
+    },
     description: {
       type: String,
     },

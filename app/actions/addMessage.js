@@ -1,6 +1,6 @@
 'use server'
 import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
+import Customer from '@/models/OldCustomer'
 import Message from '@/models/Message'
 import { getSessionUser } from '@/utils/getSession'
 

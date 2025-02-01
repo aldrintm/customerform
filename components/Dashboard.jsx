@@ -18,7 +18,7 @@ const Dashboard = ({ customers }) => {
           </div>
         </div>
 
-        <div className='hidden sm:grid grid-cols-1 gap-4 sm:grid-cols-3 lg:gap-6 mx-2'>
+        <div className='hidden sm:grid grid-cols-1 gap-4 sm:grid-cols-5 lg:gap-6 mx-2'>
           {/* <DateAndTime /> OLD TIME AND DATE*/}
           <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg shadow-sm'>
             <Calendar className='w-6 h-6 text-blue-500' />

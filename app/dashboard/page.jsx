@@ -1,5 +1,5 @@
 import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
+import Customer from '@/models/OldCustomer'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 import Dashboard from '@/components/Dashboard'

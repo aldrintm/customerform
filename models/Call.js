@@ -2,7 +2,7 @@ import { Schema, model, models } from 'mongoose'
 
 const CallSchema = new Schema(
   {
-    user: {
+    noteBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
@@ -12,9 +12,6 @@ const CallSchema = new Schema(
     },
     callDate: {
       type: Date,
-    },
-    subject: {
-      type: String,
     },
     description: {
       type: String,

@@ -30,20 +30,44 @@ const CustomerSchema = new Schema(
     contractorPhone: {
       type: Number,
     },
-    // Reference to projects
-    projects: [
+    purchaseOrderNumber: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Project',
+        type: String,
       },
     ],
-    // Reference to calls
-    notes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Note',
-      },
-    ],
+    storeName: {
+      type: String,
+    },
+    storeId: {
+      type: Number,
+    },
+    purchaseOrderDate: {
+      type: Date,
+    },
+    purchaseOrderAmount: {
+      type: Number,
+    },
+    squareFeet: {
+      type: Number,
+    },
+    materialType: {
+      type: String,
+    },
+    materialThickness: {
+      type: String,
+    },
+    materialBrand: {
+      type: String,
+    },
+    materialColor: {
+      type: String,
+    },
+    orderNotes: {
+      type: String,
+    },
+    status: {
+      type: String,
+    },
     is_flagged: {
       type: Boolean,
       default: false,
@@ -51,6 +75,10 @@ const CustomerSchema = new Schema(
     is_featured: {
       type: Boolean,
       default: false,
+    },
+    project: {
+      type: Schema.Types.ObjectId,
+      ref: 'Project',
     },
   },
   {

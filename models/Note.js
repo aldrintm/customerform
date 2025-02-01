@@ -19,10 +19,6 @@ const NoteSchema = new Schema(
     note: {
       type: String,
     },
-    read: {
-      type: Boolean,
-      default: false,
-    },
   },
   {
     timestamps: true,

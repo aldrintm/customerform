@@ -97,6 +97,7 @@ const SearchResults = async ({ searchParams: { search } }) => {
             </div>
           ) : (
             <>
+              {/* Customer Section */}
               {combinedResults.customers.length > 0 && (
                 <div className='grid grid-cols-1 gap-6'>
                   <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
@@ -238,23 +239,132 @@ const SearchResults = async ({ searchParams: { search } }) => {
               {combinedResults.projects.length > 0 && (
                 <div className='grid grid-cols-1 gap-6'>
                   <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
-                    Results from Projects Page
+                    Results from Customers Page
                   </div>
                   <table className='w-full divide-y-2 divide-gray-200 bg-white text-sm'>
                     <thead className='text-left'>
                       <tr>
                         <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
-                          Product Name
+                          Customer
                         </th>
-                        {/* Add other columns for product */}
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          Status
+                        </th>
+                        <th className='whitespace-nowrap px-4 py-3 text-center font-sm text-gray-600'>
+                          Address
+                        </th>
+
+                        <th className='whitespace-nowrap px-4 py-3 pl-8 font-sm text-gray-600'>
+                          Phone/Email
+                        </th>
+
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          Store
+                        </th>
+
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          View
+                        </th>
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          PO#'s'
+                        </th>
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          Action
+                        </th>
                       </tr>
                     </thead>
                     <tbody className='divide-y divide-gray-200'>
                       {combinedResults.projects.map((project) => (
                         <tr key={project._id}>
-                          {/* Populate product data */}
+                          {/* Populate customer data */}
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {project.purchaseOrderNumber}
+                            {customerWithCapitalizedNames(project.lastName)}{' '}
+                            {customerWithCapitalizedNames(project.firstName)}
+                          </td>
+                          <td className='whitespace-nowrap px-0 py-0 text-sm'>
+                            {customer.status === 'will call' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
+                                will call
+                              </div>
+                            ) : customer.status === 'for template' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
+                                for template
+                              </div>
+                            ) : customer.status === 'pending' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
+                                pending
+                              </div>
+                            ) : customer.status === 'for install' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
+                                for install
+                              </div>
+                            ) : customer.status === 'service' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
+                                service
+                              </div>
+                            ) : customer.status === 'completed' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
+                                completed
+                              </div>
+                            ) : null}
+                          </td>
+                          <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
+                            <div className='grid grid-rows-2'>
+                              <p>{customer.address.street}</p>
+                              <p>
+                                {customer.address.city} {customer.address.state}{' '}
+                                {customer.address.zipcode}
+                              </p>
+                            </div>
+                          </td>
+                          <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                            <div className='grid grid-rows-2'>
+                              <p>{customer.email}</p>
+                              <p>{formatPhoneNumber(customer.phone)}</p>
+                            </div>
+                          </td>
+
+                          <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                            {customer.storeName} {customer.storeId}
+                          </td>
+
+                          <td className='whitespace-nowrap px-4 py-2 text-sm'>
+                            <Link
+                              href={`/dashboard/customers/${customer._id}`}
+                              className='inline-block rounded-full p-1 text-sm text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
+                            >
+                              <span className='text-xs font-sm'>
+                                <svg
+                                  className='size-5 rtl:rotate-180'
+                                  xmlns='http://www.w3.org/2000/svg'
+                                  fill='none'
+                                  viewBox='0 0 24 24'
+                                  stroke='currentColor'
+                                >
+                                  <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    strokeWidth='1.5'
+                                    d='M17 8l4 4m0 0l-4 4m4-4H3'
+                                  />
+                                </svg>
+                                {/* <Eye className='h-4 w-4 text-xs text-blue-500 text-bold' /> */}
+                              </span>
+                            </Link>
+                          </td>
+                          <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                            <div className='grid grid-flow-row'>
+                              <p>{customer.purchaseOrderNumber}</p>
+                            </div>
+                          </td>
+                          <td className='whitespace-nowrap px-4 py-2 text-sm'>
+                            <div className='flex gap-3'>
+                              <Link
+                                href={`/dashboard/customers/${customer._id}/edit`}
+                              >
+                                <Button>Edit</Button>
+                              </Link>
+                            </div>
                           </td>
                         </tr>
                       ))}

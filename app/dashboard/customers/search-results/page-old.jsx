@@ -150,7 +150,6 @@ const SearchResults = async ({ searchParams: { search } }) => {
                           </div>
                         </td>
 
-                        
                         <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                           {customer.storeName} {customer.storeId}
                         </td>

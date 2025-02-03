@@ -1,22 +1,24 @@
-import addProject from '@/app/actions/addProject'
+import updateProject from '@/app/actions/updateProject'
 import Link from 'next/link'
 
-const ProjectForm = ({ customer }) => {
-  console.log(customer)
+const CustomerEditProjectForm = ({ project }) => {
+  const updateProjectById = updateProject.bind(null, project._id)
+
+  console.log(project)
+
   return (
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
         <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-          Add Project Details
+          New Customer Details - CustomerEditProjectForm
         </div>
 
         <div className='isolate px-4 sm:pb-2 lg:px-0'>
           {/* Form Starts Here */}
           <form
-            action={addProject}
+            action={updateProjectById}
             className='container mx-auto my-4 justify-center'
           >
-            <input type='hidden' name='customer' value={customer._id} />
             <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
               {/* Break */}
 
@@ -37,7 +39,7 @@ const ProjectForm = ({ customer }) => {
                       name='storeName'
                       id='storeName'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm text-gray-500 bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'DEFAULT'}
+                      defaultValue={project.storeName}
                     >
                       <option value='DEFAULT' disabled>
                         Choose ...
@@ -51,7 +53,7 @@ const ProjectForm = ({ customer }) => {
                       <option value='KandB'>Other</option>
                     </select>
                   </div>
-                  {/* Purchase Order */}
+                  {/* Store ID */}
                   <div className='col-span-4'>
                     <label
                       htmlFor='storeId'
@@ -65,6 +67,7 @@ const ProjectForm = ({ customer }) => {
                       id='storeId'
                       name='storeId'
                       placeholder='Store Id'
+                      defaultValue={project.storeId}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -82,7 +85,7 @@ const ProjectForm = ({ customer }) => {
                       name='status'
                       id='status'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm text-gray-500 bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'DEFAULT'}
+                      defaultValue={project.status}
                     >
                       <option value='DEFAULT' disabled>
                         Choose ...
@@ -102,7 +105,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Purchase Order */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderNumber1'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Purchase Order No:
@@ -110,16 +113,19 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='purchaseOrderNumber1'
-                      name='purchaseOrderNumber1'
+                      id='purchaseOrderNumber'
+                      name='purchaseOrderNumber'
                       placeholder='Purchase Order #'
+                      defaultValue={
+                        project?.purchaseOrders?.[0]?.purchaseOrderNumber || ''
+                      }
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
                   {/* Purchase Order Date */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderDate1'
+                      htmlFor='purchaseOrderDate'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Date paid:
@@ -127,8 +133,8 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='date'
-                      id='purchaseOrderDate1'
-                      name='purchaseOrderDate1'
+                      id='purchaseOrderDate'
+                      name='purchaseOrderDate'
                       placeholder='Purchase order date'
                       className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -136,7 +142,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Square Feet */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='squareFeet1'
+                      htmlFor='squareFeet'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Paid sq ft.
@@ -144,8 +150,8 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='number'
-                      id='squareFeet1'
-                      name='squareFeet1'
+                      id='squareFeet'
+                      name='squareFeet'
                       placeholder='How many sqft?'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -153,7 +159,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Purchase Order Amount */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderAmount1'
+                      htmlFor='purchaseOrderAmount'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Purchase amount
@@ -161,8 +167,8 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='number'
-                      name='purchaseOrderAmount1'
-                      id='purchaseOrderAmount1'
+                      name='purchaseOrderAmount'
+                      id='purchaseOrderAmount'
                       placeholder='PO cost ...'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
@@ -435,7 +441,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Edge Input */}
                   <div className='col-span-4'>
                     <label
-                      htmlFor='edge'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Edges:
@@ -452,15 +458,15 @@ const ProjectForm = ({ customer }) => {
                   {/* Sink */}
                   <div className='col-span-2'>
                     <label
-                      htmlFor='sinkType'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Sink Type:
                     </label>
 
                     <select
-                      name='sinkType'
-                      id='sinkType'
+                      name='materialFinish'
+                      id='materialFinish'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={'default'}
                     >
@@ -476,15 +482,15 @@ const ProjectForm = ({ customer }) => {
                   </div>
                   <div className='col-span-1'>
                     <label
-                      htmlFor='sinkQuantity'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Qty:
                     </label>
 
                     <select
-                      name='sinkQuantity'
-                      id='sinkQuantity'
+                      name='materialFinish'
+                      id='materialFinish'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={'default'}
                     >
@@ -505,15 +511,15 @@ const ProjectForm = ({ customer }) => {
                   </div>
                   <div className='col-span-2'>
                     <label
-                      htmlFor='sinkLocation'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Location:
                     </label>
 
                     <select
-                      name='sinkLocation'
-                      id='sinkLocation'
+                      name='materialFinish'
+                      id='materialFinish'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={'default'}
                     >
@@ -527,7 +533,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Sink Info */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='sinkInfo'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Sink Info/Model:
@@ -535,9 +541,9 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='sinkInfo'
-                      name='sinkInfo'
-                      placeholder='Sink Info'
+                      id='edge'
+                      name='edge'
+                      placeholder='Edge'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -548,7 +554,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Splash Info */}
                   <div className='col-span-6'>
                     <label
-                      htmlFor='splash'
+                      htmlFor='materialColor'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Splash Info:
@@ -556,8 +562,8 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='splash'
-                      name='splash'
+                      id='materialColor'
+                      name='materialColor'
                       placeholder='Enter all splashes info here'
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -567,13 +573,13 @@ const ProjectForm = ({ customer }) => {
                     {/* Slide-in Range Checkbox */}
                     <div className='flex items-center mr-4'>
                       <label
-                        htmlFor='stove'
+                        htmlFor='edge'
                         className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
                       >
                         <input
                           type='checkbox'
-                          id='stove'
-                          name='stove'
+                          id='edge'
+                          name='edge'
                           className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
                         />
                         <span className='ml-2 items-center'>
@@ -605,7 +611,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Text Area for Special Notes with Customer */}
                   <div className=''>
                     <label
-                      htmlFor='notes'
+                      htmlFor='orderNotes'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       {' '}
@@ -613,8 +619,8 @@ const ProjectForm = ({ customer }) => {
                     </label>
 
                     <textarea
-                      id='notes'
-                      name='notes'
+                      id='orderNotes'
+                      name='orderNotes'
                       rows='3'
                       className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter any additional order notes...'
@@ -644,4 +650,4 @@ const ProjectForm = ({ customer }) => {
     </section>
   )
 }
-export default ProjectForm
+export default CustomerEditProjectForm

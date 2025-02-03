@@ -15,7 +15,7 @@ const Breadcrumb = () => {
 
   const pathSegments = pathWithoutQuery.split('/').filter((segment) => segment) // Split path into segments
 
-  console.log(pathSegments)
+  // console.log(pathSegments)
 
   return (
     <nav aria-label='Breadcrumb' className='hidden md:flex'>
@@ -28,7 +28,9 @@ const Breadcrumb = () => {
 
         {pathSegments.map((segment, index) => {
           const fullPath = '/' + pathSegments.slice(0, index + 1).join('/')
-          console.log(fullPath)
+          {
+            /* console.log(fullPath) */
+          }
           return (
             <li key={index} className='ml-2 inline-flex space-x-2'>
               <span className='text-xs text-gray-600 font-normal'>/</span>

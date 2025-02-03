@@ -1,6 +1,6 @@
-import CustomerForm from '@/components/CustomerForm'
-import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
+import SideNavbar from '@/components/SideNavbar'
+import CustomerForm from '@/components/CustomerForm'
 
 const AddCustomerPage = () => {
   return (

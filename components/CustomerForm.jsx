@@ -24,7 +24,7 @@ const CustomerForm = () => {
                   {/* First Name */}
                   <div>
                     <label
-                      htmlFor='First Name'
+                      htmlFor='firstName'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       First Name
@@ -43,7 +43,7 @@ const CustomerForm = () => {
                   {/* Last Name */}
                   <div>
                     <label
-                      htmlFor='Last Name'
+                      htmlFor='lastName'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Last Name
@@ -65,7 +65,7 @@ const CustomerForm = () => {
                   {/* Phone */}
                   <div>
                     <label
-                      htmlFor='Phone'
+                      htmlFor='phone'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Phone
@@ -84,7 +84,7 @@ const CustomerForm = () => {
                   {/* Email */}
                   <div>
                     <label
-                      htmlFor='Email'
+                      htmlFor='email'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Email
@@ -106,7 +106,7 @@ const CustomerForm = () => {
                   {/* Street Address */}
                   <div>
                     <label
-                      htmlFor='Street Address'
+                      htmlFor='street'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Street Address
@@ -128,7 +128,7 @@ const CustomerForm = () => {
                   {/* City */}
                   <div className='md:col-span-5'>
                     <label
-                      htmlFor='City'
+                      htmlFor='city'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       City
@@ -147,7 +147,7 @@ const CustomerForm = () => {
                   {/* State */}
                   <div className='md:col-span-1'>
                     <label
-                      htmlFor='State'
+                      htmlFor='state'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       State
@@ -166,14 +166,14 @@ const CustomerForm = () => {
                   {/* Zipcode */}
                   <div className='md:col-span-2'>
                     <label
-                      htmlFor='Zipcode'
+                      htmlFor='zipcode'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Zipcode
                     </label>
 
                     <input
-                      type='number'
+                      type='text'
                       id='zipcode'
                       name='zipcode'
                       required
@@ -188,7 +188,7 @@ const CustomerForm = () => {
                   {/* Contractor Name */}
                   <div>
                     <label
-                      htmlFor='Contractor Name'
+                      htmlFor='contractorName'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Contractor Name
@@ -232,15 +232,7 @@ const CustomerForm = () => {
                   </span>
                 </div>
               </div>
-
-              {/* Break */}
-              {/* Break */}
-              {/* Break */}
             </div>
-
-            {/* Break */}
-            {/* Break */}
-            {/* Break */}
           </form>
         </div>
       </div>

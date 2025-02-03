@@ -1,6 +1,6 @@
 'use server'
 import connectDB from '@/config/db'
-import Customer from '@/models/Customer'
+import Customer from '@/models/OldCustomer'
 import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -41,6 +41,15 @@ async function updateCustomer(customerId, formData) {
     },
     contractorName: formData.get('contractorName'),
     contractorPhone: formData.get('contractorPhone'),
+    purchaseOrderNumber: formData.get('purchaseOrderNumber'),
+    storeId: formData.get('storeId'),
+    purchaseOrderDate: formData.get('purchaseOrderDate'),
+    purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+    squareFeet: formData.get('squareFeet'),
+    materialType: formData.get('materialType'),
+    materialThickness: formData.get('materialThickness'),
+    materialBrand: formData.get('materialBrand'),
+    materialColor: formData.get('materialColor'),
     orderNotes: formData.get('orderNotes'),
   }
 

@@ -20,15 +20,15 @@ import { toast } from 'react-toastify'
 const CustomerDetails = ({ customer: initialCustomers }) => {
   const [customer, setCustomers] = useState(initialCustomers)
 
-  const dateObj = new Date(customer.purchaseOrderDate)
+  // const dateObj = new Date(customer.purchaseOrderDate)
 
   // Extract the month, date, and year
-  const month = dateObj.toLocaleString('default', { month: 'long' }) // Full month name (e.g., "January")
-  const day = dateObj.getDate() // Day of the month (e.g., 1, 2, etc.)
-  const year = dateObj.getFullYear() // Full year (e.g., 2025)
+  // const month = dateObj.toLocaleString('default', { month: 'long' }) // Full month name (e.g., "January")
+  // const day = dateObj.getDate() // Day of the month (e.g., 1, 2, etc.)
+  // const year = dateObj.getFullYear() // Full year (e.g., 2025)
 
   // Format the string as needed
-  const formattedDate = `${month} ${day}, ${year}`
+  // const formattedDate = `${month} ${day}, ${year}`
 
   const handleDelete = async (customerId) => {
     const confirmed = window.confirm(
@@ -147,7 +147,9 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                   </h3>
                   <div className='flex gap-4'>
                     <Button>
-                      <Link href={`/dashboard/customers/${customer._id}/edit`}>
+                      <Link
+                        href={`/dashboard/customers/${customer._id}/editCustomer`}
+                      >
                         Edit
                       </Link>
                     </Button>
@@ -238,7 +240,7 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
               </div>
             </div>
 
-            {/* 2nd - Purchase Order Details */}
+            {/* 2nd - Internal Office Staff Notes */}
             <div className='hidden md:grid md:grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:hidden'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
@@ -323,6 +325,13 @@ const CustomerDetails = ({ customer: initialCustomers }) => {
                     <Button>
                       <Link
                         href={`/dashboard/customers/${customer._id}/project`}
+                      >
+                        Add
+                      </Link>
+                    </Button>
+                    <Button>
+                      <Link
+                        href={`/dashboard/customers/${customer._id}/editProject`}
                       >
                         Edit
                       </Link>

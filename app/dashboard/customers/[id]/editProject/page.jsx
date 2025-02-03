@@ -1,11 +1,12 @@
 import Header from '@/components/Header'
 import SideNavbar from '@/components/SideNavbar'
-import ProjectForm from '@/components/ProjectForm'
+
+import CustomerEditProjectForm from '@/components/CustomerEditProjectForm'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
-const AddProjectPage = async ({ params }) => {
+const ProjectEditPage = async ({ params }) => {
   const { id } = await params
   await connectDB
 
@@ -28,16 +29,18 @@ const AddProjectPage = async ({ params }) => {
       </>
     )
   }
+
   return (
     <>
       <div className='flex min-h-screen w-full flex-col'>
         <Header />
         <SideNavbar />
         <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
-          <ProjectForm customer={customer} />
+          <CustomerEditProjectForm customer={customer} />
         </main>
       </div>
     </>
   )
 }
-export default AddProjectPage
+
+export default ProjectEditPage

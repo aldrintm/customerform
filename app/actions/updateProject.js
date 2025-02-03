@@ -1,12 +1,13 @@
 'use server'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import Project from '@/models/Project'
 import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 // this action is added to the form to perform tasks
-async function updateCustomer(customerId, formData) {
+async function updateProject(customerId, projectId, formData) {
   // connect to DB
   await connectDB()
 
@@ -20,34 +21,47 @@ async function updateCustomer(customerId, formData) {
   // lets get the userId then
   const { userId } = sessionUser
 
-  const existingCustomer = await Customer.findById(customerId)
+  const existingCustomer = await Project.findById(projectId)
   console.log(existingCustomer)
+
+  const project = existingCustomer
+
+  if (!project) {
+    throw new Error('Project not found')
+  }
 
   // verify ownership - we do not need this?
   // if (existingCustomer.owner.toString() !== userId) {
   //   throw new Error('Current user is not allowed to edit this customer')
   // }
 
-  const customerData = {
-    firstName: formData.get('firstName').toLowerCase(),
-    lastName: formData.get('lastName'),
-    phone: formData.get('phone'),
-    email: formData.get('email'),
-    address: {
-      street: formData.get('street'),
-      city: formData.get('city'),
-      state: formData.get('state'),
-      zipcode: formData.get('zipcode'),
+  // Extracting the form data and structuring the purchaseOrder as an array of objects
+  const purchaseOrders = [
+    {
+      purchaseOrderNumber: formData.get('purchaseOrderNumber'),
+      purchaseOrderDate: formData.get('purchaseOrderDate'),
+      squareFeet: formData.get('squareFeet'),
+      purchaseOrderAmount: formData.get('purchaseOrderAmount'),
     },
-    contractorName: formData.get('contractorName'),
-    contractorPhone: formData.get('contractorPhone'),
+  ]
+
+  const projectData = {
+    purchaseOrders,
+    storeId: formData.get('storeId'),
+    purchaseOrderDate: formData.get('purchaseOrderDate'),
+    purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+    squareFeet: formData.get('squareFeet'),
+    materialType: formData.get('materialType'),
+    materialThickness: formData.get('materialThickness'),
+    materialBrand: formData.get('materialBrand'),
+    materialColor: formData.get('materialColor'),
     orderNotes: formData.get('orderNotes'),
   }
 
   // lets allocate the data above to the customerId in this profile and update it.
-  const updatedCustomer = await Customer.findByIdAndUpdate(
-    customerId,
-    customerData
+  const updatedCustomer = await Project.findByIdAndUpdate(
+    projectId,
+    projectData
   )
 
   console.log(updatedCustomer)
@@ -62,4 +76,4 @@ async function updateCustomer(customerId, formData) {
   redirect(`/dashboard/customers/${updatedCustomer._id}`)
 }
 
-export default updateCustomer
+export default updateProject

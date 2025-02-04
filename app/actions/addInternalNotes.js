@@ -1,6 +1,8 @@
 'use server'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import Note from '@/models/Note'
+import User from '@/models/User'
 import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -21,17 +23,17 @@ async function addInternalNotes(formData) {
   const { userId } = sessionUser
 
   const internalNotesData = {
-    firstName: formData.get('firstName')?.toLowerCase() || '',
-    lastName: formData.get('lastName')?.toLowerCase() || '',
-    phone: formData.get('phone') || '',
-    email: formData.get('email') || '',
+    staff: user,
+    customer: customerId,
+    noteDate: formData.get('noteDate') || '',
+    note: formData.get('note') || '',
   }
 
   // lets check the server to see all items uploaded to the DB
   console.log(internalNotesData)
 
   // lets plug all the date using the property model
-  const newInternalNotes = new InternalNotes(internalNotesData)
+  const newInternalNotes = new Note(internalNotesData)
   // save it in our DB
   await newInteralNotes.save()
 

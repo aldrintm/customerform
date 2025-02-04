@@ -6,16 +6,20 @@ const UserSchema = new Schema(
       type: String,
       unique: [true, 'Email already exist'],
       required: [true, 'Email is required'],
+      trim: true,
     },
     username: {
       type: String,
       required: [true, 'Username is required'],
+      trim: true,
     },
     image: {
       type: String,
+      trim: true,
     },
     department: {
       type: String,
+      trim: true,
     },
     bookmarks: [
       {

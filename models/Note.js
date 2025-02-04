@@ -2,22 +2,23 @@ import { Schema, model, models } from 'mongoose'
 
 const NoteSchema = new Schema(
   {
-    author: {
+    staff: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-
     customer: {
       type: Schema.Types.ObjectId,
       ref: 'Customer',
       required: true,
     },
-    date: {
+    noteDate: {
       type: Date,
+      trim: true,
     },
     note: {
       type: String,
+      trim: true,
     },
   },
   {

@@ -1,225 +1,78 @@
+import addInternalNotes from '@/app/actions/addInternalNotes'
+import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
-
-const CustomerForm = () => {
+const NotesForm = ({ customer }) => {
   return (
     <section className='bg-white'>
-      <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
+      <div className='container max-w-2xl mx-auto px-15 md:rounded-2xl'>
         <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-          New Customer Details
+          Add Notes for {customerWithCapitalizedNames(customer.firstName)}{' '}
+          {customerWithCapitalizedNames(customer.lastName)}
         </div>
 
         <div className='isolate px-4 sm:pb-2 lg:px-0'>
           {/* Form Starts Here */}
           <form
-            action={}
+            action={addInternalNotes}
             className='container mx-auto my-4 justify-center'
           >
             <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
               {/* Left Side of Form Column */}
 
               <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white p-4 md:border border-gray-300 md:rounded-md'>
-                {/* First Name and Last Name */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
-                  {/* First Name */}
+                {/* Customer Name */}
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 py-2 lg:gap-x-6'>
                   <div>
-                    <label
-                      htmlFor='firstName'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      First Name
-                    </label>
-
-                    <input
-                      type='text'
-                      id='firstName'
-                      name='firstName'
-                      required
-                      placeholder='First name'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-
-                  {/* Last Name */}
-                  <div>
-                    <label
-                      htmlFor='lastName'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      Last Name
-                    </label>
-
-                    <input
-                      type='text'
-                      id='lastName'
-                      name='lastName'
-                      required
-                      placeholder='Last name'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                    />
+                    <div className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'>
+                      Customer:{' '}
+                      {customerWithCapitalizedNames(customer.firstName)}{' '}
+                      {customerWithCapitalizedNames(customer.lastName)}
+                    </div>
                   </div>
                 </div>
 
-                {/* Phone and Email */}
+                {/* Note Date */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
                   {/* Phone */}
                   <div>
                     <label
-                      htmlFor='phone'
+                      htmlFor='noteDate'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Phone
+                      Date:
                     </label>
 
                     <input
-                      type='tel'
-                      id='phone'
-                      name='phone'
+                      type='date'
+                      id='noteDate'
+                      name='noteDate'
                       required
-                      placeholder='(408) xxx xxxx'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-
-                  {/* Email */}
-                  <div>
-                    <label
-                      htmlFor='email'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      Email
-                    </label>
-
-                    <input
-                      type='email'
-                      id='email'
-                      name='email'
-                      required
-                      placeholder='Email'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
                 </div>
 
-                {/* Address */}
+                {/* Note */}
                 <div className='grid grid-cols-1 gap-4 px-4 lg:gap-x-6'>
-                  {/* Street Address */}
                   <div>
                     <label
-                      htmlFor='street'
+                      htmlFor='note'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Street Address
                     </label>
 
-                    <input
+                    <textarea
                       type='text'
-                      id='street'
-                      name='street'
-                      required
-                      placeholder='Example: 33100 Transit Ave.'
+                      id='note'
+                      name='note'
+                      rows={5}
+                      placeholder='Enter Notes or Customer Calls ....'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
                 </div>
 
-                {/* City + State + Zipcode */}
-                <div className='grid grid-cols-1 gap-4 md:gap-x-4 md:grid-cols-8 px-4 lg:gap-x-6'>
-                  {/* City */}
-                  <div className='md:col-span-5'>
-                    <label
-                      htmlFor='city'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      City
-                    </label>
-
-                    <input
-                      type='text'
-                      id='city'
-                      name='city'
-                      required
-                      placeholder='City'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-
-                  {/* State */}
-                  <div className='md:col-span-1'>
-                    <label
-                      htmlFor='state'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      State
-                    </label>
-
-                    <input
-                      type='text'
-                      id='state'
-                      name='state'
-                      defaultValue='CA'
-                      readOnly
-                      className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-
-                  {/* Zipcode */}
-                  <div className='md:col-span-2'>
-                    <label
-                      htmlFor='zipcode'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      Zipcode
-                    </label>
-
-                    <input
-                      type='text'
-                      id='zipcode'
-                      name='zipcode'
-                      required
-                      placeholder='Zipcode'
-                      className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-                </div>
-
-                {/* Contractor Info */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-4 lg:gap-x-6'>
-                  {/* Contractor Name */}
-                  <div>
-                    <label
-                      htmlFor='contractorName'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      Contractor Name
-                    </label>
-
-                    <input
-                      type='text'
-                      id='contractorName'
-                      name='contractorName'
-                      placeholder='Name of contractor or on-site contact'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-
-                  {/* Contractor Phone */}
-                  <div>
-                    <label
-                      htmlFor='contractorPhone'
-                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                    >
-                      Contractor Phone
-                    </label>
-
-                    <input
-                      type='tel'
-                      id='contractorPhone'
-                      name='contractorPhone'
-                      placeholder='Contractor or on-site contact'
-                      className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                    />
-                  </div>
-                </div>
                 <div className='p-4'>
                   <span className=''>
                     <button
@@ -238,4 +91,4 @@ const CustomerForm = () => {
     </section>
   )
 }
-export default CustomerForm
+export default NotesForm

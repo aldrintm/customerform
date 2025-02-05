@@ -23,8 +23,13 @@ const CustomerPage = async ({ params }) => {
   // const customer = await fetchCustomer(id)
 
   await connectDB()
-  const customerDocs = await Customer.findById(id).lean()
-  const customer = convertToSerializeableObject(customerDocs)
+
+  // Populate the projects array (this assumes your Customer model's projects field
+  // is defined as an array of ObjectIds referencing 'Project')
+  const customerDoc = await Customer.findById(id).populate('projects').lean()
+
+  const customer = convertToSerializeableObject(customerDoc)
+
   if (!customer) {
     notFound() // Returns a 404 page if no customer is found
   }

@@ -175,8 +175,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='text'
-                      id='purchaseOrderNumber'
-                      name='purchaseOrderNumber'
+                      id='purchaseOrderNumber2'
+                      name='purchaseOrderNumber2'
                       placeholder='Purchase Order #'
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -185,8 +185,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='date'
-                      id='purchaseOrderDate'
-                      name='purchaseOrderDate'
+                      id='purchaseOrderDate2'
+                      name='purchaseOrderDate2'
                       placeholder='Purchase order date'
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -195,8 +195,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      id='squareFeet'
-                      name='squareFeet'
+                      id='squareFeet2'
+                      name='squareFeet2'
                       placeholder='How many sqft?'
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -205,8 +205,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      name='purchaseOrderAmount'
-                      id='purchaseOrderAmount'
+                      name='purchaseOrderAmount2'
+                      id='purchaseOrderAmount2'
                       placeholder='PO cost ...'
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
@@ -219,8 +219,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='text'
-                      id='purchaseOrderNumber'
-                      name='purchaseOrderNumber'
+                      id='purchaseOrderNumber3'
+                      name='purchaseOrderNumber3'
                       placeholder='Purchase Order #'
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -229,8 +229,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='date'
-                      id='purchaseOrderDate'
-                      name='purchaseOrderDate'
+                      id='purchaseOrderDate3'
+                      name='purchaseOrderDate3'
                       placeholder='Purchase order date'
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -239,8 +239,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      id='squareFeet'
-                      name='squareFeet'
+                      id='squareFeet3'
+                      name='squareFeet3'
                       placeholder='How many sqft?'
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -249,8 +249,8 @@ const ProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      name='purchaseOrderAmount'
-                      id='purchaseOrderAmount'
+                      name='purchaseOrderAmount3'
+                      id='purchaseOrderAmount3'
                       placeholder='PO cost ...'
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
@@ -261,7 +261,7 @@ const ProjectForm = ({ customer }) => {
                   {/* Description */}
                   <div className='col-span-6'>
                     <label
-                      htmlFor='materialColor'
+                      htmlFor='description'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Description:
@@ -269,8 +269,8 @@ const ProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='materialColor'
-                      name='materialColor'
+                      id='description'
+                      name='description'
                       placeholder='What is this project for?'
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />

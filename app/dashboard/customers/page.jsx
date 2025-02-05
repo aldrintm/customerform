@@ -3,13 +3,15 @@ import TableComponentPage from '@/components/TableComponent'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 import connectDB from '@/config/db'
-import Customer from '@/models/OldCustomer'
+import Customer from '@/models/Customer'
+import Project from '@/models/Project'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
 const newCustomerForm = async () => {
   await connectDB()
 
   const customerDocs = await Customer.find({})
+    .populate('projects')
     .sort({ createdAt: -1 })
     .limit(20)
     .lean()

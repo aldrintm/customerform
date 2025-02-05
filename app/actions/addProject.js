@@ -41,6 +41,18 @@ async function addProject(formData) {
         squareFeet: formData.get('squareFeet1'),
         purchaseOrderAmount: formData.get('purchaseOrderAmount1'),
       },
+      {
+        purchaseOrderNumber: formData.get('purchaseOrderNumber2'),
+        purchaseOrderDate: formData.get('purchaseOrderDate2'),
+        squareFeet: formData.get('squareFeet2'),
+        purchaseOrderAmount: formData.get('purchaseOrderAmount2'),
+      },
+      {
+        purchaseOrderNumber: formData.get('purchaseOrderNumber3'),
+        purchaseOrderDate: formData.get('purchaseOrderDate3'),
+        squareFeet: formData.get('squareFeet3'),
+        purchaseOrderAmount: formData.get('purchaseOrderAmount3'),
+      },
     ],
     description: formData.get('description'),
     materialType: formData.get('materialType'),
@@ -49,12 +61,13 @@ async function addProject(formData) {
     materialColor: formData.get('materialColor'),
     materialFinish: formData.get('materialFinish'),
     edge: formData.getAll('edge'),
+    sinkType: formData.get('sinkType'),
     sinkQuantity: formData.get('sinkQuantity'),
     sinkLocation: formData.get('sinkLocation'),
     sinkInfo: formData.get('sinkInfo'),
     stove: formData.has('stove'),
     splash: formData.getAll('splash'),
-    windowSill: formData.has('windowSill'),
+    cooktop: formData.has('cooktop'),
     notes: formData.get('notes'),
   }
 

@@ -1,16 +1,18 @@
 import updateProject from '@/app/actions/updateProject'
+import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 import Link from 'next/link'
 
-const CustomerEditProjectForm = ({ project }) => {
-  const updateProjectById = updateProject.bind(null, project._id)
-
-  console.log(project)
+const CustomerEditProjectForm = ({ customer }) => {
+  const project = customer.projects[0]
+  const updateProjectById = updateProject.bind(null)
 
   return (
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
         <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-          New Customer Details - CustomerEditProjectForm
+          Editing Project Form for{' '}
+          {customerWithCapitalizedNames(customer.firstName)}{' '}
+          {customerWithCapitalizedNames(customer.lastName)}
         </div>
 
         <div className='isolate px-4 sm:pb-2 lg:px-0'>

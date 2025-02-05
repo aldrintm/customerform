@@ -15,7 +15,7 @@ const TableComponentPage = ({ customers }) => {
   //   .sort({ createdAt: -1 })
   //   .limit(10)
   // .lean()
-
+  console.log(customers)
   return (
     <section>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
@@ -125,7 +125,7 @@ const TableComponentPage = ({ customers }) => {
                       {customer.email}
                     </td> */}
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                      {customer.storeName} {customer.storeId}
+                      {customer.storeName} {customer.storeId}{' '}
                     </td>
 
                     <td className='whitespace-nowrap px-4 py-2 text-sm'>

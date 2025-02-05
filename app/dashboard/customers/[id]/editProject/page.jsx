@@ -10,9 +10,9 @@ const ProjectEditPage = async ({ params }) => {
   const { id } = await params
   await connectDB
 
-  const customerDocs = await Customer.findById(id).lean()
+  const customerDocs = await Customer.findById(id).populate('projects').lean()
+
   const customer = convertToSerializeableObject(customerDocs)
-  console.log(customer)
 
   if (!customer) {
     return (

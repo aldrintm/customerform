@@ -1,6 +1,9 @@
+'use server'
+
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
 import SideNavbar from '@/components/SideNavbar'
+import Project from '@/models/Project'
 import Header from '@/components/Header'
 import Dashboard from '@/components/Dashboard'
 import { convertToSerializeableObject } from '@/utils/convertToObject'

@@ -9,8 +9,11 @@ import Button from './Button'
 import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 
-const TableComponentPage = ({ customers }) => {
+const DashboardTablePage = ({ customers }) => {
   const limitedCustomers = customers.slice(0, 8)
+
+  console.log(limitedCustomers)
+
   return (
     <section className=''>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
@@ -19,8 +22,9 @@ const TableComponentPage = ({ customers }) => {
           <Link href={`/dashboard/customers/add`}>
             <Button
               icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+              s
             >
-              Create New
+              Create a New Customer
             </Button>
           </Link>
         </div>
@@ -79,29 +83,33 @@ const TableComponentPage = ({ customers }) => {
                     </td>
 
                     <td className='whitespace-nowrap px-0 py-0 text-sm'>
-                      {customer.status === 'will call' ? (
+                      {customer.projects?.[0]?.status === 'will call' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                           will call
                         </div>
-                      ) : customer.status === 'for template' ? (
+                      ) : customer.projects?.[0]?.status === 'for template' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                           for template
                         </div>
-                      ) : customer.status === 'pending' ? (
+                      ) : customer.projects?.[0]?.status === 'pending' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
                           pending
                         </div>
-                      ) : customer.status === 'for install' ? (
+                      ) : customer.projects?.[0]?.status === 'for install' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                           for install
                         </div>
-                      ) : customer.status === 'service' ? (
+                      ) : customer.projects?.[0]?.status === 'service' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
                           service
                         </div>
-                      ) : customer.status === 'completed' ? (
+                      ) : customer.projects?.[0]?.status === 'completed' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                           completed
+                        </div>
+                      ) : customer.projects?.[0]?.status === null ? (
+                        <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
+                          n/a
                         </div>
                       ) : null}
                     </td>
@@ -117,7 +125,7 @@ const TableComponentPage = ({ customers }) => {
                     </td>
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <div className='grid grid-rows-2'>
-                        <p>{customer.email}</p>
+                        <p>{customer.status}</p>
                         <p>{formatPhoneNumber(customer.phone)}</p>
                       </div>
                     </td>
@@ -126,7 +134,7 @@ const TableComponentPage = ({ customers }) => {
                       {customer.email}
                     </td> */}
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                      {customer.storeName} {customer.storeId}
+                      {customer.projects?.[0]?.status || 'n/a'}
                     </td>
 
                     <td className='whitespace-nowrap px-4 py-2 text-sm'>
@@ -171,4 +179,4 @@ const TableComponentPage = ({ customers }) => {
   )
 }
 
-export default TableComponentPage
+export default DashboardTablePage

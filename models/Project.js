@@ -63,7 +63,7 @@ const ProjectSchema = new Schema(
       type: String,
       trim: true,
     },
-    materialName: {
+    materialColor: {
       type: String,
       trim: true,
     },

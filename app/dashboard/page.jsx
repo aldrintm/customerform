@@ -10,7 +10,7 @@ const DashboardPage = async () => {
 
   const customerDocs = await Customer.find({})
     .sort({ createdAt: -1 })
-    .limit()
+    .populate('projects')
     .lean()
 
   const customers = customerDocs.map(convertToSerializeableObject)

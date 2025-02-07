@@ -19,6 +19,7 @@ import Map from '@/assets/images/mapbox.webp'
 const CustomerDetails = ({ customer: initialCustomer }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
   const [customer, setCustomers] = useState(initialCustomer)
+  const [project, setProject] = useState('')
 
   // const dateObj = new Date(
   //   customer.projects[0].purchaseOrders[0].purchaseOrderDate
@@ -34,7 +35,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
 
   console.log(customer)
 
-  const handleDelete = async (customerId) => {
+  const handleDeleteCustomer = async (customerId) => {
     const confirmed = window.confirm(
       'Are you sure you want to delete this customer?'
     )
@@ -49,6 +50,17 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
 
     setCustomers(updatedCustomers)
     toast.success(`${customerId} is DELETED!`)
+  }
+
+  const handleDeleteProject = async (projectId) => {
+    const confirmed = window.confirm('Delete the project?')
+    if (!confirmed) return
+    await handleDeleteProject(projectId)
+    const updatedProject = customer.project[0].filter(
+      (project) => projectId !== customer.project[0]._id
+    )
+    setProject(updatedProject)
+    toast.success(`${projectId} is DELETED!`)
   }
 
   return (
@@ -158,7 +170,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                       </Link>
                     </Button>
 
-                    <Button onClick={() => handleDelete(customer._id)}>
+                    <Button onClick={() => handleDeleteCustomer(customer._id)}>
                       Delete
                     </Button>
                   </div>
@@ -341,7 +353,11 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                       </Link>
                     </Button>
 
-                    <Button onClick={() => handleDelete(customer._id)}>
+                    <Button
+                      onClick={() =>
+                        handleDeleteProject(customer.projects[0]._id)
+                      }
+                    >
                       Delete
                     </Button>
                   </div>
@@ -393,16 +409,21 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Material:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 md:flex md:justify-between'>
-                          <span className='pr-2'>{customer.projects[0].material}</span>
-                          <span className='pr-2 underline'>Cambria</span>
+                          <span className='pr-2'>
+                            {customer.projects[0].materialThickness}{' '}
+                            {customer.projects[0].materialColor}
+                          </span>
+                          <span className='pr-2 underline'>
+                            {customer.projects[0].materialBrand}
+                          </span>
                           {/* <span className='pr-2 underline'>Quartz</span>
                         <span className='pr-2 underline'>Polished</span> */}
                           <span className='inline-flex items-center rounded-md sm:mr-2 bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
                             {/* <span className='inline-block w-2.5 h-2.5 mr-2 bg-red-500 rounded-full'></span> */}
-                            Quartz
+                            {customer.projects[0].materialType}
                           </span>
                           <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                            Polished
+                            {customer.projects[0].materialFinish}
                           </span>
                         </dd>
                       </div>
@@ -411,7 +432,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Edge:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          1 1/2" Laminated Eased Edge
+                          {customer.projects[0].edge}
                         </dd>
                       </div>
                       <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
@@ -419,7 +440,10 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Sink:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          sinkQuantity project.sinkType
+                          {customer.projects[0].sinkQuantity}{' '}
+                          {customer.projects[0].sinkType} @{' '}
+                          {customer.projects[0].sinkLocation} (
+                          {customer.projects[0].sinkInfo})
                         </dd>
                       </div>
                       <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
@@ -427,7 +451,11 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Stove:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          1 Slide-in Range
+                          {customer.projects?.[0]?.stove
+                            ? 'stove'
+                            : customer.projects?.[0]?.cookop
+                            ? 'cooktop'
+                            : 'n/a'}
                         </dd>
                       </div>
                       <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
@@ -435,7 +463,8 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Splash:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          6" Splash and 36" x 33" behind stove
+                          {customer.projects[0].splash}{' '}
+                          {customer.projects[0].status}
                         </dd>
                       </div>
                       <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
@@ -443,7 +472,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Order Notes:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          Bring a small truck
+                          {customer.projects[0].notes}
                         </dd>
                       </div>
                     </dl>

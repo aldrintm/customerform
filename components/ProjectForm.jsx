@@ -354,6 +354,7 @@ const ProjectForm = ({ customer }) => {
                       <option value='default' disabled>
                         ---
                       </option>
+                      <option value='Plamar Stock'>Plamar Stock</option>
                       <option value='Daltile'>Daltile</option>
                       <option value='Dellaterra'>Arizona Tile</option>
                       <option value='MSI'>MSI</option>

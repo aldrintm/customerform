@@ -29,7 +29,7 @@ const DateAndWeather = () => {
         const response = await fetch(url)
         const data = await response.json()
         const weatherCondition = data.weather[0].icon
-        console.log(data)
+        // console.log(data)
 
         // Map OpenWeather condition to Skycons types
         const skyconMap = {

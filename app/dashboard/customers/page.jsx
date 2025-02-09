@@ -11,9 +11,9 @@ const newCustomerForm = async () => {
   await connectDB()
 
   const customerDocs = await Customer.find({})
-    .populate('projects')
     .sort({ createdAt: -1 })
-    .limit(30)
+    .populate('projects')
+    .limit(40)
     .lean()
 
   const customers = customerDocs.map(convertToSerializeableObject)

@@ -241,7 +241,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         Order Notes:
                       </dt>
                       <dd className='text-sm font-medium text-gray-700 sm:col-span-2'>
-                        {customer.orderNotes}
+                        {customer.notes}
                       </dd>
                     </div>
 
@@ -452,9 +452,9 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
                           {customer.projects?.[0]?.stove
-                            ? 'stove'
-                            : customer.projects?.[0]?.cookop
-                            ? 'cooktop'
+                            ? 'Slide In Range'
+                            : customer.projects?.[0]?.cooktop
+                            ? 'Cooktop'
                             : 'n/a'}
                         </dd>
                       </div>

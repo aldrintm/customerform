@@ -4,11 +4,22 @@ import Link from 'next/link'
 
 const CustomerEditProjectForm = ({ customer }) => {
   const project = customer.projects[0]
-  const updateProjectById = updateProject.bind(null)
+  const updateProjectById = updateProject.bind(null, customer._id, project._id)
+
+  const formattedDates = project?.purchaseOrders?.map(
+    (po) => new Date(po.purchaseOrderDate).toISOString().split('T')[0]
+  )
+
+  const formattedDate1 = formattedDates[0] || ''
+  const formattedDate2 = formattedDates[1] || ''
+  const formattedDate3 = formattedDates[2] || ''
+
+  console.log('Project ID:', project._id)
+  console.log('Customer ID:', customer._id)
 
   return (
     <section className='bg-white'>
-      <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
+      <div className='container max-w-5xl mx-auto px-15 md:rounded-2xl'>
         <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
           Editing Project Form for{' '}
           {customerWithCapitalizedNames(customer.firstName)}{' '}
@@ -26,6 +37,9 @@ const CustomerEditProjectForm = ({ customer }) => {
 
               {/* Form */}
               <div className='grid grid-cols-1 gap-4 lg:grid-rows-auto lg:gap-4 bg-white p-4 md:border md:rounded-md border-gray-300'>
+                {/* Extracting customer._id and project._id as Hidden Inputs */}
+                <input type='hidden' name='customerId' value={customer._id} />
+                <input type='hidden' name='projectId' value={project._id} />
                 {/* Purchase Order + Store ID */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-2 lg:gap-x-6'>
                   {/* Customer Type */}
@@ -138,9 +152,29 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderDate'
                       name='purchaseOrderDate'
                       placeholder='Purchase order date'
+                      defaultValue={formattedDate1}
                       className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
+                  {/* {project?.purchaseOrders?.map((po, index) => {
+                    const formattedDate = new Date(po.purchaseOrderDate)
+                      .toISOString()
+                      .split('T')[0] // "yyyy-MM-dd"
+                    return (
+                      <div key={index}>
+                        <label htmlFor={`purchaseOrderDate-${index}`}>
+                          Purchase Order Date {index + 1}:
+                        </label>
+                        <input
+                          type='date'
+                          id={`purchaseOrderDate-${index}`}
+                          name={`purchaseOrderDate-${index}`}
+                          defaultValue={formattedDate}
+                          className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                        />
+                      </div>
+                    )
+                  })} */}
                   {/* Square Feet */}
                   <div className='col-span-3'>
                     <label
@@ -155,6 +189,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='squareFeet'
                       name='squareFeet'
                       placeholder='How many sqft?'
+                      defaultValue={
+                        project?.purchaseOrders?.[0]?.squareFeet || ''
+                      }
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -172,6 +209,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='purchaseOrderAmount'
                       id='purchaseOrderAmount'
                       placeholder='PO cost ...'
+                      defaultValue={
+                        project?.purchaseOrders?.[0]?.purchaseOrderAmount || ''
+                      }
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -186,6 +226,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderNumber'
                       name='purchaseOrderNumber'
                       placeholder='Purchase Order #'
+                      defaultValue={
+                        project?.purchaseOrders?.[1]?.purchaseOrderNumber || ''
+                      }
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -196,6 +239,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderDate'
                       name='purchaseOrderDate'
                       placeholder='Purchase order date'
+                      defaultValue={formattedDate2}
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -206,6 +250,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='squareFeet'
                       name='squareFeet'
                       placeholder='How many sqft?'
+                      defaultValue={
+                        project?.purchaseOrders?.[1]?.squareFeet || ''
+                      }
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -216,6 +263,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='purchaseOrderAmount'
                       id='purchaseOrderAmount'
                       placeholder='PO cost ...'
+                      defaultValue={
+                        project?.purchaseOrders?.[1]?.purchaseOrderAmount || ''
+                      }
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -230,6 +280,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderNumber'
                       name='purchaseOrderNumber'
                       placeholder='Purchase Order #'
+                      defaultValue={
+                        project?.purchaseOrders?.[2]?.purchaseOrderNumber || ''
+                      }
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -240,6 +293,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderDate'
                       name='purchaseOrderDate'
                       placeholder='Purchase order date'
+                      defaultValue={formattedDate3}
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -250,6 +304,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='squareFeet'
                       name='squareFeet'
                       placeholder='How many sqft?'
+                      defaultValue={
+                        project?.purchaseOrders?.[2]?.squareFeet || ''
+                      }
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -260,6 +317,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='purchaseOrderAmount'
                       id='purchaseOrderAmount'
                       placeholder='PO cost ...'
+                      defaultValue={
+                        project?.purchaseOrders?.[2]?.purchaseOrderAmount || ''
+                      }
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -269,7 +329,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   {/* Description */}
                   <div className='col-span-6'>
                     <label
-                      htmlFor='materialColor'
+                      htmlFor='description'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Description:
@@ -277,9 +337,10 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='materialColor'
-                      name='materialColor'
+                      id='description'
+                      name='description'
                       placeholder='What is this project for?'
+                      defaultValue={project?.description || ''}
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -299,7 +360,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <select
                       id='materialType'
                       name='materialType'
-                      defaultValue={'default'}
+                      defaultValue={project?.materialType || ''}
                       className='mt-1 w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-sky-50'
                     >
                       <option value='default' disabled>
@@ -330,7 +391,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='materialThickness'
                       id='materialThickness'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={project?.materialThickness || ''}
                     >
                       <option value='default' disabled>
                         ---
@@ -357,7 +418,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='materialBrand'
                       id='materialBrand'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={project?.materialBrand || ''}
                     >
                       <option value='default' disabled>
                         ---
@@ -397,6 +458,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='materialColor'
                       name='materialColor'
                       placeholder='Color name'
+                      defaultValue={project?.materialColor || ''}
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -414,7 +476,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='materialFinish'
                       id='materialFinish'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={project?.materialFinish || ''}
                     >
                       <option value='default' disabled>
                         ---
@@ -455,22 +517,23 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='edge'
                       placeholder='Edge'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      defaultValue={project?.edge || ''}
                     />
                   </div>
                   {/* Sink */}
                   <div className='col-span-2'>
                     <label
-                      htmlFor='purchaseOrderNumber'
+                      htmlFor='sinkType'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Sink Type:
                     </label>
 
                     <select
-                      name='materialFinish'
-                      id='materialFinish'
+                      name='sinkType'
+                      id='sinkType'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={project?.sinkType || ''}
                     >
                       <option value='default' disabled>
                         ---
@@ -484,17 +547,17 @@ const CustomerEditProjectForm = ({ customer }) => {
                   </div>
                   <div className='col-span-1'>
                     <label
-                      htmlFor='purchaseOrderNumber'
+                      htmlFor='sinkQuantity'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Qty:
                     </label>
 
                     <select
-                      name='materialFinish'
-                      id='materialFinish'
+                      name='sinkQuantity'
+                      id='sinkQuantity'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={project?.sinkQuantity || ''}
                     >
                       <option value='default' disabled>
                         ---
@@ -513,17 +576,17 @@ const CustomerEditProjectForm = ({ customer }) => {
                   </div>
                   <div className='col-span-2'>
                     <label
-                      htmlFor='purchaseOrderNumber'
+                      htmlFor='sinkLocation'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Location:
                     </label>
 
                     <select
-                      name='materialFinish'
-                      id='materialFinish'
+                      name='sinkLocation'
+                      id='sinkLocation'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={project?.sinkLocation || ''}
                     >
                       <option value='default' disabled>
                         ---
@@ -535,7 +598,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   {/* Sink Info */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderNumber'
+                      htmlFor='sinkInfo'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Sink Info/Model:
@@ -543,10 +606,11 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='edge'
-                      name='edge'
-                      placeholder='Edge'
+                      id='sinkInfo'
+                      name='sinkInfo'
+                      placeholder='Sink Model'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      defaultValue={project?.sinkInfo || ''}
                     />
                   </div>
                 </div>
@@ -556,7 +620,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   {/* Splash Info */}
                   <div className='col-span-6'>
                     <label
-                      htmlFor='materialColor'
+                      htmlFor='splash'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Splash Info:
@@ -564,10 +628,11 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='materialColor'
-                      name='materialColor'
+                      id='splash'
+                      name='splash'
                       placeholder='Enter all splashes info here'
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
+                      defaultValue={project?.splash || ''}
                     />
                   </div>
                   {/* Checkbox Container */}
@@ -575,14 +640,15 @@ const CustomerEditProjectForm = ({ customer }) => {
                     {/* Slide-in Range Checkbox */}
                     <div className='flex items-center mr-4'>
                       <label
-                        htmlFor='edge'
+                        htmlFor='stove'
                         className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
                       >
                         <input
                           type='checkbox'
-                          id='edge'
-                          name='edge'
+                          id='stove'
+                          name='stove'
                           className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                          defaultChecked={project?.stove || false}
                         />
                         <span className='ml-2 items-center'>
                           Slide-in Range
@@ -601,6 +667,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                           id='cooktop'
                           name='cooktop'
                           className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                          defaultChecked={project?.cooktop || false}
                         />
                         <span className='ml-2 items-center'>Cooktop</span>
                       </label>
@@ -613,7 +680,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   {/* Text Area for Special Notes with Customer */}
                   <div className=''>
                     <label
-                      htmlFor='orderNotes'
+                      htmlFor='notes'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       {' '}
@@ -621,11 +688,12 @@ const CustomerEditProjectForm = ({ customer }) => {
                     </label>
 
                     <textarea
-                      id='orderNotes'
-                      name='orderNotes'
+                      id='notes'
+                      name='notes'
                       rows='3'
                       className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter any additional order notes...'
+                      defaultValue={project?.notes || ''}
                     ></textarea>
                   </div>
                   {/* col-span-2 */}

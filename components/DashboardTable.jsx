@@ -10,7 +10,7 @@ import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 
 const DashboardTablePage = ({ customers }) => {
-  const limitedCustomers = customers.slice(0, 8)
+  const limitedCustomers = customers.slice(0, 6)
 
   console.log(limitedCustomers)
 
@@ -50,9 +50,6 @@ const DashboardTablePage = ({ customers }) => {
                   <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Phone/Email
                   </th>
-                  {/* <th className='whitespace-nowrap px-4 py-2 font-sm text-gray-700'>
-                    Email
-                  </th> */}
 
                   <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Store
@@ -125,7 +122,7 @@ const DashboardTablePage = ({ customers }) => {
                     </td>
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <div className='grid grid-rows-2'>
-                        <p>{customer.status}</p>
+                        <p>{customer.email}</p>
                         <p>{formatPhoneNumber(customer.phone)}</p>
                       </div>
                     </td>
@@ -134,7 +131,7 @@ const DashboardTablePage = ({ customers }) => {
                       {customer.email}
                     </td> */}
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                      {customer.projects?.[0]?.status || 'n/a'}
+                      {customer.projects?.[0]?.storeId}
                     </td>
 
                     <td className='whitespace-nowrap px-4 py-2 text-sm'>

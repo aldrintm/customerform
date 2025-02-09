@@ -33,6 +33,7 @@ async function addCustomer(formData) {
     },
     contractorName: formData.get('contractorName') || '',
     contractorPhone: formData.get('contractorPhone') || '',
+    notes: formData.get('notes') || '',
   }
 
   // lets check the server to see all items uploaded to the DB

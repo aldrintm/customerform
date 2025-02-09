@@ -21,10 +21,7 @@ async function updateProject(customerId, projectId, formData) {
   // lets get the userId then
   const { userId } = sessionUser
 
-  const existingCustomer = await Project.findById(projectId)
-  console.log(existingCustomer)
-
-  const project = existingCustomer
+  const project = await Project.findById(projectId)
 
   if (!project) {
     throw new Error('Project not found')
@@ -43,28 +40,44 @@ async function updateProject(customerId, projectId, formData) {
       squareFeet: formData.get('squareFeet'),
       purchaseOrderAmount: formData.get('purchaseOrderAmount'),
     },
+    {
+      purchaseOrderNumber: formData.get('purchaseOrderNumber'),
+      purchaseOrderDate: formData.get('purchaseOrderDate'),
+      squareFeet: formData.get('squareFeet'),
+      purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+    },
+    {
+      purchaseOrderNumber: formData.get('purchaseOrderNumber'),
+      purchaseOrderDate: formData.get('purchaseOrderDate'),
+      squareFeet: formData.get('squareFeet'),
+      purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+    },
   ]
 
   const projectData = {
     purchaseOrders,
+    description: formData.get('description'),
     storeId: formData.get('storeId'),
-    purchaseOrderDate: formData.get('purchaseOrderDate'),
-    purchaseOrderAmount: formData.get('purchaseOrderAmount'),
-    squareFeet: formData.get('squareFeet'),
     materialType: formData.get('materialType'),
     materialThickness: formData.get('materialThickness'),
     materialBrand: formData.get('materialBrand'),
     materialColor: formData.get('materialColor'),
-    orderNotes: formData.get('orderNotes'),
+    materialFinish: formData.get('materialFinish'),
+    edge: formData.get('edge'),
+    sinkQuantity: formData.get('sinkQuantity'),
+    sinkType: formData.get('sinkType'),
+    sinkLocation: formData.get('sinkLocation'),
+    sinkInfo: formData.get('sinkInfo'),
+    stove: formData.get('stove') ? true : false,
+    cooktop: formData.get('cooktop') ? true : false,
+    splash: formData.get('splash'),
+    notes: formData.get('notes'),
   }
 
   // lets allocate the data above to the customerId in this profile and update it.
-  const updatedCustomer = await Project.findByIdAndUpdate(
-    projectId,
-    projectData
-  )
+  const updatedProject = await Project.findByIdAndUpdate(projectId, projectData)
 
-  console.log(updatedCustomer)
+  console.log(updatedProject)
 
   // this will clear cached data in our form/memory
   revalidatePath('/', 'layout')
@@ -73,7 +86,7 @@ async function updateProject(customerId, projectId, formData) {
   // redirect(`/customers/${newCustomer._id}`)
 
   // redirect to the main table
-  redirect(`/dashboard/customers/${updatedCustomer._id}`)
+  redirect(`/dashboard/customers/${customerId}`)
 }
 
 export default updateProject

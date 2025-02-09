@@ -10,11 +10,6 @@ import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 
 const TableComponentPage = ({ customers }) => {
-  // await connectDB()
-  // const customers = await Customer.find({})
-  //   .sort({ createdAt: -1 })
-  //   .limit(10)
-  // .lean()
   console.log(customers)
   return (
     <section>
@@ -78,29 +73,33 @@ const TableComponentPage = ({ customers }) => {
                       {customerWithCapitalizedNames(customer.lastName)}
                     </td>
                     <td className='whitespace-nowrap px-0 py-0 text-sm'>
-                      {customer.status === 'will call' ? (
+                      {customer.projects?.[0]?.status === 'will call' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                           will call
                         </div>
-                      ) : customer.status === 'for template' ? (
+                      ) : customer.projects?.[0]?.status === 'for template' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                           for template
                         </div>
-                      ) : customer.status === 'pending' ? (
+                      ) : customer.projects?.[0]?.status === 'pending' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
                           pending
                         </div>
-                      ) : customer.status === 'for install' ? (
+                      ) : customer.projects?.[0]?.status === 'for install' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                           for install
                         </div>
-                      ) : customer.status === 'service' ? (
+                      ) : customer.projects?.[0]?.status === 'service' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
                           service
                         </div>
-                      ) : customer.status === 'completed' ? (
+                      ) : customer.projects?.[0]?.status === 'completed' ? (
                         <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                           completed
+                        </div>
+                      ) : customer.projects?.[0]?.status === null ? (
+                        <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
+                          n/a
                         </div>
                       ) : null}
                     </td>
@@ -125,7 +124,8 @@ const TableComponentPage = ({ customers }) => {
                       {customer.email}
                     </td> */}
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                      {customer.storeName} {customer.storeId}{' '}
+                      {customer.projects?.[0]?.customerType}{' '}
+                      {customer.projects?.[0]?.storeId}
                     </td>
 
                     <td className='whitespace-nowrap px-4 py-2 text-sm'>

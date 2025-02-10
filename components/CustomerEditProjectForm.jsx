@@ -9,10 +9,24 @@ const CustomerEditProjectForm = ({ customer }) => {
   const formattedDates = project?.purchaseOrders?.map(
     (po) => new Date(po.purchaseOrderDate).toISOString().split('T')[0]
   )
-
   const formattedDate1 = formattedDates[0] || ''
   const formattedDate2 = formattedDates[1] || ''
   const formattedDate3 = formattedDates[2] || ''
+
+  const singlePo = project?.purchaseOrders?.map((po) => po.purchaseOrderNumber)
+  const singlePo1 = singlePo[0] || ''
+  const singlePo2 = singlePo[1] || ''
+  const singlePo3 = singlePo[2] || ''
+
+  const squareFeet = project?.purchaseOrders?.map((po) => po.squareFeet)
+  const sqft1 = squareFeet[0] || ''
+  const sqft2 = squareFeet[1] || ''
+  const sqft3 = squareFeet[2] || ''
+
+  const poAmount = project?.purchaseOrders?.map((po) => po.purchaseOrderAmount)
+  const poAmount1 = poAmount[0] || ''
+  const poAmount2 = poAmount[1] || ''
+  const poAmount3 = poAmount[2] || ''
 
   console.log('Project ID:', project._id)
   console.log('Customer ID:', customer._id)
@@ -130,11 +144,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='text'
                       id='purchaseOrderNumber'
-                      name='purchaseOrderNumber'
+                      name='purchaseOrderNumber1'
                       placeholder='Purchase Order #'
-                      defaultValue={
-                        project?.purchaseOrders?.[0]?.purchaseOrderNumber || ''
-                      }
+                      defaultValue={singlePo1}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -150,7 +162,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='date'
                       id='purchaseOrderDate'
-                      name='purchaseOrderDate'
+                      name='purchaseOrderDate1'
                       placeholder='Purchase order date'
                       defaultValue={formattedDate1}
                       className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
@@ -187,11 +199,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='number'
                       id='squareFeet'
-                      name='squareFeet'
+                      name='squareFeet1'
                       placeholder='How many sqft?'
-                      defaultValue={
-                        project?.purchaseOrders?.[0]?.squareFeet || ''
-                      }
+                      defaultValue={sqft1}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -206,12 +216,10 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='number'
-                      name='purchaseOrderAmount'
+                      name='purchaseOrderAmount1'
                       id='purchaseOrderAmount'
                       placeholder='PO cost ...'
-                      defaultValue={
-                        project?.purchaseOrders?.[0]?.purchaseOrderAmount || ''
-                      }
+                      defaultValue={poAmount1}
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -224,11 +232,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='text'
                       id='purchaseOrderNumber'
-                      name='purchaseOrderNumber'
+                      name='purchaseOrderNumber2'
                       placeholder='Purchase Order #'
-                      defaultValue={
-                        project?.purchaseOrders?.[1]?.purchaseOrderNumber || ''
-                      }
+                      defaultValue={singlePo2}
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -237,7 +243,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='date'
                       id='purchaseOrderDate'
-                      name='purchaseOrderDate'
+                      name='purchaseOrderDate2'
                       placeholder='Purchase order date'
                       defaultValue={formattedDate2}
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
@@ -248,11 +254,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='number'
                       id='squareFeet'
-                      name='squareFeet'
+                      name='squareFeet2'
                       placeholder='How many sqft?'
-                      defaultValue={
-                        project?.purchaseOrders?.[1]?.squareFeet || ''
-                      }
+                      defaultValue={sqft2}
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -260,12 +264,10 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      name='purchaseOrderAmount'
+                      name='purchaseOrderAmount2'
                       id='purchaseOrderAmount'
                       placeholder='PO cost ...'
-                      defaultValue={
-                        project?.purchaseOrders?.[1]?.purchaseOrderAmount || ''
-                      }
+                      defaultValue={poAmount2}
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -278,11 +280,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='text'
                       id='purchaseOrderNumber'
-                      name='purchaseOrderNumber'
+                      name='purchaseOrderNumber3'
                       placeholder='Purchase Order #'
-                      defaultValue={
-                        project?.purchaseOrders?.[2]?.purchaseOrderNumber || ''
-                      }
+                      defaultValue={singlePo3}
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -291,7 +291,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='date'
                       id='purchaseOrderDate'
-                      name='purchaseOrderDate'
+                      name='purchaseOrderDate3'
                       placeholder='Purchase order date'
                       defaultValue={formattedDate3}
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
@@ -302,11 +302,9 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='number'
                       id='squareFeet'
-                      name='squareFeet'
+                      name='squareFeet3'
                       placeholder='How many sqft?'
-                      defaultValue={
-                        project?.purchaseOrders?.[2]?.squareFeet || ''
-                      }
+                      defaultValue={sqft3}
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -314,12 +312,10 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      name='purchaseOrderAmount'
+                      name='purchaseOrderAmount3'
                       id='purchaseOrderAmount'
                       placeholder='PO cost ...'
-                      defaultValue={
-                        project?.purchaseOrders?.[2]?.purchaseOrderAmount || ''
-                      }
+                      defaultValue={poAmount2}
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -423,6 +419,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       <option value='default' disabled>
                         ---
                       </option>
+                      <option value='Plamar Stock'>Plamar Stock</option>
                       <option value='Daltile'>Daltile</option>
                       <option value='Dellaterra'>Arizona Tile</option>
                       <option value='MSI'>MSI</option>

@@ -85,7 +85,7 @@ const DashboardTablePage = ({ customers }) => {
                           will call
                         </div>
                       ) : customer.projects?.[0]?.status === 'for template' ? (
-                        <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
+                        <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                           for template
                         </div>
                       ) : customer.projects?.[0]?.status === 'pending' ? (

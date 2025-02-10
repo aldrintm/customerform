@@ -35,22 +35,22 @@ async function updateProject(customerId, projectId, formData) {
   // Extracting the form data and structuring the purchaseOrder as an array of objects
   const purchaseOrders = [
     {
-      purchaseOrderNumber: formData.get('purchaseOrderNumber'),
-      purchaseOrderDate: formData.get('purchaseOrderDate'),
-      squareFeet: formData.get('squareFeet'),
-      purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+      purchaseOrderNumber: formData.get('purchaseOrderNumber1'),
+      purchaseOrderDate: formData.get('purchaseOrderDate1'),
+      squareFeet: formData.get('squareFeet1'),
+      purchaseOrderAmount: formData.get('purchaseOrderAmount1'),
     },
     {
-      purchaseOrderNumber: formData.get('purchaseOrderNumber'),
-      purchaseOrderDate: formData.get('purchaseOrderDate'),
-      squareFeet: formData.get('squareFeet'),
-      purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+      purchaseOrderNumber: formData.get('purchaseOrderNumber2'),
+      purchaseOrderDate: formData.get('purchaseOrderDate2'),
+      squareFeet: formData.get('squareFeet2'),
+      purchaseOrderAmount: formData.get('purchaseOrderAmount2'),
     },
     {
-      purchaseOrderNumber: formData.get('purchaseOrderNumber'),
-      purchaseOrderDate: formData.get('purchaseOrderDate'),
-      squareFeet: formData.get('squareFeet'),
-      purchaseOrderAmount: formData.get('purchaseOrderAmount'),
+      purchaseOrderNumber: formData.get('purchaseOrderNumber3'),
+      purchaseOrderDate: formData.get('purchaseOrderDate3'),
+      squareFeet: formData.get('squareFeet3'),
+      purchaseOrderAmount: formData.get('purchaseOrderAmount3'),
     },
   ]
 
@@ -58,6 +58,7 @@ async function updateProject(customerId, projectId, formData) {
     purchaseOrders,
     description: formData.get('description'),
     storeId: formData.get('storeId'),
+    status: formData.get('status'),
     materialType: formData.get('materialType'),
     materialThickness: formData.get('materialThickness'),
     materialBrand: formData.get('materialBrand'),

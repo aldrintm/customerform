@@ -17,8 +17,6 @@ const NotesForm = ({ customer }) => {
             className='container mx-auto my-4 justify-center'
           >
             <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
-              {/* Left Side of Form Column */}
-
               <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white p-4 md:border border-gray-300 md:rounded-md'>
                 {/* Customer Name */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 py-2 lg:gap-x-6'>
@@ -31,9 +29,11 @@ const NotesForm = ({ customer }) => {
                   </div>
                 </div>
 
+                <input type='hidden' name='customerId' value={customer._id} />
+
                 {/* Note Date */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
-                  {/* Phone */}
+                  {/* Date Note is Taken */}
                   <div>
                     <label
                       htmlFor='noteDate'
@@ -59,15 +59,15 @@ const NotesForm = ({ customer }) => {
                       htmlFor='note'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Street Address
+                      Internal Notes Starts Here
                     </label>
 
                     <textarea
                       type='text'
                       id='note'
                       name='note'
-                      rows={5}
-                      placeholder='Enter Notes or Customer Calls ....'
+                      rows={6}
+                      placeholder='Share Notes or Customer Calls ....'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>

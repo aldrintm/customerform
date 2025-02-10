@@ -41,7 +41,7 @@ async function updateCustomer(customerId, formData) {
     },
     contractorName: formData.get('contractorName'),
     contractorPhone: formData.get('contractorPhone'),
-    orderNotes: formData.get('orderNotes'),
+    notes: formData.get('notes'),
   }
 
   // lets allocate the data above to the customerId in this profile and update it.

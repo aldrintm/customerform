@@ -155,7 +155,7 @@ const TableComponentPage = ({ customers }) => {
                     <td className='whitespace-nowrap px-4 py-2 text-sm'>
                       <div className='flex gap-3'>
                         <Link
-                          href={`/dashboard/customers/${customer._id}/edit`}
+                          href={`/dashboard/customers/${customer._id}/editCustomer`}
                         >
                           <Button>Edit</Button>
                         </Link>

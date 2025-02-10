@@ -19,11 +19,16 @@ async function addInternalNotes(formData) {
     throw new Error('User ID is required')
   }
 
+  console.log(sessionUser.user.email)
+
   // lets get the userId then
-  const { userId } = sessionUser
+  const user = await User.findOne({ email: sessionUser.user.email })
+  const userId = user._id
+
+  const customerId = formData.get('customerId')
 
   const internalNotesData = {
-    staff: user,
+    staff: userId,
     customer: customerId,
     noteDate: formData.get('noteDate') || '',
     note: formData.get('note') || '',
@@ -35,7 +40,7 @@ async function addInternalNotes(formData) {
   // lets plug all the date using the property model
   const newInternalNotes = new Note(internalNotesData)
   // save it in our DB
-  await newInteralNotes.save()
+  await newInternalNotes.save()
 
   // this will clear cached data in our form/memory
   revalidatePath('/dashboard/customers/${customerId}')
@@ -44,7 +49,7 @@ async function addInternalNotes(formData) {
   // redirect(`/customers/${newCustomer._id}`)
 
   // redirect to the main table
-  redirect(`/dashboard/customers/${Customer.id}`)
+  redirect(`/dashboard/customers/${customerId}`)
 }
 
 export default addInternalNotes

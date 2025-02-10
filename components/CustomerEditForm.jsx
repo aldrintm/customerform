@@ -1,4 +1,4 @@
-import updateCustomer from '@/app/actions/updateCustomerOld'
+import updateCustomer from '@/app/actions/updateCustomer'
 import Link from 'next/link'
 
 const CustomerEditForm = ({ customer }) => {
@@ -232,6 +232,30 @@ const CustomerEditForm = ({ customer }) => {
                     />
                   </div>
                 </div>
+                {/* Textarea for Notes */}
+                <div className='grid grid-cols-1 lg:grid-cols-1 px-4 py-2'>
+                  {/* Text Area for Special Notes with Customer */}
+                  <div className=''>
+                    <label
+                      htmlFor='notes'
+                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                    >
+                      {' '}
+                      Special Notes{' '}
+                    </label>
+
+                    <textarea
+                      id='notes'
+                      name='notes'
+                      rows='3'
+                      className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
+                      placeholder='Enter any additional order notes...'
+                      defaultValue={customer.notes}
+                    ></textarea>
+                  </div>
+                </div>
+
+                {/* Submit Button */}
                 <div className='p-4'>
                   <span className=''>
                     <button

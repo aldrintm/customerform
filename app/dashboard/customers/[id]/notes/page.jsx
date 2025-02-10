@@ -8,11 +8,8 @@ import { convertToSerializeableObject } from '@/utils/convertToObject'
 const AddNotesPage = async ({ params }) => {
   const { id } = await params
   await connectDB()
-  const customerDocs = await Customer.findById(id).lean()
+  const customerDocs = await Customer.findById(id).lean() 
   const customer = convertToSerializeableObject(customerDocs)
-  console.log(customer)
-
-  console.log(params)
 
   if (!customer) {
     return (

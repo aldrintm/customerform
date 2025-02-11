@@ -311,48 +311,56 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   </div>
                 </div>
                 {/* We will need to do Daisychaining here to fetch data - whether customer.officeNotes is >0 or an empty array display something or just say not notes yet something like this */}
-                <div className='mt-4 border-t border-gray-100'>
-                  <dl className=' mt-2'>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'>
-                      <div className='flex'>
-                        <dt className='text-sm font-medium text-gray-900 pr-5'>
-                          Date: Jan 13, 2025
-                        </dt>
-                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          By: Dana
-                        </dd>
-                      </div>
-                      <div className='flex sm:border-b sm:pb-3'>
-                        <dt className='text-sm font-medium text-gray-900 pr-5'>
-                          {customer.officeNotes[0].note}
-                        </dt>
-                      </div>
-                    </div>
-                    {/* Break */}
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'>
-                      <div className='flex'>
-                        <dt className='text-sm font-medium text-gray-900 pr-5'>
-                          Date: Jan 13, 2025
-                        </dt>
-                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          By: Dana
-                        </dd>
-                      </div>
-                      <div className='flex sm:border-b sm:pb-3'>
-                        <dt className='text-sm font-medium text-gray-900 pr-5'>
-                          Notes: Customer will bring the sink to the office next
-                          week.
-                        </dt>
-                      </div>
-                    </div>
-                    {/* Divider */}
-                    {/* <span className='flex items-center py-2'>
+                {customer.officeNotes && customer.officeNotes.length > 0 ? (
+                  <div className='mt-4 border-t border-gray-100'>
+                    <dl className=' mt-2'>
+                      {customer.officeNotes.map((note, index) => {
+                        // Format each purchase order date
+                        const date = new Date(note.noteDate)
+                        const day = date.getDate().toString().padStart(2, '0')
+                        const month = date.toLocaleString('en-US', {
+                          month: 'long',
+                        })
+                        const year = date.getFullYear()
+                        const formattedDate = `${month} ${day}, ${year}`
+
+                        return (
+                          <div
+                            key={index}
+                            className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'
+                          >
+                            <div className='flex'>
+                              <dt className='text-sm font-medium text-gray-900 pr-5'>
+                                {formattedDate}
+                              </dt>
+                              <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                                By: {note.staff}
+                              </dd>
+                            </div>
+                            <div className='flex sm:border-b sm:pb-3'>
+                              <dt className='text-sm font-medium text-gray-900 pr-5'>
+                                {note.note}
+                              </dt>
+                            </div>
+                          </div>
+                        )
+                      })}
+
+                      {/* Divider */}
+                      {/* <span className='flex items-center py-2'>
                       <span className='h-px flex-1 bg-gray-300'></span>
                       <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
                       <span className='h-px flex-1 bg-gray-300'></span>
                     </span> */}
-                  </dl>
-                </div>
+                    </dl>
+                  </div>
+                ) : (
+                  <div className='flex items-center justify-center h-3/4 '>
+                    <p className='text-center text-base md:text-lg font-semibold text-gray-700'>
+                      Notes NOT found
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -396,7 +404,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 customer.projects[0].purchaseOrders &&
                 customer.projects[0].purchaseOrders.length > 0 ? (
                   <div className='mt-4 border-t border-gray-100'>
-                    <dl className=''>
+                    <dl className='mt-1'>
                       {customer.projects[0].purchaseOrders.map((po, index) => {
                         // Format each purchase order date
                         const poDate = new Date(po.purchaseOrderDate)
@@ -410,12 +418,12 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         return (
                           <div
                             key={index}
-                            className='px-4 py-1 mt-2 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'
+                            className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'
                           >
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               PO Number:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 flex justify-between'>
+                            <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
                               <span>{po.purchaseOrderNumber}</span>
                               <span>{formattedDate}</span>
                               <span>${po.purchaseOrderAmount}</span>

@@ -14,17 +14,15 @@ async function addInternalNotes(formData) {
 
   // lets check for user session
   const sessionUser = await getSessionUser()
-
   if (!sessionUser || !sessionUser.userId) {
     throw new Error('User ID is required')
   }
-
-  console.log(sessionUser.user.email)
 
   // lets get the userId then
   const user = await User.findOne({ email: sessionUser.user.email })
   const userId = user._id
 
+  // gather formData
   const customerId = formData.get('customerId')
 
   const internalNotesData = {
@@ -34,15 +32,20 @@ async function addInternalNotes(formData) {
     note: formData.get('note') || '',
   }
 
-  // lets check the server to see all items uploaded to the DB
-  console.log(internalNotesData)
+  // lets plug all the date using the Note model
+  const newInternalNote = new Note(internalNotesData)
+  // save a new note in our DB
+  await newInternalNote.save()
 
-  // lets plug all the date using the property model
-  const newInternalNotes = new Note(internalNotesData)
-  // save it in our DB
-  await newInternalNotes.save()
+  // push the note._id into the customers officeNotes array
+  await Customer.findByIdAndUpdate(
+    customerId,
+    { $push: { officeNotes: newInternalNote._id } },
+    { new: true } // optional: returns the updated doc if you need it
+  )
 
   // this will clear cached data in our form/memory
+  // Fix your string template here to correctly interpolate customerId
   revalidatePath('/dashboard/customers/${customerId}')
 
   // redirect to newly created thank you page details

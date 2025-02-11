@@ -97,10 +97,8 @@ const TableComponentPage = ({ customers }) => {
                         <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                           completed
                         </div>
-                      ) : customer.projects?.[0]?.status === null ? (
-                        <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
-                          n/a
-                        </div>
+                      ) : customer.projects?.[0]?.status === '' ? (
+                        <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'></div>
                       ) : null}
                     </td>
 

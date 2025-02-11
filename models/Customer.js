@@ -47,7 +47,7 @@ const CustomerSchema = new Schema(
       ref: 'Project',
       default: [],
     },
-    // Reference to calls
+    // Reference to notes
     officeNotes: [
       {
         type: Schema.Types.ObjectId,

@@ -12,8 +12,6 @@ import { Plus } from 'lucide-react'
 const DashboardTablePage = ({ customers }) => {
   const limitedCustomers = customers.slice(0, 6)
 
-  console.log(limitedCustomers)
-
   return (
     <section className=''>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>

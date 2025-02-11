@@ -33,8 +33,6 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   // // Format the string as needed
   // const formattedDate = `${month} ${day}, ${year}`
 
-  console.log(customer)
-
   const handleDeleteCustomer = async (customerId) => {
     const confirmed = window.confirm(
       'Are you sure you want to delete this customer?'
@@ -52,15 +50,37 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     toast.success(`${customerId} is DELETED!`)
   }
 
+  // const handleDeleteProject = async (projectId) => {
+  //   const confirmed = window.confirm('Delete the project?')
+  //   if (!confirmed) return
+  //   await handleDeleteProject(projectId)
+  //   const updatedProject = customer.project[0].filter(
+  //     (project) => projectId !== customer.project[0]._id
+  //   )
+  //   setProject(updatedProject)
+  //   toast.success(`${projectId} is DELETED!`)
+  // }
+
+  // this replaces the handleDeleteProject above
   const handleDeleteProject = async (projectId) => {
     const confirmed = window.confirm('Delete the project?')
     if (!confirmed) return
-    await handleDeleteProject(projectId)
-    const updatedProject = customer.project[0].filter(
-      (project) => projectId !== customer.project[0]._id
-    )
-    setProject(updatedProject)
-    toast.success(`${projectId} is DELETED!`)
+
+    // (Assuming deleteProject is an action that deletes the project from the database)
+    await deleteProject(projectId)
+
+    // Check if projects array exists and filter out the deleted project
+    if (customer?.projects && customer.projects.length > 0) {
+      const updatedProjects = customer.projects.filter(
+        (proj) => proj._id !== projectId
+      )
+      // Update the entire customer state with the updated projects array
+      setCustomers({
+        ...customer,
+        projects: updatedProjects,
+      })
+      toast.success(`${projectId} is DELETED!`)
+    }
   }
 
   return (
@@ -88,43 +108,54 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
               </div>
             </div>
             <div className='hidden md:grid md:grid-cols sm:gap-2 align-middle print:hidden'>
-              <div className='text-lg md:text-3xl font-semibold text-white'>
-                <span className='inline-flex items-center justify-center align-middle rounded-full border border-amber-500 mr-3 px-2.5 py-0.5 text-amber-600'>
-                  <Store className='h-4 w-4' />
-                  <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
-                    {customer.storeName} {customer.storeId}
+              {customer.projects && customer.projects.length > 0 ? (
+                <div className='text-lg md:text-3xl font-semibold text-white'>
+                  {customer?.projects[0]?.customerType?.length > 0 ? (
+                    <span className='inline-flex items-center justify-center align-middle rounded-full border border-amber-500 mr-3 px-2.5 py-0.5 text-amber-600'>
+                      <Store className='h-4 w-4' />
+                      <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
+                        {customer?.projects[0]?.customerType}{' '}
+                        {customer?.projects[0]?.storeId}
+                      </p>
+                    </span>
+                  ) : null}
+
+                  {customer?.projects[0]?.status?.length > 0 && (
+                    <span className='inline-flex items-center justify-center align-middle rounded-full border border-emerald-500 mr-3 px-2.5 py-0.5 text-emerald-600'>
+                      <PhoneIncoming className='h-4 w-4' />
+
+                      <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
+                        {customer?.projects[0]?.status}
+                      </p>
+                    </span>
+                  )}
+
+                  {customer.is_flagged && (
+                    <span className='inline-flex items-center justify-center align-middle rounded-full border border-red-500 mr-3 px-2.5 py-0.5 text-red-600'>
+                      <ShieldAlert className='h-4 w-4' />
+
+                      <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
+                        Critical
+                      </p>
+                    </span>
+                  )}
+                  {customer.is_featured && (
+                    <span className='inline-flex items-center justify-center align-middle rounded-full border border-fuchsia-500 px-2.5 py-0.5 text-fuchsia-600'>
+                      <ShieldAlert className='h-4 w-4' />
+
+                      <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
+                        Important Customer
+                      </p>
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <div className='flex items-center'>
+                  <p className='text-center text-base md:text-md font-semibold text-gray-700'>
+                    "Project Order Details Empty"
                   </p>
-                </span>
-
-                {customer.status?.length > 0 && (
-                  <span className='inline-flex items-center justify-center align-middle rounded-full border border-emerald-500 mr-3 px-2.5 py-0.5 text-emerald-600'>
-                    <PhoneIncoming className='h-4 w-4' />
-
-                    <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
-                      {customer.status}
-                    </p>
-                  </span>
-                )}
-
-                {customer.is_flagged && (
-                  <span className='inline-flex items-center justify-center align-middle rounded-full border border-red-500 mr-3 px-2.5 py-0.5 text-red-600'>
-                    <ShieldAlert className='h-4 w-4' />
-
-                    <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
-                      Critical
-                    </p>
-                  </span>
-                )}
-                {customer.is_featured && (
-                  <span className='inline-flex items-center justify-center align-middle rounded-full border border-fuchsia-500 px-2.5 py-0.5 text-fuchsia-600'>
-                    <ShieldAlert className='h-4 w-4' />
-
-                    <p className='whitespace-nowrap text-sm px-2 hidden md:block'>
-                      Important Customer
-                    </p>
-                  </span>
-                )}
-              </div>
+                </div>
+              )}
               <div className='flex md:gap-6'>
                 <div className='flex text-sm md:text-base font-normal text-gray-600'>
                   <span className='items-center justify-center align-middle'>
@@ -279,6 +310,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                     </Button> */}
                   </div>
                 </div>
+                {/* We will need to do Daisychaining here to fetch data - whether customer.officeNotes is >0 or an empty array display something or just say not notes yet something like this */}
                 <div className='mt-4 border-t border-gray-100'>
                   <dl className=' mt-2'>
                     <div className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'>
@@ -292,11 +324,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                       </div>
                       <div className='flex sm:border-b sm:pb-3'>
                         <dt className='text-sm font-medium text-gray-900 pr-5'>
-                          Notes: The customer does not currently have a sink
-                          installed in their space but is still want to get an
-                          install date. Please be aware that this customer is
-                          NOT the best sandwich in the bag. Contractor doesn't
-                          answer calls.
+                          {customer.officeNotes[0].note}
                         </dt>
                       </div>
                     </div>

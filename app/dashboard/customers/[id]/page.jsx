@@ -1,5 +1,7 @@
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import Note from '@/models/Note'
+import Project from '@/models/Project'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 import CustomerDetails from '@/components/CustomerDetails'
@@ -26,9 +28,14 @@ const CustomerPage = async ({ params }) => {
 
   // Populate the projects array (this assumes your Customer model's projects field
   // is defined as an array of ObjectIds referencing 'Project')
-  const customerDoc = await Customer.findById(id).populate('projects').lean()
+  const customerDoc = await Customer.findById(id)
+    .populate('projects')
+    .populate('officeNotes')
+    .lean()
 
   const customer = convertToSerializeableObject(customerDoc)
+
+  console.log(customerDoc)
 
   if (!customer) {
     notFound() // Returns a 404 page if no customer is found

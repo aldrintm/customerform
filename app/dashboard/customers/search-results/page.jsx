@@ -108,38 +108,28 @@ const SearchResults = async ({ searchParams }) => {
               {/* Render Customer results */}
               {combinedResults.customers.length > 0 && (
                 <div className='grid grid-cols-1 gap-6'>
-                  <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
+                  <div className='container flex items-center justify-between px-2 py-2 mt-8 text-md md:text-md text-blue-500 font-semibold'>
                     Results from Customers Page
                   </div>
                   <table className='w-full divide-y-2 divide-gray-200 bg-white text-sm'>
                     <thead className='text-left'>
                       <tr>
                         <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
-                          Customer
+                          Customer Name
                         </th>
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                           Status
                         </th>
-                        <th className='whitespace-nowrap px-4 py-3 text-center font-sm text-gray-600'>
+                        <th className='whitespace-nowrap px-4 py-3 pl-8 font-sm text-gray-600'>
                           Address
                         </th>
 
-                        <th className='whitespace-nowrap px-4 py-3 pl-8 font-sm text-gray-600'>
-                          Phone/Email
-                        </th>
-
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          Store
+                          Phone + Email
                         </th>
 
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                           View
-                        </th>
-                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          PO#'s'
-                        </th>
-                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          Action
                         </th>
                       </tr>
                     </thead>
@@ -198,11 +188,6 @@ const SearchResults = async ({ searchParams }) => {
                             </div>
                           </td>
 
-                          <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {customer?.projects?.customerType || 'n/a'}{' '}
-                            {customer?.projects?.storeId || ''}
-                          </td>
-
                           <td className='whitespace-nowrap px-4 py-2 text-sm'>
                             <Link
                               href={`/dashboard/customers/${customer._id}`}
@@ -227,17 +212,8 @@ const SearchResults = async ({ searchParams }) => {
                               </span>
                             </Link>
                           </td>
-                          <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            <div className='grid grid-flow-row'>
-                              <p>
-                                {
-                                  customer?.projects?.purchaseOrders
-                                    ?.purchaseOrderNumber
-                                }
-                              </p>
-                            </div>
-                          </td>
-                          <td className='whitespace-nowrap px-4 py-2 text-sm'>
+
+                          {/* <td className='whitespace-nowrap px-4 py-2 text-sm'>
                             <div className='flex gap-3'>
                               <Link
                                 href={`/dashboard/customers/${customer._id}/edit`}
@@ -245,7 +221,7 @@ const SearchResults = async ({ searchParams }) => {
                                 <Button>Edit</Button>
                               </Link>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>
@@ -256,38 +232,35 @@ const SearchResults = async ({ searchParams }) => {
               {/* Products Section */}
               {combinedResults.projects.length > 0 && (
                 <div className='grid grid-cols-1 gap-6'>
-                  <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
+                  <div className='container flex items-center justify-between px-2 py-2 mt-8 text-md md:text-md text-blue-500 font-semibold'>
                     Results from Products Page
                   </div>
                   <table className='w-full divide-y-2 divide-gray-200 bg-white text-sm'>
                     <thead className='text-left'>
                       <tr>
                         <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
-                          Customer
+                          Customer Name
                         </th>
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                           Status
                         </th>
-                        <th className='whitespace-nowrap px-4 py-3 text-center font-sm text-gray-600'>
+                        <th className='whitespace-nowrap px-4 py-3 pl-8 font-sm text-gray-600'>
                           Address
                         </th>
 
-                        <th className='whitespace-nowrap px-4 py-3 pl-8 font-sm text-gray-600'>
-                          Phone/Email
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          Phone + Email
                         </th>
 
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          Store
+                          Store + ID
                         </th>
 
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          Purchase Orders
+                        </th>
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                           View
-                        </th>
-                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          PO#'s'
-                        </th>
-                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          Action
                         </th>
                       </tr>
                     </thead>
@@ -296,8 +269,8 @@ const SearchResults = async ({ searchParams }) => {
                         <tr key={project._id}>
                           {/* Populate customer data */}
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {project?.customer?.lastName}{' '}
-                            {project?.customer?.firstName}
+                            {project?.customer?.firstName}{' '}
+                            {project?.customer?.lastName}
                           </td>
                           <td className='whitespace-nowrap px-0 py-0 text-sm'>
                             {project.status === 'will call' ? (
@@ -346,11 +319,18 @@ const SearchResults = async ({ searchParams }) => {
                           </td>
 
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {project.customer?.customerType || ''}{' '}
-                            {project.customer?.storeId || ''}
+                            {project.customerType || ''} {project.storeId || ''}
                           </td>
 
-                          <td className='whitespace-nowrap px-4 py-2 text-sm'>
+                          <td className='whitespace-nowrap px-4 py-2 text-sm text-center text-gray-700'>
+                            {project.purchaseOrders.map((po, index) => (
+                              <div key={index} className='grid grid-flow-col'>
+                                <p>{po.purchaseOrderNumber}</p>
+                              </div>
+                            ))}
+                          </td>
+
+                          <td className='whitespace-nowrap px-4 py-2 text-sm text-center'>
                             <Link
                               href={`/dashboard/customers/${project.customer?._id}`}
                               className='inline-block rounded-full p-1 text-sm text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
@@ -374,17 +354,8 @@ const SearchResults = async ({ searchParams }) => {
                               </span>
                             </Link>
                           </td>
-                          <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            <div className='grid grid-flow-row'>
-                              <p>
-                                {
-                                  project.customer?.purchaseOrders
-                                    ?.purchaseOrderNumber
-                                }
-                              </p>
-                            </div>
-                          </td>
-                          <td className='whitespace-nowrap px-4 py-2 text-sm'>
+
+                          {/* <td className='whitespace-nowrap px-4 py-2 text-sm'>
                             <div className='flex gap-3'>
                               <Link
                                 href={`/dashboard/customers/${project.customer?._id}/editProject`}
@@ -392,7 +363,7 @@ const SearchResults = async ({ searchParams }) => {
                                 <Button>Edit</Button>
                               </Link>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       ))}
                     </tbody>

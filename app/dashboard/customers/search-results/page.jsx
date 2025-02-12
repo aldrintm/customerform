@@ -4,18 +4,19 @@ import Header from '@/components/Header'
 import SideNavbar from '@/components/SideNavbar'
 import Button from '@/components/Button'
 import connectDB from '@/config/db'
-import Customer from '@/models/OldCustomer'
+import Customer from '@/models/Customer'
 import Skater from '@/assets/images/skate-skateboard.gif'
 import Image from 'next/image'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 import { CircleArrowLeft, Undo2 } from 'lucide-react'
 import Card from '@/components/Card'
-import Project from '@/models/OldProject'
+import Project from '@/models/Project'
 
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
-const SearchResults = async ({ searchParams: { search } }) => {
+const SearchResults = async ({ searchParams }) => {
+  const { search } = await searchParams
   await connectDB()
 
   const customerPattern = new RegExp(search, 'i')
@@ -37,10 +38,15 @@ const SearchResults = async ({ searchParams: { search } }) => {
 
   // Query for Product collection
   let projectQuery = {
-    $or: [{ purchaseOrderNumber: projectPattern }, { status: projectPattern }],
+    $or: [
+      { 'purchaseOrders.purchaseOrderNumber': projectPattern },
+      { status: projectPattern },
+    ],
   }
 
-  const projectQueryResults = await Project.find(projectQuery).lean()
+  const projectQueryResults = await Project.find(projectQuery)
+    .populate('customer')
+    .lean()
   const projects = projectQueryResults.map(convertToSerializeableObject)
 
   // Combine both customer and product results
@@ -48,6 +54,8 @@ const SearchResults = async ({ searchParams: { search } }) => {
     customers: customers,
     projects: projects,
   }
+
+  console.log(combinedResults)
 
   return (
     <div className='flex min-h-screen w-full flex-col'>
@@ -69,7 +77,7 @@ const SearchResults = async ({ searchParams: { search } }) => {
             <h1>Search Results</h1>
           </div>
 
-          {/* Customers Section */}
+          {/* If no results, show a "nothing to see here" message */}
           {combinedResults.customers.length === 0 &&
           combinedResults.projects.length === 0 ? (
             <div className='container text-center bg-white'>
@@ -97,7 +105,7 @@ const SearchResults = async ({ searchParams: { search } }) => {
             </div>
           ) : (
             <>
-              {/* Customer Section */}
+              {/* Render Customer results */}
               {combinedResults.customers.length > 0 && (
                 <div className='grid grid-cols-1 gap-6'>
                   <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
@@ -168,6 +176,10 @@ const SearchResults = async ({ searchParams: { search } }) => {
                               <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                                 completed
                               </div>
+                            ) : customer.status === '' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
+                                n/a
+                              </div>
                             ) : null}
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
@@ -187,7 +199,8 @@ const SearchResults = async ({ searchParams: { search } }) => {
                           </td>
 
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {customer.storeName} {customer.storeId}
+                            {customer?.projects?.customerType || 'n/a'}{' '}
+                            {customer?.projects?.storeId || ''}
                           </td>
 
                           <td className='whitespace-nowrap px-4 py-2 text-sm'>
@@ -216,7 +229,12 @@ const SearchResults = async ({ searchParams: { search } }) => {
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                             <div className='grid grid-flow-row'>
-                              <p>{customer.purchaseOrderNumber}</p>
+                              <p>
+                                {
+                                  customer?.projects?.purchaseOrders
+                                    ?.purchaseOrderNumber
+                                }
+                              </p>
                             </div>
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 text-sm'>
@@ -239,7 +257,7 @@ const SearchResults = async ({ searchParams: { search } }) => {
               {combinedResults.projects.length > 0 && (
                 <div className='grid grid-cols-1 gap-6'>
                   <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
-                    Results from Customers Page
+                    Results from Products Page
                   </div>
                   <table className='w-full divide-y-2 divide-gray-200 bg-white text-sm'>
                     <thead className='text-left'>
@@ -278,31 +296,31 @@ const SearchResults = async ({ searchParams: { search } }) => {
                         <tr key={project._id}>
                           {/* Populate customer data */}
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {customerWithCapitalizedNames(project.lastName)}{' '}
-                            {customerWithCapitalizedNames(project.firstName)}
+                            {project?.customer?.lastName}{' '}
+                            {project?.customer?.firstName}
                           </td>
                           <td className='whitespace-nowrap px-0 py-0 text-sm'>
-                            {customer.status === 'will call' ? (
+                            {project.status === 'will call' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                                 will call
                               </div>
-                            ) : customer.status === 'for template' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
+                            ) : project.status === 'for template' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                                 for template
                               </div>
-                            ) : customer.status === 'pending' ? (
+                            ) : project.status === 'pending' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
                                 pending
                               </div>
-                            ) : customer.status === 'for install' ? (
+                            ) : project.status === 'for install' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                                 for install
                               </div>
-                            ) : customer.status === 'service' ? (
+                            ) : project.status === 'service' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
                                 service
                               </div>
-                            ) : customer.status === 'completed' ? (
+                            ) : project.status === 'completed' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                                 completed
                               </div>
@@ -310,27 +328,31 @@ const SearchResults = async ({ searchParams: { search } }) => {
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
                             <div className='grid grid-rows-2'>
-                              <p>{customer.address.street}</p>
+                              <p>{project.customer?.address?.street}</p>
                               <p>
-                                {customer.address.city} {customer.address.state}{' '}
-                                {customer.address.zipcode}
+                                {project.customer?.address?.city}{' '}
+                                {project.customer?.address?.state}{' '}
+                                {project.customer?.address?.zipcode}
                               </p>
                             </div>
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                             <div className='grid grid-rows-2'>
-                              <p>{customer.email}</p>
-                              <p>{formatPhoneNumber(customer.phone)}</p>
+                              <p>{project.customer?.email}</p>
+                              <p>
+                                {formatPhoneNumber(project.customer?.phone)}
+                              </p>
                             </div>
                           </td>
 
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {customer.storeName} {customer.storeId}
+                            {project.customer?.customerType || ''}{' '}
+                            {project.customer?.storeId || ''}
                           </td>
 
                           <td className='whitespace-nowrap px-4 py-2 text-sm'>
                             <Link
-                              href={`/dashboard/customers/${customer._id}`}
+                              href={`/dashboard/customers/${project.customer?._id}`}
                               className='inline-block rounded-full p-1 text-sm text-sky-500 border hover:ring-2 hover:ring-blue-400 hover:text-sky-500 focus:outline-none focus:ring active:text-sky-500'
                             >
                               <span className='text-xs font-sm'>
@@ -354,13 +376,18 @@ const SearchResults = async ({ searchParams: { search } }) => {
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                             <div className='grid grid-flow-row'>
-                              <p>{customer.purchaseOrderNumber}</p>
+                              <p>
+                                {
+                                  project.customer?.purchaseOrders
+                                    ?.purchaseOrderNumber
+                                }
+                              </p>
                             </div>
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 text-sm'>
                             <div className='flex gap-3'>
                               <Link
-                                href={`/dashboard/customers/${customer._id}/edit`}
+                                href={`/dashboard/customers/${project.customer?._id}/editProject`}
                               >
                                 <Button>Edit</Button>
                               </Link>

@@ -87,12 +87,21 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     <>
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Page Details Title */}
-        <div className='hidden md:grid md:grid-cols-1'>
+        <div className='hidden md:grid md:grid-cols-2 '>
           <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
             Customer Details Page
           </div>
+          <div className=''>
+            {/* <Button onClick={window.print}>Print File</Button> */}
+            {/* Other buttons like Edit, Delete */}
+            {/* <Link
+              href={`/dashboard/customers/${customer._id}/print`}
+              target='_blank'
+              rel='noopener noreferrer'
+            ></Link> */}
+          </div>
         </div>
-        <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:block'>
+        <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:mt-8 print:block'>
           {/* Customer Quick Top Contact Details*/}
           <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
             <div className='grid grid-cols gap-2 align-middle'>
@@ -192,7 +201,9 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   <h3 className='text-base font-semibold text-gray-700'>
                     Customer Profile Details
                   </h3>
-                  <div className='flex gap-4'>
+
+                  <div className='flex gap-4 print:hidden'>
+                    <Button onClick={window.print}>Print File</Button>
                     <Button>
                       <Link
                         href={`/dashboard/customers/${customer._id}/editCustomer`}
@@ -250,7 +261,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         {formatPhoneNumber(customer.phone)}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
                       <dt className='text-sm font-medium text-gray-900 pr-2'>
                         Email:
                       </dt>
@@ -267,7 +278,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         {formatPhoneNumber(customer.contractorPhone)}
                       </dd>
                     </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
+                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
                       <dt className='text-sm font-medium text-gray-900 pr-2'>
                         Order Notes:
                       </dt>
@@ -367,13 +378,13 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
           {/* 2nd Main Box - Project + Mapbox */}
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* Project Order Details Box */}
-            <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4'>
+            <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:mb-8 print:border-b-2'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
                     Project Order Details
                   </h3>
-                  <div className='flex gap-4'>
+                  <div className='flex gap-4 print:hidden'>
                     <Button>
                       <Link
                         href={`/dashboard/customers/${customer._id}/project`}
@@ -418,7 +429,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         return (
                           <div
                             key={index}
-                            className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'
+                            className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'
                           >
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               PO Number:
@@ -545,7 +556,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
         {/* Break */}
         {/* Template and Install Dates + Signature */}
         <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block print:block'>
-          {customer.status === 'will call' ? (
+          {customer?.projects[0]?.status === 'will call' ? (
             <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2'>
               <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                 <span className=''>Template Date: Jan 3, 2025</span>
@@ -557,7 +568,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 template. Contractor present and approved all overhangs
               </div>
             </div>
-          ) : customer.status === 'for install' ? (
+          ) : customer?.projects[0]?.status === 'for install' ? (
             <>
               <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden'>
                 <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>

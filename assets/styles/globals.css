@@ -12,3 +12,22 @@
     transform: rotate(360deg);
   }
 }
+
+@media print {
+  /* Hide your own header/footer elements */
+  /* header,
+  footer,
+  .no-print {
+    display: none;
+  } */
+
+  /* Attempt to remove page margins */
+  /* @page {
+    margin: 0;
+  } */
+
+  /* Add some margin to the body to avoid clipping content */
+  /* body {
+    margin: 1cm;
+  } */
+}

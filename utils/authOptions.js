@@ -30,18 +30,18 @@ export const authOptions = {
       // 3. if not, add the user in the db manually through the dashboard by the admin user only
       if (!user) {
         // Option A: Block Sign in
-        return false
+        // return false
         // or
         // redirect('/')
 
         // Option B: Create a new user (not sure if we should)
         // if we need to create below - Truncate username if  too long
         // const username = profile.name.slice(0, 20)
-        // await User.create({
-        //   email: profile.email,
-        //   username: profile.name.slice(0, 20),
-        //   image: profile.picture,
-        // })
+        await User.create({
+          email: profile.email,
+          username: profile.name.slice(0, 20),
+          image: profile.picture,
+        })
       }
       // 4. Sign in is allowed - return true to proceed with the authentication flow
       return true

@@ -15,6 +15,7 @@ import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedN
 import deleteCustomer from '@/app/actions/deleteCustomer'
 import { toast } from 'react-toastify'
 import Map from '@/assets/images/mapbox.webp'
+import CustomerMap from './CustomerMap'
 
 const CustomerDetails = ({ customer: initialCustomer }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
@@ -60,6 +61,10 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   //   setProject(updatedProject)
   //   toast.success(`${projectId} is DELETED!`)
   // }
+
+  const printFile = async (customerId) => {
+    window.print()
+  }
 
   // this replaces the handleDeleteProject above
   const handleDeleteProject = async (projectId) => {
@@ -203,7 +208,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   </h3>
 
                   <div className='flex gap-4 print:hidden'>
-                    <Button onClick={window.print}>Print File</Button>
+                    <Button onClick={printFile}>Print File</Button>
                     <Button>
                       <Link
                         href={`/dashboard/customers/${customer._id}/editCustomer`}
@@ -368,7 +373,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 ) : (
                   <div className='flex items-center justify-center h-3/4 '>
                     <p className='text-center text-base md:text-lg font-semibold text-gray-700'>
-                      Notes NOT found
+                      No Notes to See
                     </p>
                   </div>
                 )}
@@ -536,15 +541,13 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
             {/* Mapbox Div */}
             <div className='hidden md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative'>
               <div className=''>
-                <Image
+                <CustomerMap customer={customer} />
+                {/* <Image
                   src={Map}
                   alt='map'
                   priority={true}
                   className='object-cover w-full h-full grayscale'
-                />
-                {/* <p className='text-sm my-auto mx-auto'>
-              Let's place a quick snapshot here of the site
-            </p> */}
+                /> */}
               </div>
               <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl text-gray-500 font-extrabold'>
                 add map later
@@ -555,52 +558,60 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
         {/* ... */}
         {/* Break */}
         {/* Template and Install Dates + Signature */}
-        <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block print:block'>
-          {customer?.projects[0]?.status === 'will call' ? (
-            <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2'>
-              <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                <span className=''>Template Date: Jan 3, 2025</span>
-                <span>Measured By: Anilber Pena</span>
-              </div>
-
-              <div className='sm:p-4 md:col-span-2'>
-                Template Notes: There's no sink on site, I only took the sink
-                template. Contractor present and approved all overhangs
-              </div>
-            </div>
-          ) : customer?.projects[0]?.status === 'for install' ? (
-            <>
-              <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden'>
+        {customer.projects && customer.projects.length > 0 ? (
+          <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block print:block'>
+            {customer?.projects[0]?.status === 'will call' ? (
+              <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2'>
                 <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                   <span className=''>Template Date: Jan 3, 2025</span>
                   <span>Measured By: Anilber Pena</span>
                 </div>
+
                 <div className='sm:p-4 md:col-span-2'>
                   Template Notes: There's no sink on site, I only took the sink
                   template. Contractor present and approved all overhangs
                 </div>
               </div>
-              <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'>
-                <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                  <span className=''>Install Date: Jan 25, 2025</span>
-                  <span>Installed By: Ruben Oronia</span>
+            ) : customer?.projects[0]?.status === 'for install' ? (
+              <>
+                <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden'>
+                  <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                    <span className=''>Template Date: Jan 3, 2025</span>
+                    <span>Measured By: Anilber Pena</span>
+                  </div>
+                  <div className='sm:p-4 md:col-span-2'>
+                    Template Notes: There's no sink on site, I only took the
+                    sink template. Contractor present and approved all overhangs
+                  </div>
                 </div>
+                <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'>
+                  <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                    <span className=''>Install Date: Jan 25, 2025</span>
+                    <span>Installed By: Ruben Oronia</span>
+                  </div>
 
-                <div className='sm:p-4 md:col-span-2'>
-                  Installation Notes: Contractor want to preserve the tiles,
-                  please protect the floor as much as you can. They will keep
-                  the sink so try to save it.
+                  <div className='sm:p-4 md:col-span-2'>
+                    Installation Notes: Contractor want to preserve the tiles,
+                    please protect the floor as much as you can. They will keep
+                    the sink so try to save it.
+                  </div>
+                  <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                    <span className=''>
+                      Sign On Install: ________________________
+                    </span>
+                    <span>Print Name: ________________________</span>
+                  </div>
                 </div>
-                <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                  <span className=''>
-                    Sign On Install: ________________________
-                  </span>
-                  <span>Print Name: ________________________</span>
-                </div>
-              </div>
-            </>
-          ) : null}
-        </div>
+              </>
+            ) : null}
+          </div>
+        ) : (
+          <div className='flex items-center justify-center h-3/4 '>
+            <p className='text-center text-base md:text-lg font-semibold text-gray-700'>
+              No Schedules Found
+            </p>
+          </div>
+        )}
       </div>
     </>
   )

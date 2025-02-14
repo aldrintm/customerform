@@ -35,8 +35,6 @@ const CustomerPage = async ({ params }) => {
 
   const customer = convertToSerializeableObject(customerDoc)
 
-  console.log(customerDoc)
-
   if (!customer) {
     notFound() // Returns a 404 page if no customer is found
   }

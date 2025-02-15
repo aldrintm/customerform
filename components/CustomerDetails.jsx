@@ -390,7 +390,11 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                     Project Order Details
                   </h3>
                   <div className='flex gap-4 print:hidden'>
-                    <Button>
+                    <Button
+                      icon={
+                        <Plus className='h-4 w-4 text-xs hover:text-white' />
+                      }
+                    >
                       <Link
                         href={`/dashboard/customers/${customer._id}/project`}
                       >
@@ -405,13 +409,13 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                       </Link>
                     </Button>
 
-                    <Button
+                    {/* <Button
                       onClick={() =>
                         handleDeleteProject(customer.projects[0]._id)
                       }
                     >
                       Delete
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
 
@@ -421,32 +425,36 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 customer.projects[0].purchaseOrders.length > 0 ? (
                   <div className='mt-4 border-t border-gray-100'>
                     <dl className='mt-1'>
-                      {customer.projects[0].purchaseOrders.map((po, index) => {
-                        // Format each purchase order date
-                        const poDate = new Date(po.purchaseOrderDate)
-                        const day = poDate.getDate().toString().padStart(2, '0')
-                        const month = poDate.toLocaleString('en-US', {
-                          month: 'long',
-                        })
-                        const year = poDate.getFullYear()
-                        const formattedDate = `${month} ${day}, ${year}`
+                      {customer.projects[0].purchaseOrders
+                        .filter((po) => po.purchaseOrderDate)
+                        .map((po, index) => {
+                          const poDate = new Date(po.purchaseOrderDate)
+                          const day = poDate
+                            .getDate()
+                            .toString()
+                            .padStart(2, '0')
+                          const month = poDate.toLocaleString('en-US', {
+                            month: 'long',
+                          })
+                          const year = poDate.getFullYear()
+                          const formattedPoDate = `${month} ${day}, ${year}`
 
-                        return (
-                          <div
-                            key={index}
-                            className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'
-                          >
-                            <dt className='text-sm font-medium text-gray-900 pr-2'>
-                              PO Number:
-                            </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
-                              <span>{po.purchaseOrderNumber}</span>
-                              <span>{formattedDate}</span>
-                              <span>${po.purchaseOrderAmount}</span>
-                            </dd>
-                          </div>
-                        )
-                      })}
+                          return (
+                            <div
+                              key={index}
+                              className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'
+                            >
+                              <dt className='text-sm font-medium text-gray-900 pr-2'>
+                                PO Number:
+                              </dt>
+                              <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
+                                <span>{po.purchaseOrderNumber}</span>
+                                <span>{formattedPoDate}</span>
+                                <span>${po.purchaseOrderAmount}</span>
+                              </dd>
+                            </div>
+                          )
+                        })}
 
                       <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
                         <dt className='text-sm font-medium text-gray-900 pr-2'>

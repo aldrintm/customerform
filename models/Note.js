@@ -14,7 +14,6 @@ const NoteSchema = new Schema(
     },
     noteDate: {
       type: Date,
-      trim: true,
     },
     note: {
       type: String,

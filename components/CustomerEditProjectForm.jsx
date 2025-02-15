@@ -132,7 +132,7 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                 {/* PO Numbers, PO Date, PO Cost etc */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 pt-2 lg:gap-x-6'>
-                  {/* Purchase Order */}
+                  {/* Purchase Order 1 */}
                   <div className='col-span-3'>
                     <label
                       htmlFor='purchaseOrderNumber'
@@ -143,7 +143,7 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='text'
-                      id='purchaseOrderNumber'
+                      id='purchaseOrderNumber1'
                       name='purchaseOrderNumber1'
                       placeholder='Purchase Order #'
                       defaultValue={singlePo1}
@@ -161,7 +161,7 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='date'
-                      id='purchaseOrderDate'
+                      id='purchaseOrderDate1'
                       name='purchaseOrderDate1'
                       placeholder='Purchase order date'
                       defaultValue={formattedDate1}
@@ -198,7 +198,7 @@ const CustomerEditProjectForm = ({ customer }) => {
 
                     <input
                       type='number'
-                      id='squareFeet'
+                      id='squareFeet1'
                       name='squareFeet1'
                       placeholder='How many sqft?'
                       defaultValue={sqft1}
@@ -217,7 +217,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='number'
                       name='purchaseOrderAmount1'
-                      id='purchaseOrderAmount'
+                      id='purchaseOrderAmount1'
                       placeholder='PO cost ...'
                       defaultValue={poAmount1}
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
@@ -231,7 +231,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='text'
-                      id='purchaseOrderNumber'
+                      id='purchaseOrderNumber2'
                       name='purchaseOrderNumber2'
                       placeholder='Purchase Order #'
                       defaultValue={singlePo2}
@@ -242,7 +242,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='date'
-                      id='purchaseOrderDate'
+                      id='purchaseOrderDate2'
                       name='purchaseOrderDate2'
                       placeholder='Purchase order date'
                       defaultValue={formattedDate2}
@@ -253,7 +253,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      id='squareFeet'
+                      id='squareFeet2'
                       name='squareFeet2'
                       placeholder='How many sqft?'
                       defaultValue={sqft2}
@@ -265,7 +265,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='number'
                       name='purchaseOrderAmount2'
-                      id='purchaseOrderAmount'
+                      id='purchaseOrderAmount2'
                       placeholder='PO cost ...'
                       defaultValue={poAmount2}
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
@@ -279,7 +279,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='text'
-                      id='purchaseOrderNumber'
+                      id='purchaseOrderNumber3'
                       name='purchaseOrderNumber3'
                       placeholder='Purchase Order #'
                       defaultValue={singlePo3}
@@ -290,7 +290,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='date'
-                      id='purchaseOrderDate'
+                      id='purchaseOrderDate3'
                       name='purchaseOrderDate3'
                       placeholder='Purchase order date'
                       defaultValue={formattedDate3}
@@ -301,7 +301,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   <div className='col-span-3'>
                     <input
                       type='number'
-                      id='squareFeet'
+                      id='squareFeet3'
                       name='squareFeet3'
                       placeholder='How many sqft?'
                       defaultValue={sqft3}
@@ -313,7 +313,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                     <input
                       type='number'
                       name='purchaseOrderAmount3'
-                      id='purchaseOrderAmount'
+                      id='purchaseOrderAmount3'
                       placeholder='PO cost ...'
                       defaultValue={poAmount2}
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
@@ -359,9 +359,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       defaultValue={project?.materialType || ''}
                       className='mt-1 w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-sky-50'
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='Quartz'>Quartz</option>
                       <option value='Granite'>Granite</option>
                       <option value='SolidSurface'>Solid Surface</option>
@@ -389,9 +387,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.materialThickness || ''}
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='2cm'>2cm</option>
                       <option value='3cm'>3cm</option>
                       <option value='.5inch'>1/2"</option>
@@ -416,9 +412,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.materialBrand || ''}
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='Plamar Stock'>Plamar Stock</option>
                       <option value='Daltile'>Daltile</option>
                       <option value='Dellaterra'>Arizona Tile</option>
@@ -475,9 +469,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.materialFinish || ''}
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='Polished'>Polished</option>
                       <option value='Honed'>Honed</option>
                       <option value='Matte'>Matte</option>
@@ -532,9 +524,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkType || ''}
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='Undermount'>Undermount</option>
                       <option value='Topmount'>Topmount</option>
                       <option value='Farm'>Farm/Apron</option>
@@ -556,9 +546,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkQuantity || ''}
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='1'>1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
@@ -585,9 +573,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkLocation || ''}
                     >
-                      <option value='default' disabled>
-                        ---
-                      </option>
+                      <option value='default'></option>
                       <option value='House'>House</option>
                       <option value='Shop'>Shop</option>
                     </select>

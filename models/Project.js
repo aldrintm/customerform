@@ -36,7 +36,6 @@ const ProjectSchema = new Schema(
         },
         purchaseOrderDate: {
           type: Date,
-          trim: true,
         },
         squareFeet: {
           type: Number,

@@ -129,7 +129,6 @@ const ProjectForm = ({ customer }) => {
                       type='date'
                       id='purchaseOrderDate1'
                       name='purchaseOrderDate1'
-                      placeholder='Purchase order date'
                       className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -187,7 +186,6 @@ const ProjectForm = ({ customer }) => {
                       type='date'
                       id='purchaseOrderDate2'
                       name='purchaseOrderDate2'
-                      placeholder='Purchase order date'
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -231,7 +229,6 @@ const ProjectForm = ({ customer }) => {
                       type='date'
                       id='purchaseOrderDate3'
                       name='purchaseOrderDate3'
-                      placeholder='Purchase order date'
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>

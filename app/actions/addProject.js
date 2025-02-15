@@ -29,6 +29,33 @@ async function addProject(formData) {
 
   console.log('Customer ID:', customerId)
 
+  // Extract the date string from the form
+  const poDate1Str = formData.get('purchaseOrderDate1')
+  const poDate2Str = formData.get('purchaseOrderDate2')
+  const poDate3Str = formData.get('purchaseOrderDate3')
+  console.log('Raw purchaseOrderDate1:', poDate1Str)
+  console.log('Raw purchaseOrderDate1:', poDate2Str)
+  console.log('Raw purchaseOrderDate1:', poDate3Str)
+
+  // Convert to a Date object and validate
+  const poDate1 = new Date(poDate1Str)
+  if (!poDate1Str || isNaN(poDate1.getTime())) {
+    console.error('Invalid date for purchaseOrderDate1:', poDate1Str)
+    // Optionally, set it to null or throw an error
+  }
+
+  const poDate2 = new Date(poDate2Str)
+  if (!poDate2Str || isNaN(poDate2.getTime())) {
+    console.error('Invalid date for purchaseOrderDate2:', poDate2Str)
+    // Optionally, set it to null or throw an error
+  }
+
+  const poDate3 = new Date(poDate3Str)
+  if (!poDate3Str || isNaN(poDate3.getTime())) {
+    console.error('Invalid date for purchaseOrderDate3:', poDate3Str)
+    // Optionally, set it to null or throw an error
+  }
+
   const projectData = {
     customer: customerId,
     customerType: formData.get('storeName'),
@@ -37,19 +64,22 @@ async function addProject(formData) {
     purchaseOrders: [
       {
         purchaseOrderNumber: formData.get('purchaseOrderNumber1'),
-        purchaseOrderDate: formData.get('purchaseOrderDate1'),
+        purchaseOrderDate:
+          poDate1Str && !isNaN(poDate1.getTime()) ? poDate1 : null,
         squareFeet: formData.get('squareFeet1'),
         purchaseOrderAmount: formData.get('purchaseOrderAmount1'),
       },
       {
         purchaseOrderNumber: formData.get('purchaseOrderNumber2'),
-        purchaseOrderDate: formData.get('purchaseOrderDate2'),
+        purchaseOrderDate:
+          poDate2Str && !isNaN(poDate2.getTime()) ? poDate2 : null,
         squareFeet: formData.get('squareFeet2'),
         purchaseOrderAmount: formData.get('purchaseOrderAmount2'),
       },
       {
         purchaseOrderNumber: formData.get('purchaseOrderNumber3'),
-        purchaseOrderDate: formData.get('purchaseOrderDate3'),
+        purchaseOrderDate:
+          poDate3Str && !isNaN(poDate3.getTime()) ? poDate3 : null,
         squareFeet: formData.get('squareFeet3'),
         purchaseOrderAmount: formData.get('purchaseOrderAmount3'),
       },

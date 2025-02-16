@@ -6,9 +6,12 @@ const CustomerEditProjectForm = ({ customer }) => {
   const project = customer.projects[0]
   const updateProjectById = updateProject.bind(null, customer._id, project._id)
 
-  const formattedDates = project?.purchaseOrders?.map(
-    (po) => new Date(po.purchaseOrderDate).toISOString().split('T')[0]
-  )
+  const formattedDates = project?.purchaseOrders?.map((po) => {
+    if (!po.purchaseOrderDate) return ''
+    const date = new Date(po.purchaseOrderDate)
+    return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0]
+  })
+
   const formattedDate1 = formattedDates[0] || ''
   const formattedDate2 = formattedDates[1] || ''
   const formattedDate3 = formattedDates[2] || ''
@@ -546,7 +549,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkQuantity || ''}
                     >
-                      <option value='default'></option>
+                      <option value='default' disabled></option>
                       <option value='1'>1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
@@ -573,7 +576,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkLocation || ''}
                     >
-                      <option value='default'></option>
+                      <option value='default' disabled></option>
                       <option value='House'>House</option>
                       <option value='Shop'>Shop</option>
                     </select>

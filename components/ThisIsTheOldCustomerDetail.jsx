@@ -426,33 +426,18 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   <div className='mt-4 border-t border-gray-100'>
                     <dl className='mt-1'>
                       {customer.projects[0].purchaseOrders
-                        .filter(
-                          (po) =>
-                            // Only include the purchase order if at least one of these fields is present
-                            po.purchaseOrderNumber ||
-                            po.purchaseOrderDate ||
-                            po.squareFeet ||
-                            po.purchaseOrderAmount
-                        )
+                        .filter((po) => po.purchaseOrderDate)
                         .map((po, index) => {
-                          // Always render the PO information
-                          const rawDate = po.purchaseOrderDate
-                          let formattedPoDate = ''
-
-                          if (rawDate) {
-                            const poDate = new Date(rawDate)
-                            if (!isNaN(poDate.getTime())) {
-                              const day = poDate
-                                .getDate()
-                                .toString()
-                                .padStart(2, '0')
-                              const month = poDate.toLocaleString('en-US', {
-                                month: 'long',
-                              })
-                              const year = poDate.getFullYear()
-                              formattedPoDate = `${month} ${day}, ${year}`
-                            }
-                          }
+                          const poDate = new Date(po.purchaseOrderDate)
+                          const day = poDate
+                            .getDate()
+                            .toString()
+                            .padStart(2, '0')
+                          const month = poDate.toLocaleString('en-US', {
+                            month: 'long',
+                          })
+                          const year = poDate.getFullYear()
+                          const formattedPoDate = `${month} ${day}, ${year}`
 
                           return (
                             <div
@@ -463,24 +448,9 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                                 PO Number:
                               </dt>
                               <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
-                                {po.purchaseOrderNumber ? (
-                                  <span>{po.purchaseOrderNumber}</span>
-                                ) : (
-                                  <span></span>
-                                )}
-
-                                {/* Only render the date if formattedPoDate is not empty */}
-                                {formattedPoDate ? (
-                                  <span>{formattedPoDate}</span>
-                                ) : (
-                                  <span></span>
-                                )}
-
-                                {po.purchaseOrderAmount ? (
-                                  <span>${po.purchaseOrderAmount}</span>
-                                ) : (
-                                  <span></span>
-                                )}
+                                <span>{po.purchaseOrderNumber}</span>
+                                <span>{formattedPoDate}</span>
+                                <span>${po.purchaseOrderAmount}</span>
                               </dd>
                             </div>
                           )

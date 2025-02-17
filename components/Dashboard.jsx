@@ -20,7 +20,7 @@ const Dashboard = ({ customers }) => {
         </div>
         {/* Main Components Starts Here */}
         <div className='hidden md:grid md:grid-cols- xl:grid-cols-12 lg:gap-4'>
-          <div className='container px-2 col-span-8'>
+          <div className='container col-span-8 md:gap-4'>
             {/* Date + Weather + Total Customers */}
             <div className='container px-2 grid grid-cols-3 lg:gap-6'>
               <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg shadow-sm'>
@@ -39,7 +39,7 @@ const Dashboard = ({ customers }) => {
             </div>
 
             {/* Feature Box Here - Problem Customers */}
-            <div className='hidden md:grid md:grid-cols-1 py-4'>
+            <div className='hidden md:grid md:grid-cols-1 py-5'>
               <div className='col-span-8 bg-white border border-gray-300 rounded-lg p-4 m-2'>
                 <p className='text-sm my-auto mx-auto grid grid-cols-4 text-center'>
                   <span className='py-auto'>Create +</span>

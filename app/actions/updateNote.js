@@ -1,31 +1,34 @@
 'use server'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
+import Note from '@/models/Note'
 import Project from '@/models/Project'
 import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 // this action is added to the form to perform tasks
-async function updateNote(customerId, projectId, formData) {
+async function updateNote(noteId, newNoteText) {
   // connect to DB
   await connectDB()
 
-  // lets check for user session
-  const sessionUser = await getSessionUser()
+  if (!noteId) {
+    throw new Error('Note ID is required')
+  }
+  const updatedNote = await Note.findByIdAndUpdate(
+    noteId,
+    { note: newNoteText },
+    { new: true }
+  )
 
-  if (!sessionUser || !sessionUser.userId) {
-    throw new Error('User ID is required')
+  if (!updatedNote) {
+    throw new Error('Note Not Found')
   }
 
-  // lets get the userId then
-  const { userId } = sessionUser
+  revalidatePath(`/dashboard/customers/$(updatedNote.customer)`)
 
-  const project = await Project.findById(projectId)
-
-  if (!project) {
-    throw new Error('Project not found')
-  }
+  // Convert to a plain object and return
+  return JSON.parse(JSON.stringify(updatedNote))
 }
 
 export default updateNote

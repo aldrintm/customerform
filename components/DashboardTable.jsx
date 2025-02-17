@@ -10,7 +10,7 @@ import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 
 const DashboardTablePage = ({ customers }) => {
-  const limitedCustomers = customers.slice(0, 6)
+  const limitedCustomers = customers.slice(0, 9)
 
   return (
     <section className=''>

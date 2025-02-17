@@ -383,7 +383,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 {/* We will need to do Daisychaining here to fetch data - whether customer.officeNotes is >0 or an empty array display something or just say not notes yet something like this */}
                 {sortedNotes && sortedNotes.length > 0 ? (
                   <div className='mt-4 border-t border-gray-100'>
-                    <dl className=' mt-2'>
+                    <dl className=' mt-1'>
                       {sortedNotes.map((note, index) => {
                         // Format each purchase order date
                         const date = new Date(note.createdAt)
@@ -488,6 +488,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   </div>
                   <div className='text-md text-gray-800 py-4'>
                     <p>{selectedNote.note}</p>
+                    {/* if we need to edit in the modal we can turn this on later */}
                     {/* <textarea
                       className='w-full border p-4 rounded-xl'
                       value={editedNote}
@@ -496,13 +497,14 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                     ></textarea> */}
                   </div>
                   <div className='mt-4 flex justify-end'>
-                    <span>
+                    {/* selectedNote changed to null takes us off from the modal */}
+                    <span className='pr-0'>
                       <Button onClick={() => setSelectedNote(null)}>
                         close
                       </Button>
                     </span>
                     {/* <span>
-                      <Button onClick={handleSaveNote}>Save</Button>
+                      <Button onClick={handleSaveNote}>save</Button>
                     </span> */}
                   </div>
                 </div>

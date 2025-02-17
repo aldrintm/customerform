@@ -10,7 +10,6 @@ import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 
 const TableComponentPage = ({ customers }) => {
-  console.log(customers)
   return (
     <section>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>

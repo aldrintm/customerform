@@ -44,8 +44,8 @@ async function addCustomer(formData) {
   // save it in our DB
   await newCustomer.save()
 
-  // this will clear cached data in our form/memory
-  revalidatePath('/')
+  // this will clear cached data in the memory
+  revalidatePath('/dashboard')
 
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)

@@ -12,7 +12,6 @@ import { Plus } from 'lucide-react'
 
 const DashboardTemplateSchedule = ({ customers }) => {
   const limitedCustomers = customers.slice(0, 4)
-  console.log(limitedCustomers)
 
   const currentDate = format(new Date(), 'MMMM dd, yyyy')
 

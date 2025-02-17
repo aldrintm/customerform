@@ -16,11 +16,15 @@ import deleteCustomer from '@/app/actions/deleteCustomer'
 import { toast } from 'react-toastify'
 import Map from '@/assets/images/mapbox.webp'
 import CustomerMap from './CustomerMap'
+import updateNote from '@/app/actions/updateNote' // this server action for updating a note
+import deleteNote from '@/app/actions/deleteNote'
 
 const CustomerDetails = ({ customer: initialCustomer }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
   const [customer, setCustomers] = useState(initialCustomer)
   const [project, setProject] = useState('')
+  const [selectedNote, setSelectedNote] = useState(null)
+  const [editedNote, setEditedNote] = useState('')
 
   // const dateObj = new Date(
   //   customer.projects[0].purchaseOrders[0].purchaseOrderDate
@@ -50,6 +54,8 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     setCustomers(updatedCustomers)
     toast.success(`${customerId} is DELETED!`)
   }
+
+  // console.log(customer)
 
   // const handleDeleteProject = async (projectId) => {
   //   const confirmed = window.confirm('Delete the project?')
@@ -85,6 +91,54 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
         projects: updatedProjects,
       })
       toast.success(`${projectId} is DELETED!`)
+    }
+  }
+
+  const sortedNotes = customer.officeNotes
+    ? [...customer.officeNotes].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      )
+    : []
+
+  // When a note is clicked, open the modal and load its note text into state.
+  const handleNoteClick = (note) => {
+    setSelectedNote(note)
+    setEditedNote(note.note)
+  }
+
+  // When the user saves the note:
+  const handleSaveNote = async () => {
+    // Call your updateNote server action.
+    // updateNote should accept the note ID and new note text.
+    try {
+      await updateNote(selectedNote._id, editedNote)
+      // Optionally update the local customer.officeNotes array so the UI reflects the change.
+      const updatedNotes = sortedNotes.map((n) =>
+        n._id === selectedNote._id ? { ...n, note: editedNote } : n
+      )
+      setCustomers({ ...customer, officeNotes: updatedNotes })
+      setSelectedNote(null)
+    } catch (error) {
+      console.error('Failed to update note', error)
+    }
+  }
+
+  // Handler to delete a note.
+  const handleDeleteNote = async (noteId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this note?'
+    )
+    if (!confirmed) return
+
+    try {
+      await deleteNote(noteId, customer._id)
+      // Update local state by filtering out the deleted note.
+      const updatedNotes = sortedNotes.filter((note) => note._id !== noteId)
+      setCustomers({ ...customer, officeNotes: updatedNotes })
+      toast.success('Note deleted successfully.')
+    } catch (error) {
+      console.error('Error deleting note:', error)
+      toast.error('Failed to delete note.')
     }
   }
 
@@ -327,12 +381,12 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   </div>
                 </div>
                 {/* We will need to do Daisychaining here to fetch data - whether customer.officeNotes is >0 or an empty array display something or just say not notes yet something like this */}
-                {customer.officeNotes && customer.officeNotes.length > 0 ? (
+                {sortedNotes && sortedNotes.length > 0 ? (
                   <div className='mt-4 border-t border-gray-100'>
                     <dl className=' mt-2'>
-                      {customer.officeNotes.map((note, index) => {
+                      {sortedNotes.map((note, index) => {
                         // Format each purchase order date
-                        const date = new Date(note.noteDate)
+                        const date = new Date(note.createdAt)
                         const day = date.getDate().toString().padStart(2, '0')
                         const month = date.toLocaleString('en-US', {
                           month: 'long',
@@ -343,21 +397,43 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         return (
                           <div
                             key={index}
-                            className='px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'
+                            onClick={() => {
+                              setSelectedNote(note)
+                              setEditedNote(note.note)
+                            }}
+                            className='relative cursor-pointer px-4 py-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:px-0 flex items-stretch'
                           >
-                            <div className='flex'>
+                            <dl className='flex sm:border-b sm:py-2'>
                               <dt className='text-sm font-medium text-gray-900 pr-5'>
-                                {formattedDate}
+                                <span className='font-medium text-gray-600 pr-2'>
+                                  {formattedDate}
+                                </span>
                               </dt>
-                              <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                                By: {note.staff}
-                              </dd>
-                            </div>
-                            <div className='flex sm:border-b sm:pb-3'>
-                              <dt className='text-sm font-medium text-gray-900 pr-5'>
-                                {note.note}
+                              <dt className='text-sm text-gray-700 sm:col-span-2 sm:mt-0 pr-5'>
+                                <span className='font-medium text-gray-600 pr-2'>
+                                  By:
+                                </span>
+                                {note.staff?.username || 'tbd'}
                               </dt>
-                            </div>
+                              <dt className='text-sm font-medium text-gray-700 pr-5'>
+                                <span className='font-medium text-gray-800 pr-2'>
+                                  Note:
+                                </span>
+                                {note.note.length > 20
+                                  ? note.note.substring(0, 30) + ' ....'
+                                  : note.note}
+                              </dt>
+                            </dl>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation() // Prevent any parent onClick events
+                                handleDeleteNote(note._id, customer._id)
+                              }}
+                              className='absolute top-2 right-0 text-sm text-red-400 font-nomral'
+                              aria-label='Delete note'
+                            >
+                              x
+                            </button>
                           </div>
                         )
                       })}
@@ -379,6 +455,59 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 )}
               </div>
             </div>
+            {/* Modal for displaying full note details */}
+            {selectedNote && (
+              <div
+                className='fixed inset-0 flex items-center justify-center z-50'
+                onClick={() => setSelectedNote(null)}
+              >
+                {/* Modal overlay */}
+                <div className='fixed inset-0 bg-black opacity-60'></div>
+                {/* Modal content */}
+                <div
+                  className='relative bg-white p-8 rounded-xl shadow-lg max-w-md w-full z-10'
+                  onClick={(e) => e.stopPropagation()} // Prevent modal closing when clicking inside content
+                >
+                  <div className='flex justify-between mb-4 border-b pb-4'>
+                    {/* Format the date for the selected note */}
+                    {selectedNote.createdAt && (
+                      <p className='text-md text-gray-500'>
+                        {new Date(selectedNote.createdAt).toLocaleDateString(
+                          'en-US',
+                          {
+                            month: 'long',
+                            day: '2-digit',
+                            year: 'numeric',
+                          }
+                        )}
+                      </p>
+                    )}
+                    <p className='text-md text-gray-500 font-semibold'>
+                      By: {selectedNote.staff?.username || 'Unknown'}
+                    </p>
+                  </div>
+                  <div className='text-md text-gray-800 py-4'>
+                    <p>{selectedNote.note}</p>
+                    {/* <textarea
+                      className='w-full border p-4 rounded-xl'
+                      value={editedNote}
+                      onChange={(e) => setEditedNote(e.target.value)}
+                      rows={6}
+                    ></textarea> */}
+                  </div>
+                  <div className='mt-4 flex justify-end'>
+                    <span>
+                      <Button onClick={() => setSelectedNote(null)}>
+                        close
+                      </Button>
+                    </span>
+                    {/* <span>
+                      <Button onClick={handleSaveNote}>Save</Button>
+                    </span> */}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           {/* 2nd Main Box - Project + Mapbox */}
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>

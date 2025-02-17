@@ -19,7 +19,7 @@ const NotesForm = ({ customer }) => {
             <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
               <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white p-4 md:border border-gray-300 md:rounded-md'>
                 {/* Customer Name */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 py-2 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-1 px-4 py-2 lg:gap-x-6'>
                   <div>
                     <div className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'>
                       Customer:{' '}
@@ -46,7 +46,7 @@ const NotesForm = ({ customer }) => {
                       type='date'
                       id='noteDate'
                       name='noteDate'
-                      required
+                      defaultValue={new Date().toISOString().split('T')[0]}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>

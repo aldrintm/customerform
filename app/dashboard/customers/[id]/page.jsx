@@ -30,7 +30,13 @@ const CustomerPage = async ({ params }) => {
   // is defined as an array of ObjectIds referencing 'Project')
   const customerDoc = await Customer.findById(id)
     .populate('projects')
-    .populate('officeNotes')
+    .populate({
+      path: 'officeNotes',
+      populate: {
+        path: 'staff',
+        select: 'username', // only fetch the username (and _id)
+      },
+    })
     .lean()
 
   const customer = convertToSerializeableObject(customerDoc)

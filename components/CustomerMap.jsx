@@ -1,6 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { setDefaults, fromAddress } from 'react-geocode'
+import Map, { Marker } from 'react-map-gl/mapbox'
+
+import Image from 'next/image'
+import pin from '@/assets/images/pin.svg'
+import Spinner from './Spinner'
 
 const CustomerMap = ({ customer }) => {
   const [lat, setLat] = useState(null)
@@ -48,7 +53,24 @@ const CustomerMap = ({ customer }) => {
     fetchCoords()
   }, [])
 
-  return <div>Map</div>
+  if (loading) return <Spinner />
+
+  if (geocodeError) return <div className='text-xl'>No Location Data Found</div>
+
+  return (
+    !loading && (
+      <Map
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+        initialViewState={{
+          longitude: -122.03986,
+          latitude: 37.60027,
+          zoom: 10,
+        }}
+        style={{ width: 600, height: 400 }}
+        mapStyle='mapbox://styles/mapbox/streets-v8'
+      />
+    )
+  )
 }
 
 export default CustomerMap

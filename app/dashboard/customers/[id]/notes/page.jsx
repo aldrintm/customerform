@@ -5,10 +5,12 @@ import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
+export const revalidate = 60
+
 const AddNotesPage = async ({ params }) => {
   const { id } = await params
   await connectDB()
-  const customerDocs = await Customer.findById(id).lean() 
+  const customerDocs = await Customer.findById(id).lean()
   const customer = convertToSerializeableObject(customerDocs)
 
   if (!customer) {

@@ -66,8 +66,8 @@ const CustomerMap = ({ customer }) => {
           latitude: 37.60027,
           zoom: 10,
         }}
-        style={{ width: 600, height: 400 }}
-        mapStyle='mapbox://styles/mapbox/streets-v8'
+        style={{ height: 400 }}
+        mapStyle='mapbox://styles/mapbox/streets-v12'
       />
     )
   )

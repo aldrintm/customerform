@@ -370,7 +370,10 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         <Plus className='h-4 w-4 text-xs hover:text-white' />
                       }
                     >
-                      <Link href={`/dashboard/customers/${customer._id}/notes`}>
+                      <Link
+                        href={`/dashboard/customers/${customer._id}/notes`}
+                        prefetch
+                      >
                         Add
                       </Link>
                     </Button>
@@ -521,24 +524,27 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                     Project Order Details
                   </h3>
                   <div className='flex gap-4 print:hidden'>
-                    <Button
-                      icon={
-                        <Plus className='h-4 w-4 text-xs hover:text-white' />
-                      }
-                    >
-                      <Link
-                        href={`/dashboard/customers/${customer._id}/project`}
+                    {customer.projects && customer.projects.length > 0 ? (
+                      <Button>
+                        <Link
+                          href={`/dashboard/customers/${customer._id}/editProject`}
+                        >
+                          Edit
+                        </Link>
+                      </Button>
+                    ) : (
+                      <Button
+                        icon={
+                          <Plus className='h-4 w-4 text-xs hover:text-white' />
+                        }
                       >
-                        Add
-                      </Link>
-                    </Button>
-                    <Button>
-                      <Link
-                        href={`/dashboard/customers/${customer._id}/editProject`}
-                      >
-                        Edit
-                      </Link>
-                    </Button>
+                        <Link
+                          href={`/dashboard/customers/${customer._id}/project`}
+                        >
+                          Add
+                        </Link>
+                      </Button>
+                    )}
 
                     {/* <Button
                       onClick={() =>

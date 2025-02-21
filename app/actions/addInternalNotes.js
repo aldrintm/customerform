@@ -51,8 +51,11 @@ async function addInternalNotes(formData) {
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)
 
-  // redirect to the main table
+  // // redirect to the main table
+  // redirect(`/dashboard/customers/${customerId}`)
+
   redirect(`/dashboard/customers/${customerId}`)
+  return { success: true } // Optional: return a response
 }
 
 export default addInternalNotes

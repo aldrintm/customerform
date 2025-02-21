@@ -724,9 +724,9 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                   className='object-cover w-full h-full grayscale'
                 /> */}
               </div>
-              <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl text-gray-500 font-extrabold'>
+              {/* <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl text-gray-500 font-extrabold'>
                 (latitude + longtitude)
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

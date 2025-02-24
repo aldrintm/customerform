@@ -18,6 +18,7 @@ import Map from '@/assets/images/mapbox.webp'
 import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
+import BookmarkButton from './BookmarkButton'
 
 const CustomerDetails = ({ customer: initialCustomer }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
@@ -160,13 +161,16 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
       </div>
 
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
+        {/* Customer Quick Top Contact Details*/}
         <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:mt-8 print:block'>
-          {/* Customer Quick Top Contact Details*/}
           <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
             <div className='grid grid-cols gap-2 align-middle'>
-              <div className='text-md md:text-2xl font-semibold text-blue-500 underline'>
+              <div className='text-md md:text-2xl font-semibold text-blue-500 underline flex items-center'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
                 {customerWithCapitalizedNames(customer.lastName)}
+                <span className='pl-6 inline-flex text-sm'>
+                  <BookmarkButton customer={customer} />
+                </span>
               </div>
               <div className='flex text-sm md:text-base font-normal text-gray-600'>
                 <span className='items-center justify-center align-middle'>

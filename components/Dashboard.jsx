@@ -19,7 +19,7 @@ const Dashboard = ({ customers }) => {
           </div>
         </div>
         {/* Main Components Starts Here */}
-        <div className='hidden md:grid md:grid-cols- xl:grid-cols-12 lg:gap-4'>
+        <div className='hidden md:grid xl:grid-cols-12 lg:gap-4'>
           <div className='container col-span-8 md:gap-4'>
             {/* Date + Weather + Total Customers */}
             <div className='container px-2 grid grid-cols-3 lg:gap-6'>

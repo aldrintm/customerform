@@ -17,14 +17,14 @@ const DashboardTablePage = ({ customers }) => {
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
         <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
           <h1>Recently Added Customers</h1>
-          <Link href={`/dashboard/customers/add`}>
+          {/* <Link href={`/dashboard/customers/add`}>
             <Button
               icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
               s
             >
               Create a New Customer
             </Button>
-          </Link>
+          </Link> */}
         </div>
 
         <div className='container mx-auto px-4 m-6 border border-gray-300 rounded-lg'>

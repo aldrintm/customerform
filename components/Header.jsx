@@ -156,7 +156,7 @@ const Header = () => {
           {/* Right Side Menu - LOGGED IN */}
           {session && (
             <div className='absolute right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 md:pr-0'>
-              <Link href='/messages' className='relative group'>
+              {/* <Link href='/messages' className='relative group'>
                 <button
                   type='button'
                   className='relative inline-flex ml-4 items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 overflow-hidden rounded-full'
@@ -180,9 +180,8 @@ const Header = () => {
                 </button>
                 <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>
                   2
-                  {/* <!-- Replace with the actual number of notifications --> */}
                 </span>
-              </Link>{' '}
+              </Link> */}
               {/* Profile Login Avatar Drop Down Button */}
               <div className='px-1 inline-flex items-center'>
                 <button
@@ -233,7 +232,7 @@ const Header = () => {
                   </Link>
                   <div className='p-2'>
                     <Link
-                      href='/profile/saved'
+                      href='/profile'
                       className='flex w-full p-2.5 text-sm gap-2 text-gray-700 items-center ite rounded-md text-dark-4 duration-300 ease-in-out hover:bg-gray-200 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white'
                       role='menuitem'
                       tabIndex='-1'

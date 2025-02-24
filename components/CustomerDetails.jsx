@@ -144,22 +144,22 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
 
   return (
     <>
-      <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
-        {/* Customer Page Details Title */}
-        <div className='hidden md:grid md:grid-cols-2 '>
-          <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
-            Customer Details Page
-          </div>
-          <div className=''>
-            {/* <Button onClick={window.print}>Print File</Button> */}
-            {/* Other buttons like Edit, Delete */}
-            {/* <Link
-              href={`/dashboard/customers/${customer._id}/print`}
-              target='_blank'
-              rel='noopener noreferrer'
-            ></Link> */}
-          </div>
+      {/* Page Title */}
+
+      <div className='hidden container mx-auto md:grid md:grid-cols-2 '>
+        <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
+          Customer Details Page
         </div>
+        <div className='pr-1 py-2 text-right'>
+          <Link href={`/dashboard/customers/${customer._id}/schedule`}>
+            <span className='py-1 px-2 rounded-md text-blue-400 font-light border border-blue-400'>
+              + schedule
+            </span>
+          </Link>
+        </div>
+      </div>
+
+      <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:mt-8 print:block'>
           {/* Customer Quick Top Contact Details*/}
           <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>

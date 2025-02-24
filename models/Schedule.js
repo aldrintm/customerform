@@ -16,21 +16,29 @@ const ScheduleSchema = new Schema(
     },
     description: {
       type: String,
+      trim: true,
     },
     measureDate: {
       type: Date,
     },
+    measureTime: {
+      type: String,
+      trim: true,
+    },
     measuredBy: {
       type: String,
+      trim: true,
     },
     installDate: {
       type: String,
     },
     installBy: {
       type: String,
+      trim: true,
     },
     notes: {
       type: String,
+      trim: true,
     },
   },
   {

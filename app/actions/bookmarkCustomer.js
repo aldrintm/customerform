@@ -18,8 +18,9 @@ async function bookmarkCustomer(customerId) {
 
   const user = await User.findOne({ email: sessionUser.user.email })
 
-  const isBookmarked = user.bookmarks.includes(customerId)
+  let isBookmarked = user.bookmarks.includes(customerId)
 
+  console.log(isBookmarked)
   let message
 
   if (isBookmarked) {
@@ -30,14 +31,14 @@ async function bookmarkCustomer(customerId) {
   } else {
     // if not bookmarked, then add to array
     user.bookmarks.push(customerId)
-    message = 'customer added to list'
+    message = 'customer is now added to list'
     isBookmarked = true
   }
 
   await user.save()
-  revalidatePath('/dashboard/customers/${customerId}', 'page')
+  revalidatePath(`/dashboard/customers/${customerId}`, 'page')
 
-  return message, isBookmarked
+  return { message, isBookmarked }
 }
 
 export default bookmarkCustomer

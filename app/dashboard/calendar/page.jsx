@@ -181,7 +181,7 @@ export default function CalendarPage() {
               </div>
             </div>
             <div className='hidden md:flex items-center gap-3 '>
-              <div className='flex items-center gap-2'>
+              {/* <div className='flex items-center gap-2'>
                 <button className='p-3 text-gray-500 flex items-center justify-center transition-all duration-300 hover:text-gray-900'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -219,8 +219,8 @@ export default function CalendarPage() {
                     ></path>
                   </svg>
                 </button>
-              </div>
-              <div className='flex items-center gap-px p-1 rounded-md bg-gray-100'>
+              </div> */}
+              {/* <div className='flex items-center gap-px p-1 rounded-md bg-gray-100'>
                 <button className='py-2.5 px-5 rounded-lg bg-gray-100 text-sm font-medium text-gray-900 transition-all duration-300 hover:bg-white'>
                   Day
                 </button>
@@ -230,7 +230,7 @@ export default function CalendarPage() {
                 <button className='py-2.5 px-5 rounded-lg bg-gray-100 text-sm font-medium text-gray-900 transition-all duration-300 hover:bg-white'>
                   Month
                 </button>
-              </div>
+              </div> */}
             </div>
             <div className='dropdown relative inline-flex md:hidden'>
               <button

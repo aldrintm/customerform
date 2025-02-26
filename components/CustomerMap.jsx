@@ -65,42 +65,42 @@ const CustomerMap = ({ customer }) => {
   }, [customer])
 
   // Get the user's current location using the browser's Geolocation API
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords
-          setUserLocation({ latitude, longitude })
-        },
-        (error) => {
-          console.error('Error getting user location:', error)
-        }
-      )
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords
+  //         setUserLocation({ latitude, longitude })
+  //       },
+  //       (error) => {
+  //         console.error('Error getting user location:', error)
+  //       }
+  //     )
+  //   }
+  // }, [])
 
   // Once we have both userLocation and the destination, fetch directions from Mapbox Directions API
-  useEffect(() => {
-    const fetchRoute = async () => {
-      if (!userLocation || !lat || !lng) return
+  // useEffect(() => {
+  //   const fetchRoute = async () => {
+  //     if (!userLocation || !lat || !lng) return
 
-      // Request driving directions with steps enabled
-      const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${userLocation.longitude},${userLocation.latitude};${lng},${lat}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}&geometries=geojson&steps=true&overview=full`
-      try {
-        const response = await fetch(url)
-        const data = await response.json()
-        if (data.routes && data.routes.length > 0) {
-          setRouteGeoJSON(data.routes[0].geometry)
-          // Extract step-by-step instructions from the first leg of the route
-          const steps = data.routes[0].legs[0].steps || []
-          setDirections(steps)
-        }
-      } catch (error) {
-        console.error('Error fetching route:', error)
-      }
-    }
-    fetchRoute()
-  }, [userLocation, lat, lng])
+  //     // Request driving directions with steps enabled
+  //     const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${userLocation.longitude},${userLocation.latitude};${lng},${lat}?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}&geometries=geojson&steps=true&overview=full`
+  //     try {
+  //       const response = await fetch(url)
+  //       const data = await response.json()
+  //       if (data.routes && data.routes.length > 0) {
+  //         setRouteGeoJSON(data.routes[0].geometry)
+  //         // Extract step-by-step instructions from the first leg of the route
+  //         const steps = data.routes[0].legs[0].steps || []
+  //         setDirections(steps)
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching route:', error)
+  //     }
+  //   }
+  //   fetchRoute()
+  // }, [userLocation, lat, lng])
 
   // Toggle directions on button click.
   const toggleDirections = () => {

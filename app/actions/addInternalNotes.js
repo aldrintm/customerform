@@ -4,6 +4,7 @@ import Customer from '@/models/Customer'
 import Note from '@/models/Note'
 import User from '@/models/User'
 import { getSessionUser } from '@/utils/getSession'
+import { constructFromSymbol } from 'date-fns/constants'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -21,6 +22,9 @@ async function addInternalNotes(formData) {
   // lets get the userId then
   const user = await User.findOne({ email: sessionUser.user.email })
   const userId = user._id
+
+  console.log('user:', user)
+  console.log('userId:', userId)
 
   // gather formData
   const customerId = formData.get('customerId')
@@ -44,10 +48,7 @@ async function addInternalNotes(formData) {
     { new: true } // optional: returns the updated doc if you need it
   )
 
-  // this will clear cached data in our form/memory
-  // Fix your string template here to correctly interpolate customerId
   revalidatePath('/dashboard/customers/${customerId}')
-
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)
 

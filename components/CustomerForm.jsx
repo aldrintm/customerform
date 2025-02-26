@@ -18,9 +18,9 @@ const CustomerForm = () => {
             <div className='grid grid-cols-1 gap-4 lg:gap-6 pb-2'>
               {/* Left Side of Form Column */}
 
-              <div className='grid grid-cols-1 gap-4 lg:row-auto lg:gap-4 bg-white p-4 md:border border-gray-300 md:rounded-md'>
+              <div className='grid grid-cols-1 gap-2 lg:row-auto lg:gap-2 bg-white p-4 md:border border-gray-300 md:rounded-md'>
                 {/* First Name and Last Name */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 pt-2 md:grid-cols-2 p-4 lg:gap-x-6'>
                   {/* First Name */}
                   <div>
                     <label
@@ -61,7 +61,7 @@ const CustomerForm = () => {
                 </div>
 
                 {/* Phone and Email */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-2 p-4 lg:gap-x-6'>
                   {/* Phone */}
                   <div>
                     <label
@@ -124,7 +124,7 @@ const CustomerForm = () => {
                 </div>
 
                 {/* City + State + Zipcode */}
-                <div className='grid grid-cols-1 gap-4 md:gap-x-4 md:grid-cols-8 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 gap-4 md:gap-x-4 md:grid-cols-8 p-4 lg:gap-x-6'>
                   {/* City */}
                   <div className='md:col-span-5'>
                     <label
@@ -184,7 +184,7 @@ const CustomerForm = () => {
                 </div>
 
                 {/* Contractor Info */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-4 lg:gap-x-6'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-4 lg:gap-x-6'>
                   {/* Contractor Name */}
                   <div>
                     <label
@@ -222,7 +222,7 @@ const CustomerForm = () => {
                   </div>
                 </div>
                 {/* Textarea for Notes */}
-                <div className='grid grid-cols-1 lg:grid-cols-1 px-4 py-2'>
+                <div className='grid grid-cols-1 lg:grid-cols-1 px-4'>
                   {/* Text Area for Special Notes with Customer */}
                   <div className=''>
                     <label
@@ -245,7 +245,7 @@ const CustomerForm = () => {
                 <div className='p-4'>
                   <span className=''>
                     <button
-                      className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+                      className='w-full hover:bg-gray flex justify-center items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
                       type='submit'
                     >
                       Submit

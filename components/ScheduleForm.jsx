@@ -1,5 +1,6 @@
 import addSchedule from '@/app/actions/addSchedule'
 import Link from 'next/link'
+import { Clock } from 'lucide-react'
 
 const ScheduleForm = ({ customer }) => {
   console.log(customer)
@@ -17,7 +18,7 @@ const ScheduleForm = ({ customer }) => {
             className='container mx-auto my-4 justify-center'
           >
             <input type='hidden' name='customer' value={customer._id} />
-            <div className='grid grid-cols-1 gap-4 lg:gap-4 bg-white p-4 md:border md:rounded-md border-gray-300'>
+            <div className='grid grid-cols-1 gap-2 lg:gap-2 bg-white p-4 md:border md:rounded-md border-gray-300'>
               {/* Break */}
 
               {/* Form Starts */}
@@ -117,7 +118,7 @@ const ScheduleForm = ({ customer }) => {
                       <textarea
                         id='notes'
                         name='notes'
-                        rows='3'
+                        rows={4}
                         className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                         placeholder='Enter any additional order notes...'
                       ></textarea>
@@ -221,7 +222,7 @@ const ScheduleForm = ({ customer }) => {
                       <textarea
                         id='notes'
                         name='notes'
-                        rows='3'
+                        rows={4}
                         className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                         placeholder='Enter any additional order notes...'
                       ></textarea>
@@ -230,15 +231,16 @@ const ScheduleForm = ({ customer }) => {
                 </div>
               </div>
 
-              <div className='grid grid-cols-1 gap-4 md:grid-cols-1 px-4 py-0 lg:gap-x-6'>
+              <div className='grid grid-cols-1 gap-2 md:grid-cols-1 p-4 lg:gap-x-6'>
                 {/* Submit Button */}
-                <div className='md:col-span-1 py-4'>
+                <div className='md:col-span-1'>
                   <span>
                     <button
-                      className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+                      className='w-full hover:bg-gray flex justify-center items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
                       type='submit'
                     >
-                      Submit
+                      <Clock className='w-5 h-5 mr-2 flex items-center text-center' />
+                      Create Schedule
                     </button>
                   </span>
                 </div>

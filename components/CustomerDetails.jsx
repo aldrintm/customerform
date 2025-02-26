@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import {
   Paperclip,
@@ -8,6 +9,7 @@ import {
   Store,
   ShieldAlert,
   Plus,
+  Trash2,
 } from 'lucide-react'
 import Button from './Button'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
@@ -26,6 +28,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   const [project, setProject] = useState('')
   const [selectedNote, setSelectedNote] = useState(null)
   const [editedNote, setEditedNote] = useState('')
+  const router = useRouter()
 
   // const dateObj = new Date(
   //   customer.projects[0].purchaseOrders[0].purchaseOrderDate
@@ -142,6 +145,17 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
       toast.error('Failed to delete note.')
     }
   }
+
+  // Prefetch the internal notes page on mount
+  useEffect(() => {
+    if (customer?._id) {
+      router.prefetch(`/dashboard/customers/${customer._id}/notes`)
+      router.prefetch(`/dashboard/customers/add`)
+      router.prefetch(`/dashboard/customers/${customer._id}/editCustomer`)
+      router.prefetch(`/dashboard/customers/${customer._id}/editProject`)
+      router.prefetch(`/dashboard/customers/${customer._id}/schedule`)
+    }
+  }, [customer._id, router])
 
   return (
     <>
@@ -440,6 +454,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                               aria-label='Delete note'
                             >
                               x
+                              {/* <Trash2 className='w-5 h-5 flex items-center text-center' /> */}
                             </button>
                           </div>
                         )

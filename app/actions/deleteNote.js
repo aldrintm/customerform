@@ -23,7 +23,7 @@ async function deleteNote(noteId, customerId) {
 
   // Optionally, revalidate the page related to this note's customer
   // For example, if you want to revalidate the customer's detail page:
-  // revalidatePath(`/dashboard/customers/${deletedNote.customer}`)
+  // revalidatePath(`/dashboard/customers/${customerId}`)
 
   // this will clear cached data in our form/memory
   // revalidatePath('/', 'layout')

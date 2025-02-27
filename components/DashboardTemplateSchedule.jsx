@@ -26,13 +26,13 @@ const DashboardTemplateSchedule = ({ customers }) => {
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>
                 <tr>
-                  <th className='whitespace-nowrap py-3 text-sm text-gray-600 font-semibold'>
+                  <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Anilber
                   </th>
-                  <th className='whitespace-nowrap py-3 text-sm text-gray-600 font-semibold'>
+                  <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Javier
                   </th>
-                  <th className='whitespace-nowrap py-3 text-sm text-gray-600 font-semibold'>
+                  <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Jeff
                   </th>
                 </tr>
@@ -54,7 +54,28 @@ const DashboardTemplateSchedule = ({ customers }) => {
                       {customerWithCapitalizedNames(customer.contractorName)}
                     </td> */}
 
-                    <td className='whitespace-nowrap py-2 text-sm text-gray-700'>
+                    <td className='whitespace-nowrap py-2 text-sm text-center text-gray-700'>
+                      <div className='grid grid-flow-row'>
+                        <span>
+                          {customerWithCapitalizedNames(customer.lastName)}/
+                          {customer?.projects?.map((item, index) => (
+                            <span key={index}>
+                              {item.customerType === 'Home Depot'
+                                ? 'HD'
+                                : item.customerType === 'Direct'
+                                ? 'Dir'
+                                : item.customerType === 'Builders'
+                                ? 'Buil'
+                                : item.customerType === 'Kitchen and Bath'
+                                ? 'K&B'
+                                : item.customerType}
+                            </span>
+                          ))}
+                        </span>
+                        <p>{customer.address.city}</p>
+                      </div>
+                    </td>
+                    <td className='whitespace-nowrap py-2 text-sm text-center text-gray-700'>
                       <div className='grid grid-flow-row'>
                         <span>
                           {customerWithCapitalizedNames(customer.lastName)}/
@@ -75,28 +96,7 @@ const DashboardTemplateSchedule = ({ customers }) => {
                         <p>{customer.address.city}</p>
                       </div>
                     </td>
-                    <td className='whitespace-nowrap py-2 text-sm text-gray-700'>
-                      <div className='grid grid-flow-row'>
-                        <span>
-                          {customerWithCapitalizedNames(customer.lastName)}/
-                          {customer?.projects?.map((item, index) => (
-                            <span key={index}>
-                              {item.customerType === 'Home Depot'
-                                ? 'HD'
-                                : item.customerType === 'Direct'
-                                ? 'Dir'
-                                : item.customerType === 'Builders'
-                                ? 'B'
-                                : item.customerType === 'Kitchen and Bath'
-                                ? 'K&B'
-                                : item.customerType}
-                            </span>
-                          ))}
-                        </span>
-                        <p>{customer.address.city}</p>
-                      </div>
-                    </td>
-                    <td className='whitespace-nowrap py-2 text-sm text-gray-700'>
+                    <td className='whitespace-nowrap py-2 text-sm text-center text-gray-700'>
                       <div className='grid grid-flow-row'>
                         <span>
                           {customerWithCapitalizedNames(customer.lastName)}/

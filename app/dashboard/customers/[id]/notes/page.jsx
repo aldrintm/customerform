@@ -1,11 +1,12 @@
+export const dynamic = 'force-static'
+export const revalidate = 60
+
 import Header from '@/components/Header'
 import SideNavbar from '@/components/SideNavbar'
 import CustomerNotesForm from '@/components/CustomerNotesForm'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
-
-export const revalidate = 60
 
 const AddNotesPage = async ({ params }) => {
   const { id } = await params

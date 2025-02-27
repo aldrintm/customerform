@@ -41,11 +41,13 @@ const Dashboard = ({ customers }) => {
             {/* Feature Box Here - Problem Customers */}
             <div className='hidden md:grid md:grid-cols-1 py-5'>
               <div className='col-span-8 bg-white border border-gray-300 rounded-lg p-4 m-2'>
-                <p className='text-sm my-auto mx-auto grid grid-cols-4 text-center'>
-                  <span className='py-auto'>Create +</span>
+                <p className='text-sm my-auto mx-auto grid grid-cols-1 text-center'>
+                  <span className='py-auto text-md font-semibold text-gray-600'>
+                    Featured Client Section
+                  </span>
+                  {/* <span className='py-auto'>Button</span>
                   <span className='py-auto'>Button</span>
-                  <span className='py-auto'>Button</span>
-                  <span className='py-auto'>Button</span>
+                  <span className='py-auto'>Button</span> */}
                 </p>
               </div>
             </div>

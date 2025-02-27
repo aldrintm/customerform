@@ -30,6 +30,17 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   const [editedNote, setEditedNote] = useState('')
   const router = useRouter()
 
+  // Prefetch the internal notes page on mount
+  useEffect(() => {
+    if (customer?._id) {
+      router.prefetch(`/dashboard/customers/${customer._id}/notes`)
+      router.prefetch(`/dashboard/customers/add`)
+      router.prefetch(`/dashboard/customers/${customer._id}/editCustomer`)
+      router.prefetch(`/dashboard/customers/${customer._id}/editProject`)
+      router.prefetch(`/dashboard/customers/${customer._id}/schedule`)
+    }
+  }, [customer._id, router])
+
   // const dateObj = new Date(
   //   customer.projects[0].purchaseOrders[0].purchaseOrderDate
   // )
@@ -145,17 +156,6 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
       toast.error('Failed to delete note.')
     }
   }
-
-  // Prefetch the internal notes page on mount
-  useEffect(() => {
-    if (customer?._id) {
-      router.prefetch(`/dashboard/customers/${customer._id}/notes`)
-      router.prefetch(`/dashboard/customers/add`)
-      router.prefetch(`/dashboard/customers/${customer._id}/editCustomer`)
-      router.prefetch(`/dashboard/customers/${customer._id}/editProject`)
-      router.prefetch(`/dashboard/customers/${customer._id}/schedule`)
-    }
-  }, [customer._id, router])
 
   return (
     <>
@@ -388,10 +388,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         <Plus className='h-4 w-4 text-xs hover:text-white' />
                       }
                     >
-                      <Link
-                        href={`/dashboard/customers/${customer._id}/notes`}
-                        prefetch
-                      >
+                      <Link href={`/dashboard/customers/${customer._id}/notes`}>
                         Add
                       </Link>
                     </Button>

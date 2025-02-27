@@ -26,7 +26,7 @@ async function deleteMessage(messageId) {
   await message.deleteOne()
 
   // this will clear cached data in our form/memory
-  revalidatePath('/dashboard/message', 'page')
+  revalidatePath(`/dashboard/message`, 'page')
 
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)

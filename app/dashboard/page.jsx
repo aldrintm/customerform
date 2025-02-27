@@ -1,4 +1,4 @@
-'use server'
+export const revalidate = 60
 
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'

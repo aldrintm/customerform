@@ -11,7 +11,7 @@ async function checkBookmarkStatus(customerId) {
   const sessionUser = await getSessionUser()
 
   if (!sessionUser || !sessionUser.userId) {
-    throw new Error('User Id is Required')
+    throw new Error('User Id is very Required')
   }
 
   const { userId } = sessionUser

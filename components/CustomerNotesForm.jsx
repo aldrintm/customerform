@@ -1,8 +1,39 @@
+'use client'
+
+import { useFormStatus } from 'react-dom'
 import addInternalNotes from '@/app/actions/addInternalNotes'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 import { MessageCircleMore } from 'lucide-react'
+import { ClipLoader } from 'react-spinners'
 
-const NotesForm = ({ customer }) => {
+// Button component to access form status
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      className='w-full hover:bg-gray rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+      type='submit'
+      disabled={pending}
+    >
+      {pending ? (
+        <ClipLoader
+          color='#2fa8f6'
+          size={23}
+          loading={true}
+          speedMultiplier={1}
+        />
+      ) : (
+        <div className='flex justify-center items-center gap-2'>
+          <MessageCircleMore className='w-5 h-5 flex items-center text-center' />
+          Send Note
+        </div>
+      )}
+    </button>
+  )
+}
+
+export default function NotesForm({ customer }) {
   return (
     <section className='bg-white'>
       <div className='container max-w-2xl mx-auto px-15 md:rounded-2xl'>
@@ -77,13 +108,7 @@ const NotesForm = ({ customer }) => {
 
                 <div className='p-4'>
                   <span className=''>
-                    <button
-                      className='w-full hover:bg-gray flex justify-center items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
-                      type='submit'
-                    >
-                      <MessageCircleMore className='w-5 h-5 mr-2 flex items-center text-center' />
-                      Submit
-                    </button>
+                    <SubmitButton />
                   </span>
                 </div>
               </div>
@@ -94,4 +119,3 @@ const NotesForm = ({ customer }) => {
     </section>
   )
 }
-export default NotesForm

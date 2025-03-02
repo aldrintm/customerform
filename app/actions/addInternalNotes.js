@@ -1,3 +1,5 @@
+// action for creating notes
+
 'use server'
 import connectDB from '@/config/db'
 import Customer from '@/models/Customer'

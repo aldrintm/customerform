@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import {
@@ -28,6 +28,8 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   const [project, setProject] = useState('')
   const [selectedNote, setSelectedNote] = useState(null)
   const [editedNote, setEditedNote] = useState('')
+  const [isNavigating, setIsNavigating] = useState(false) //navigation loading
+  const [isPending, startTransition] = useTransition() //for smooth navigation
   const router = useRouter()
 
   // Prefetch the internal notes page on mount
@@ -52,6 +54,14 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
 
   // // Format the string as needed
   // const formattedDate = `${month} ${day}, ${year}`
+
+  // Handle navigation with loading state
+  const handleAddNoteClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(`/dashboard/customers/${customer._id}/notes`)
+    })
+  }
 
   const handleDeleteCustomer = async (customerId) => {
     const confirmed = window.confirm(
@@ -387,15 +397,15 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                       icon={
                         <Plus className='h-4 w-4 text-xs hover:text-white' />
                       }
+                      onClick={handleAddNoteClick}
+                      disabled={isPending || isNavigating}
                     >
-                      <Link href={`/dashboard/customers/${customer._id}/notes`}>
-                        Add
-                      </Link>
+                      {isNavigating || isPending ? (
+                        <span className='text-xs'>Loading ...</span>
+                      ) : (
+                        'Add'
+                      )}
                     </Button>
-
-                    {/* <Button onClick={() => handleDelete(customer._id)}>
-                      Delete
-                    </Button> */}
                   </div>
                 </div>
                 {/* We will need to do Daisychaining here to fetch data - whether customer.officeNotes is >0 or an empty array display something or just say not notes yet something like this */}

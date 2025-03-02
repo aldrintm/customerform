@@ -24,13 +24,15 @@ import mongoose from 'mongoose'
 
 let cachedConnection = null
 
+// Connect to existing db connection as cached
 export default async function connectDB() {
   if (cachedConnection) {
     return cachedConnection
   }
 
+  // Connect to MongoDB
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {})
+    const conn = await mongoose.connect(process.env.MONGODB_URI)
     cachedConnection = conn
     return conn
   } catch (error) {

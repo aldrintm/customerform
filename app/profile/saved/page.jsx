@@ -1,5 +1,6 @@
 import Header from '@/components/Header'
 import SideNavbar from '@/components/SideNavbar'
+import connectDB from '@/config/db'
 import User from '@/models/User'
 import { getSessionUser } from '@/utils/getSession'
 import Link from 'next/link'
@@ -9,6 +10,7 @@ import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
 const SavedCustomersPage = async () => {
+  await connectDB()
   const sessionUser = await getSessionUser()
 
   const { bookmarks } = await User.findOne({

@@ -1,7 +1,39 @@
-import addProject from '@/app/actions/addProject'
-import Link from 'next/link'
+'use client'
 
-const ProjectForm = ({ customer }) => {
+import { useFormStatus } from 'react-dom'
+import addProject from '@/app/actions/addProject'
+import { UserRound, UserRoundPlus } from 'lucide-react'
+import Link from 'next/link'
+import { ClipLoader } from 'react-spinners'
+
+// Button component to access form status
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      className='w-full hover:bg-gray rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+      type='submit'
+      disabled={pending}
+    >
+      {pending ? (
+        <ClipLoader
+          color='#2fa8f6'
+          size={23}
+          loading={true}
+          speedMultiplier={1}
+        />
+      ) : (
+        <div className='flex justify-center items-center gap-2'>
+          <UserRoundPlus className='w-5 h-5 flex items-center text-center' />
+          Create Customer
+        </div>
+      )}
+    </button>
+  )
+}
+
+export default function ProjectForm({ customer }) {
   console.log(customer)
   return (
     <section className='bg-white'>
@@ -620,14 +652,7 @@ const ProjectForm = ({ customer }) => {
                   </div>
                   {/* col-span-2 */}
                   <div className='lg:col-span-2 content-end py-4'>
-                    <span>
-                      <button
-                        className='w-full items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
-                        type='submit'
-                      >
-                        Submit
-                      </button>
-                    </span>
+                    <SubmitButton />
                   </div>
                 </div>
               </div>
@@ -642,4 +667,3 @@ const ProjectForm = ({ customer }) => {
     </section>
   )
 }
-export default ProjectForm

@@ -26,6 +26,7 @@ let cachedConnection = null
 
 // Connect to existing db connection as cached
 export default async function connectDB() {
+  mongoose.set('strictQuery', true)
   if (cachedConnection) {
     return cachedConnection
   }

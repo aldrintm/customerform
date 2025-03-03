@@ -228,11 +228,11 @@ const Header = () => {
                       setIsProfileMenuOpen(false)
                     }}
                   >
-                    Profile
+                    Messages
                   </Link>
                   <div className='p-2'>
                     <Link
-                      href='/profile'
+                      href='/profile/saved'
                       className='flex w-full p-2.5 text-sm gap-2 text-gray-700 items-center ite rounded-md text-dark-4 duration-300 ease-in-out hover:bg-gray-200 hover:text-dark dark:text-dark-6 dark:hover:bg-dark-3 dark:hover:text-white'
                       role='menuitem'
                       tabIndex='-1'

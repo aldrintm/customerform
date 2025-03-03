@@ -32,11 +32,11 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   const [isPending, startTransition] = useTransition() //for smooth navigation
   const router = useRouter()
 
-  // Prefetch the internal notes page on mount
+  // Prefetch the pages on mount
   useEffect(() => {
     if (customer?._id) {
       router.prefetch(`/dashboard/customers/${customer._id}/notes`)
-      router.prefetch(`/dashboard/customers/add`)
+      router.prefetch(`/dashboard/customers/${customer._id}/project`)
       router.prefetch(`/dashboard/customers/${customer._id}/editCustomer`)
       router.prefetch(`/dashboard/customers/${customer._id}/editProject`)
       router.prefetch(`/dashboard/customers/${customer._id}/schedule`)
@@ -55,11 +55,27 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   // // Format the string as needed
   // const formattedDate = `${month} ${day}, ${year}`
 
-  // Handle navigation with loading state
+  // Handle Add Note navigation with loading state
   const handleAddNoteClick = () => {
     setIsNavigating(true)
     startTransition(() => {
       router.push(`/dashboard/customers/${customer._id}/notes`)
+    })
+  }
+
+  // Handle Create Schedule navigation with loading state
+  const handleAddScheduleClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(`/dashboard/customers/${customer._id}/schedule`)
+    })
+  }
+
+  // Handle Add Project navigation with loading state
+  const handleAddProjectClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(`/dashboard/customers/${customer._id}/project`)
     })
   }
 
@@ -176,11 +192,17 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
           Customer Details Page
         </div>
         <div className='pr-1 py-2 text-right'>
-          <Link href={`/dashboard/customers/${customer._id}/schedule`}>
-            <span className='py-1 px-2 rounded-md text-blue-400 font-light border border-blue-400'>
-              + schedule
-            </span>
-          </Link>
+          <Button
+            icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+            onClick={handleAddScheduleClick}
+            disabled={isPending || isNavigating}
+          >
+            {isNavigating || isPending ? (
+              <span className='text-sm px-2'>Loading ... </span>
+            ) : (
+              'Add Schedule'
+            )}
+          </Button>
         </div>
       </div>
 
@@ -563,12 +585,14 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                         icon={
                           <Plus className='h-4 w-4 text-xs hover:text-white' />
                         }
+                        onClick={handleAddProjectClick}
+                        disabled={isPending || isNavigating}
                       >
-                        <Link
-                          href={`/dashboard/customers/${customer._id}/project`}
-                        >
-                          Add
-                        </Link>
+                        {isNavigating || isPending ? (
+                          <span className='text-sm'>Loading ...</span>
+                        ) : (
+                          'Add'
+                        )}
                       </Button>
                     )}
 

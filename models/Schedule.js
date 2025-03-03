@@ -30,7 +30,7 @@ const ScheduleSchema = new Schema(
       trim: true,
     },
     installDate: {
-      type: String,
+      type: Date,
     },
     installBy: {
       type: String,

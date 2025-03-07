@@ -11,8 +11,6 @@ const ScheduleEditPage = async ({ params, searchParams }) => {
   const { id } = params
   const { scheduleId } = searchParams
 
-  console.log(searchParams)
-
   console.log('Customer ID from params:', id)
   console.log('Schedule ID from searchParams:', scheduleId)
 

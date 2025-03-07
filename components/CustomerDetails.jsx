@@ -81,7 +81,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     })
   }
 
-  console.log(customer.projects[0].schedules[0])
+  console.log(customer.projects[0].schedules[0]._id)
 
   // Handle Add Project navigation with loading state
   const handleAddProjectClick = () => {
@@ -209,7 +209,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
             <Button
               icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
               onClick={() =>
-                handleEditScheduleClick(customer.projects[0].schedules[0])
+                handleEditScheduleClick(customer.projects[0].schedules[0]._id)
               }
               disabled={isPending || isNavigating}
             >

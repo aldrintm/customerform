@@ -30,7 +30,10 @@ const CustomerPage = async ({ params }) => {
   // Populate the projects array (this assumes your Customer model's projects field
   // is defined as an array of ObjectIds referencing 'Project')
   const customerDoc = await Customer.findById(id)
-    .populate('projects')
+    .populate({
+      path: 'projects',
+      populate: { path: 'schedules' },
+    })
     .populate({
       path: 'officeNotes',
       populate: {

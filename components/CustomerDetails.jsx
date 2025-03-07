@@ -81,8 +81,6 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     })
   }
 
-  console.log(customer.projects[0].schedules[0]._id)
-
   // Handle Add Project navigation with loading state
   const handleAddProjectClick = () => {
     setIsNavigating(true)
@@ -203,7 +201,9 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
         <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
           Customer Details Page
         </div>
-        {customer.projects[0].schedules &&
+        {customer.projects &&
+        customer.projects.length > 0 &&
+        customer.projects[0].schedules &&
         customer.projects[0].schedules.length > 0 ? (
           <div className='pr-1 py-2 text-right'>
             <Button

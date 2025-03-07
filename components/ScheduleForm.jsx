@@ -14,7 +14,6 @@ const ScheduleForm = ({ customer, projects }) => {
     router.back()
   }
 
-  console.log(customer)
   return (
     <>
       {projects && projects.length > 0 ? (

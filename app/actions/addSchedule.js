@@ -15,15 +15,15 @@ async function addSchedule(formData) {
 
   // lets check for user session
   const sessionUser = await getSessionUser()
-
   if (!sessionUser || !sessionUser.userId) {
     throw new Error('User ID is required')
   }
-  // lets get the userId then
+  // Find userId using email
   const userEmail = sessionUser?.user?.email
-
-  const user = await User.find({ email: userEmail })
-
+  const user = await User.findOne({ email: userEmail })
+  if (!user) {
+    throw new Error('User Not Found')
+  }
   const userId = user._id
 
   // Retrieve customer ID from hidden field in your form
@@ -31,46 +31,34 @@ async function addSchedule(formData) {
   if (!customerId) {
     throw new Error('Customer ID is missing')
   }
-  // Retrieve project Id from ???
-  const projects = await Project.findOne({ customer: customerId })
-  if (!projects || projects.length === 0) {
-    throw new Error(
-      "You need to add a Project first - doesn't have to be complete"
-    )
+  // // Retrieve project Id from ???
+  // const projects = await Project.findOne({ customer: customerId })
+  // if (!projects || projects.length === 0) {
+  //   throw new Error(
+  //     "You need to add a Project first - doesn't have to be complete"
+  //   )
+  // }
+
+  // Retrieve Selected Project Id from Schedule Form
+  const projectId = formData.get('project')
+  if (!projectId) {
+    throw new Error('Project ID is mising')
   }
 
-  const projectId = projects[0]._id
+  // Verify the project exists and belongs to the customer
+  const project = await Project.findOne({
+    _id: projectId,
+    customer: customerId,
+  })
+  if (!project) {
+    throw new Error(
+      'Invalid Project Id or Project does not belong to this customer'
+    )
+  }
 
   console.log('Customer ID:', customerId)
   console.log('Project ID:', projectId)
   console.log('User:', userId)
-
-  //   // Extract the date string from the form
-  //   const poDate1Str = formData.get('purchaseOrderDate1')
-  //   const poDate2Str = formData.get('purchaseOrderDate2')
-  //   const poDate3Str = formData.get('purchaseOrderDate3')
-  //   console.log('Raw purchaseOrderDate1:', poDate1Str)
-  //   console.log('Raw purchaseOrderDate1:', poDate2Str)
-  //   console.log('Raw purchaseOrderDate1:', poDate3Str)
-
-  //   // Convert to a Date object and validate
-  //   const poDate1 = new Date(poDate1Str)
-  //   if (!poDate1Str || isNaN(poDate1.getTime())) {
-  //     console.error('Invalid date for purchaseOrderDate1:', poDate1Str)
-  //     // Optionally, set it to null or throw an error
-  //   }
-
-  //   const poDate2 = new Date(poDate2Str)
-  //   if (!poDate2Str || isNaN(poDate2.getTime())) {
-  //     console.error('Invalid date for purchaseOrderDate2:', poDate2Str)
-  //     // Optionally, set it to null or throw an error
-  //   }
-
-  //   const poDate3 = new Date(poDate3Str)
-  //   if (!poDate3Str || isNaN(poDate3.getTime())) {:
-  //     console.error('Invalid date for purchaseOrderDate3:', poDate3Str)
-  //     // Optionally, set it to null or throw an error
-  //   }
 
   const scheduleData = {
     user: userId,
@@ -89,7 +77,7 @@ async function addSchedule(formData) {
   }
 
   // lets check the server to see all items uploaded to the DB
-  console.log(scheduleData)
+  console.log('Schedule Data:', scheduleData)
 
   // lets plug all the date using the property model
   const newSchedule = new Schedule(scheduleData)
@@ -97,29 +85,18 @@ async function addSchedule(formData) {
   await newSchedule.save()
   console.log('New Schedule Saved:', newSchedule)
 
-  // update the customer with the new project’s _id into the projects array
-  // const updatedCustomer = await Customer.findByIdAndUpdate(
-  //   customerId,
-  //   {
-  //     $push: { projects: newProject._id },
-  //   },
-  //   { new: true }
-  // ) // return the updated document for loggin)
-
-  // if (!updatedCustomer) {
-  //   console.error('Customer update failed. Customer not found or invalid ID.')
-  // } else {
-  //   console.log('Customer updated:', updatedCustomer)
-  // }
-
-  //Update the customer document by pushing the new project's _id
+  //Update the project with the new scheduleId
   try {
     const updatedProject = await Project.findByIdAndUpdate(
       projectId,
       { $push: { schedules: newSchedule._id } },
       { new: true }
     )
-    console.log('Schedule updated:', updatedProject)
+    if (!updatedProject) {
+      console.error('Project Update Failed. Project Not Found or Invalid Id')
+    } else {
+      console.log('Project Updated with Schedule:', updatedProject)
+    }
   } catch (error) {
     console.error('Error updating schedule:', error)
   }

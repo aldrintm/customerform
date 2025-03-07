@@ -4,30 +4,30 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Button from './Button'
 import Skater from '@/assets/images/skate-skateboard.gif'
-import addSchedule from '@/app/actions/addSchedule'
-import { Clock, Dot, Undo2 } from 'lucide-react'
+import editSchedule from '@/app/actions/editSchedule'
+import { RefreshCw, Dot, Undo2 } from 'lucide-react'
 
-const ScheduleForm = ({ customer, projects }) => {
+const ScheduleForm = ({ customer, projects, schedule }) => {
   const router = useRouter()
 
   const handleGoBack = () => {
     router.back()
   }
 
-  console.log(customer)
+  console.log('Editing Schedule:', schedule)
   return (
     <>
       {projects && projects.length > 0 ? (
         <section className='bg-white'>
           <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
             <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-              Create Schedule for Template and Install
+              Edit Schedule for Template and Install
             </div>
 
             <div className='isolate px-4 sm:pb-2 lg:px-0'>
               {/* Form Starts Here */}
               <form
-                action={addSchedule}
+                action={editSchedule}
                 className='container mx-auto my-4 justify-center'
               >
                 <input type='hidden' name='customer' value={customer._id} />
@@ -43,10 +43,12 @@ const ScheduleForm = ({ customer, projects }) => {
                     >
                       Which Project is this schedule for?
                     </label>
+
+                    {/* (converts ObjectId to string for <select>) */}
                     <select
                       name='project'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={'default'}
+                      defaultValue={schedule.project.toString()}
                       required
                     >
                       <option value=''>Select a Project</option>
@@ -76,6 +78,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           name='measureDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                           placeholder='What are we measuring for this trip?'
+                          defaultValue={schedule.measureDescription}
                         />
                       </div>
 
@@ -93,6 +96,13 @@ const ScheduleForm = ({ customer, projects }) => {
                           id='measureDate'
                           name='measureDate'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                          defaultValue={
+                            schedule.measureDate
+                              ? new Date(schedule.measureDate)
+                                  .toISOString()
+                                  .split('T')[0]
+                              : ''
+                          }
                         />
                       </div>
 
@@ -109,7 +119,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           name='measureTime'
                           id='measureTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
+                          defaultValue={schedule.measureTime || 'default'}
                         >
                           <option value='default'>
                             Select Time (required)
@@ -139,7 +149,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           name='measureBy'
                           id='measureBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
+                          defaultValue={schedule.measuredBy || 'default'}
                         >
                           <option value='default' disabled>
                             Select Name (required)
@@ -169,6 +179,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                           placeholder='Enter any additional order notes...'
+                          defaultValue={schedule.measureNotes || ''}
                         ></textarea>
                       </div>
                     </div>
@@ -198,6 +209,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           name='installDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                           placeholder='What are we installing for this trip?'
+                          defaultValue={schedule.installDescription || ''}
                           disabled
                         />
                       </div>
@@ -216,6 +228,13 @@ const ScheduleForm = ({ customer, projects }) => {
                           id='installDate'
                           name='installDate'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                          defaultValue={
+                            schedule.installDate
+                              ? new Date(schedule.installDate)
+                                  .toISOString()
+                                  .split('T')[0]
+                              : ''
+                          }
                         />
                       </div>
 
@@ -232,7 +251,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           name='installTime'
                           id='installTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
+                          defaultValue={schedule.installTime || 'default'}
                         >
                           <option value='default' disabled>
                             Select Time (required)
@@ -258,7 +277,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           name='installBy'
                           id='installBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
+                          defaultValue={schedule.installBy || 'default'}
                         >
                           <option value='default' disabled>
                             Select Name (required)
@@ -293,6 +312,7 @@ const ScheduleForm = ({ customer, projects }) => {
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                           placeholder='Enter any additional order notes...'
+                          defaultValue={schedule.installNotes || ''}
                         ></textarea>
                       </div>
                     </div>
@@ -306,8 +326,8 @@ const ScheduleForm = ({ customer, projects }) => {
                           className='w-full hover:bg-gray flex justify-center items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
                           type='submit'
                         >
-                          <Clock className='w-5 h-5 mr-2 flex items-center text-center' />
-                          Create Schedule
+                          <RefreshCw className='w-5 h-5 mr-2 flex items-center text-center' />
+                          Update Schedule
                         </button>
                       </span>
                     </div>

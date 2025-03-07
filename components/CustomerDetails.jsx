@@ -71,13 +71,17 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     })
   }
 
-  // Handle Edit Schedule navigation with loading state
-  const handleEditScheduleClick = () => {
+  // Handle Edit Schedule navigation with loading state and specific scheduleId
+  const handleEditScheduleClick = (scheduleId) => {
     setIsNavigating(true)
     startTransition(() => {
-      router.push(`/dashboard/customers/${customer._id}/editSchedule`)
+      router.push(
+        `/dashboard/customers/${customer._id}/editSchedule?scheduleId=${scheduleId}`
+      )
     })
   }
+
+  console.log(customer.projects[0].schedules[0])
 
   // Handle Add Project navigation with loading state
   const handleAddProjectClick = () => {
@@ -204,7 +208,9 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
           <div className='pr-1 py-2 text-right'>
             <Button
               icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
-              onClick={handleEditScheduleClick}
+              onClick={() =>
+                handleEditScheduleClick(customer.projects[0].schedules[0])
+              }
               disabled={isPending || isNavigating}
             >
               {isNavigating || isPending ? (

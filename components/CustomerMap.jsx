@@ -41,7 +41,7 @@ const CustomerMap = ({ customer }) => {
           `${customer.address.street} ${customer.address.city} ${customer.address.state} ${customer.address.zipcode}`
         )
 
-        console.log('no error here')
+        console.log('Coordinates Found')
 
         // check Geocode results
         if (res.results.length === 0) {

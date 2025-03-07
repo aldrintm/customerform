@@ -7,7 +7,11 @@ const ProjectSchema = new Schema(
       ref: 'Customer',
       required: true,
     },
-
+    schedules: {
+      type: [Schema.Types.ObjectId],
+      ref: 'Schedule',
+      default: [],
+    },
     customerType: {
       type: String,
       trim: true,

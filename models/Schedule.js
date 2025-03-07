@@ -13,8 +13,9 @@ const ScheduleSchema = new Schema(
     project: {
       type: Schema.Types.ObjectId,
       ref: 'Project',
+      required: false, // Optional
     },
-    description: {
+    measureDescription: {
       type: String,
       trim: true,
     },
@@ -25,18 +26,30 @@ const ScheduleSchema = new Schema(
       type: String,
       trim: true,
     },
-    measuredBy: {
+    measureBy: {
+      type: String,
+      trim: true,
+    },
+    measureNotes: {
+      type: String,
+      trim: true,
+    },
+    installDescription: {
       type: String,
       trim: true,
     },
     installDate: {
       type: Date,
     },
+    installTime: {
+      type: String,
+      trim: true,
+    },
     installBy: {
       type: String,
       trim: true,
     },
-    notes: {
+    installNotes: {
       type: String,
       trim: true,
     },

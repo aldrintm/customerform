@@ -26,7 +26,7 @@ function SubmitButton() {
       ) : (
         <div className='flex justify-center items-center gap-2'>
           <UserRoundPlus className='w-5 h-5 flex items-center text-center' />
-          Create Customer
+          Create Project
         </div>
       )}
     </button>
@@ -39,7 +39,7 @@ export default function ProjectForm({ customer }) {
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
         <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-          Add Project Details
+          Add Project Details for {customer.firstName} {customer.lastName}
         </div>
 
         <div className='isolate px-4 sm:pb-2 lg:px-0'>

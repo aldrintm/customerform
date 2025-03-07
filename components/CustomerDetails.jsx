@@ -71,6 +71,14 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
     })
   }
 
+  // Handle Edit Schedule navigation with loading state
+  const handleEditScheduleClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(`/dashboard/customers/${customer._id}/editSchedule`)
+    })
+  }
+
   // Handle Add Project navigation with loading state
   const handleAddProjectClick = () => {
     setIsNavigating(true)
@@ -191,19 +199,36 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
         <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
           Customer Details Page
         </div>
-        <div className='pr-1 py-2 text-right'>
-          <Button
-            icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
-            onClick={handleAddScheduleClick}
-            disabled={isPending || isNavigating}
-          >
-            {isNavigating || isPending ? (
-              <span className='text-sm px-2'>Loading ... </span>
-            ) : (
-              'Add Schedule'
-            )}
-          </Button>
-        </div>
+        {customer.projects[0].schedules &&
+        customer.projects[0].schedules.length > 0 ? (
+          <div className='pr-1 py-2 text-right'>
+            <Button
+              icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+              onClick={handleEditScheduleClick}
+              disabled={isPending || isNavigating}
+            >
+              {isNavigating || isPending ? (
+                <span className='text-sm px-2'>Loading ... </span>
+              ) : (
+                'Edit Schedule'
+              )}
+            </Button>
+          </div>
+        ) : (
+          <div className='pr-1 py-2 text-right'>
+            <Button
+              icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+              onClick={handleAddScheduleClick}
+              disabled={isPending || isNavigating}
+            >
+              {isNavigating || isPending ? (
+                <span className='text-sm px-2'>Loading ... </span>
+              ) : (
+                'Add Schedule'
+              )}
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
@@ -740,8 +765,7 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                           Splash:
                         </dt>
                         <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                          {customer.projects[0].splash}{' '}
-                          {customer.projects[0].status}
+                          {customer.projects[0].splash}
                         </dd>
                       </div>
                       <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>

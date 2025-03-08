@@ -8,8 +8,8 @@ import Customer from '@/models/Customer'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
 const ScheduleEditPage = async ({ params, searchParams }) => {
-  const { id } = params
-  const { scheduleId } = searchParams
+  const { id } = await params
+  const { scheduleId } = await searchParams
 
   console.log('Customer ID from params:', id)
   console.log('Schedule ID from searchParams:', scheduleId)

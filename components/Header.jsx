@@ -1,17 +1,20 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { FaRegUser, FaGoogle } from 'react-icons/fa'
 import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import AppleTouch from '@/assets/images/apple-touch-icon.png'
 import Breadcrumb from './BreadCrumb'
-import OpenMapButton from '@/app/actions/openMapButton'
-import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { RefreshCw } from 'lucide-react'
+
 import CustomerSearchForm from './CustomerSearchForm'
 import Greeting from './Greeting'
 
 const Header = () => {
+  const router = useRouter()
+
   // get data as session from useSession from next-auth
   const { data: session } = useSession()
   // use '?' for optional chaining so we dont get thrown an error here
@@ -20,6 +23,16 @@ const Header = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [isLoggedin, setIsLoggedIn] = useState(false)
   const [providers, setProviders] = useState(null)
+  const [isSpinning, setIsSpinning] = useState(false)
+
+  const handleClickAndRefresh = () => {
+    router.refresh() // Refreshes Server Component data
+    setIsSpinning(true)
+    // Reset the animation after it completes
+    setTimeout(() => {
+      setIsSpinning(false)
+    }, 1000) // 1 second for animation duration
+  }
 
   const pathname = usePathname()
 
@@ -64,14 +77,11 @@ const Header = () => {
           </button>
           {/* I created this breadcrumb to see what dynamic breadcrumbing looks like */}
           {session && <Breadcrumb />}
-          {/* <OpenMapButton /> */}
-          {/* Add a Google Button if NOT logged in */}
-          {/* Search Form Starts Here */}
+
           {/* Search Form Here */}
           {session && <CustomerSearchForm />}
-          {/*  Right Side Menu (Logged Out) Google Button */}
 
-          {/* Google Button */}
+          {/* Right Side Menu - LOGGED OUT + Google Button */}
           {!session && (
             <div className='w-full'>
               <div className='hidden md:block'>
@@ -93,6 +103,7 @@ const Header = () => {
                           version='1.1'
                         >
                           {' '}
+                          {/* Google Button */}
                           <title>Google-color</title>{' '}
                           <desc>Created with Sketch.</desc> <defs> </defs>{' '}
                           <g
@@ -183,9 +194,21 @@ const Header = () => {
                 </span>
               </Link> */}
               {/* Profile Login Avatar Drop Down Button */}
-              <div className='px-1 inline-flex items-center'>
+              <div className='inline-flex items-center'>
                 <button
-                  className='relative inline-flex mx-4 items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 overflow-hidden rounded-full'
+                  className='relative inline-flex items-center gap-2 justify-center whitespace-nowrap md:rounded-full md:border md:border-blue-400 h-10 w-10 text-blue-400 transition-all duration-400 ease-in-out hover:bg-blue-400 hover:text-white hover:scale-110 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 active:bg-blue-500 active:scale-95 active:shadow-inner'
+                  type='button'
+                  onClick={handleClickAndRefresh}
+                >
+                  <RefreshCw
+                    size={18}
+                    className={`${
+                      isSpinning ? 'animate-spin' : ''
+                    } transition-transform duration-1000`}
+                  />
+                </button>
+                <button
+                  className='relative inline-flex mx-6 items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:bg-blue-400 hover:text-white transition-all duration-400 ease-in-out hover:scale-110 focus:outline-non focus:ring focus:ring-blue-300 focus:ring-opacity-50 active:bg-blue-400 active:scale-95 active:shadow-inner h-10 w-10 rounded-full'
                   type='button'
                   id='user-menu-button'
                   aria-haspopup='true'
@@ -195,13 +218,12 @@ const Header = () => {
                   <span className='absolute'></span>
                   <span className='sr-only'>Open user menu</span>
                   <Image
-                    className='h-8 w-8 rounded-full'
+                    className='h-10 w-10 rounded-full'
                     src={profileImage || AppleTouch}
-                    width={40}
-                    height={40}
+                    width={50}
+                    height={50}
                     alt='Avatar'
                   />
-                  {/* <FaRegUser className='text-xl text-blue-500 font-bold' /> */}
                 </button>
                 <span className='text-sm inline-flex mr-2'>
                   <Greeting />{' '}

@@ -32,6 +32,11 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
   const [isPending, startTransition] = useTransition() //for smooth navigation
   const router = useRouter()
 
+  // Sync local state with prop changes
+  useEffect(() => {
+    setCustomers(initialCustomer) // updates the state when prop changes
+  }, [initialCustomer])
+
   // Prefetch the pages on mount
   useEffect(() => {
     if (customer?._id) {

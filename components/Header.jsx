@@ -28,12 +28,12 @@ const Header = () => {
 
   const handleClickAndRefresh = async () => {
     await refreshCustomerData() // Revalidates Server Component for Dashboard and Customers Only, we can pass a customerId later but it would have to be on every header component which I think is too much, might need to apply context provider
-    router.refresh() // Refreshes Server Component data
+    router.refresh() // Refreshes Server Component data for current page
     setIsSpinning(true)
     // Reset the animation after it completes
     setTimeout(() => {
       setIsSpinning(false)
-    }, 1500) // 1.5 second for animation duration
+    }, 3000) // 3 second for animation duration
   }
 
   const pathname = usePathname()

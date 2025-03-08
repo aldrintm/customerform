@@ -31,7 +31,7 @@ const Header = () => {
     // Reset the animation after it completes
     setTimeout(() => {
       setIsSpinning(false)
-    }, 1000) // 1 second for animation duration
+    }, 1500) // 1.5 second for animation duration
   }
 
   const pathname = usePathname()

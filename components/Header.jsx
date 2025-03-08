@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { refreshCustomerData } from '@/app/actions/refreshCustomerData'
 import Image from 'next/image'
 import Link from 'next/link'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
@@ -25,7 +26,8 @@ const Header = () => {
   const [providers, setProviders] = useState(null)
   const [isSpinning, setIsSpinning] = useState(false)
 
-  const handleClickAndRefresh = () => {
+  const handleClickAndRefresh = async () => {
+    await refreshCustomerData() // Revalidates Server Component for Dashboard and Customers Only, we can pass a customerId later but it would have to be on every header component which I think is too much, might need to apply context provider
     router.refresh() // Refreshes Server Component data
     setIsSpinning(true)
     // Reset the animation after it completes

@@ -7,7 +7,7 @@ import { getSessionUser } from '@/utils/getSession'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-// this action is added to the form to perform tasks
+// this action is deletes the customer from the database
 async function deleteCustomer(customerId, email) {
   // lets check for user session
   const sessionUser = await getSessionUser()

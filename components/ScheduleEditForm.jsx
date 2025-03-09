@@ -6,12 +6,31 @@ import Button from './Button'
 import Skater from '@/assets/images/skate-skateboard.gif'
 import editSchedule from '@/app/actions/editSchedule'
 import { RefreshCw, Dot, Undo2 } from 'lucide-react'
+import { useTransition } from 'react'
+import deleteSchedule from '@/app/actions/deleteSchedule'
 
-const ScheduleForm = ({ customer, projects, schedule }) => {
+const ScheduleEditForm = ({ customer, projects, schedule }) => {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   const handleGoBack = () => {
     router.back()
+  }
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this schedule?')) {
+      startTransition(async () => {
+        try {
+          const result = await deleteSchedule(schedule._id, customer._id)
+          if (result.success) {
+            router.push(`/dashboard/customers/${result.customerId}`)
+          }
+        } catch (error) {
+          console.error('Error deleting schedule:', error)
+          alert('Failed to delete schedule. Please try again.')
+        }
+      })
+    }
   }
 
   console.log('Editing Schedule:', schedule)
@@ -20,8 +39,15 @@ const ScheduleForm = ({ customer, projects, schedule }) => {
       {projects && projects.length > 0 ? (
         <section className='bg-white'>
           <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
-            <div className='mx-auto text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
-              Edit Schedule for Template and Install
+            <div className='mx-auto flex justify-between'>
+              <span className='text-left py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
+                Edit Schedule for Template and Install
+              </span>
+              <span className='py-2 pl-1 text-sm md:text-md text-blue-500 font-bold'>
+                <Button onClick={handleDelete} disabled={isPending}>
+                  {isPending ? 'Please Wait ...' : 'Delete Schedule'}
+                </Button>
+              </span>
             </div>
 
             <div className='isolate px-4 sm:pb-2 lg:px-0'>
@@ -31,6 +57,7 @@ const ScheduleForm = ({ customer, projects, schedule }) => {
                 className='container mx-auto my-4 justify-center'
               >
                 <input type='hidden' name='customer' value={customer._id} />
+                <input type='hidden' name='scheduleId' value={schedule._id} />
 
                 {/* Break */}
                 <div className='grid grid-cols-1 gap-2 lg:gap-2 bg-white p-4 md:border md:rounded-md border-gray-300'>
@@ -371,4 +398,4 @@ const ScheduleForm = ({ customer, projects, schedule }) => {
     </>
   )
 }
-export default ScheduleForm
+export default ScheduleEditForm

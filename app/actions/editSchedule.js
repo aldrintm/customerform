@@ -9,11 +9,11 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 // this action is added to the form to perform tasks
-async function editSchedule(projectId, formData) {
+async function editSchedule(formData) {
   // connect to DB
   await connectDB()
 
-  // lets check for user session
+  // Check for user session
   const sessionUser = await getSessionUser()
   if (!sessionUser || !sessionUser.userId) {
     throw new Error('User ID is required')
@@ -26,20 +26,17 @@ async function editSchedule(projectId, formData) {
   }
   const userId = user._id
 
-  // Retrieve customer ID from hidden field in your form
+  // Retrieve customer ID and schedule ID from form
   const customerId = formData.get('customer')
+  const scheduleId = formData.get('scheduleId')
   if (!customerId) {
     throw new Error('Customer ID is missing')
   }
-  // // Retrieve project Id from ???
-  // const projects = await Project.findOne({ customer: customerId })
-  // if (!projects || projects.length === 0) {
-  //   throw new Error(
-  //     "You need to add a Project first - doesn't have to be complete"
-  //   )
-  // }
+  if (!scheduleId) {
+    throw new Error('Schedule ID is missing')
+  }
 
-  // Retrieve Selected Project Id from Schedule Form
+  // Retrieve Selected Project Id from ScheduleEditForm
   const projectId = formData.get('project')
   if (!projectId) {
     throw new Error('Project ID is mising')
@@ -56,8 +53,15 @@ async function editSchedule(projectId, formData) {
     )
   }
 
+  // Verify the schedule exist
+  const existingSchedule = await Schedule.findById(scheduleId)
+  if (!existingSchedule) {
+    throw new Error('Schedule Not Found')
+  }
+
   console.log('Customer ID:', customerId)
   console.log('Project ID:', projectId)
+  console.log('Schedule ID:', scheduleId)
   console.log('User:', userId)
 
   const scheduleData = {
@@ -79,42 +83,35 @@ async function editSchedule(projectId, formData) {
   // lets check the server to see all items uploaded to the DB
   console.log('Schedule Data:', scheduleData)
 
-  // lets plug all the date to the scheduleId and update it
+  // Update the existing schedule
   const updatedSchedule = await Schedule.findByIdAndUpdate(
     scheduleId,
-    scheduleData
+    { $set: scheduleData }, // we use $set to update fields without limits - like null is null
+    { new: true, runValidators: true } // return updated doc, run schema validators
   )
-
-  //Update the project with the new scheduleId
-  try {
-    const updatedProject = await Project.findByIdAndUpdate(
-      projectId,
-      { $push: { schedules: newSchedule._id } },
-      { new: true }
-    )
-    if (!updatedProject) {
-      console.error('Project Update Failed. Project Not Found or Invalid Id')
-    } else {
-      console.log('Project Updated with Schedule:', updatedProject)
-    }
-  } catch (error) {
-    console.error('Error updating schedule:', error)
+  if (!updatedSchedule) {
+    throw new Error('Failed to update schedule')
   }
 
-  //   // Update the customer document using updateOne
-  //   try {
-  //     const updateResult = await Customer.updateOne(
-  //       { _id: customerId },
-  //       { $push: { projects: newProject._id } }
-  //     )
-  //     console.log('Update result:', updateResult)
+  // check for success
+  console.log('Updated Schedule:', updatedSchedule)
 
-  //     // Optionally fetch the updated customer document to verify:
-  //     const updatedCustomer = await Customer.findById(customerId)
-  //     console.log('Updated Customer:', updatedCustomer)
-  //   } catch (error) {
-  //     console.error('Error updating customer:', error)
-  //   }
+  // Handle project change if projectId changed
+  if (existingSchedule.project.toString() !== projectId) {
+    // Remove Schedule from old project
+    await Project.findById(
+      existingSchedule.project,
+      { $pull: { schedules: scheduleId } },
+      { new: true }
+    )
+    // Add Schedule to new project
+    await Project.findByIdAndUpdate(
+      projectId,
+      { $addToSet: { schedules: scheduleId } },
+      { new: true }
+    )
+    console.log(`Moved schedule to ${scheduleId} to project ${projectId}`)
+  }
 
   // Optionally, revalidate the customer’s page and redirect
   // this will clear cached data in our form/memory

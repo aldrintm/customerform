@@ -9,8 +9,6 @@ import Header from '@/components/Header'
 import CustomerDetails from '@/components/CustomerDetails'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 import { notFound } from 'next/navigation'
-import mongoose from 'mongoose'
-import { cache } from 'react'
 
 const CustomerPage = async ({ params }) => {
   const awaitedParams = await params // await params object
@@ -38,6 +36,14 @@ const CustomerPage = async ({ params }) => {
 
   const customer = convertToSerializeableObject(customerDoc)
 
+  // Extract schedules from all projects into a flat array
+  const schedules = customer.projects
+    ? customer.projects.flatMap((project) => project.schedules || [])
+    : []
+
+  console.log('Customer:', customer)
+  console.log('Schedules:', schedules)
+
   if (!customer) {
     notFound() // Returns a 404 page if no customer is found
   }
@@ -47,7 +53,7 @@ const CustomerPage = async ({ params }) => {
         <Header />
         <SideNavbar />
         <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14 print:pl-0'>
-          <CustomerDetails customer={customer} />
+          <CustomerDetails customer={customer} schedules={schedules} />
         </main>
       </div>
     </>

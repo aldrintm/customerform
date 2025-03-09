@@ -22,7 +22,7 @@ import updateNote from '@/app/actions/updateNote' // this server action for upda
 import deleteNote from '@/app/actions/deleteNote'
 import BookmarkButton from './BookmarkButton'
 
-const CustomerDetails = ({ customer: initialCustomer }) => {
+const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
   const [customer, setCustomers] = useState(initialCustomer)
   const [project, setProject] = useState('')
@@ -206,27 +206,28 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
         <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
           Customer Details Page
         </div>
-        {customer.projects &&
-        customer.projects.length > 0 &&
-        customer.projects[0].schedules &&
-        customer.projects[0].schedules.length > 0 ? (
-          <div className='pr-1 py-2 text-right'>
-            <Button
-              icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
-              onClick={() =>
-                handleEditScheduleClick(customer.projects[0].schedules[0]._id)
-              }
-              disabled={isPending || isNavigating}
-            >
-              {isNavigating || isPending ? (
-                <span className='text-sm px-2'>Loading ... </span>
-              ) : (
-                'Edit Schedule'
-              )}
-            </Button>
-          </div>
-        ) : (
-          <div className='pr-1 py-2 text-right'>
+
+        <div className='pr-1 py-2 text-right'>
+          {schedules && schedules.length > 0 ? (
+            <div className='flex flex-col items-end'>
+              {schedules.map((schedule) => (
+                <Button
+                  key={schedule._id}
+                  icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+                  onClick={() => handleEditScheduleClick(schedule._id)}
+                  disabled={isPending || isNavigating}
+                >
+                  {isNavigating || isPending ? (
+                    <span className='text-sm px-2'>Loading ... </span>
+                  ) : (
+                    `Edit Schedule: ${
+                      schedule.measureDescription || schedule._id
+                    }`
+                  )}
+                </Button>
+              ))}
+            </div>
+          ) : (
             <Button
               icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
               onClick={handleAddScheduleClick}
@@ -238,8 +239,8 @@ const CustomerDetails = ({ customer: initialCustomer }) => {
                 'Add Schedule'
               )}
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>

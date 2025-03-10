@@ -15,8 +15,8 @@ import Button from './Button'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 import deleteCustomer from '@/app/actions/deleteCustomer'
-import { deleteProject } from '@/app/actions/deleteProject'
 import { toast } from 'react-toastify'
+import Map from '@/assets/images/mapbox.webp'
 import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
@@ -102,9 +102,11 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
     if (!confirmed) return
 
     await deleteCustomer(customerId)
+
     const updatedCustomers = customer.filter(
       (customer) => customerId !== customer._id
     )
+
     setCustomers(updatedCustomers)
     toast.success(`${customerId} is DELETED!`)
   }
@@ -128,35 +130,23 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
 
   // this replaces the handleDeleteProject above
   const handleDeleteProject = async (projectId) => {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this project and all of its schedules?'
-    )
+    const confirmed = window.confirm('Delete the project?')
     if (!confirmed) return
 
-    try {
-      // Call the deleteProject server action with projectId and customerId
-      const result = await deleteProject(projectId, customer._id)
-      if (!result) {
-        throw new Error('ProjectId or CustomerId is missing')
-      }
-      if (result.success) {
-        // Update local state to remove the deleted project
-        if (customer?.projects && customer.projects.length > 0) {
-          const updatedProjects = customer.projects.filter(
-            (project) => project._id !== projectId
-          )
-          setCustomers({
-            ...customer,
-            projects: updatedProjects,
-          })
-          toast.success(
-            `Project ${projectId} for ${customer.firstName} ${customer.lastName} and its schedules are DELETED`
-          )
-        }
-      }
-    } catch (error) {
-      console.error('Error deleting project:', error)
-      toast.error('Failed to delete project. Please try again')
+    // (Assuming deleteProject is an action that deletes the project from the database)
+    await deleteProject(projectId)
+
+    // Check if projects array exists and filter out the deleted project
+    if (customer?.projects && customer.projects.length > 0) {
+      const updatedProjects = customer.projects.filter(
+        (proj) => proj._id !== projectId
+      )
+      // Update the entire customer state with the updated projects array
+      setCustomers({
+        ...customer,
+        projects: updatedProjects,
+      })
+      toast.success(`${projectId} is DELETED!`)
     }
   }
 
@@ -613,230 +603,21 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* Project Order Details Box */}
             <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:mb-8 print:border-b-2'>
-              {customer.projects && customer.projects.length > 0 ? (
-                customer.projects.map((project, index) => (
-                  <div key={project._id} className='pb-4 sm:p-4'>
-                    <div className='px-4 sm:px-0 flex justify-between'>
-                      <h3 className='text-base font-semibold text-gray-700'>
-                        Project Order Details{' '}
-                        {customer.projects.length > 1 ? `#${index + 1}` : ''}
-                      </h3>
-                      <div className='flex gap-4 print:hidden'>
-                        <Button>
-                          <Link
-                            href={`/dashboard/customers/${customer._id}/editProject?projectId=${project._id}`}
-                          >
-                            Edit Project
-                          </Link>
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            handleDeleteProject(project._id, customer)
-                          }
+              <div className='pb-4 sm:p-4'>
+                <div className='px-4 sm:px-0 flex justify-between'>
+                  <h3 className='text-base font-semibold text-gray-700'>
+                    Project Order Details
+                  </h3>
+                  <div className='flex gap-4 print:hidden'>
+                    {customer.projects && customer.projects.length > 0 ? (
+                      <Button>
+                        <Link
+                          href={`/dashboard/customers/${customer._id}/editProject`}
                         >
-                          Delete Project
-                        </Button>
-                      </div>
-                    </div>
-                    <div className='mt-4 border-t border-gray-100'>
-                      <dl className='mt-1'>
-                        {project.purchaseOrders &&
-                        project.purchaseOrders.length > 0 ? (
-                          project.purchaseOrders
-                            .filter(
-                              (po) =>
-                                po.purchaseOrderNumber ||
-                                po.purchaseOrderDate ||
-                                po.squareFeet ||
-                                po.purchaseOrderAmount
-                            )
-                            .map((po, poIndex) => {
-                              const rawDate = po.purchaseOrderDate
-                              let formattedPoDate = ''
-                              if (rawDate) {
-                                const poDate = new Date(rawDate)
-                                if (!isNaN(poDate.getTime())) {
-                                  const day = poDate
-                                    .getDate()
-                                    .toString()
-                                    .padStart(2, '0')
-                                  const month = poDate.toLocaleString('en-US', {
-                                    month: 'long',
-                                  })
-                                  const year = poDate.getFullYear()
-                                  formattedPoDate = `${month} ${day}, ${year}`
-                                }
-                              }
-                              return (
-                                <div
-                                  key={poIndex}
-                                  className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'
-                                >
-                                  <dt className='text-sm font-medium text-gray-900 pr-2'>
-                                    PO Number:
-                                  </dt>
-                                  <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
-                                    {po.purchaseOrderNumber && (
-                                      <span>{po.purchaseOrderNumber}</span>
-                                    )}
-                                    {formattedPoDate && (
-                                      <span>{formattedPoDate}</span>
-                                    )}
-                                    {po.purchaseOrderAmount && (
-                                      <span>${po.purchaseOrderAmount}</span>
-                                    )}
-                                  </dd>
-                                </div>
-                              )
-                            })
-                        ) : (
-                          <p className='text-sm text-gray-700 px-4 py-1'>
-                            No Purchase Orders Found
-                          </p>
-                        )}
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Description:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
-                            {project.description}
-                          </dd>
-                        </div>
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Material:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 md:flex md:justify-between'>
-                            <span className='pr-2'>
-                              {project.materialThickness}{' '}
-                              {project.materialColor}
-                            </span>
-                            <span className='pr-2 underline'>
-                              {project.materialBrand}
-                            </span>
-                            <span className='inline-flex items-center rounded-md sm:mr-2 bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
-                              {project.materialType}
-                            </span>
-                            <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
-                              {project.materialFinish}
-                            </span>
-                          </dd>
-                        </div>
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Edge:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                            {project.edge}
-                          </dd>
-                        </div>
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Sink:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                            {project.sinkQuantity} {project.sinkType} @{' '}
-                            {project.sinkLocation} ({project.sinkInfo})
-                          </dd>
-                        </div>
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Stove:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                            {project.stove
-                              ? 'Slide In Range'
-                              : project.cooktop
-                              ? 'Cooktop'
-                              : 'n/a'}
-                          </dd>
-                        </div>
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Splash:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                            {project.splash}
-                          </dd>
-                        </div>
-                        <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                          <dt className='text-sm font-medium text-gray-900 pr-2'>
-                            Order Notes:
-                          </dt>
-                          <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                            {project.notes}
-                          </dd>
-                        </div>
-                        {/* Schedules for this Project */}
-                        {project.schedules && project.schedules.length > 0 ? (
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
-                            <dt className='text-sm font-medium text-gray-900 pr-2'>
-                              Schedules:
-                            </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
-                              <div className='flex flex-col gap-2'>
-                                {project.schedules.map((schedule) => (
-                                  <Button
-                                    key={schedule._id}
-                                    icon={
-                                      <Plus className='h-4 w-4 text-xs hover:text-white' />
-                                    }
-                                    onClick={() =>
-                                      handleEditScheduleClick(schedule._id)
-                                    }
-                                    disabled={isPending || isNavigating}
-                                    className='text-left'
-                                  >
-                                    {isNavigating || isPending ? (
-                                      <span className='text-sm px-2'>
-                                        Loading ...{' '}
-                                      </span>
-                                    ) : (
-                                      `Edit Schedule: ${
-                                        schedule.measureDescription ||
-                                        schedule._id
-                                      }`
-                                    )}
-                                  </Button>
-                                ))}
-                              </div>
-                            </dd>
-                          </div>
-                        ) : (
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                            <dt className='text-sm font-medium text-gray-900 pr-2'>
-                              Schedules:
-                            </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
-                              <Button
-                                icon={
-                                  <Plus className='h-4 w-4 text-xs hover:text-white' />
-                                }
-                                onClick={handleAddScheduleClick}
-                                disabled={isPending || isNavigating}
-                              >
-                                {isNavigating || isPending ? (
-                                  <span className='text-sm px-2'>
-                                    Loading ...{' '}
-                                  </span>
-                                ) : (
-                                  'Add Schedule'
-                                )}
-                              </Button>
-                            </dd>
-                          </div>
-                        )}
-                      </dl>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className='pb-4 sm:p-4'>
-                  <div className='px-4 sm:px-0 flex justify-between'>
-                    <h3 className='text-base font-semibold text-gray-700'>
-                      Project Order Details
-                    </h3>
-                    <div className='flex gap-4 print:hidden'>
+                          Edit
+                        </Link>
+                      </Button>
+                    ) : (
                       <Button
                         icon={
                           <Plus className='h-4 w-4 text-xs hover:text-white' />
@@ -850,19 +631,188 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                           'Add'
                         )}
                       </Button>
-                    </div>
-                  </div>
-                  <div className='flex items-center justify-center h-3/4 mt-4'>
-                    <p className='text-center text-base md:text-lg font-semibold text-gray-700'>
-                      No Projects Found
-                    </p>
+                    )}
+
+                    {/* <Button
+                      onClick={() =>
+                        handleDeleteProject(customer.projects[0]._id)
+                      }
+                    >
+                      Delete
+                    </Button> */}
                   </div>
                 </div>
-              )}
+
+                {customer.projects &&
+                customer.projects.length > 0 &&
+                customer.projects[0].purchaseOrders &&
+                customer.projects[0].purchaseOrders.length > 0 ? (
+                  <div className='mt-4 border-t border-gray-100'>
+                    <dl className='mt-1'>
+                      {customer.projects[0].purchaseOrders
+                        .filter(
+                          (po) =>
+                            // Only include the purchase order if at least one of these fields is present
+                            po.purchaseOrderNumber ||
+                            po.purchaseOrderDate ||
+                            po.squareFeet ||
+                            po.purchaseOrderAmount
+                        )
+                        .map((po, index) => {
+                          // Always render the PO information
+                          const rawDate = po.purchaseOrderDate
+                          let formattedPoDate = ''
+
+                          if (rawDate) {
+                            const poDate = new Date(rawDate)
+                            if (!isNaN(poDate.getTime())) {
+                              const day = poDate
+                                .getDate()
+                                .toString()
+                                .padStart(2, '0')
+                              const month = poDate.toLocaleString('en-US', {
+                                month: 'long',
+                              })
+                              const year = poDate.getFullYear()
+                              formattedPoDate = `${month} ${day}, ${year}`
+                            }
+                          }
+
+                          return (
+                            <div
+                              key={index}
+                              className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'
+                            >
+                              <dt className='text-sm font-medium text-gray-900 pr-2'>
+                                PO Number:
+                              </dt>
+                              <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
+                                {po.purchaseOrderNumber ? (
+                                  <span>{po.purchaseOrderNumber}</span>
+                                ) : (
+                                  <span></span>
+                                )}
+
+                                {/* Only render the date if formattedPoDate is not empty */}
+                                {formattedPoDate ? (
+                                  <span>{formattedPoDate}</span>
+                                ) : (
+                                  <span></span>
+                                )}
+
+                                {po.purchaseOrderAmount ? (
+                                  <span>${po.purchaseOrderAmount}</span>
+                                ) : (
+                                  <span></span>
+                                )}
+                              </dd>
+                            </div>
+                          )
+                        })}
+
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Description:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
+                          {customer.projects[0].description}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Material:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 md:flex md:justify-between'>
+                          <span className='pr-2'>
+                            {customer.projects[0].materialThickness}{' '}
+                            {customer.projects[0].materialColor}
+                          </span>
+                          <span className='pr-2 underline'>
+                            {customer.projects[0].materialBrand}
+                          </span>
+                          {/* <span className='pr-2 underline'>Quartz</span>
+                        <span className='pr-2 underline'>Polished</span> */}
+                          <span className='inline-flex items-center rounded-md sm:mr-2 bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/10'>
+                            {/* <span className='inline-block w-2.5 h-2.5 mr-2 bg-red-500 rounded-full'></span> */}
+                            {customer.projects[0].materialType}
+                          </span>
+                          <span className='inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20'>
+                            {customer.projects[0].materialFinish}
+                          </span>
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Edge:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          {customer.projects[0].edge}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Sink:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          {customer.projects[0].sinkQuantity}{' '}
+                          {customer.projects[0].sinkType} @{' '}
+                          {customer.projects[0].sinkLocation} (
+                          {customer.projects[0].sinkInfo})
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Stove:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          {customer.projects?.[0]?.stove
+                            ? 'Slide In Range'
+                            : customer.projects?.[0]?.cooktop
+                            ? 'Cooktop'
+                            : 'n/a'}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Splash:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          {customer.projects[0].splash}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Order Notes:
+                        </dt>
+                        <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                          {customer.projects[0].notes}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                ) : (
+                  <div className='flex items-center justify-center h-3/4 '>
+                    <p className='text-center text-base md:text-lg font-semibold text-gray-700'>
+                      No Purchase Order Found
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
             {/* Mapbox Div */}
             <div className='hidden md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative'>
-              <CustomerMap customer={customer} />
+              <div className=''>
+                <CustomerMap customer={customer} />
+                {/* <Image
+                  src={Map}
+                  alt='map'
+                  priority={true}
+                  className='object-cover w-full h-full grayscale'
+                /> */}
+              </div>
+              {/* <p className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl text-gray-500 font-extrabold'>
+                (latitude + longtitude)
+              </p> */}
             </div>
           </div>
         </div>

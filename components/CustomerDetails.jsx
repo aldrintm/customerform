@@ -773,31 +773,37 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Schedules:
                             </dt>
+
                             <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
                               <div className='flex flex-col gap-2'>
                                 {project.schedules.map((schedule) => (
-                                  <Button
-                                    key={schedule._id}
-                                    icon={
-                                      <Plus className='h-4 w-4 text-xs hover:text-white' />
-                                    }
-                                    onClick={() =>
-                                      handleEditScheduleClick(schedule._id)
-                                    }
-                                    disabled={isPending || isNavigating}
-                                    className='text-left'
-                                  >
-                                    {isNavigating || isPending ? (
-                                      <span className='text-sm px-2'>
-                                        Loading ...{' '}
-                                      </span>
-                                    ) : (
-                                      `Edit Schedule: ${
-                                        schedule.measureDescription ||
-                                        schedule._id
-                                      }`
-                                    )}
-                                  </Button>
+                                  <div key={schedule._id}>
+                                    <Button
+                                      icon={
+                                        <Plus className='h-4 w-4 text-xs hover:text-white' />
+                                      }
+                                      onClick={() =>
+                                        handleEditScheduleClick(schedule._id)
+                                      }
+                                      disabled={isPending || isNavigating}
+                                      className='text-left'
+                                    >
+                                      {isNavigating || isPending ? (
+                                        <span className='text-sm px-2'>
+                                          Loading ...{' '}
+                                        </span>
+                                      ) : (
+                                        `Edit Schedule: ${
+                                          schedule.measureDescription ||
+                                          schedule._id
+                                        }`
+                                      )}
+                                    </Button>
+
+                                    <div>{schedule.measureDate}</div>
+                                    <div>{schedule.measureBy}</div>
+                                    <div>{schedule.measureWindow}</div>
+                                  </div>
                                 ))}
                               </div>
                             </dd>

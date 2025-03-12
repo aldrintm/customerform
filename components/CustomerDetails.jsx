@@ -360,13 +360,13 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
 
                   <div className='flex gap-4 print:hidden'>
                     <Button onClick={printFile}>Print File</Button>
-                    <Button>
-                      <Link
-                        href={`/dashboard/customers/${customer._id}/editCustomer`}
-                      >
-                        Edit
-                      </Link>
-                    </Button>
+
+                    <Link
+                      href={`/dashboard/customers/${customer._id}/editCustomer`}
+                      prefetch={true}
+                    >
+                      <Button>Edit Project</Button>
+                    </Link>
 
                     <Button onClick={() => handleDeleteCustomer(customer._id)}>
                       Delete

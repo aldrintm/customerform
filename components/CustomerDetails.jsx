@@ -21,6 +21,7 @@ import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
 import BookmarkButton from './BookmarkButton'
+import { formatDate } from './FormatDate'
 
 const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
@@ -866,7 +867,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                                       Measure Date:
                                     </dt>
                                     <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
-                                      {reformattedMeasureDate}
+                                      {formatDate(schedule.measureDate)}
                                     </dd>
                                     <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
                                       By: {schedule.measureBy}
@@ -881,7 +882,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                                       Install Date:
                                     </dt>
                                     <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
-                                      {reformattedInstallDate}
+                                      {formatDate(schedule.installDate)}
                                     </dd>
                                     <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
                                       By: {schedule.installBy}

@@ -836,7 +836,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                                     <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
                                       <div className='flex flex-col gap-2'>
                                         <button
-                                          className='text-left border border-blue-300 rounded-md px-2 py-1 text-sm font-medium text-gray-700 hover:bg-white hover:scale-105 active:scale-95 transition-all ease-in-out duration-400'
+                                          className='text-left border border-blue-400 rounded-md px-2 py-1 text-sm font-medium text-gray-700 hover:bg-blue-400 hover:text-white hover:scale-105 active:scale-95 transition-all ease-in-out duration-400'
                                           icon={
                                             <Plus className='h-4 w-4 text-xs hover:text-white' />
                                           }

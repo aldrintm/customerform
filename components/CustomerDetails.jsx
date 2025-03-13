@@ -365,7 +365,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                       href={`/dashboard/customers/${customer._id}/editCustomer`}
                       prefetch={true}
                     >
-                      <Button>Edit Project</Button>
+                      <Button>Edit</Button>
                     </Link>
 
                     <Button onClick={() => handleDeleteCustomer(customer._id)}>
@@ -622,13 +622,13 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                         {customer.projects.length > 1 ? `#${index + 1}` : ''}
                       </h3>
                       <div className='flex gap-4 print:hidden'>
-                        <Button>
-                          <Link
-                            href={`/dashboard/customers/${customer._id}/editProject?projectId=${project._id}`}
-                          >
-                            Edit Project
-                          </Link>
-                        </Button>
+                        <Link
+                          href={`/dashboard/customers/${customer._id}/editProject?projectId=${project._id}`}
+                          prefetch={true}
+                        >
+                          <Button>Edit Project</Button>
+                        </Link>
+
                         <Button
                           onClick={() =>
                             handleDeleteProject(project._id, customer)
@@ -769,44 +769,130 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                         </div>
                         {/* Schedules for this Project */}
                         {project.schedules && project.schedules.length > 0 ? (
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0'>
-                            <dt className='text-sm font-medium text-gray-900 pr-2'>
-                              Schedules:
-                            </dt>
+                          <div>
+                            {project.schedules.map((schedule) => {
+                              const measureDate = new Date(schedule.measureDate)
+                              const formattedMeasureDate =
+                                measureDate.toLocaleDateString('en-US', {
+                                  month: 'numeric',
+                                  day: '2-digit', // 2-digit
+                                  year: 'numeric',
+                                })
+                              const installDate = new Date(schedule.installDate)
+                              const formattedInstallDate =
+                                installDate.toLocaleDateString('en-US', {
+                                  month: 'numeric',
+                                  day: '2-digit', // 2-digit
+                                  year: 'numeric',
+                                })
 
-                            <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
-                              <div className='flex flex-col gap-2'>
-                                {project.schedules.map((schedule) => (
-                                  <div key={schedule._id}>
-                                    <Button
-                                      icon={
-                                        <Plus className='h-4 w-4 text-xs hover:text-white' />
-                                      }
-                                      onClick={() =>
-                                        handleEditScheduleClick(schedule._id)
-                                      }
-                                      disabled={isPending || isNavigating}
-                                      className='text-left'
-                                    >
-                                      {isNavigating || isPending ? (
-                                        <span className='text-sm px-2'>
-                                          Loading ...{' '}
-                                        </span>
-                                      ) : (
-                                        `Edit Schedule: ${
-                                          schedule.measureDescription ||
-                                          schedule._id
-                                        }`
-                                      )}
-                                    </Button>
+                              const rawMeasureDate = schedule.measureDate
+                              let reformattedMeasureDate = ''
+                              if (rawMeasureDate) {
+                                const measureDate = new Date(rawMeasureDate)
+                                if (!isNaN(measureDate.getTime())) {
+                                  const day = measureDate
+                                    .getDate()
+                                    .toString()
+                                    .padStart(2, '0')
+                                  const month = measureDate.toLocaleString(
+                                    'en-US',
+                                    {
+                                      month: 'short',
+                                    }
+                                  )
+                                  const year = measureDate.getFullYear()
+                                  reformattedMeasureDate = `${month} ${day}, ${year}`
+                                }
+                              }
 
-                                    <div>{schedule.measureDate}</div>
-                                    <div>{schedule.measureBy}</div>
-                                    <div>{schedule.measureWindow}</div>
+                              const rawInstallDate = schedule.installDate
+                              let reformattedInstallDate = ''
+                              if (rawInstallDate) {
+                                const measureDate = new Date(rawInstallDate)
+                                if (!isNaN(installDate.getTime())) {
+                                  const day = installDate
+                                    .getDate()
+                                    .toString()
+                                    .padStart(2, '0')
+                                  const month = installDate.toLocaleString(
+                                    'en-US',
+                                    {
+                                      month: 'short',
+                                    }
+                                  )
+                                  const year = installDate.getFullYear()
+                                  reformattedInstallDate = `${month} ${day}, ${year}`
+                                }
+                              }
+
+                              return (
+                                <div key={schedule._id}>
+                                  <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                                    <dt className='text-sm font-medium text-gray-900 pr-2'>
+                                      Schedules:
+                                    </dt>
+                                    <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
+                                      <div className='flex flex-col gap-2'>
+                                        <button
+                                          className='text-left border border-blue-300 rounded-md px-2 py-1 text-sm font-medium text-gray-700 hover:bg-white hover:scale-105 active:scale-95 transition-all ease-in-out duration-400'
+                                          icon={
+                                            <Plus className='h-4 w-4 text-xs hover:text-white' />
+                                          }
+                                          onClick={() =>
+                                            handleEditScheduleClick(
+                                              schedule._id
+                                            )
+                                          }
+                                          disabled={isPending || isNavigating}
+                                        >
+                                          {isNavigating || isPending ? (
+                                            <span className='text-sm px-2'>
+                                              Loading ...{' '}
+                                            </span>
+                                          ) : (
+                                            `Edit Schedule: ${
+                                              schedule.measureDescription ||
+                                              schedule._id
+                                            }`
+                                          )}
+                                        </button>
+                                      </div>
+                                    </dd>
                                   </div>
-                                ))}
-                              </div>
-                            </dd>
+
+                                  <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                                    <dt className='text-sm font-medium text-gray-900 pr-2'>
+                                      Measure Date:
+                                    </dt>
+                                    <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
+                                      {reformattedMeasureDate}
+                                    </dd>
+                                    <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
+                                      By: {schedule.measureBy}
+                                    </dd>
+                                    <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
+                                      Time: {schedule.measureTime}
+                                    </dd>
+                                  </div>
+
+                                  <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                                    <dt className='text-sm font-medium text-gray-900 pr-2'>
+                                      Install Date:
+                                    </dt>
+                                    <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
+                                      {reformattedInstallDate}
+                                    </dd>
+                                    <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
+                                      By: {schedule.installBy}
+                                    </dd>
+                                    <dd className='text-sm text-gray-700 sm:col-span-1 sm:mt-0'>
+                                      Time: {schedule.installTime}
+                                    </dd>
+                                  </div>
+                                </div>
+                              )
+                            })}
                           </div>
                         ) : (
                           <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>

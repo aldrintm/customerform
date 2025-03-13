@@ -176,7 +176,7 @@ const ScheduleEditForm = ({ customer, projects, schedule }) => {
                           name='measureBy'
                           id='measureBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={schedule.measuredBy || 'default'}
+                          defaultValue={schedule.measureBy || 'default'}
                         >
                           <option value='default' disabled>
                             Select Name (required)

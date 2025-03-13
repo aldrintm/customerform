@@ -21,7 +21,7 @@ import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
 import BookmarkButton from './BookmarkButton'
-import { formatDate } from './FormatDate'
+import { formatDate } from '@/utils/formatDate'
 
 const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   // initialCustomer is now a plain object that includes a populated projects array.

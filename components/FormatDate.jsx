@@ -1,21 +1,17 @@
-export const formatDate = (dateString, format = 'short') => {
+export const formatDate = (dateString) => {
   if (!dateString) return ''
 
   const date = new Date(dateString)
   if (isNaN(date.getTime())) return ''
 
-  const formats = {
-    short: {
-      month: 'short',
-      day: '2-digit',
-      year: 'numeric',
-    },
-    long: {
-      month: 'long',
-      day: '2-digit',
-      year: 'numeric',
-    },
-  }
+  // Add timezone offset to keep local date
+  const userTimezone = date.getTimezoneOffset() * 60000
+  const localDate = new Date(date.getTime() + userTimezone)
 
-  return date.toLocaleDateString('en-US', formats[format])
+  return localDate.toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+    timeZone: 'UTC', // Force UTC to prevent double conversion
+  })
 }

@@ -273,7 +273,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                 </span>
               </div>
             </div>
-            <div className='hidden md:grid md:grid-cols sm:gap-2 align-middle print:hidden'>
+            <div className='hidden md:grid md:grid-cols-1 sm:gap-2 align-middle print:hidden'>
               {customer.projects && customer.projects.length > 0 ? (
                 <div className='text-lg md:text-3xl font-semibold text-white'>
                   {customer?.projects[0]?.customerType?.length > 0 ? (
@@ -335,13 +335,37 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                 </div>
               </div>
             </div>
-            <div className='grid grid-cols gap-2 text-right'>
+            <div className='grid grid-cols-1 gap-2 text-right'>
               <div className='text-sm md:text-md font-semibold text-gray-500'>
-                Template: Jan 3, 2025
+                <span className='text-gray-500 pr-2'>Template:</span>
+                <span className='inline-flex'>
+                  {schedules && schedules.length > 0 ? (
+                    <span>
+                      {schedules.map((schedule) => (
+                        <span key={schedule._id}>
+                          {formatDate(schedule.measureDate)}
+                        </span>
+                      ))}
+                    </span>
+                  ) : (
+                    <p>no schedule</p>
+                  )}
+                </span>
               </div>
               <div className='text-sm md:text-md font-semibold text-gray-500'>
-                <span className='items-center align-middle'>
-                  Install: Jan 25, 2025
+                <span className='text-gray-500 pr-2'>Install:</span>
+                <span className='inline-flex'>
+                  {schedules && schedules.length > 0 ? (
+                    <span>
+                      {schedules.map((schedule) => (
+                        <span key={schedule._id}>
+                          {formatDate(schedule.installDate)}
+                        </span>
+                      ))}
+                    </span>
+                  ) : (
+                    <p>no schedule</p>
+                  )}
                 </span>
               </div>
             </div>

@@ -58,8 +58,14 @@ const Dashboard = ({ customers }) => {
               </div>
             </div>
           </div>
-          <div className='container px-2 col-span-4'>
-            <DashboardTemplateSchedule customers={customers} />
+          <div className='container col-span-4 space-y-6'>
+            {/* <DashboardTemplateSchedule customers={customers} /> */}
+            <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'>
+              Logic Error :(
+            </div>
+            <div className=' border border-gray-300 rounded-lg p-4 h-[27rem] flex items-center justify-center bg-teal-100'>
+              Waiting for Codeblock Above
+            </div>
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@ const BookmarkedCard = ({ bookmarks, sessionUser }) => {
     return dividerColors[randomIndex]
   }
   return (
-    <div>
+    <>
       {bookmarks.length === 0 ? (
         <div className='text-center text-gray-600'>
           There's no saved customers to show
@@ -71,7 +71,7 @@ const BookmarkedCard = ({ bookmarks, sessionUser }) => {
           </div>
         </>
       )}
-    </div>
+    </>
   )
 }
 

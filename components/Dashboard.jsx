@@ -6,9 +6,12 @@ import { format } from 'date-fns'
 import { Calendar, Users } from 'lucide-react'
 import WeatherNow from './WeatherNow'
 import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
+import DashboardBookmarkPage from './DashboardBookmarkPage'
 
-const Dashboard = ({ customers }) => {
+const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
+
+  console.log(currentDate)
 
   return (
     <>
@@ -40,15 +43,17 @@ const Dashboard = ({ customers }) => {
 
             {/* Feature Box Here - Problem Customers */}
             <div className='hidden md:grid md:grid-cols-1 py-5'>
-              <div className='col-span-8 bg-white border border-gray-300 rounded-lg p-4 m-2'>
-                <p className='text-sm my-auto mx-auto grid grid-cols-1 text-center'>
-                  <span className='py-auto text-md font-semibold text-gray-600'>
-                    Featured Client Section
-                  </span>
+              <div className='col-span-8 bg-white m-2'>
+                <div className='text-sm my-auto mx-auto grid grid-cols-1 text-center'>
+                  <DashboardBookmarkPage
+                    bookmarks={bookmarks}
+                    sessionUser={sessionUser}
+                  />
+
                   {/* <span className='py-auto'>Button</span>
                   <span className='py-auto'>Button</span>
                   <span className='py-auto'>Button</span> */}
-                </p>
+                </div>
               </div>
             </div>
             {/* Customer Dashboard Table Here - Snapshot */}

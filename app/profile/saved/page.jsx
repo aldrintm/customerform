@@ -18,56 +18,19 @@ const SavedCustomersPage = async () => {
       <Header />
       <SideNavbar />
       <main className='flex-1 sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
-        <BookmarkedCard bookmarks={bookmarks} sessionUser={sessionUser} />
-        {/* {bookmarks.length === 0 ? (
+        {bookmarks.length === 0 ? (
           <div className='text-center text-gray-600'>
             There's no saved customers to show
           </div>
         ) : (
-          <>
-            <div className='container mx-auto p-2'>
-              <div className='text-md pl-2 md:text-md text-blue-500 font-semibold mb-4'>
-                Saved Customer for {sessionUser.user.name}
-              </div>
-              <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6'>
-                {bookmarks.map((customer) => (
-                  <div key={customer._id}>
-                    <Link
-                      href={`/dashboard/customers/${customer._id}`}
-                      className='inline-flex items-center py-1.5 text-sm font-medium text-white bg-white rounded-md transition-colors'
-                    >
-                      <div
-                        key={customer._id}
-                        className='flex w-full h-full bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow'
-                      >
-                        <div className={`w-2 ${getRandomColor()} rounded-l-lg`}>
-                          <span></span>
-                        </div>
-
-                        <div className='flex-1 px-4 py-3'>
-                          <h3 className='text-lg font-semibold text-gray-700'>
-                            {customerWithCapitalizedNames(customer.firstName)}{' '}
-                            {customerWithCapitalizedNames(customer.lastName)}
-                          </h3>
-                          <p className='text-sm text-gray-600'>
-                            {customer.address.street}, {customer.address.city}{' '}
-                            {customer.address.state} {customer.address.zipcode}
-                          </p>
-                          <p className='text-sm text-gray-600'>
-                            {formatPhoneNumber(customer.phone)}
-                          </p>
-                          <p className='text-sm text-gray-600'>
-                            {customer.email}
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
+          <div className='container mx-auto p-2'>
+            <div className='text-md pl-2 md:text-md text-blue-500 font-semibold mb-4'>
+              Saved Customer for {sessionUser.user.name}
             </div>
-          </>
-        )} */}
+
+            <BookmarkedCard bookmarks={bookmarks} sessionUser={sessionUser} />
+          </div>
+        )}
       </main>
     </div>
   )

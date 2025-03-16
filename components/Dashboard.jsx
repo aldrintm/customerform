@@ -11,7 +11,9 @@ import DashboardBookmarkPage from './DashboardBookmarkPage'
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
 
-  console.log(currentDate)
+  const date = new Date('March 12, 2025')
+  const day = format(date, 'MM/dd/yyyy')
+  console.log(day)
 
   return (
     <>

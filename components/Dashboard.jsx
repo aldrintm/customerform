@@ -17,33 +17,35 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   console.log(day)
 
   // Get customer with all schedules
-  const customerWithSchedules = customers.map((customer) => {
-    const schedules =
-      customer.projects?.flatMap((project) => project.schedules || []) || []
-    return { ...customer, schedules }
-  })
+  // const customerWithSchedules = customers.map((customer) => {
+  //   const schedules =
+  //     customer.projects?.flatMap((project) => project.schedules || []) || []
+  //   return { ...customer, schedules }
+  // })
 
-  // Extract schedules from all projects into a flat array
-  const allSchedules = customers
-    .flatMap((customer) => customer.projects || [])
-    .flatMap((project) => project.schedules || [])
+  // Get all projects with schedules
+  const projectWithSchedules = customers
+    .flatMap(
+      (customer) =>
+        customer.projects?.filter((project) => project.schedules?.length > 0) ||
+        []
+    )
+    .map((project) => ({ ...project, customerId: project.customerId }))
 
-  console.log('Customer with Schedules:', customerWithSchedules)
-  console.log('Total schedules found:', allSchedules.length)
-  console.log('All Schedules:', allSchedules)
+  console.log('Project with Schedules:', projectWithSchedules)
 
   // Get all schedules with customer information
-  const processedSchedules = allSchedules.map((schedule) => {
-    const customer = customers.find(
-      (customer) => customer._id === schedule.customerId
-    )
-    return {
-      ...schedule,
-      customerName: customer
-        ? `${customer.firstName} ${customer.lastName}`
-        : '',
-    }
-  })
+  // const processedSchedules = allSchedules.map((schedule) => {
+  //   const customer = customers.find(
+  //     (customer) => customer._id === schedule.customerId
+  //   )
+  //   return {
+  //     ...schedule,
+  //     customerName: customer
+  //       ? `${customer.firstName} ${customer.lastName}`
+  //       : '',
+  //   }
+  // })
 
   return (
     <>
@@ -92,7 +94,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           <div className='container xl:col-span-4 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'>
-              <DashboardScheduleDisplay schedules={processedSchedules} />
+              {/* <DashboardScheduleDisplay schedules={processedSchedules} /> */}
             </div>
             <div className=' border border-gray-300 rounded-lg p-4 h-[27rem] flex items-center justify-center bg-teal-100'>
               Waiting for Codeblock Above

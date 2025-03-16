@@ -115,7 +115,7 @@ const SideNavbar = () => {
               <span className='sr-only'>Files</span>
             </Link>
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/inventory'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
@@ -141,6 +141,9 @@ const SideNavbar = () => {
               </svg> */}
               <Archive className='h-5 w-5' />
               <span className='sr-only'>Inventory</span>
+              <span className='invisible absolute start-full top-1/4 ms-1 -translate-y-1/2 rounded-md bg-gray-500 px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                Inventory
+              </span>
             </Link>
             <Link
               className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${

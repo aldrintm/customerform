@@ -74,6 +74,23 @@ CustomerSchema.index({ lastName: 1 })
 CustomerSchema.index({ phone: 1 })
 CustomerSchema.index({ email: 1 }, { unique: true })
 
+// Add compound index for customer lookup with project and note population
+CustomerSchema.index({ _id: 1, projects: 1, officeNotes: 1 })
+
+// Add index for projects array to improve population performance
+CustomerSchema.index({ projects: 1 })
+
+// Add index for office notes to improve population performance
+CustomerSchema.index({ officeNotes: 1 })
+
+// Add index for frequently accessed fields together
+CustomerSchema.index({
+  _id: 1,
+  firstName: 1,
+  lastName: 1,
+  createdAt: -1,
+})
+
 const Customer = models.Customer || model('Customer', CustomerSchema)
 
 export default Customer

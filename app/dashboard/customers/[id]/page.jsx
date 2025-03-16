@@ -18,6 +18,12 @@ const CustomerPage = async ({ params }) => {
 
   await connectDB()
 
+  // Add this to debug index usage (development only)
+  if (process.env.NODE_ENV === 'development') {
+    const explanation = await Customer.findById(id).explain('executionStats')
+    console.log('Query execution stats:', explanation.executionStats)
+  }
+
   // Populate the projects array (this assumes your Customer model's projects field
   // is defined as an array of ObjectIds referencing 'Project')
   const customerDoc = await Customer.findById(id)

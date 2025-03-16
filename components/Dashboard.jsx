@@ -7,6 +7,7 @@ import { Calendar, Users } from 'lucide-react'
 import WeatherNow from './WeatherNow'
 import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
+import DashboardScheduleDisplay from './DashboardScheduleDisplay'
 
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
@@ -14,6 +15,35 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const date = new Date('March 12, 2025')
   const day = format(date, 'MM/dd/yyyy')
   console.log(day)
+
+  // Get customer with all schedules
+  const customerWithSchedules = customers.map((customer) => {
+    const schedules =
+      customer.projects?.flatMap((project) => project.schedules || []) || []
+    return { ...customer, schedules }
+  })
+
+  // Extract schedules from all projects into a flat array
+  const allSchedules = customers
+    .flatMap((customer) => customer.projects || [])
+    .flatMap((project) => project.schedules || [])
+
+  console.log('Customer with Schedules:', customerWithSchedules)
+  console.log('Total schedules found:', allSchedules.length)
+  console.log('All Schedules:', allSchedules)
+
+  // Get all schedules with customer information
+  const processedSchedules = allSchedules.map((schedule) => {
+    const customer = customers.find(
+      (customer) => customer._id === schedule.customerId
+    )
+    return {
+      ...schedule,
+      customerName: customer
+        ? `${customer.firstName} ${customer.lastName}`
+        : '',
+    }
+  })
 
   return (
     <>
@@ -62,7 +92,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           <div className='container xl:col-span-4 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'>
-              Logic Error :(
+              <DashboardScheduleDisplay schedules={processedSchedules} />
             </div>
             <div className=' border border-gray-300 rounded-lg p-4 h-[27rem] flex items-center justify-center bg-teal-100'>
               Waiting for Codeblock Above

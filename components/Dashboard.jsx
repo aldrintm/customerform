@@ -23,10 +23,10 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
         </div>
         {/* Main Components Starts Here */}
         <div className='hidden md:grid xl:grid-cols-12 lg:gap-4'>
-          <div className='container col-span-8 md:gap-4'>
+          <div className='container col-span-8 md:gap-4 space-y-6'>
             {/* Date + Weather + Total Customers */}
             <div className='container px-2 grid grid-cols-3 lg:gap-6'>
-              <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg shadow-sm'>
+              <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
                 <Calendar className='w-6 h-6 text-blue-500' />
                 <span className='text-md font-semibold text-gray-700'>
                   {currentDate}
@@ -42,18 +42,12 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             </div>
 
             {/* Feature Box Here - Problem Customers */}
-            <div className='hidden md:grid md:grid-cols-1 py-5'>
-              <div className='col-span-8 bg-white m-2'>
-                <div className='text-sm my-auto mx-auto grid grid-cols-1 text-center'>
-                  <DashboardBookmarkPage
-                    bookmarks={bookmarks}
-                    sessionUser={sessionUser}
-                  />
-
-                  {/* <span className='py-auto'>Button</span>
-                  <span className='py-auto'>Button</span>
-                  <span className='py-auto'>Button</span> */}
-                </div>
+            <div className='container px-2 grid grid-cols-1 md:gap-6 '>
+              <div className='flex justify-center items-center gap-2 md:gap-4'>
+                <DashboardBookmarkPage
+                  bookmarks={bookmarks}
+                  sessionUser={sessionUser}
+                />
               </div>
             </div>
             {/* Customer Dashboard Table Here - Snapshot */}

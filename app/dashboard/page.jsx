@@ -20,9 +20,17 @@ const DashboardPage = async () => {
     .populate('projects')
     .lean()
 
-  const { bookmarks } = await User.findOne({
+  const user = await User.findOne({
     email: sessionUser.user.email,
-  }).populate('bookmarks')
+  })
+    .populate({
+      path: 'bookmarks',
+      model: 'Customer',
+    })
+    .lean()
+
+  const { bookmarks } = user
+  const reversedBookmarks = [...bookmarks].reverse()
 
   const customers = customerDocs.map(convertToSerializeableObject)
 
@@ -30,11 +38,11 @@ const DashboardPage = async () => {
     <div className='flex min-h-screen w-full flex-col'>
       <SideNavbar />
       <Header />
-      <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
+      <main className='flex flex-col sm:gap-2 sm:py-0 sm:px-0 sm:pl-14'>
         <Dashboard
           customers={customers}
           sessionUser={sessionUser}
-          bookmarks={bookmarks}
+          bookmarks={reversedBookmarks}
         />
       </main>
     </div>

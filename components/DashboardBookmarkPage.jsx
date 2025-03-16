@@ -30,29 +30,25 @@ const DashboardBookmarkPage = ({ bookmarks, sessionUser }) => {
           There's no saved customers to show
         </div>
       ) : (
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-6 text-left'>
+        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-6 w-full'>
           {limitedBookmarks.map((customer) => (
-            <div key={customer._id}>
+            <div key={customer._id} className='w-full'>
               <Link
                 href={`/dashboard/customers/${customer._id}`}
-                className='inline-flex items-center py-1.5 text-sm font-light text-white bg-white rounded-md transition-colors'
+                className='block w-full h-full'
               >
-                <div
-                  key={customer._id}
-                  className='flex w-full h-full bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow'
-                >
+                <div className='flex w-full h-full bg-white rounded-lg'>
                   <div className={`w-2 ${getRandomColor()} rounded-l-lg`}>
                     <span></span>
                   </div>
 
-                  <div className='flex-1 px-5 py-3'>
+                  <div className='flex-1 bg-white md:px-5 md:py-3 border border-gray-300 rounded-r-lg transition-all duration-300 ease-in-out hover:shadow-md'>
                     <h3 className='text-xs font-semibold text-gray-700'>
                       {customerWithCapitalizedNames(customer.firstName)}{' '}
                       {customerWithCapitalizedNames(customer.lastName)}
                     </h3>
-                    <p className='text-xs text-gray-600 md:text-xs'>
-                      {customer.address.street}, {customer.address.city}{' '}
-                      {customer.address.state} {customer.address.zipcode}
+                    <p className='text-xs text-gray-600 md:text-sm'>
+                      {customer.address.street}, {customer.address.city}
                     </p>
                     <p className='text-xs text-gray-600 md:text-sm'>
                       {formatPhoneNumber(customer.phone)}

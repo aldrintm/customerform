@@ -49,8 +49,8 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
 
   return (
     <>
-      <div className='container mx-auto grid grid-flow-row'>
-        <div className='md:container max-w-4xl text-left px-15 pl-2'>
+      <div className='md:container w-full mx-auto grid grid-flow-row'>
+        <div className='md:container w-full text-left px-15 pl-2'>
           <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
             Main Dashboard
           </div>

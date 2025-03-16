@@ -58,7 +58,7 @@ const CustomerPage = async ({ params }) => {
       <div className='flex min-h-screen w-full flex-col'>
         <Header />
         <SideNavbar />
-        <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14 print:pl-0'>
+        <main className='flex flex-col sm:gap-4 sm:py-0 sm:ml-14 sm:px-2 md:px-4 lg:px-6 xl:px-8 print:pl-0'>
           <CustomerDetails customer={customer} schedules={schedules} />
         </main>
       </div>

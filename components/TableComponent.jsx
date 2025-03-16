@@ -11,8 +11,8 @@ import { Plus } from 'lucide-react'
 
 const TableComponentPage = ({ customers }) => {
   return (
-    <section>
-      <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
+    <>
+      <div className='md:container w-full text-left px-15 mx-auto md:rounded-2xl'>
         <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
           <h1>Customers List</h1>
           <Link href={`/dashboard/customers/add`}>
@@ -172,7 +172,7 @@ const TableComponentPage = ({ customers }) => {
           </div>
         </div>
       </div>
-    </section>
+    </>
   )
 }
 

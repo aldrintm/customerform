@@ -22,10 +22,10 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           </div>
         </div>
         {/* Main Components Starts Here */}
-        <div className='hidden md:grid xl:grid-cols-12 lg:gap-4'>
-          <div className='container col-span-8 md:gap-4 space-y-6'>
+        <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-4'>
+          <div className='container xl:col-span-8 md:gap-4 space-y-6'>
             {/* Date + Weather + Total Customers */}
-            <div className='container px-2 grid grid-cols-3 lg:gap-6'>
+            <div className='container px-2 grid sm:grid-cols-3 lg:gap-6'>
               <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
                 <Calendar className='w-6 h-6 text-blue-500' />
                 <span className='text-md font-semibold text-gray-700'>
@@ -57,7 +57,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
               </div>
             </div>
           </div>
-          <div className='container col-span-4 space-y-6'>
+          <div className='container xl:col-span-4 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'>
               Logic Error :(

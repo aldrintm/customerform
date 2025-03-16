@@ -89,7 +89,7 @@ const DateAndWeather = () => {
 
   return (
     <div className='flex gap-6 items-center'>
-      <div className='flex items-center gap-2 p-4 bg-white'>
+      <div className='flex items-center gap-2 p-4'>
         <Skycons
           type={weather.icon} // Pass the Skycons type
           color='#0096FF'

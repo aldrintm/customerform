@@ -38,11 +38,13 @@ const DashboardBookmarkPage = ({ bookmarks, sessionUser }) => {
                 className='block w-full h-full'
               >
                 <div className='flex w-full h-full bg-white rounded-lg'>
-                  <div className={`w-2 ${getRandomColor()} rounded-l-lg`}>
+                  <div
+                    className={`w-1 md:w-2 ${getRandomColor()} rounded-l-lg`}
+                  >
                     <span></span>
                   </div>
 
-                  <div className='flex-1 bg-white md:px-3 md:py-2 border border-gray-300 rounded-r-lg transition-all duration-300 ease-in-out hover:shadow-md'>
+                  <div className='flex-1 p-2 bg-white md:px-3 md:py-2 border border-gray-300 rounded-r-lg transition-all duration-300 ease-in-out hover:shadow-md'>
                     <p className='text-xs font-semibold text-gray-700 md:text-sm'>
                       {customerWithCapitalizedNames(customer.firstName)}{' '}
                       {customerWithCapitalizedNames(customer.lastName)}

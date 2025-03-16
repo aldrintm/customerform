@@ -25,24 +25,24 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
         <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-4'>
           <div className='container xl:col-span-8 md:gap-4 space-y-6'>
             {/* Date + Weather + Total Customers */}
-            <div className='container px-2 grid sm:grid-cols-3 lg:gap-6'>
-              <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
-                <Calendar className='w-6 h-6 text-blue-500' />
-                <span className='text-md font-semibold text-gray-700'>
+            <div className='hidden container sm:grid gap-4 sm:grid-cols-3 lg:gap-6'>
+              <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
+                <Calendar className='w-4 h-4 lg:w-6 lg:h-6 text-blue-500' />
+                <span className='text-xs lg:text-base font-semibold text-gray-700'>
                   {currentDate}
                 </span>
               </div>
               <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
                 <WeatherNow />
               </div>
-              <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
-                <Users className='w-6 h-6 text-blue-500' />
+              <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
+                <Users className='w-4 h-4 lg:w-6 lg:h-6 text-blue-500' />
                 <TotalCustomer customers={customers} />
               </div>
             </div>
 
             {/* Feature Box Here - Problem Customers */}
-            <div className='container px-2 grid grid-cols-1 md:gap-6 '>
+            <div className='container grid grid-cols-1 md:gap-6 '>
               <div className='flex justify-center items-center gap-2 md:gap-4'>
                 <DashboardBookmarkPage
                   bookmarks={bookmarks}
@@ -52,7 +52,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             </div>
             {/* Customer Dashboard Table Here - Snapshot */}
             <div className='lg:gap-4'>
-              <div className='container px-2 col-span-8'>
+              <div className='container col-span-8'>
                 <DashboardTable customers={customers} />
               </div>
             </div>

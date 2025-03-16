@@ -42,18 +42,18 @@ const DashboardBookmarkPage = ({ bookmarks, sessionUser }) => {
                     <span></span>
                   </div>
 
-                  <div className='flex-1 bg-white md:px-5 md:py-3 border border-gray-300 rounded-r-lg transition-all duration-300 ease-in-out hover:shadow-md'>
-                    <h3 className='text-xs font-semibold text-gray-700'>
+                  <div className='flex-1 bg-white md:px-3 md:py-2 border border-gray-300 rounded-r-lg transition-all duration-300 ease-in-out hover:shadow-md'>
+                    <p className='text-xs font-semibold text-gray-700 md:text-sm'>
                       {customerWithCapitalizedNames(customer.firstName)}{' '}
                       {customerWithCapitalizedNames(customer.lastName)}
-                    </h3>
-                    <p className='text-xs text-gray-600 md:text-sm'>
+                    </p>
+                    <p className='text-xs text-gray-600 md:text-xs'>
                       {customer.address.street}, {customer.address.city}
                     </p>
-                    <p className='text-xs text-gray-600 md:text-sm'>
+                    <p className='text-xs text-gray-600 md:text-xs'>
                       {formatPhoneNumber(customer.phone)}
                     </p>
-                    <p className='text-xs text-gray-600 md:text-sm'>
+                    <p className='text-xs text-gray-600 md:text-xs'>
                       {customer.email}
                     </p>
                   </div>

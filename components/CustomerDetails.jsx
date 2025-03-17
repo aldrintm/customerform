@@ -10,6 +10,7 @@ import {
   ShieldAlert,
   Plus,
   Trash2,
+  Minus,
 } from 'lucide-react'
 import Button from './Button'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
@@ -61,6 +62,14 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   // // Format the string as needed
   // const formattedDate = `${month} ${day}, ${year}`
 
+  // Handle Edit Customer navigation with loading state
+  const handleEditCustomerClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(`/dashboard/customers/${customer._id}/editCustomer`) // this is the edit customer page
+    })
+  }
+
   // Handle Add Note navigation with loading state
   const handleAddNoteClick = () => {
     setIsNavigating(true)
@@ -92,6 +101,16 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
     setIsNavigating(true)
     startTransition(() => {
       router.push(`/dashboard/customers/${customer._id}/project`)
+    })
+  }
+
+  // Handle Edit Project navigation with loading state and specific projectId
+  const handleEditProjectClick = (projectId) => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(
+        `/dashboard/customers/${customer._id}/editProject?projectId=${projectId}`
+      )
     })
   }
 
@@ -386,12 +405,17 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                   <div className='flex gap-4 print:hidden'>
                     <Button onClick={printFile}>Print File</Button>
 
-                    <Link
-                      href={`/dashboard/customers/${customer._id}/editCustomer`}
-                      prefetch={true}
+                    <Button
+                      onClick={() => handleEditCustomerClick(customer._id)}
+                      disabled={isPending || isNavigating}
                     >
-                      <Button>Edit</Button>
-                    </Link>
+                      {' '}
+                      {isNavigating || isPending ? (
+                        <span className='text-sm px-2'>Loading ...</span>
+                      ) : (
+                        'Edit'
+                      )}
+                    </Button>
 
                     <Button onClick={() => handleDeleteCustomer(customer._id)}>
                       Delete
@@ -647,12 +671,16 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                         {customer.projects.length > 1 ? `#${index + 1}` : ''}
                       </h3>
                       <div className='flex gap-4 print:hidden'>
-                        <Link
-                          href={`/dashboard/customers/${customer._id}/editProject?projectId=${project._id}`}
-                          prefetch={true}
+                        <Button
+                          onClick={() => handleAddProjectClick(project._id)}
+                          disabled={isPending || isNavigating}
                         >
-                          <Button>Edit Project</Button>
-                        </Link>
+                          {isNavigating || isPending ? (
+                            <span className='text-sm px-2'>Loading ...</span>
+                          ) : (
+                            'Edit Project'
+                          )}
+                        </Button>
 
                         <Button
                           onClick={() =>
@@ -854,13 +882,13 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                               return (
                                 <div key={schedule._id}>
                                   <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
-                                    <dt className='text-sm font-medium text-gray-900 pr-2'>
+                                    <dt className='text-sm font-medium text-gray-900 pr-2 py-1'>
                                       Schedules:
                                     </dt>
                                     <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
                                       <div className='flex flex-col gap-2'>
                                         <button
-                                          className='text-left border border-blue-400 rounded-sm px-2 py-1 text-sm font-medium text-gray-700 hover:bg-blue-400 hover:text-white hover:scale-105 active:scale-100 transition-all ease-in-out duration-400'
+                                          className='text-left border border-blue-400 rounded-md px-2 py-1 text-sm font-medium text-gray-700 hover:bg-blue-400 hover:text-white hover:scale-105 active:scale-100 transition-all ease-in-out duration-400'
                                           icon={
                                             <Plus className='h-4 w-4 text-xs hover:text-white' />
                                           }

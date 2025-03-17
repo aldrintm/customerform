@@ -1,7 +1,36 @@
+'use client'
 import addCustomer from '@/app/actions/addCustomer'
-import Link from 'next/link'
+import { useFormStatus } from 'react-dom'
+import { ClipLoader } from 'react-spinners'
+import { UserRoundPen } from 'lucide-react' // Import any icons you need
 
 const CustomerForm = () => {
+  const { pending } = useFormStatus()
+
+  const SubmitButton = () => {
+    return (
+      <button
+        className='w-full hover:bg-gray rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+        type='submit'
+        disabled={pending}
+      >
+        {pending ? (
+          <ClipLoader
+            color='#2fa8f6'
+            size={23}
+            loading={true}
+            speedMultiplier={1}
+          />
+        ) : (
+          <div className='flex justify-center items-center gap-2'>
+            <UserRoundPen className='w-5 h-5 flex items-center text-center' />
+            Submit Customer
+          </div>
+        )}
+      </button>
+    )
+  }
+
   return (
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
@@ -244,12 +273,7 @@ const CustomerForm = () => {
                 </div>
                 <div className='p-4'>
                   <span className=''>
-                    <button
-                      className='w-full hover:bg-gray flex justify-center items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
-                      type='submit'
-                    >
-                      Submit
-                    </button>
+                    <SubmitButton />
                   </span>
                 </div>
               </div>

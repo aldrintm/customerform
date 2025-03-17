@@ -56,7 +56,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           </div>
         </div>
         {/* Main Components Starts Here */}
-        <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-4'>
+        <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-6'>
           <div className='container xl:col-span-8 md:gap-4 space-y-6'>
             {/* Date + Weather + Total Customers */}
             <div className='hidden container sm:grid gap-4 sm:grid-cols-3 lg:gap-6'>

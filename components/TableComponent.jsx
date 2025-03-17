@@ -1,30 +1,49 @@
 'use client'
 
+import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
-import { useState } from 'react'
+
 import { toast } from 'react-toastify'
 import Button from './Button'
 import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
+import { set } from 'mongoose'
 
 const TableComponentPage = ({ customers }) => {
+  const router = useRouter()
+  const [isNavigating, setIsNavigating] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
+  const handleAddCustomerClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push('/dashboard/customers/add')
+    })
+  }
+
   return (
     <>
       <div className='md:container w-full text-left px-15 mx-auto md:rounded-2xl'>
         <div className='container flex items-center justify-between px-2 py-2 text-md md:text-md text-blue-500 font-semibold'>
           <h1>Customers List</h1>
-          <Link href={`/dashboard/customers/add`}>
-            <Button
-              icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
-            >
-              Create New
-            </Button>
-          </Link>
+
+          <Button
+            icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
+            onClick={() => handleAddCustomerClick()}
+            disabled={isPending || isNavigating}
+          >
+            {isNavigating || isPending ? (
+              <span className='animate-pulse'>Loading...</span>
+            ) : (
+              'Create New'
+            )}
+          </Button>
         </div>
 
-        <div className='container mx-auto px-4 m-6 border border-gray-300 rounded-lg'>
+        <div className='container mx-auto px-4 m-0 border border-gray-300 rounded-lg'>
           <div className='overflow-x-auto'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>

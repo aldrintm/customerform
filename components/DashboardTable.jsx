@@ -27,7 +27,7 @@ const DashboardTablePage = ({ customers }) => {
           </Link> */}
         </div>
 
-        <div className='container mx-auto px-4 m-6 border border-gray-300 rounded-lg'>
+        <div className='container mx-auto px-4 m-1 border border-gray-300 rounded-lg'>
           <div className='overflow-x-auto'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>

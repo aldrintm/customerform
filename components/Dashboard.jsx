@@ -24,15 +24,47 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   // })
 
   // Get all projects with schedules
-  const projectWithSchedules = customers
-    .flatMap(
-      (customer) =>
-        customer.projects?.filter((project) => project.schedules?.length > 0) ||
-        []
-    )
-    .map((project) => ({ ...project, customerId: project.customerId }))
+  const projectWithSchedules = customers.flatMap(
+    (customer) =>
+      customer.projects?.filter((project) => project.schedules?.length > 0) ||
+      []
+  )
 
-  console.log('Project with Schedules:', projectWithSchedules)
+  // const processedSchedules = projectWithSchedules.map((project) => {
+  //   const schedules = project.schedules.map((schedule) => ({
+  //     ...schedule,
+  //     customerName: `${project.customer.firstName} ${project.customer.lastName}`,
+  //     customerAddress: project.customer.address,
+  //     customerPhone: project.customer.phone,
+  //     customerEmail: project.customer.email,
+  //     scheduleDate: format(new Date(schedule.measureDate), 'MM/dd/yyyy'),
+  //     measureBy: schedule.measureBy || 'Unassigned',
+  //     measureTime: schedule.measureTime || 'Unassigned',
+  //   }))
+  //   return { ...project, schedules }
+  //   console.log(schedules)
+  // })
+
+  // Get all schedules with customer information
+  const processedSchedules = customers.flatMap(
+    (customer) =>
+      customer.projects
+        ?.filter((project) => project.schedules?.length > 0)
+        ?.flatMap((project) =>
+          project.schedules.map((schedule) => ({
+            ...schedule,
+            customerName: `${customer.firstName} ${customer.lastName}`,
+            customerAddress: customer.address,
+            customerPhone: customer.phone,
+            customerEmail: customer.email,
+            scheduleDate: format(new Date(schedule.measureDate), 'MM/dd/yyyy'),
+            measureBy: schedule.measureBy || 'Unassigned',
+            measureTime: schedule.measureTime || 'Unassigned',
+          }))
+        ) || []
+  )
+
+  console.log('Processed Schedules:', processedSchedules)
 
   // Get all schedules with customer information
   // const processedSchedules = allSchedules.map((schedule) => {
@@ -94,7 +126,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           <div className='container xl:col-span-4 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'>
-              {/* <DashboardScheduleDisplay schedules={processedSchedules} /> */}
+              <DashboardScheduleDisplay schedules={processedSchedules} />
             </div>
             <div className=' border border-gray-300 rounded-lg p-4 h-[27rem] flex items-center justify-center bg-teal-100'>
               Waiting for Codeblock Above

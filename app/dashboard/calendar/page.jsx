@@ -1,6 +1,6 @@
 'use client'
 // pages/calendar.js
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   addDays,
   startOfMonth,
@@ -15,8 +15,9 @@ import {
 } from 'date-fns'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
+import ScheduleModal from '@/components/CalendarScheduleModalForm'
 
-export default function CalendarPage() {
+export default function CalendarPage({ customers }) {
   // Example: fixed to January 2022
   // Changed to state instead of fixed date
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 1, 15)) // February 2025
@@ -25,6 +26,7 @@ export default function CalendarPage() {
   const [events, setEvents] = useState({})
 
   // Modal form state
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
   const [newEventTitle, setNewEventTitle] = useState('')
   const [newEventTime, setNewEventTime] = useState('')
@@ -76,6 +78,34 @@ export default function CalendarPage() {
     setSelectedDate(date)
     setNewEventTitle('')
     setNewEventTime('')
+  }
+
+  // Handle date cell click
+  const handleDateClick = (date) => {
+    setSelectedDate(date)
+    setIsModalOpen(true)
+  }
+
+  // Handle schedule submission
+  const handleScheduleSubmit = async (formData) => {
+    try {
+      const response = await fetch('/api/schedules', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create schedule')
+      }
+
+      // Refresh data or update UI as needed
+      setIsModalOpen(false)
+    } catch (error) {
+      console.error('Error creating schedule:', error)
+    }
   }
 
   // Add a new event (max 15 per day)
@@ -339,7 +369,8 @@ export default function CalendarPage() {
               {dayCells.map((date, index) => (
                 <div
                   key={index}
-                  className={`p-3.5 ${
+                  onClick={() => handleDateClick(date)}
+                  className={`cursor-pointer p-3.5 ${
                     !isSameMonth(date, monthStart) ? 'bg-gray-50' : ''
                   } ${
                     isSameDay(date, today) ? 'bg-blue-300' : ''
@@ -402,6 +433,13 @@ export default function CalendarPage() {
           </div>
         </div>
       </div>
+      <ScheduleModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        selectedDate={selectedDate}
+        customers={customers}
+        onSubmit={handleScheduleSubmit}
+      />
     </section>
   )
 }

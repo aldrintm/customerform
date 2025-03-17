@@ -2,19 +2,19 @@ import TotalCustomer from './TotalCustomer'
 import DateAndTime from './DateAndTime'
 import TableComponentPage from './TableComponent'
 import DashboardTable from './DashboardTable'
-import { format } from 'date-fns'
 import { Calendar, Users } from 'lucide-react'
 import WeatherNow from './WeatherNow'
 import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
+import { format, isSameDay, parseISO } from 'date-fns'
 
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
+  const today = new Date()
 
-  const date = new Date('March 12, 2025')
-  const day = format(date, 'MM/dd/yyyy')
-  console.log(day)
+  console.log(currentDate)
+  console.log(today)
 
   // Get customer with all schedules
   // const customerWithSchedules = customers.map((customer) => {
@@ -57,12 +57,21 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             customerAddress: customer.address,
             customerPhone: customer.phone,
             customerEmail: customer.email,
+            customerType: project.customerType,
             scheduleDate: format(new Date(schedule.measureDate), 'MM/dd/yyyy'),
             measureBy: schedule.measureBy || 'Unassigned',
             measureTime: schedule.measureTime || 'Unassigned',
           }))
         ) || []
   )
+
+  // Filter schedules for current day
+  const todaySchedules = processedSchedules.filter((schedule) => {
+    const scheduleDate = schedule.measureDate
+    return isSameDay(scheduleDate, today)
+  })
+
+  console.log("Today's Schedules:", todaySchedules)
 
   console.log('Processed Schedules:', processedSchedules)
 
@@ -125,9 +134,8 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           </div>
           <div className='container xl:col-span-4 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
-            <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'>
-              <DashboardScheduleDisplay schedules={processedSchedules} />
-            </div>
+            <DashboardScheduleDisplay schedules={processedSchedules} />
+            <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'></div>
             <div className=' border border-gray-300 rounded-lg p-4 h-[27rem] flex items-center justify-center bg-teal-100'>
               Waiting for Codeblock Above
             </div>

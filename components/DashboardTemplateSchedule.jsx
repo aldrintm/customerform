@@ -50,6 +50,8 @@ const DashboardTemplateSchedule = ({ customers }) => {
                       </Link>
                     </td>
 
+
+
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       {customerWithCapitalizedNames(customer.contractorName)}
                     </td> */}

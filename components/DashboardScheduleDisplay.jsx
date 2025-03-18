@@ -40,8 +40,9 @@ const DashboardScheduleDisplay = ({ schedules }) => {
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
         <div className='container mx-auto px-4 border border-gray-300 rounded-lg'>
           <div className='container flex items-center justify-center px-2 pt-4 text-md md:text-md text-blue-500 font-semibold'>
-            <h1>{currentDate}</h1>
+            {/* <h1>{currentDate}</h1> */}
             {/* <h1>Template Schedule for {currentDate}</h1> */}
+            <h2>Upcoming Template Schedules</h2>
           </div>
           <div className='overflow-x-auto p-2'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
@@ -68,7 +69,18 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                       >
                         <td className='whitespace-nowrap py-2 text-sm text-center text-gray-700'>
                           <div className='grid grid-flow-row'>
-                            <span>
+                            <span className='underline text-sm font-light text-gray-900 inline-flex items-center gap-2'>
+                              {formatScheduleDate(schedule?.measureDate) || ''}
+                            </span>
+                            <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
+                              {schedule.measureTime}
+                              <p>
+                                {customerWithCapitalizedNames(
+                                  schedule?.customerAddress?.city || ''
+                                )}
+                              </p>
+                            </span>
+                            <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
                               {customerWithCapitalizedNames(
                                 schedule?.customerName || 'Unknown Customer'
                               )}
@@ -83,11 +95,6 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                                 ? 'K&B'
                                 : schedule?.customerType}
                             </span>
-                            <p>
-                              {customerWithCapitalizedNames(
-                                schedule?.customerAddress?.city || ''
-                              )}
-                            </p>
                           </div>
                         </td>
                       </tr>

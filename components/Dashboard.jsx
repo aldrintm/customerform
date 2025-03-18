@@ -7,14 +7,10 @@ import WeatherNow from './WeatherNow'
 import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
-import { format, isSameDay, parseISO } from 'date-fns'
+import { format, isSameDay, parseISO, startOfDay } from 'date-fns'
 
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
-  const today = new Date()
-
-  console.log(currentDate)
-  console.log(today)
 
   // Get customer with all schedules
   // const customerWithSchedules = customers.map((customer) => {
@@ -64,16 +60,33 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           }))
         ) || []
   )
+  // Debug raw dates
+  console.log(
+    'Raw schedule dates:',
+    processedSchedules.map((s) => s.measureDate)
+  )
 
-  // Filter schedules for current day
+  // Filter schedules for current day with better date handling
+  const today = startOfDay(new Date())
+  console.log('Today is:', today)
   const todaySchedules = processedSchedules.filter((schedule) => {
-    const scheduleDate = schedule.measureDate
-    return isSameDay(scheduleDate, today)
+    try {
+      const scheduleDate = startOfDay(parseISO(schedule.measureDate))
+
+      const isToday = isSameDay(scheduleDate, today)
+      console.log('Comparing dates:', {
+        scheduleDate,
+        today,
+        isToday,
+      })
+      return isToday
+    } catch (error) {
+      console.error('Date parsing error:', error)
+      return false
+    }
   })
 
   console.log("Today's Schedules:", todaySchedules)
-
-  console.log('Processed Schedules:', processedSchedules)
 
   // Get all schedules with customer information
   // const processedSchedules = allSchedules.map((schedule) => {

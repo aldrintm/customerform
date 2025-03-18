@@ -1,6 +1,6 @@
 # CustomerForm
 
-A streamlined solution for managing customer data  
+A streamlined solution for managing customer data (Full Stack Web Application)
 
 ![image](https://github.com/user-attachments/assets/27178865-4d4c-4208-a3f4-53c0c2b75594)
 

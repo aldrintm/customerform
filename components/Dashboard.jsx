@@ -95,7 +95,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
         scheduleDay: scheduleDay,
         today: today.toISOString(),
         isToday,
-        originalDate: schedule.measureDate,
+        originalDate: formatDate(schedule.measureDate),
       })
 
       // const isToday = isSameDay(scheduleDate, today)

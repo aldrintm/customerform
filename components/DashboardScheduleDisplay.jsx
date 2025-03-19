@@ -9,16 +9,16 @@ const DashboardScheduleDisplay = ({ schedules }) => {
   const currentDate = format(new Date(), 'MMMM dd, yyyy')
 
   // Helper function to safely format dates
-  const formatScheduleDate = (date) => {
-    try {
-      if (!date) return 'No date'
-      const parsedDate = parseISO(date)
-      return format(parsedDate, 'MMM dd, yyyy')
-    } catch (error) {
-      console.error('Date formatting error:', error)
-      return 'Invalid date'
-    }
-  }
+  // const formatScheduleDate = (date) => {
+  //   try {
+  //     if (!date) return 'No date'
+  //     const parsedDate = parseISO(date)
+  //     return format(parsedDate, 'MMM dd, yyyy')
+  //   } catch (error) {
+  //     console.error('Date formatting error:', error)
+  //     return 'Invalid date'
+  //   }
+  // }
 
   // Sort schedules by date with Validation
   // const sortedSchedules = [...schedules].sort((a, b) => {

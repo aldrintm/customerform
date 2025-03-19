@@ -1,5 +1,4 @@
 import TotalCustomer from './TotalCustomer'
-import DateAndTime from './DateAndTime'
 import TableComponentPage from './TableComponent'
 import DashboardTable from './DashboardTable'
 import { Calendar, Users } from 'lucide-react'
@@ -7,10 +6,26 @@ import WeatherNow from './WeatherNow'
 import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
-import { format, isSameDay, parseISO, startOfDay } from 'date-fns'
+import {
+  format,
+  isSameDay,
+  parseISO,
+  startOfDay,
+  setHours,
+  setMinutes,
+  setSeconds,
+  setMilliseconds,
+} from 'date-fns'
+import { formatDate } from '@/utils/formatDate'
 
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
+
+  // // Normalize today's date by removing time component
+  // const today = setMilliseconds(
+  //   setSeconds(setMinutes(setHours(new Date(), 0), 0), 0),
+  //   0
+  // )
 
   // Get customer with all schedules
   // const customerWithSchedules = customers.map((customer) => {
@@ -54,37 +69,69 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             customerPhone: customer.phone,
             customerEmail: customer.email,
             customerType: project.customerType,
-            scheduleDate: format(new Date(schedule.measureDate), 'MM/dd/yyyy'),
+            // Parse date string to Date object
+            scheduleDate: parseISO(schedule.measureDate),
             measureBy: schedule.measureBy || 'Unassigned',
             measureTime: schedule.measureTime || 'Unassigned',
           }))
         ) || []
   )
   // Debug raw dates
-  console.log(
-    'Raw schedule dates:',
-    processedSchedules.map((s) => s.measureDate)
-  )
+  // console.log(
+  //   'Raw schedule dates:',
+  //   processedSchedules.map((s) => s.measureDate)
+  // )
 
   // Filter schedules for current day with better date handling
-  const today = startOfDay(new Date())
+  const today = new Date()
   console.log('Today is:', today)
   const todaySchedules = processedSchedules.filter((schedule) => {
     try {
-      const scheduleDate = startOfDay(parseISO(schedule.measureDate))
+      // Ensure we're comparing dates without time components
+      const scheduleDay = formatDate(schedule.measureDate)
+      const isToday = isSameDay(scheduleDay, today)
 
-      const isToday = isSameDay(scheduleDate, today)
       console.log('Comparing dates:', {
-        scheduleDate,
-        today,
+        scheduleDay: scheduleDay,
+        today: today.toISOString(),
         isToday,
+        originalDate: schedule.measureDate,
       })
+
+      // const isToday = isSameDay(scheduleDate, today)
+      // console.log('Comparing dates:', {
+      //   scheduleDate,
+      //   today,
+      //   isToday,
+      // })
       return isToday
     } catch (error) {
       console.error('Date parsing error:', error)
       return false
     }
   })
+
+  // const todaySchedules = processedSchedules.filter((schedule) => {
+  //   try {
+  //     // Parse and normalize schedule date
+  //     const scheduleDate = parseISO(schedule.measureDate)
+  //     const normalizedScheduleDate = setMilliseconds(
+  //       setSeconds(setMinutes(setHours(scheduleDate, 0), 0), 0),
+  //       0
+  //     )
+
+  //     console.log('Comparing normalized dates:', {
+  //       normalizedScheduleDate: normalizedScheduleDate.toISOString(),
+  //       today: today.toISOString(),
+  //       original: schedule.measureDate,
+  //     })
+
+  //     return isSameDay(normalizedScheduleDate, today)
+  //   } catch (error) {
+  //     console.error('Date parsing error:', error)
+  //     return false
+  //   }
+  // })
 
   console.log("Today's Schedules:", todaySchedules)
 

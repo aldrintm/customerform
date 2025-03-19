@@ -21,14 +21,14 @@ const DashboardScheduleDisplay = ({ schedules }) => {
   }
 
   // Sort schedules by date with Validation
-  const sortedSchedules = [...schedules].sort((a, b) => {
-    if (!a.measureDate || !b.measureDate) return 0
-    const dateA = parseISO(a.measureDate)
-    const dateB = parseISO(b.measureDate)
-    if (!isValid(dateA) && !isValid(dateB)) {
-      return dateA - dateB
-    }
-  })
+  // const sortedSchedules = [...schedules].sort((a, b) => {
+  //   if (!a.measureDate || !b.measureDate) return 0
+  //   const dateA = parseISO(a.measureDate)
+  //   const dateB = parseISO(b.measureDate)
+  //   if (!isValid(dateA) && !isValid(dateB)) {
+  //     return dateA - dateB
+  //   }
+  // })
 
   // console.log(
   //   'Sorted Schedules:',
@@ -70,7 +70,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                         <td className='whitespace-nowrap py-2 text-sm text-center text-gray-700'>
                           <div className='grid grid-flow-row'>
                             <span className='underline text-sm font-light text-gray-900 inline-flex items-center gap-2'>
-                              {formatScheduleDate(schedule?.measureDate) || ''}
+                              {formatDate(schedule?.measureDate) || ''}
                             </span>
                             <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
                               {schedule.measureTime}

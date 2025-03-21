@@ -479,7 +479,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                         Contractor:
                       </dt>
                       <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                        {customer.contractorName} @{' '}
+                        {customer.contractorName}{' '}
                         {formatPhoneNumber(customer.contractorPhone)}
                       </dd>
                     </div>
@@ -788,7 +788,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                             Sink:
                           </dt>
                           <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                            {project.sinkQuantity} {project.sinkType} @{' '}
+                            {project.sinkQuantity} {project.sinkType}{' '}
                             {project.sinkLocation} ({project.sinkInfo})
                           </dd>
                         </div>

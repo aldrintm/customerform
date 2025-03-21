@@ -362,7 +362,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       defaultValue={project?.materialType || ''}
                       className='mt-1 w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-sky-50'
                     >
-                      <option value='default'></option>
+                      <option value=' '></option>
                       <option value='Quartz'>Quartz</option>
                       <option value='Granite'>Granite</option>
                       <option value='SolidSurface'>Solid Surface</option>
@@ -390,7 +390,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.materialThickness || ''}
                     >
-                      <option value='default'></option>
+                      <option value=' '></option>
                       <option value='2cm'>2cm</option>
                       <option value='3cm'>3cm</option>
                       <option value='.5inch'>1/2"</option>
@@ -415,7 +415,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.materialBrand || ''}
                     >
-                      <option value='default'></option>
+                      <option value=' '></option>
                       <option value='Plamar Stock'>Plamar Stock</option>
                       <option value='Daltile'>Daltile</option>
                       <option value='Dellaterra'>Arizona Tile</option>
@@ -472,7 +472,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.materialFinish || ''}
                     >
-                      <option value='default'></option>
+                      <option value=''></option>
                       <option value='Polished'>Polished</option>
                       <option value='Honed'>Honed</option>
                       <option value='Matte'>Matte</option>
@@ -527,7 +527,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkType || ''}
                     >
-                      <option value='default'></option>
+                      <option value=' '></option>
                       <option value='Undermount'>Undermount</option>
                       <option value='Topmount'>Topmount</option>
                       <option value='Farm'>Farm/Apron</option>
@@ -549,7 +549,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project?.sinkQuantity || ''}
                     >
-                      <option value='default' disabled></option>
+                      <option value='0'> </option>
                       <option value='1'>1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
@@ -574,11 +574,11 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='sinkLocation'
                       id='sinkLocation'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={project?.sinkLocation || ''}
+                      defaultValue={project?.sinkLocation || ' '}
                     >
-                      <option value='default' disabled></option>
-                      <option value='House'>House</option>
-                      <option value='Shop'>Shop</option>
+                      <option value=' '></option>
+                      <option value='@ House'>House</option>
+                      <option value='@ Shop'>Shop</option>
                     </select>
                   </div>
                   {/* Sink Info */}

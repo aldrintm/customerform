@@ -17,8 +17,6 @@ const DashboardScheduleDisplay = ({ schedules }) => {
     '2-4': 4,
   }
 
-  
-
   // Sort schedules by time slots
   const sortedSchedules = [...schedules].sort((a, b) => {
     const priorityA = timeSlotPriority[a.measureTime] || 999

@@ -83,7 +83,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   // )
 
   // Filter schedules for current day with better date handling
-  const today = new Date()
+  const today = new Date(new Date().toLocaleDateString())
   console.log('Today is:', today)
   const todaySchedules = processedSchedules.filter((schedule) => {
     try {

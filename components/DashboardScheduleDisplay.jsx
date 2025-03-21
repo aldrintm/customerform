@@ -17,6 +17,8 @@ const DashboardScheduleDisplay = ({ schedules }) => {
     '2-4': 4,
   }
 
+  
+
   // Sort schedules by time slots
   const sortedSchedules = [...schedules].sort((a, b) => {
     const priorityA = timeSlotPriority[a.measureTime] || 999
@@ -64,7 +66,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
           </div>
           <div className='overflow-x-auto p-2'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
-              {/* <thead className='text-left'>
+              <thead className='text-left'>
                 <tr>
                   <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Anilber
@@ -76,7 +78,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                     Jeff
                   </th>
                 </tr>
-              </thead> */}
+              </thead>
               <tbody className='divide-y divide-gray-200'>
                 {sortedSchedules.length > 0 ? (
                   <>

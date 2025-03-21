@@ -158,7 +158,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
         </div>
         {/* Main Components Starts Here */}
         <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-6'>
-          <div className='container xl:col-span-8 md:gap-4 space-y-6'>
+          <div className='container xl:col-span-7 md:gap-4 space-y-6'>
             {/* Date + Weather + Total Customers */}
             <div className='hidden container sm:grid gap-4 sm:grid-cols-3 lg:gap-6'>
               <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
@@ -192,7 +192,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
               </div>
             </div>
           </div>
-          <div className='container xl:col-span-4 space-y-6'>
+          <div className='container xl:col-span-5 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <DashboardScheduleDisplay schedules={todaySchedules} />
             <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'></div>

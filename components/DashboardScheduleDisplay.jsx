@@ -127,7 +127,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
             {/* <h1>Template Schedule for {currentDate}</h1> */}
             <h2>Template Schedules</h2>
           </div>
-          <div className='overflow-x-auto p-2'>
+          <div className='overflow-x-auto'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>
                 {/* <tr>

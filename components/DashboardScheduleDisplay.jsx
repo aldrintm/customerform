@@ -125,7 +125,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
           <div className='container flex items-center justify-center px-2 pt-4 text-md md:text-md text-blue-500 font-semibold'>
             {/* <h1>{currentDate}</h1> */}
             {/* <h1>Template Schedule for {currentDate}</h1> */}
-            <h2>Upcoming Template Schedules</h2>
+            <h2>Template Schedules</h2>
           </div>
           <div className='overflow-x-auto p-2'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>

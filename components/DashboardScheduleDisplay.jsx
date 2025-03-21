@@ -9,22 +9,39 @@ const DashboardScheduleDisplay = ({ schedules }) => {
 
   const currentDate = format(new Date(), 'MMMM dd, yyyy')
 
-  // Time slot priority mapping
-  const timeSlotPriority = {
+  // Time slot priority mapping standard
+  const timeSlotPriorityRegular = {
     '8-10': 1,
     '10-12': 2,
     '12-2': 3,
     '2-4': 4,
   }
 
-  // Sort schedules by time slots
-  const sortedSchedules = [...schedules].sort((a, b) => {
-    const priorityA = timeSlotPriority[a.measureTime] || 999
-    const priorityB = timeSlotPriority[b.measureTime] || 999
-    return priorityA - priorityB
-  })
+  // Time slot priority mapping non-standard
+  const timeSlotPriorityIrregular = {
+    '7-9': 1,
+    '9-11': 2,
+    '11-1': 3,
+    '1-3': 4,
+  }
 
-  console.log('Sorted Time:', sortedSchedules)
+  const measureByOrder = ['Anilber', 'Javier', 'Jeff']
+
+  // Sort schedules by time slots
+  // const sortedSchedulesA = [...schedules].sort((a, b) => {
+  //   const priorityA = timeSlotPriorityRegular[a.measureTime] || 999
+  //   const priorityB = timeSlotPriorityRegular[b.measureTime] || 999
+  //   return priorityA - priorityB
+  // })
+
+  // Sort schedules by time slots
+  // const sortedSchedulesB = [...schedules].sort((c, d) => {
+  //   const priorityC = timeSlotPriorityIrregular[c.measureTime] || 999
+  //   const priorityD = timeSlotPriorityIrregular[d.measureTime] || 999
+  //   return priorityC - priorityD
+  // })
+
+  // console.log('Sorted Time:', sortedSchedulesA, sortedSchedulesB)
 
   // Helper function to safely format dates
   // const formatScheduleDate = (date) => {
@@ -53,6 +70,54 @@ const DashboardScheduleDisplay = ({ schedules }) => {
   //   sortedSchedules.map((schedule) => schedule.measureDate)
   // )
 
+  // First group schedules by measureBy
+  const groupedSchedules = schedules.reduce((groups, schedule) => {
+    const measureBy = schedule.measureBy || 'Unassigned'
+    if (!groups[measureBy]) {
+      groups[measureBy] = []
+    }
+    groups[measureBy].push(schedule)
+    return groups
+  }, {})
+
+  // Then sort each group by time slots - original with 1 Priority Only
+  // Object.keys(groupedSchedules).forEach((measureBy) => {
+  //   groupedSchedules[measureBy].sort((a, b) => {
+  //     // Check regular time slots first
+  //     const PriorityA = timeSlotPriority[a.measureTime] || 999
+  //     const PriorityB = timeSlotPriority[b.measureTime] || 999
+  //     return PriorityA - PriorityB
+  //   })
+  // })
+
+  // Then sort each group by time slots, handling both regular and irregular
+  Object.keys(groupedSchedules).forEach((measureBy) => {
+    groupedSchedules[measureBy].sort((a, b) => {
+      // Check regular time slots first
+      const regularPriorityA = timeSlotPriorityRegular[a.measureTime]
+      const regularPriorityB = timeSlotPriorityRegular[b.measureTime]
+
+      // If both times are in regular slots, use regular priority
+      if (regularPriorityA && regularPriorityB) {
+        return regularPriorityA - regularPriorityB
+      }
+
+      // Check regular time slots first
+      const irregularPriorityA = timeSlotPriorityIrregular[a.measureTime]
+      const irregularPriorityB = timeSlotPriorityIrregular[b.measureTime]
+
+      // If both times are in irregular slots, use irregular priority
+      if (irregularPriorityA && irregularPriorityB) {
+        return irregularPriorityA - irregularPriorityB
+      }
+
+      // If mixing regular and irregular, or unknown time slots
+      // const priorityA = regularPriorityA || irregularPriorityA || 999
+      // const priorityB = regularPriorityB || irregularPriorityB || 999
+      // return priorityA - priorityB
+    })
+  })
+
   return (
     <section>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
@@ -65,7 +130,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
           <div className='overflow-x-auto p-2'>
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>
-                <tr>
+                {/* <tr>
                   <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Anilber
                   </th>
@@ -75,9 +140,19 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                   <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Jeff
                   </th>
+                </tr> */}
+                <tr>
+                  {Object.keys(groupedSchedules).map((measureBy) => (
+                    <th
+                      key={measureBy}
+                      className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'
+                    >
+                      {measureBy}
+                    </th>
+                  ))}
                 </tr>
               </thead>
-              <tbody className='divide-y divide-gray-200'>
+              {/* <tbody className='divide-y divide-gray-200'>
                 {sortedSchedules.length > 0 ? (
                   <>
                     {sortedSchedules.map((schedule) => (
@@ -128,7 +203,57 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                     No schedules found
                   </p>
                 )}
-              </tbody>
+              </tbody> */}
+
+              <tr>
+                {Object.entries(groupedSchedules).map(
+                  ([measureBy, schedules]) => (
+                    <td
+                      key={measureBy}
+                      className='align-top border-r last:border-r-0'
+                    >
+                      {schedules.map((schedule) => (
+                        <div
+                          key={schedule._id}
+                          className='p-2 hover:bg-blue-50 cursor-pointer border-b'
+                        >
+                          <Link
+                            href={`/dashboard/customers/${schedule.customer}`}
+                          >
+                            <div className='grid grid-flow-row gap-1'>
+                              <span className='text-sm font-light text-gray-700'>
+                                {formatDate(schedule?.measureDate) || ''}
+                              </span>
+                              <span className='text-sm font-light text-gray-900'>
+                                {schedule.measureTime} -{' '}
+                                {customerWithCapitalizedNames(
+                                  schedule?.customerAddress?.city || ''
+                                )}
+                              </span>
+                              <span className='text-sm font-light text-gray-900'>
+                                {customerWithCapitalizedNames(
+                                  schedule?.customerName || 'Unknown Customer'
+                                )}{' '}
+                                /{' '}
+                                {schedule?.customerType === 'Home Depot'
+                                  ? 'HD'
+                                  : schedule?.customerType === 'Direct'
+                                  ? 'Dir'
+                                  : schedule?.customerType === 'Builders'
+                                  ? 'Buil'
+                                  : schedule?.customerType ===
+                                    'Kitchen and Bath'
+                                  ? 'K&B'
+                                  : schedule?.customerType}
+                              </span>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </td>
+                  )
+                )}
+              </tr>
             </table>
           </div>
 

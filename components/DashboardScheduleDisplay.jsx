@@ -204,56 +204,57 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                   </p>
                 )}
               </tbody> */}
-
-              <tr>
-                {Object.entries(groupedSchedules).map(
-                  ([measureBy, schedules]) => (
-                    <td
-                      key={measureBy}
-                      className='align-top border-r last:border-r-0'
-                    >
-                      {schedules.map((schedule) => (
-                        <div
-                          key={schedule._id}
-                          className='p-2 hover:bg-blue-50 cursor-pointer border-b'
-                        >
-                          <Link
-                            href={`/dashboard/customers/${schedule.customer}`}
+              <tbody className='divide-y divide-gray-200'>
+                <tr>
+                  {Object.entries(groupedSchedules).map(
+                    ([measureBy, schedules]) => (
+                      <td
+                        key={measureBy}
+                        className='align-top border-r last:border-r-0'
+                      >
+                        {schedules.map((schedule) => (
+                          <div
+                            key={schedule._id}
+                            className='p-2 hover:bg-blue-50 cursor-pointer border-b'
                           >
-                            <div className='grid grid-flow-row gap-1'>
-                              <span className='text-sm font-light text-gray-700'>
-                                {formatDate(schedule?.measureDate) || ''}
-                              </span>
-                              <span className='text-sm font-light text-gray-900'>
-                                {schedule.measureTime} -{' '}
-                                {customerWithCapitalizedNames(
-                                  schedule?.customerAddress?.city || ''
-                                )}
-                              </span>
-                              <span className='text-sm font-light text-gray-900'>
-                                {customerWithCapitalizedNames(
-                                  schedule?.customerName || 'Unknown Customer'
-                                )}{' '}
-                                /{' '}
-                                {schedule?.customerType === 'Home Depot'
-                                  ? 'HD'
-                                  : schedule?.customerType === 'Direct'
-                                  ? 'Dir'
-                                  : schedule?.customerType === 'Builders'
-                                  ? 'Buil'
-                                  : schedule?.customerType ===
-                                    'Kitchen and Bath'
-                                  ? 'K&B'
-                                  : schedule?.customerType}
-                              </span>
-                            </div>
-                          </Link>
-                        </div>
-                      ))}
-                    </td>
-                  )
-                )}
-              </tr>
+                            <Link
+                              href={`/dashboard/customers/${schedule.customer}`}
+                            >
+                              <div className='grid grid-flow-row gap-1'>
+                                <span className='text-sm font-light text-gray-700'>
+                                  {formatDate(schedule?.measureDate) || ''}
+                                </span>
+                                <span className='text-sm font-light text-gray-900'>
+                                  {schedule.measureTime} -{' '}
+                                  {customerWithCapitalizedNames(
+                                    schedule?.customerAddress?.city || ''
+                                  )}
+                                </span>
+                                <span className='text-sm font-light text-gray-900'>
+                                  {customerWithCapitalizedNames(
+                                    schedule?.customerName || 'Unknown Customer'
+                                  )}{' '}
+                                  /{' '}
+                                  {schedule?.customerType === 'Home Depot'
+                                    ? 'HD'
+                                    : schedule?.customerType === 'Direct'
+                                    ? 'Dir'
+                                    : schedule?.customerType === 'Builders'
+                                    ? 'Buil'
+                                    : schedule?.customerType ===
+                                      'Kitchen and Bath'
+                                    ? 'K&B'
+                                    : schedule?.customerType}
+                                </span>
+                              </div>
+                            </Link>
+                          </div>
+                        ))}
+                      </td>
+                    )
+                  )}
+                </tr>
+              </tbody>
             </table>
           </div>
 

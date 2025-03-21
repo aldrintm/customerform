@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import { format, isValid, parseISO } from 'date-fns'
 import { formatDate } from '@/utils/formatDate'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
@@ -7,6 +8,23 @@ const DashboardScheduleDisplay = ({ schedules }) => {
   console.log('Incoming Schedules:', schedules)
 
   const currentDate = format(new Date(), 'MMMM dd, yyyy')
+
+  // Time slot priority mapping
+  const timeSlotPriority = {
+    '8-10': 1,
+    '10-12': 2,
+    '12-2': 3,
+    '2-4': 4,
+  }
+
+  // Sort schedules by time slots
+  const sortedSchedules = [...schedules].sort((a, b) => {
+    const priorityA = timeSlotPriority[a.measureTime] || 999
+    const priorityB = timeSlotPriority[b.measureTime] || 999
+    return priorityA - priorityB
+  })
+
+  console.log('Sorted Time:', sortedSchedules)
 
   // Helper function to safely format dates
   // const formatScheduleDate = (date) => {
@@ -60,42 +78,47 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                 </tr>
               </thead> */}
               <tbody className='divide-y divide-gray-200'>
-                {schedules.length > 0 ? (
+                {sortedSchedules.length > 0 ? (
                   <>
-                    {schedules.map((schedule) => (
+                    {sortedSchedules.map((schedule) => (
                       <tr
                         key={schedule._id}
                         className='hover:bg-blue-50 cursor-pointer'
                       >
                         <td className='whitespace-nowrap py-2 text-sm text-center text-gray-700'>
-                          <div className='grid grid-flow-row'>
-                            <span className='underline text-sm font-light text-gray-900 inline-flex items-center gap-2'>
-                              {formatDate(schedule?.measureDate) || ''}
-                            </span>
-                            <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
-                              {schedule.measureTime}
-                              <p>
+                          <Link
+                            href={`/dashboard/customers/${schedule.customer}`}
+                          >
+                            <div className='grid grid-flow-row'>
+                              <span className='underline text-sm font-light text-gray-900 inline-flex items-center gap-2'>
+                                {formatDate(schedule?.measureDate) || ''}
+                              </span>
+                              <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
+                                {schedule.measureTime}
+                                <p>
+                                  {customerWithCapitalizedNames(
+                                    schedule?.customerAddress?.city || ''
+                                  )}
+                                </p>
+                              </span>
+                              <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
                                 {customerWithCapitalizedNames(
-                                  schedule?.customerAddress?.city || ''
+                                  schedule?.customerName || 'Unknown Customer'
                                 )}
-                              </p>
-                            </span>
-                            <span className='text-sm font-light text-gray-900 inline-flex items-center gap-2'>
-                              {customerWithCapitalizedNames(
-                                schedule?.customerName || 'Unknown Customer'
-                              )}
-                              /
-                              {schedule?.customerType === 'Home Depot'
-                                ? 'HD'
-                                : schedule?.customerType === 'Direct'
-                                ? 'Dir'
-                                : schedule?.customerType === 'Builders'
-                                ? 'Buil'
-                                : schedule?.customerType === 'Kitchen and Bath'
-                                ? 'K&B'
-                                : schedule?.customerType}
-                            </span>
-                          </div>
+                                /
+                                {schedule?.customerType === 'Home Depot'
+                                  ? 'HD'
+                                  : schedule?.customerType === 'Direct'
+                                  ? 'Dir'
+                                  : schedule?.customerType === 'Builders'
+                                  ? 'Buil'
+                                  : schedule?.customerType ===
+                                    'Kitchen and Bath'
+                                  ? 'K&B'
+                                  : schedule?.customerType}
+                              </span>
+                            </div>
+                          </Link>
                         </td>
                       </tr>
                     ))}

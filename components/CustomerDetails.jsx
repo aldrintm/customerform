@@ -672,7 +672,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                       </h3>
                       <div className='flex gap-4 print:hidden'>
                         <Button
-                          onClick={() => handleAddProjectClick(project._id)}
+                          onClick={() => handleEditProjectClick(project._id)}
                           disabled={isPending || isNavigating}
                         >
                           {isNavigating || isPending ? (

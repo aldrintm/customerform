@@ -422,7 +422,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       <option value='MSI'>MSI</option>
                       <option value='Cambria'>Cambria</option>
                       <option value='Caesarstone'>Caesarstone</option>
-                      <option value='Viatera'>Viatera</option>
+                      <option value='Viatera'>LG Viatera</option>
                       <option value='Silestone'>Silestone</option>
                       <option value='Vadara'>Vadara</option>
                       <option value='Corianquartz'>Corian Quartz</option>

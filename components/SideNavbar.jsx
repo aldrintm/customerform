@@ -31,7 +31,7 @@ const SideNavbar = () => {
         <aside className='fixed inset-y-0 py-2 left-0 z-10 w-14 hidden flex-col border-r sm:flex'>
           <nav className='flex flex-col items-center gap-6 px-2 sm:py-5 sm:pt-14'>
             <Link
-              className='group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base'
+              className='group relative flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base'
               href='https://www.plamarusa.com'
             >
               {/* <svg
@@ -48,9 +48,12 @@ const SideNavbar = () => {
               </svg> */}
               <Globe className='h-5 w-5 text-blue-500' />
               <span className='sr-only'>Plamar USA</span>
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                plamarusa.com
+              </span>
             </Link>
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
@@ -74,10 +77,13 @@ const SideNavbar = () => {
               </svg> */}
               <Home className='h-5 w-5' />
               <span className='sr-only'>Dashboard</span>
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                Main Dashboard
+              </span>
             </Link>
 
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/customers'
                   ? 'bg-blue-500 text-white rounded-full'
                   : 'text-blue-500 hover:text-foreground'
@@ -86,9 +92,12 @@ const SideNavbar = () => {
             >
               <Files className='h-5 w-5' />
               <span className='sr-only'>Customers</span>
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                Customers List
+              </span>
             </Link>
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/files'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
@@ -113,6 +122,9 @@ const SideNavbar = () => {
               </svg> */}
               <ArrowDownToLine className='h-5 w-5' />
               <span className='sr-only'>Files</span>
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                PDFs List
+              </span>
             </Link>
             <Link
               className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
@@ -141,12 +153,12 @@ const SideNavbar = () => {
               </svg> */}
               <Archive className='h-5 w-5' />
               <span className='sr-only'>Inventory</span>
-              <span className='invisible absolute start-full top-1/4 ms-1 -translate-y-1/2 rounded-md bg-gray-500 px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
-                Inventory
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                Slab Inventory
               </span>
             </Link>
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/customers/add'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
@@ -170,9 +182,13 @@ const SideNavbar = () => {
                 <path d='M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3'></path>
               </svg> */}
               <UserRoundPlus className='h-5 w-5' />
+
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                Slab Inventory
+              </span>
             </Link>
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/calendar'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
@@ -199,9 +215,12 @@ const SideNavbar = () => {
               </svg>
               {/* <Calendar1 className='h-5 w-5 text-blue-500' /> */}
               <span className='sr-only'>Calendar</span>
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                Calendar
+              </span>
             </Link>
             <Link
-              className={`flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/tasks'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
@@ -210,6 +229,12 @@ const SideNavbar = () => {
             >
               <ClipboardList className='h-5 w-5' />
               <span className='sr-only'>Task To Do</span>
+              {/* <span className='invisible absolute start-full top-1/2 ms-1 -translate-y-1/2 rounded-md bg-gray-500 px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
+                Tasks
+              </span> */}
+              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+                Tasks to do
+              </span>
             </Link>
             {/* <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'

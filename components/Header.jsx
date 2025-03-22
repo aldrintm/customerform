@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { refreshCustomerData } from '@/app/actions/refreshCustomerData'
@@ -15,6 +15,10 @@ import Greeting from './Greeting'
 
 const Header = () => {
   const router = useRouter()
+
+  // Lets create a ref for both menu and button
+  const menuRef = useRef(null)
+  const buttonRef = useRef(null)
 
   // get data as session from useSession from next-auth
   const { data: session } = useSession()
@@ -33,7 +37,7 @@ const Header = () => {
     // Reset the animation after it completes
     setTimeout(() => {
       setIsSpinning(false)
-    }, 3000) // 3 second for animation duration
+    }, 1000) // 3 second for animation duration
   }
 
   const pathname = usePathname()
@@ -45,6 +49,21 @@ const Header = () => {
       setProviders(res)
     }
     setAuthProviders()
+  }, [])
+
+  // Lets add a click listener that checks if click was outside both elements
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   return (
@@ -198,19 +217,23 @@ const Header = () => {
               {/* Profile Login Avatar Drop Down Button */}
               <div className='inline-flex items-center'>
                 <button
-                  className='relative inline-flex items-center gap-2 justify-center whitespace-nowrap md:rounded-full md:border md:border-blue-400 h-10 w-10 text-blue-400 transition-all duration-400 ease-in-out hover:bg-blue-400 hover:text-white hover:scale-110 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 active:bg-blue-500 active:scale-95 active:shadow-inner'
+                  className='group relative inline-flex items-center gap-2 justify-center whitespace-nowrap md:rounded-full md:border md:border-blue-400 h-10 w-10 text-blue-400 transition-all duration-400 ease-in-out hover:bg-blue-400 hover:text-white hover:shadow-md focus:outline-none focus:ring-1 focus:ring-blue-200 focus:ring-opacity-100 active:bg-blue-500 active:scale-90 active:shadow-inner'
                   type='button'
                   onClick={handleClickAndRefresh}
                 >
                   <RefreshCw
                     size={18}
                     className={`${
-                      isSpinning ? 'animate-spin' : ''
-                    } transition-transform duration-1000`}
+                      isSpinning ? 'animate-spin fast-spin' : ''
+                    } transition-transform duration-300`}
                   />
+                  <span className='invisible group-hover:visible mt-3 absolute left-1/2 translate-y-full -translate-x-1/2 z-20 scale-0 px-2 py-1 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-2 before:left-1/2 before:size-3 before:-translate-x-1/2 before:-translate-y-full before:rotate-45 before:bg-white peer-hover:bottom-[3.3rem] peer-hover:opacity-100 peer-hover:duration-500'>
+                    <p className='text-center'>Refresh Page</p>
+                  </span>
                 </button>
                 <button
-                  className='relative inline-flex mx-6 items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:bg-blue-400 hover:text-white transition-all duration-400 ease-in-out hover:scale-110 focus:outline-non focus:ring focus:ring-blue-300 focus:ring-opacity-50 active:bg-blue-400 active:scale-95 active:shadow-inner h-10 w-10 rounded-full'
+                  ref={buttonRef}
+                  className='group relative inline-flex mx-6 items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:bg-blue-400 hover:text-white transition-all duration-400 ease-in-out hover:scale-100 focus:outline-none  active:bg-blue-400 active:scale-90 active:shadow-inner h-10 w-10 rounded-full'
                   type='button'
                   id='user-menu-button'
                   aria-haspopup='true'
@@ -219,6 +242,9 @@ const Header = () => {
                 >
                   <span className='absolute'></span>
                   <span className='sr-only'>Open user menu</span>
+                  <span className='invisible group-hover:visible mt-3 absolute left-1/2 translate-y-full -translate-x-1/2 z-20 scale-0 px-2 py-1 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-2 before:left-1/2 before:size-3 before:-translate-x-1/2 before:-translate-y-full before:rotate-45 before:bg-white peer-hover:bottom-[3.3rem] peer-hover:opacity-100 peer-hover:duration-500'>
+                    <p className='text-center'>Profile</p>
+                  </span>
                   <Image
                     className='h-10 w-10 rounded-full'
                     src={profileImage || AppleTouch}
@@ -235,6 +261,7 @@ const Header = () => {
               {/* Profile Dropdown */}
               {isProfileMenuOpen && (
                 <div
+                  ref={menuRef}
                   id='user-menu'
                   className='absolute right-10 z-10 mt-2 w-48 top-10 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
                   role='menu'

@@ -48,7 +48,7 @@ const SideNavbar = () => {
               </svg> */}
               <Globe className='h-5 w-5 text-blue-500' />
               <span className='sr-only'>Plamar USA</span>
-              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 plamarusa.com
               </span>
             </Link>
@@ -77,7 +77,7 @@ const SideNavbar = () => {
               </svg> */}
               <Home className='h-5 w-5' />
               <span className='sr-only'>Dashboard</span>
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Main Dashboard
               </span>
             </Link>
@@ -92,8 +92,8 @@ const SideNavbar = () => {
             >
               <Files className='h-5 w-5' />
               <span className='sr-only'>Customers</span>
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
-                Customers List
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
+                Customer List
               </span>
             </Link>
             <Link
@@ -122,8 +122,8 @@ const SideNavbar = () => {
               </svg> */}
               <ArrowDownToLine className='h-5 w-5' />
               <span className='sr-only'>Files</span>
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
-                PDFs List
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
+                Office Files
               </span>
             </Link>
             <Link
@@ -153,7 +153,7 @@ const SideNavbar = () => {
               </svg> */}
               <Archive className='h-5 w-5' />
               <span className='sr-only'>Inventory</span>
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Slab Inventory
               </span>
             </Link>
@@ -183,8 +183,8 @@ const SideNavbar = () => {
               </svg> */}
               <UserRoundPlus className='h-5 w-5' />
 
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
-                Slab Inventory
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
+                Create Customer
               </span>
             </Link>
             <Link
@@ -215,7 +215,7 @@ const SideNavbar = () => {
               </svg>
               {/* <Calendar1 className='h-5 w-5 text-blue-500' /> */}
               <span className='sr-only'>Calendar</span>
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Calendar
               </span>
             </Link>
@@ -229,10 +229,8 @@ const SideNavbar = () => {
             >
               <ClipboardList className='h-5 w-5' />
               <span className='sr-only'>Task To Do</span>
-              {/* <span className='invisible absolute start-full top-1/2 ms-1 -translate-y-1/2 rounded-md bg-gray-500 px-2 py-1.5 text-xs font-medium text-white group-hover:visible'>
-                Tasks
-              </span> */}
-              <span className='invisible group-hover:visible absolute ms-2 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap'>
+
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Tasks to do
               </span>
             </Link>

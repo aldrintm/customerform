@@ -31,3 +31,7 @@
     margin: 1cm;
   } */
 }
+
+.fast-spin {
+  animation-duration: 0.3s; /* Example: half the default duration */
+}

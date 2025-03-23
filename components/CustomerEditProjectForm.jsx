@@ -72,18 +72,18 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='storeName'
                       id='storeName'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm text-gray-500 bg-sky-50 border-gray-200 focus-bg-white'
-                      defaultValue={project.storeName}
+                      defaultValue={project.customerType}
                     >
                       <option value='DEFAULT' disabled>
                         Choose ...
                       </option>
                       <option value='Home Depot'>Home Depot</option>
                       <option value='HDI'>HDI</option>
-                      <option value='HDI'>HD Pro</option>
+                      <option value='HD Pro'>HD Pro</option>
                       <option value='Direct'>Direct</option>
                       <option value='Builder'>Builders</option>
-                      <option value='KandB'>Kitchen and Bath</option>
-                      <option value='KandB'>Other</option>
+                      <option value='Kitchen + Bath'>Kitchen and Bath</option>
+                      <option value='Other'>Other</option>
                     </select>
                   </div>
                   {/* Store ID */}

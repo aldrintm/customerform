@@ -57,6 +57,7 @@ async function updateProject(customerId, projectId, formData) {
   const projectData = {
     purchaseOrders,
     description: formData.get('description'),
+    customerType: formData.get('storeName')?.trim() || '',
     storeId: formData.get('storeId'),
     status: formData.get('status'),
     materialType: formData.get('materialType'),

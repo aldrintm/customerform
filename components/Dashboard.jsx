@@ -17,6 +17,7 @@ import {
   setMilliseconds,
 } from 'date-fns'
 import { formatDate } from '@/utils/formatDate'
+import Greeting from './Greeting'
 
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
@@ -153,7 +154,10 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
       <div className='md:container w-full mx-auto grid grid-flow-row'>
         <div className='md:container w-full text-left px-15 pl-2'>
           <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
-            Main Dashboard
+            {/* <span className='text-md inline-flex mr-2'>
+              <Greeting /> <span className='ml-2'>{sessionUser.user.name}</span>
+            </span> */}
+            <h1>Welcome to Plamar USA</h1>
           </div>
         </div>
         {/* Main Components Starts Here */}
@@ -177,7 +181,12 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             </div>
 
             {/* Feature Box Here - Problem Customers */}
-            <div className='container grid grid-cols-1 md:gap-6 '>
+            <div className='container grid grid-cols-1 md:gap-1 '>
+              <div className='md:container w-full text-left px-15 pl-2'>
+                <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
+                  Bookmarks
+                </div>
+              </div>
               <div className='flex justify-center items-center gap-2 md:gap-4'>
                 <DashboardBookmarkPage
                   bookmarks={bookmarks}

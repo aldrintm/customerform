@@ -9,7 +9,6 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import AppleTouch from '@/assets/images/apple-touch-icon.png'
 import Breadcrumb from './BreadCrumb'
 import { RefreshCw } from 'lucide-react'
-
 import CustomerSearchForm from './CustomerSearchForm'
 import Greeting from './Greeting'
 
@@ -70,9 +69,9 @@ const Header = () => {
     <nav>
       {/* Header Page */}
       <div className='flex flex-col sm:gap-4 sm:py-4 sm:ml-14'>
-        <header className='sticky top-0 z-30 bg-blue-400 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 print:hidden'>
+        <header className='sticky top-0 z-30 bg-blue-400 flex items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 print:hidden'>
           <button
-            className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 sm:hidden'
+            className='inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 sm:hidden'
             type='button'
             aria-haspopup='dialog'
             aria-expanded='false'
@@ -228,7 +227,7 @@ const Header = () => {
                     } transition-transform duration-300`}
                   />
                   <span className='invisible group-hover:visible mt-3 absolute left-1/2 translate-y-full -translate-x-1/2 z-20 scale-0 px-2 py-1 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-2 before:left-1/2 before:size-3 before:-translate-x-1/2 before:-translate-y-full before:rotate-45 before:bg-white peer-hover:bottom-[3.3rem] peer-hover:opacity-100 peer-hover:duration-500'>
-                    <p className='text-center'>Refresh Page</p>
+                    <p className='text-center'>Refresh Data</p>
                   </span>
                 </button>
                 <button

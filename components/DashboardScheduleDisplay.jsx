@@ -7,7 +7,7 @@ import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedN
 const DashboardScheduleDisplay = ({ schedules }) => {
   console.log('Incoming Schedules:', schedules)
 
-  const currentDate = format(new Date(), 'MMMM dd, yyyy')
+  const currentDate = format(new Date().toLocaleDateString(), 'MMMM dd, yyyy')
 
   // Time slot priority mapping standard
   const timeSlotPriorityRegular = {
@@ -121,14 +121,14 @@ const DashboardScheduleDisplay = ({ schedules }) => {
   return (
     <section>
       <div className='md:container max-w-4xl text-left px-15 mx-auto md:rounded-2xl'>
-        <div className='container mx-auto px-4 border border-gray-300 rounded-lg'>
+        <div className='container mx-auto border-gray-300 rounded-lg'>
           <div className='container flex items-center justify-center px-2 pt-4 text-md md:text-md text-blue-500 font-semibold'>
             {/* <h1>{currentDate}</h1> */}
             {/* <h1>Template Schedule for {currentDate}</h1> */}
-            <h2>Template Schedules</h2>
+            <h2>Measure Schedule for {currentDate}</h2>
           </div>
           <div className='overflow-x-auto'>
-            <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
+            <table className='min-w-full bg-white text-sm'>
               <thead className='text-left'>
                 {/* <tr>
                   <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
@@ -145,7 +145,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                   {Object.keys(groupedSchedules).map((measureBy) => (
                     <th
                       key={measureBy}
-                      className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'
+                      className='whitespace-nowrap py-4 text-sm text-center text-gray-600 font-semibold'
                     >
                       {measureBy}
                     </th>
@@ -204,48 +204,103 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                   </p>
                 )}
               </tbody> */}
-              <tbody className='divide-y divide-gray-200'>
+              {/*  className='divide-y divide-gray-200'  */}
+              <tbody className=''>
                 <tr>
                   {Object.entries(groupedSchedules).map(
                     ([measureBy, schedules]) => (
-                      <td
-                        key={measureBy}
-                        className='align-top border-r last:border-r-0'
-                      >
+                      <td key={measureBy} className='align-top'>
                         {schedules.map((schedule) => (
                           <div
                             key={schedule._id}
-                            className='p-2 hover:bg-blue-50 cursor-pointer border-b'
+                            className='p-2 my-2 mx-1 hover:bg-blue-50 cursor-pointer border border-slate-300 rounded-md hover:shadow-md'
                           >
                             <Link
                               href={`/dashboard/customers/${schedule.customer}`}
                             >
                               <div className='grid grid-flow-row gap-1'>
-                                <span className='text-sm font-light text-gray-700'>
+                                {/* <span className='text-sm font-light text-gray-700'>
                                   {formatDate(schedule?.measureDate) || ''}
-                                </span>
-                                <span className='text-sm font-light text-gray-900'>
-                                  {schedule.measureTime} -{' '}
-                                  {customerWithCapitalizedNames(
-                                    schedule?.customerAddress?.city || ''
-                                  )}
-                                </span>
-                                <span className='text-sm font-light text-gray-900'>
-                                  {customerWithCapitalizedNames(
-                                    schedule?.customerName || 'Unknown Customer'
-                                  )}{' '}
-                                  /{' '}
-                                  {schedule?.customerType === 'Home Depot'
-                                    ? 'HD'
-                                    : schedule?.customerType === 'Direct'
-                                    ? 'Dir'
-                                    : schedule?.customerType === 'Builders'
-                                    ? 'Buil'
-                                    : schedule?.customerType ===
-                                      'Kitchen and Bath'
-                                    ? 'K&B'
-                                    : schedule?.customerType}
-                                </span>
+                                </span> */}
+                                <div className='flex justify-between'>
+                                  <span className='text-sm font-light text-gray-900'>
+                                    {(() => {
+                                      //First time slot (Blue)
+                                      if (
+                                        schedule.measureTime === '7-9' ||
+                                        schedule.measureTime === '8-10'
+                                      ) {
+                                        return (
+                                          <div className='text-blue-500 font-semibold'>
+                                            {schedule.measureTime}
+                                          </div>
+                                        )
+                                      }
+
+                                      // Second time slot (Red)
+                                      if (
+                                        schedule.measureTime === '9-11' ||
+                                        schedule.measureTime === '10-12'
+                                      ) {
+                                        return (
+                                          <div className='text-red-500 font-semibold'>
+                                            {schedule.measureTime}
+                                          </div>
+                                        )
+                                      }
+                                      // Third time slot (Yellow)
+                                      if (
+                                        schedule.measureTime === '11-1' ||
+                                        schedule.measureTime === '12-2'
+                                      ) {
+                                        return (
+                                          <div className='text-yellow-500 font-semibold'>
+                                            {schedule.measureTime}
+                                          </div>
+                                        )
+                                      }
+
+                                      // Frouth time slot (Green)
+                                      if (
+                                        schedule.measureTime === '1-3' ||
+                                        schedule.measureTime === '2-4'
+                                      ) {
+                                        return (
+                                          <div className='text-green-500 font-semibold'>
+                                            {schedule.measureTime}
+                                          </div>
+                                        )
+                                      }
+                                      // Default case
+                                      return <div>{schedule.measureTime}</div>
+                                    })()}
+                                  </span>
+                                  <span className='text-sm font-light text-gray-900'>
+                                    {customerWithCapitalizedNames(
+                                      schedule?.customerAddress?.city || ''
+                                    )}
+                                  </span>
+                                </div>
+                                <div className='flex justify-between'>
+                                  <span className='text-sm font-light text-gray-900'>
+                                    {customerWithCapitalizedNames(
+                                      schedule?.customerName ||
+                                        'Unknown Customer'
+                                    )}
+                                  </span>
+                                  <span className='text-sm font-light text-gray-900'>
+                                    {schedule?.customerType === 'Home Depot'
+                                      ? 'HD'
+                                      : schedule?.customerType === 'Direct'
+                                      ? 'Direct'
+                                      : schedule?.customerType === 'Builders'
+                                      ? 'Buil'
+                                      : schedule?.customerType ===
+                                        'Kitchen and Bath'
+                                      ? 'K & B'
+                                      : schedule?.customerType}
+                                  </span>
+                                </div>
                               </div>
                             </Link>
                           </div>

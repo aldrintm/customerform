@@ -6,6 +6,7 @@ import WeatherNow from './WeatherNow'
 import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
+import DashboardInstallScheduleDisplay from './DashboardInstallScheduleDisplay'
 import {
   format,
   isSameDay,
@@ -204,10 +205,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           <div className='container xl:col-span-5 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <DashboardScheduleDisplay schedules={todaySchedules} />
-            <div className='border border-gray-300 rounded-lg p-4 h-96 flex items-center justify-center bg-emerald-100'></div>
-            <div className=' border border-gray-300 rounded-lg p-4 h-[27rem] flex items-center justify-center bg-teal-100'>
-              Waiting for Codeblock Above
-            </div>
+            <DashboardInstallScheduleDisplay schedules={todaySchedules} />
           </div>
         </div>
       </div>

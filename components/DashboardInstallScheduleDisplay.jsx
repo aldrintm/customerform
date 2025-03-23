@@ -4,7 +4,7 @@ import { format, isValid, parseISO } from 'date-fns'
 import { formatDate } from '@/utils/formatDate'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
-const DashboardScheduleDisplay = ({ schedules }) => {
+const DashboardInstallScheduleDisplay = ({ schedules }) => {
   console.log('Incoming Schedules:', schedules)
 
   const currentDate = format(new Date().toLocaleDateString(), 'MMMM dd, yyyy')
@@ -125,7 +125,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
           <div className='container flex items-center justify-center px-2 pt-4 text-md md:text-md text-blue-500 font-semibold'>
             {/* <h1>{currentDate}</h1> */}
             {/* <h1>Template Schedule for {currentDate}</h1> */}
-            <h2>Measure Schedule for {currentDate}</h2>
+            <h2>Install Schedule for {currentDate}</h2>
           </div>
           <div className='overflow-x-auto'>
             <table className='min-w-full bg-white text-sm'>
@@ -147,7 +147,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                       key={measureBy}
                       className='whitespace-nowrap py-4 text-sm text-center text-gray-600 font-semibold'
                     >
-                      {measureBy}
+                      {/* {measureBy} */}
                     </th>
                   ))}
                 </tr>
@@ -218,12 +218,12 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                             <Link
                               href={`/dashboard/customers/${schedule.customer}`}
                             >
-                              <div className='grid grid-flow-row gap-1'>
+                              <div className='grid grid-flow-col gap-1'>
                                 {/* <span className='text-sm font-light text-gray-700'>
                                   {formatDate(schedule?.measureDate) || ''}
                                 </span> */}
                                 <div className='flex justify-between'>
-                                  <span className='text-sm font-light text-gray-900'>
+                                  {/* <span className='text-sm font-light text-gray-900'>
                                     {(() => {
                                       //First time slot (Blue)
                                       if (
@@ -279,10 +279,10 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                                     {customerWithCapitalizedNames(
                                       schedule?.customerAddress?.city || ''
                                     )}
-                                  </span>
+                                  </span> */}
                                 </div>
                                 <div className='flex justify-between'>
-                                  <span className='text-sm font-medium text-gray-600'>
+                                  {/* <span className='text-sm font-medium text-gray-600'>
                                     {customerWithCapitalizedNames(
                                       schedule?.customerName ||
                                         'Unknown Customer'
@@ -299,7 +299,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                                         'Kitchen and Bath'
                                       ? 'K & B'
                                       : schedule?.customerType}
-                                  </span>
+                                  </span> */}
                                 </div>
                               </div>
                             </Link>
@@ -353,4 +353,4 @@ const DashboardScheduleDisplay = ({ schedules }) => {
   )
 }
 
-export default DashboardScheduleDisplay
+export default DashboardInstallScheduleDisplay

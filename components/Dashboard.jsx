@@ -7,56 +7,12 @@ import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
 import DashboardInstallScheduleDisplay from './DashboardInstallScheduleDisplay'
-import {
-  format,
-  isSameDay,
-  parseISO,
-  startOfDay,
-  setHours,
-  setMinutes,
-  setSeconds,
-  setMilliseconds,
-} from 'date-fns'
-import { formatDate } from '@/utils/formatDate'
+import { format, isSameDay, parseISO, startOfDay } from 'date-fns'
 import Greeting from './Greeting'
+import { formatDate } from '@/utils/formatDate'
 
 const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
-
-  // // Normalize today's date by removing time component
-  // const today = setMilliseconds(
-  //   setSeconds(setMinutes(setHours(new Date(), 0), 0), 0),
-  //   0
-  // )
-
-  // Get customer with all schedules
-  // const customerWithSchedules = customers.map((customer) => {
-  //   const schedules =
-  //     customer.projects?.flatMap((project) => project.schedules || []) || []
-  //   return { ...customer, schedules }
-  // })
-
-  // Get all projects with schedules
-  // const projectWithSchedules = customers.flatMap(
-  //   (customer) =>
-  //     customer.projects?.filter((project) => project.schedules?.length > 0) ||
-  //     []
-  // )
-
-  // const processedSchedules = projectWithSchedules.map((project) => {
-  //   const schedules = project.schedules.map((schedule) => ({
-  //     ...schedule,
-  //     customerName: `${project.customer.firstName} ${project.customer.lastName}`,
-  //     customerAddress: project.customer.address,
-  //     customerPhone: project.customer.phone,
-  //     customerEmail: project.customer.email,
-  //     scheduleDate: format(new Date(schedule.measureDate), 'MM/dd/yyyy'),
-  //     measureBy: schedule.measureBy || 'Unassigned',
-  //     measureTime: schedule.measureTime || 'Unassigned',
-  //   }))
-  //   return { ...project, schedules }
-  //   console.log(schedules)
-  // })
 
   // Get all schedules with customer information
   const processedSchedules = customers.flatMap(
@@ -64,91 +20,86 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
       customer.projects
         ?.filter((project) => project.schedules?.length > 0)
         ?.flatMap((project) =>
-          project.schedules.map((schedule) => ({
-            ...schedule,
-            customerName: `${customer.firstName} ${customer.lastName}`,
-            customerAddress: customer.address,
-            customerPhone: customer.phone,
-            customerEmail: customer.email,
-            customerType: project.customerType,
-            // Parse date string to Date object
-            scheduleDate: parseISO(schedule.measureDate),
-            measureBy: schedule.measureBy || 'Unassigned',
-            measureTime: schedule.measureTime || 'Unassigned',
-          }))
+          project.schedules.map((schedule) => {
+            // Parse MongoDB UTC date and keep it as UTC
+            const measureDate = new Date(schedule.measureDate)
+
+            return {
+              ...schedule,
+              customerName: `${customer.firstName} ${customer.lastName}`,
+              customerAddress: customer.address,
+              customerPhone: customer.phone,
+              customerEmail: customer.email,
+              customerType: project.customerType,
+              measureDate: measureDate, // Keep as UTC Date object
+              measureBy: schedule.measureBy || 'Unassigned',
+              measureTime: schedule.measureTime || 'Unassigned',
+              // installDate: schedule.installDate
+              //   ? new Date(schedule.installDate)
+              //   : null,
+              // installBy: schedule.installBy || 'Unassigned',
+              // installTime: schedule.installTime || 'No time set',
+            }
+          })
         ) || []
   )
-  // Debug raw dates
-  // console.log(
-  //   'Raw schedule dates:',
-  //   processedSchedules.map((s) => s.measureDate)
-  // )
 
-  // Filter schedules for current day with better date handling
-  const today = new Date(new Date().toLocaleDateString())
-  console.log('Today is:', today)
-  const todaySchedules = processedSchedules.filter((schedule) => {
+  // Get today's date in local timezone
+  // const today = startOfDay(new Date())
+
+  // Get today's date normalized to UTC midnight
+  const todayUTC = new Date(
+    Date.UTC(
+      new Date().getUTCFullYear(),
+      new Date().getUTCMonth(),
+      new Date().getUTCDate()
+    )
+  )
+
+  const todayMeasureSchedules = processedSchedules.filter((schedule) => {
     try {
-      // Ensure we're comparing dates without time components
-      const scheduleDay = formatDate(schedule.measureDate)
-      const isToday = isSameDay(scheduleDay, today)
+      // Get schedule date as UTC midnight
+      const scheduleDayUTC = new Date(
+        Date.UTC(
+          schedule.measureDate.getUTCFullYear(),
+          schedule.measureDate.getUTCMonth(),
+          schedule.measureDate.getUTCDate()
+        )
+      )
+      // const scheduleDay = startOfDay(schedule.measureDate)
+      // const isToday = isSameDay(scheduleDayUTC, todayUTC)
 
+      // Avoid using startOfDay as it might apply local timezone
+      const isToday = scheduleDayUTC.getTime() === todayUTC.getTime()
+
+      // Debug logging with UTC formatting
+      // console.log('Comparing dates:', {
+      //   scheduleDay: format(scheduleDayUTC, 'yyyy-MM-dd'),
+      //   today: format(todayUTC, 'yyyy-MM-dd'),
+      //   isToday,
+      //   originalDate: format(schedule.measureDate, 'yyyy-MM-dd'),
+      //   rawMongoMeasureDate: schedule.measureDate.toISOString(),
+      //   systemDate: new Date().toISOString(),
+      // })
+
+      // Debug logging with explicit UTC formatting
       console.log('Comparing dates:', {
-        scheduleDay: scheduleDay,
-        today: today.toISOString(),
+        scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
+        today: todayUTC.toISOString().split('T')[0], // Extract date in UTC
         isToday,
-        originalDate: formatDate(schedule.measureDate),
+        originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
+        rawMongoMeasureDate: schedule.measureDate.toISOString(),
+        systemDate: new Date().toISOString(),
       })
 
-      // const isToday = isSameDay(scheduleDate, today)
-      // console.log('Comparing dates:', {
-      //   scheduleDate,
-      //   today,
-      //   isToday,
-      // })
       return isToday
     } catch (error) {
-      console.error('Date parsing error:', error)
+      console.error('Date comparison error:', error)
       return false
     }
   })
 
-  // const todaySchedules = processedSchedules.filter((schedule) => {
-  //   try {
-  //     // Parse and normalize schedule date
-  //     const scheduleDate = parseISO(schedule.measureDate)
-  //     const normalizedScheduleDate = setMilliseconds(
-  //       setSeconds(setMinutes(setHours(scheduleDate, 0), 0), 0),
-  //       0
-  //     )
-
-  //     console.log('Comparing normalized dates:', {
-  //       normalizedScheduleDate: normalizedScheduleDate.toISOString(),
-  //       today: today.toISOString(),
-  //       original: schedule.measureDate,
-  //     })
-
-  //     return isSameDay(normalizedScheduleDate, today)
-  //   } catch (error) {
-  //     console.error('Date parsing error:', error)
-  //     return false
-  //   }
-  // })
-
-  console.log("Today's Schedules:", todaySchedules)
-
-  // Get all schedules with customer information
-  // const processedSchedules = allSchedules.map((schedule) => {
-  //   const customer = customers.find(
-  //     (customer) => customer._id === schedule.customerId
-  //   )
-  //   return {
-  //     ...schedule,
-  //     customerName: customer
-  //       ? `${customer.firstName} ${customer.lastName}`
-  //       : '',
-  //   }
-  // })
+  console.log("Today's Schedules:", todayMeasureSchedules)
 
   return (
     <>
@@ -204,8 +155,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           </div>
           <div className='container xl:col-span-5 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
-            <DashboardScheduleDisplay schedules={todaySchedules} />
-            <DashboardInstallScheduleDisplay schedules={todaySchedules} />
+            <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
           </div>
         </div>
       </div>

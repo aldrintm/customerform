@@ -1,13 +1,13 @@
 'use client'
 import Link from 'next/link'
-import { format, isValid, parseISO } from 'date-fns'
+import { format, isValid, parseISO, startOfDay } from 'date-fns'
 import { formatDate } from '@/utils/formatDate'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
 const DashboardScheduleDisplay = ({ schedules }) => {
-  console.log('Incoming Schedules:', schedules)
+  // console.log('Incoming Schedules:', schedules)
 
-  const currentDate = format(new Date().toLocaleDateString(), 'MMMM dd, yyyy')
+  const currentDate = format(startOfDay(new Date()), 'MMMM dd, yyyy')
 
   // Time slot priority mapping standard
   const timeSlotPriorityRegular = {

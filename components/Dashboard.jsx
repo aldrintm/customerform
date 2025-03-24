@@ -45,7 +45,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   )
 
   // Get today's date in local timezone
-  // const today = startOfDay(new Date())
+  const today = startOfDay(new Date())
 
   // Get today's date normalized to UTC midnight
   const todayUTC = new Date(
@@ -99,7 +99,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
     }
   })
 
-  console.log("Today's Schedules:", todayMeasureSchedules)
+  // console.log("Today's Schedules:", todayMeasureSchedules)
 
   return (
     <>

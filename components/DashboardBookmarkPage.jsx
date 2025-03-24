@@ -26,7 +26,7 @@ const DashboardBookmarkPage = ({ bookmarks, sessionUser }) => {
   return (
     <>
       {bookmarks.length === 0 ? (
-        <div className='text-center text-white leading-8 font-medium w-full border border-gray-300 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-red-300'>
+        <div className='text-center text-white leading-8 font-light w-full border border-gray-300 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-red-300'>
           no saved customers to show
         </div>
       ) : (

@@ -165,9 +165,27 @@ const CustomerMap = ({ customer }) => {
         {/* Button in top right to toggle directions */}
         <button
           onClick={toggleDirections}
-          className='absolute top-4 right-4 z-50 border border-blue-400 rounded-md text-xs text-blue-500 p-2 hover:text-blue-400 hover:border-blue-500 hover:bg-white'
+          className='absolute top-6 right-6 z-50 border border-blue-400 rounded-full text-xs text-blue-500 p-2 hover:text-blue-400 hover:border-blue-500 hover:bg-white active:scale-90 transition ease-in-out'
         >
-          {showDirections ? 'Hide Directions' : 'Show Directions'}
+          {showDirections ? (
+            'Hide Directions'
+          ) : (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              className='lucide lucide-corner-up-right'
+            >
+              <polyline points='15 14 20 9 15 4' />
+              <path d='M4 20v-7a4 4 0 0 1 4-4h12' />
+            </svg>
+          )}
         </button>
 
         {/* Render driving directions below the map when toggled on */}

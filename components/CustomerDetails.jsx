@@ -243,7 +243,6 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
               {schedules.map((schedule) => (
                 <Button
                   key={schedule._id}
-                  icon={<Plus className='h-4 w-4 text-xs hover:text-white' />}
                   onClick={() => handleEditScheduleClick(schedule._id)}
                   disabled={isPending || isNavigating}
                 >
@@ -276,7 +275,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Quick Top Contact Details*/}
         <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:mt-8 print:block'>
-          <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
+          <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4 transition-all duration-300 hover:shadow-md'>
             <div className='grid grid-cols gap-2 align-middle'>
               <div className='text-md md:text-2xl font-semibold text-blue-500 underline flex items-center'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
@@ -395,7 +394,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
         <div className='flex flex-col pt-2 sm:px-4 md:p-0 md:grid md:grid-row gap-0 md:gap-8 mx-4 md:mx-0'>
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* 1st - Customer Profile Details */}
-            <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b'>
+            <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
@@ -504,7 +503,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
             </div>
 
             {/* 2nd - Internal Office Staff Notes */}
-            <div className='hidden md:grid md:grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:hidden'>
+            <div className='hidden md:grid md:grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:hidden transition-all duration-300 hover:shadow-md'>
               <div className='pb-4 sm:p-4'>
                 <div className='px-4 sm:px-0 flex justify-between'>
                   <h3 className='text-base font-semibold text-gray-700'>
@@ -661,7 +660,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
           {/* 2nd Main Box - Project + Mapbox */}
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* Project Order Details Box */}
-            <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:mb-8 print:border-b-2'>
+            <div className='grid grid-cols-1 md:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:mb-8 print:border-b-2 transition-all duration-300 hover:shadow-md'>
               {customer.projects && customer.projects.length > 0 ? (
                 customer.projects.map((project, index) => (
                   <div key={project._id} className='pb-4 sm:p-4'>
@@ -1006,7 +1005,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
               )}
             </div>
             {/* Mapbox Div */}
-            <div className='hidden md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative'>
+            <div className='hidden md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative transition-all duration-300 hover:shadow-md'>
               <CustomerMap customer={customer} />
             </div>
           </div>
@@ -1017,7 +1016,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
         {customer.projects && customer.projects.length > 0 ? (
           <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block print:block'>
             {customer?.projects[0]?.status === 'will call' ? (
-              <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2'>
+              <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 transition-all duration-300 hover:shadow-md'>
                 <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                   <span className=''>Template Date: Jan 3, 2025</span>
                   <span>Measured By: Anilber Pena</span>
@@ -1030,7 +1029,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
               </div>
             ) : customer?.projects[0]?.status === 'for install' ? (
               <>
-                <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden'>
+                <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden transition-all duration-300 hover:shadow-md'>
                   <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                     <span className=''>Template Date: Jan 3, 2025</span>
                     <span>Measured By: Anilber Pena</span>

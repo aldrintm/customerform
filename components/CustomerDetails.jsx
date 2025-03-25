@@ -22,6 +22,7 @@ import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
 import BookmarkButton from './BookmarkButton'
+import PrintButton from './PrintButton'
 import { formatDate } from '@/utils/formatDate'
 
 const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
@@ -237,7 +238,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
           Customer Details Page
         </div>
 
-        <div className='pr-1 py-2 text-right'>
+        <div className='pr-1 py-2 text-right print:hidden'>
           {schedules && schedules.length > 0 ? (
             <div className='flex flex-col items-end'>
               {schedules.map((schedule) => (
@@ -274,8 +275,8 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
 
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Quick Top Contact Details*/}
-        <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:mt-8 print:block'>
-          <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4 transition-all duration-300 hover:shadow-md'>
+        <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:block'>
+          <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
             <div className='grid grid-cols gap-2 align-middle'>
               <div className='text-md md:text-2xl font-semibold text-blue-500 underline flex items-center'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
@@ -289,6 +290,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                   {customer.address.street} {customer.address.city}{' '}
                   {customer.address.state} {customer.address.zipcode}
                 </span>
+                <PrintButton />
               </div>
             </div>
             <div className='hidden md:grid md:grid-cols-1 sm:gap-2 align-middle print:hidden'>

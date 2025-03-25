@@ -13,23 +13,66 @@
   }
 }
 
-@media print {
-  /* Hide your own header/footer elements */
-  /* header,
+/* @media print { */
+/* Hide your own header/footer elements */
+/* header,
   footer,
   .no-print {
     display: none;
   } */
 
-  /* Attempt to remove page margins */
-  /* @page {
+/* Attempt to remove page margins */
+/* @page {
     margin: 0;
   } */
 
-  /* Add some margin to the body to avoid clipping content */
-  /* body {
+/* Add some margin to the body to avoid clipping content */
+/* body {
     margin: 1cm;
   } */
+/* } */
+
+@media print {
+  @page {
+    margin: 1cm;
+    size: auto;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  /* Prevent blank first page */
+  body::before {
+    content: none !important;
+  }
+
+  /* Ensure content starts from first page */
+  #__next,
+  main {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:break-before-page {
+    break-before: page;
+  }
+
+  .print\:text-black {
+    color: black !important;
+  }
+
+  /* Prevent page breaks inside important elements */
+  .no-break {
+    page-break-inside: avoid;
+  }
 }
 
 .fast-spin {

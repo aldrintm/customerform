@@ -111,7 +111,7 @@ const LoginComponent = () => {
               Object.values(providers).map((provider, index) => (
                 <button
                   key={index}
-                  onClick={() => signIn(provider._id)}
+                  onClick={() => signIn(provider.id)}
                   className='flex items-center '
                 >
                   {/* <FaGoogle className='text-blue-500 mr-2' /> */}

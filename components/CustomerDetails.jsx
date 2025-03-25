@@ -233,7 +233,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
     <>
       {/* Page Title */}
 
-      <div className='hidden container mx-auto md:grid md:grid-cols-2 '>
+      <div className='hidden container mx-auto md:grid md:grid-cols-2 print:hidden'>
         <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
           Customer Details Page
         </div>
@@ -275,13 +275,13 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
 
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Quick Top Contact Details*/}
-        <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:block'>
+        <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0'>
           <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
             <div className='grid grid-cols gap-2 align-middle'>
               <div className='text-md md:text-2xl font-semibold text-blue-500 underline flex items-center'>
                 {customerWithCapitalizedNames(customer.firstName)}{' '}
                 {customerWithCapitalizedNames(customer.lastName)}
-                <span className='pl-6 inline-flex text-sm'>
+                <span className='pl-6 inline-flex text-sm print:hidden'>
                   <BookmarkButton customer={customer} />
                 </span>
               </div>

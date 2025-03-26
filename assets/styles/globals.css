@@ -45,6 +45,14 @@
     height: 100%;
   }
 
+  #print-layout {
+    display: block !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
   /* Prevent blank first page */
   body::before {
     content: none !important;

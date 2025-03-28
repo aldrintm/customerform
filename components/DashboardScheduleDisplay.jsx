@@ -9,6 +9,20 @@ const DashboardScheduleDisplay = ({ schedules }) => {
 
   const currentDate = format(startOfDay(new Date()), 'MMMM dd, yyyy')
 
+  // Get current UTC date
+  const utcDate = new Date()
+
+  // Format as "Friday, March 28, 2025" in UTC time
+  const formattedUTCDate = utcDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC', // This is the key option to ensure UTC formatting
+  })
+
+  console.log(formattedUTCDate)
+
   // Time slot priority mapping standard
   const timeSlotPriorityRegular = {
     '8-10': 1,
@@ -125,7 +139,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
           <div className='container flex items-center justify-center px-2 pt-4 text-md md:text-md text-blue-500 font-semibold'>
             {/* <h1>{currentDate}</h1> */}
             {/* <h1>Template Schedule for {currentDate}</h1> */}
-            <h2>Measure Schedule for {currentDate}</h2>
+            <h2>Measure Schedule for {formattedUTCDate}</h2>
           </div>
           <div className='overflow-x-auto'>
             <table className='min-w-full bg-white text-sm'>

@@ -57,11 +57,11 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
     Date.UTC(
       new Date().getUTCFullYear(),
       new Date().getUTCMonth(),
-      new Date().getUTCDate(),
-      new Date().getUTCHours(),
-      new Date().getUTCMinutes()
+      new Date().getUTCDate()
     )
   )
+
+  const currentDateTodayUTC = format(todayUTC, 'EEEE, MMMM dd, yyyy')
 
   // Get today localtime to UTC for comparison
   const localTime = new Date()
@@ -94,8 +94,8 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
 
       // Avoid using startOfDay as it might apply local timezone
       const isToday =
-        schedule.measureDate.toISOString().split('T')[0] ===
-        today.toISOString().split('T')[0]
+        scheduleDayUTC.toISOString().split('T')[0] ===
+        todayUTC.toISOString().split('T')[0]
 
       // Debug logging with UTC formatting
       // console.log('Comparing dates:', {
@@ -109,9 +109,9 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
 
       // Debug logging with explicit UTC formatting
       console.log('Comparing dates:', {
-        scheduleDay: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
+        scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
         // today: todayUTC.toISOString(), // Extract date in UTC
-        today: today.toISOString().split('T')[0], // Extract date in local time
+        today: todayUTC.toISOString().split('T')[0], // Extract date in local time
         isToday,
         originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
         rawMongoMeasureDate: schedule.measureDate.toISOString(),

@@ -98,10 +98,10 @@ const DateAndWeather = () => {
         />
 
         {/* <WeatherIcon className='w-6 h-6 text-yellow-500' /> */}
-        <span className='text-xs lg:text-base font-semibold text-gray-700'>
+        <span className='text-xs lg:text-sm font-semibold text-gray-700'>
           {weather.temperature} °F
         </span>
-        <div className='text-xs lg:text-base text-gray-700 capitalize'>
+        <div className='text-xs lg:text-sm text-gray-700 capitalize'>
           {weather.description}
         </div>
       </div>

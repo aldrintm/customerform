@@ -22,10 +22,7 @@ import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
 import BookmarkButton from './BookmarkButton'
-import PrintButton from './PrintButton'
 import { formatDate } from '@/utils/formatDate'
-import CustomPrintButton from './PrintButtonCustom'
-import PrintLayout from './PrintLayout'
 
 const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   // initialCustomer is now a plain object that includes a populated projects array.
@@ -292,11 +289,6 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                   {customer.address.street} {customer.address.city}{' '}
                   {customer.address.state} {customer.address.zipcode}
                 </span>
-                <CustomPrintButton customer={customer} schedules={schedules} />
-                {/* Add PrintLayout at the bottom of your component */}
-                <div id='print-layout' className='hidden'>
-                  <PrintLayout customer={customer} schedules={schedules} />
-                </div>
               </div>
             </div>
             <div className='hidden md:grid md:grid-cols-1 sm:gap-2 align-middle print:hidden'>
@@ -410,7 +402,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                   </h3>
 
                   <div className='flex gap-4 print:hidden'>
-                    <Button onClick={printFile}>Print File</Button>
+                    <Button onClick={() => printFile()}>Print File</Button>
 
                     <Button
                       onClick={() => handleEditCustomerClick(customer._id)}
@@ -1062,10 +1054,7 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
                     <span className=''>
                       Sign On Install: ________________________
                     </span>
-                    <span>
-                      PrintLayimport PrintLayout from './PrintLayout' Name:
-                      ________________________
-                    </span>
+                    <span>Name: ________________________</span>
                   </div>
                 </div>
               </>

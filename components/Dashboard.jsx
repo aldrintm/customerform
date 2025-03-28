@@ -44,6 +44,11 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
         ) || []
   )
 
+  // Format it to a string that shows your local time
+  const localTimeString = new Date().toLocaleString()
+
+  console.log(`Local California time: ${localTimeString}`)
+
   // Get today's date in local timezone
   const today = startOfDay(new Date())
 
@@ -52,9 +57,27 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
     Date.UTC(
       new Date().getUTCFullYear(),
       new Date().getUTCMonth(),
-      new Date().getUTCDate()
+      new Date().getUTCDate(),
+      new Date().getUTCHours(),
+      new Date().getUTCMinutes()
     )
   )
+
+  // Get today localtime to UTC for comparison
+  const localTime = new Date()
+
+  const localTimeInUTC = new Date(localTime.getTime())
+
+  console.log(
+    `Local time: ${localTime.toLocaleString('en-US', {
+      timeZone: 'America/Los_Angeles',
+    })}`
+  )
+  console.log(`Same time in UTC format: ${localTimeInUTC.toISOString()}`)
+
+  console.log('Today:', today.toISOString())
+  console.log('Today UTC:', todayUTC.toISOString())
+  console.log('Current Date:', currentDate)
 
   const todayMeasureSchedules = processedSchedules.filter((schedule) => {
     try {
@@ -70,7 +93,9 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
       // const isToday = isSameDay(scheduleDayUTC, todayUTC)
 
       // Avoid using startOfDay as it might apply local timezone
-      const isToday = scheduleDayUTC.getTime() === todayUTC.getTime()
+      const isToday =
+        schedule.measureDate.toISOString().split('T')[0] ===
+        today.toISOString().split('T')[0]
 
       // Debug logging with UTC formatting
       // console.log('Comparing dates:', {
@@ -84,8 +109,9 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
 
       // Debug logging with explicit UTC formatting
       console.log('Comparing dates:', {
-        scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
-        today: todayUTC.toISOString().split('T')[0], // Extract date in UTC
+        scheduleDay: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
+        // today: todayUTC.toISOString(), // Extract date in UTC
+        today: today.toISOString().split('T')[0], // Extract date in local time
         isToday,
         originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
         rawMongoMeasureDate: schedule.measureDate.toISOString(),
@@ -118,8 +144,8 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             {/* Date + Weather + Total Customers */}
             <div className='hidden container sm:grid gap-4 sm:grid-cols-3 lg:gap-6'>
               <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
-                <Calendar className='w-4 h-4 lg:w-6 lg:h-6 text-blue-500' />
-                <span className='text-xs lg:text-base font-semibold text-gray-700'>
+                <Calendar className='w-4 h-4 lg:w-5 lg:h-5 text-blue-500' />
+                <span className='text-xs lg:text-sm font-semibold text-gray-700'>
                   {currentDate}
                 </span>
               </div>
@@ -127,7 +153,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
                 <WeatherNow />
               </div>
               <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
-                <Users className='w-4 h-4 lg:w-6 lg:h-6 text-blue-500' />
+                <Users className='w-4 h-4 lg:w-5 lg:h-5 text-blue-500' />
                 <TotalCustomer customers={customers} />
               </div>
             </div>

@@ -35,22 +35,17 @@
 @media print {
   @page {
     margin: 1cm;
-    size: auto;
   }
 
-  html,
+  /* Improve readability for printed text */
   body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+    font-size: 12pt;
+    line-height: 1.5;
   }
 
-  #print-layout {
-    display: block !important;
-  }
-
-  .print-only {
-    display: block !important;
+  /* Remove unnecessary spacing */
+  .container {
+    padding: 0 !important;
   }
 
   /* Prevent blank first page */
@@ -82,7 +77,7 @@
     page-break-inside: avoid;
   }
 }
-
+/* Add a class for faster spin */
 .fast-spin {
   animation-duration: 0.3s; /* Example: half the default duration */
 }

@@ -25,6 +25,8 @@ import BookmarkButton from './BookmarkButton'
 import { formatDate } from '@/utils/formatDate'
 
 const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
+  const router = useRouter()
+
   // initialCustomer is now a plain object that includes a populated projects array.
   const [customer, setCustomers] = useState(initialCustomer)
   const [project, setProject] = useState('')
@@ -32,7 +34,8 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   const [editedNote, setEditedNote] = useState('')
   const [isNavigating, setIsNavigating] = useState(false) //navigation loading
   const [isPending, startTransition] = useTransition() //for smooth navigation
-  const router = useRouter()
+
+  const [isPrinting, setIsPrinting] = useState(false) // for printing
 
   // Sync local state with prop changes
   useEffect(() => {
@@ -142,9 +145,18 @@ const CustomerDetails = ({ customer: initialCustomer, schedules }) => {
   //   toast.success(`${projectId} is DELETED!`)
   // }
 
-  const printFile = async (customerId) => {
-    window.print()
+  // Print function with Tailwindcss print:hidden in the Div's
+  const printFile = () => {
+    setIsPrinting(true)
+    setTimeout(() => {
+      window.print()
+      setTimeout(() => {
+        setIsPrinting(false)
+      }, 100)
+    }, 100)
   }
+
+  // Print
 
   // this replaces the handleDeleteProject above
   const handleDeleteProject = async (projectId) => {

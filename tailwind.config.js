@@ -13,6 +13,15 @@ module.exports = {
       gridTemplateColumns: {
         '70/30': '70% 28%',
       },
+      keyframes: {
+        indeterminateProgress: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(200%)' },
+        },
+      },
+      animation: {
+        indeterminateProgress: 'indeterminateProgress 1.5s infinite linear',
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],

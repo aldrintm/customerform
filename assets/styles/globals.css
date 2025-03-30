@@ -13,25 +13,46 @@
   }
 }
 
-/* @media print { */
-/* Hide your own header/footer elements */
-/* header,
-  footer,
-  .no-print {
-    display: none;
-  } */
+/* Custom Style for Fly Print */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(2deg);
+    opacity: 0;
+  }
+}
 
-/* Attempt to remove page margins */
-/* @page {
-    margin: 0;
-  } */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
 
-/* Add some margin to the body to avoid clipping content */
-/* body {
-    margin: 1cm;
-  } */
-/* } */
+/* @keyframes indeterminateProgress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+} */
 
+.float-up-animation {
+  animation: floatUp 1.5s ease-out forwards;
+}
+
+.printer-pulse {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* Custom styles for the print layout */
 @media print {
   @page {
     margin: 1cm;

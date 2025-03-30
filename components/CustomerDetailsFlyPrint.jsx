@@ -38,6 +38,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const [isNavigating, setIsNavigating] = useState(false) //navigation loading
   const [isPending, startTransition] = useTransition() //for smooth navigation
   const [showPrintAnimation, setShowPrintAnimation] = useState(false) // for printing animation
+  const [animationPhase, setAnimationPhase] = useState(0)
   // const [isPrinting, setIsPrinting] = useState(false) // for printing
 
   // Sync local state with prop changes
@@ -56,78 +57,225 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     }
   }, [customer._id, router])
 
+  // const dateObj = new Date(
+  //   customer.projects[0].purchaseOrders[0].purchaseOrderDate
+  // )
+
+  // // Extract the month, date, and year
+  // const month = dateObj.toLocaleString('default', { month: 'long' }) // Full month name (e.g., "January")
+  // const day = dateObj.getDate() // Day of the month (e.g., 1, 2, etc.)
+  // const year = dateObj.getFullYear() // Full year (e.g., 2025)
+
+  // // Format the string as needed
+  // const formattedDate = `${month} ${day}, ${year}`
+
   // Enhanced print function to include animation
   const enhancedPrintMode = () => {
-    // Show Animation
+    // Show animation
     setShowPrintAnimation(true)
-    // After animation plays, trigget actual print
+    setAnimationPhase(1)
+
+    // Paper flying animation after a short delay
+    setTimeout(() => {
+      setAnimationPhase(2)
+    }, 800)
+
+    // After animation plays, trigger actual print
     setTimeout(() => {
       originalEnablePrintMode()
 
-      // Reset animation state after a printing
+      // Show processing state
+      setAnimationPhase(3)
+
+      // Reset animation state after printing
       setTimeout(() => {
         setShowPrintAnimation(false)
-      }, 500) // Adjust the timeout as needed
-    }, 500) // Adjust the timeout as needed
+        setAnimationPhase(0)
+      }, 1000)
+    }, 2000) // Animation duration
   }
 
   // Trigger for Print animation
   const PrintAnimation = () => {
     if (!showPrintAnimation) return null
 
-    return (
-      <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-50 flex items-center justify-center transition-all duration-300 ease-in-out'>
-        <div className='bg-white rounded-lg shadow-xl p-8 max-w-sm w-full mx-4 transform transition-all duration-300 scale-100'>
-          <div className='flex flex-col items-center'>
-            {/* Elegant spinner with gradient */}
-            {/* <div className='relative mb-6'>
-              <div className='w-16 h-16 border-4 border-blue-100 rounded-full'></div>
-              <div className='absolute top-0 left-0 w-16 h-16 border-4 border-blue-500 rounded-full animate-spin border-t-transparent'></div>
-            </div> */}
+    // Dynamically determine customer information to show in the preview
+    const customerName = `${customerWithCapitalizedNames(
+      customer.firstName
+    )} ${customerWithCapitalizedNames(customer.lastName)}`
+    const customerAddress = `${customer.address.street}, ${customer.address.city}, ${customer.address.state} ${customer.address.zipcode}`
+    const customerPhone = formatPhoneNumber(customer.phone)
 
-            {/* Document icon */}
-            <div className='bg-blue-50 p-3 rounded-full mb-5'>
+    // Get project information if available
+    const hasProjects = customer.projects && customer.projects.length > 0
+    const projectDetails = hasProjects
+      ? {
+          description: customer.projects[0].description,
+          material: `${customer.projects[0].materialThickness} ${customer.projects[0].materialColor} ${customer.projects[0].materialType}`,
+          edge: customer.projects[0].edge,
+        }
+      : null
+
+    return (
+      <div
+        className={`
+        fixed inset-0 bg-black bg-opacity-60 z-50 
+        flex items-center justify-center 
+        transition-all duration-500
+        backdrop-blur-sm
+        ${animationPhase > 0 ? 'opacity-100' : 'opacity-0'}
+      `}
+      >
+        {/* Print document container */}
+        <div className='relative w-80 sm:w-96 h-auto max-h-[80vh] mx-auto'>
+          {/* Document preview with actual customer data */}
+          <div
+            className={`
+            relative bg-white rounded-lg shadow-2xl overflow-hidden
+            transition-all duration-1500 ease-out
+            transform ${
+              animationPhase >= 2
+                ? 'translate-y-[-100vh] rotate-1 opacity-0'
+                : 'translate-y-0 opacity-100'
+            }
+          `}
+          >
+            {/* Header bar */}
+            <div className='bg-blue-600 px-6 py-4 text-white flex justify-between items-center'>
+              <h3 className='font-bold text-lg'>Customer Information</h3>
+              <div className='rounded-full bg-white p-1'>
+                <svg
+                  className='w-5 h-5 text-blue-600'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z'
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Document content with real customer data */}
+            <div className='p-6'>
+              {/* Company logo or name could go here */}
+              <div className='text-sm text-gray-500 mb-4'>PRINT PREVIEW</div>
+
+              <div className='mb-6'>
+                <h4 className='text-lg font-semibold text-blue-700 mb-3'>
+                  {customerName}
+                </h4>
+                <div className='text-sm text-gray-700 mb-1'>
+                  {customerAddress}
+                </div>
+                <div className='text-sm text-gray-700'>{customerPhone}</div>
+              </div>
+
+              {hasProjects && (
+                <div className='border-t border-gray-200 pt-4 mb-6'>
+                  <h5 className='font-medium text-gray-800 mb-2'>
+                    Project Details
+                  </h5>
+                  <div className='text-sm text-gray-700 mb-1'>
+                    <span className='font-medium'>Description:</span>{' '}
+                    {projectDetails.description}
+                  </div>
+                  <div className='text-sm text-gray-700 mb-1'>
+                    <span className='font-medium'>Material:</span>{' '}
+                    {projectDetails.material}
+                  </div>
+                  <div className='text-sm text-gray-700'>
+                    <span className='font-medium'>Edge:</span>{' '}
+                    {projectDetails.edge}
+                  </div>
+                </div>
+              )}
+
+              {/* Footer with watermark-like effect */}
+              <div className='flex justify-between items-center border-t border-gray-200 pt-4 mt-6'>
+                <div className='text-xs text-gray-400'>
+                  Document generated on {new Date().toLocaleDateString()}
+                </div>
+                <div className='text-xs text-blue-500'>
+                  {schedules && schedules.length > 0 ? (
+                    <span>
+                      Scheduled: {formatDate(schedules[0].installDate)}
+                    </span>
+                  ) : (
+                    <span>No schedule</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Paper trail shadows - multiple smaller papers */}
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div
+              key={index}
+              className={`
+                absolute top-4 left-4 right-4 bottom-4
+                bg-white rounded-md shadow-md opacity-0
+                transform transition-all duration-1000 ease-out
+                ${
+                  animationPhase >= 2
+                    ? `translate-y-[-${50 + index * 25}vh] opacity-${
+                        2 + index
+                      } rotate-${index % 2 === 0 ? '2' : '-1'}`
+                    : ''
+                }
+              `}
+              style={{
+                transitionDelay: `${200 + index * 100}ms`,
+                opacity: animationPhase >= 2 ? 0.3 - index * 0.05 : 0,
+              }}
+            ></div>
+          ))}
+
+          {/* Printer animation at bottom */}
+          <div
+            className={`
+            absolute bottom-[-48px] left-1/2 transform -translate-x-1/2
+            transition-all duration-500 ease-out
+            ${animationPhase === 3 ? 'scale-110' : 'scale-100'}
+          `}
+          >
+            <div
+              className={`
+              w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full
+              flex items-center justify-center shadow-lg
+              transition-all duration-300
+              ${animationPhase === 3 ? 'printer-pulse' : ''}
+            `}
+            >
               <svg
-                className='w-8 h-8 text-blue-500'
-                xmlns='http://www.w3.org/2000/svg'
+                className='w-10 h-10 text-white'
                 fill='none'
-                viewBox='0 0 24 24'
                 stroke='currentColor'
+                viewBox='0 0 24 24'
+                xmlns='http://www.w3.org/2000/svg'
               >
                 <path
                   strokeLinecap='round'
                   strokeLinejoin='round'
                   strokeWidth={2}
-                  d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                  d='M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z'
                 />
               </svg>
             </div>
 
-            {/* Message with subtle animation */}
-            <h3 className='text-lg font-medium text-gray-800 mb-1'>
-              Preparing Document
-            </h3>
-            <p className='text-sm text-gray-500 mb-3 text-center'>
-              Getting your document ready for printing...
-            </p>
-
-            {/* Old Progress bar */}
-            {/* <div className="w-full bg-gray-100 rounded-full h-1.5 mb-1 overflow-hidden">
-              <div className="bg-blue-500 h-1.5 rounded-full animate-pulse"></div>
-            </div> */}
-
-            {/* Dynamic Progress bar */}
-            <div className='w-full bg-gray-100 rounded-full h-1.5 mb-1 overflow-hidden'>
-              <div className='relative w-full h-full'>
-                <div
-                  className='absolute inset-0 bg-blue-500 rounded-full animate-indeterminateProgress w-3/4'
-                  // style={{
-                  //   animation: 'indeterminateProgress 1.5s infinite linear',
-                  //   width: '50%',
-                  //   transformOrigin: 'left',
-                  // }}
-                ></div>
-              </div>
+            {/* Status text */}
+            <div className='absolute top-full left-1/2 transform -translate-x-1/2 mt-3 whitespace-nowrap'>
+              <span className='font-medium text-white bg-black bg-opacity-70 px-4 py-2 rounded-full text-sm shadow-md'>
+                {animationPhase === 3
+                  ? 'Printing document...'
+                  : 'Preparing preview...'}
+              </span>
             </div>
           </div>
         </div>
@@ -201,6 +349,30 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     setCustomers(updatedCustomers)
     toast.success(`${customerId} is DELETED!`)
   }
+
+  // console.log(customer)
+
+  // const handleDeleteProject = async (projectId) => {
+  //   const confirmed = window.confirm('Delete the project?')
+  //   if (!confirmed) return
+  //   await handleDeleteProject(projectId)
+  //   const updatedProject = customer.project[0].filter(
+  //     (project) => projectId !== customer.project[0]._id
+  //   )
+  //   setProject(updatedProject)
+  //   toast.success(`${projectId} is DELETED!`)
+  // }
+
+  // Print function with Tailwindcss print:hidden in the Div's
+  // const printFile = () => {
+  //   setIsPrinting(true)
+  //   setTimeout(() => {
+  //     window.print()
+  //     setTimeout(() => {
+  //       setIsPrinting(false)
+  //     }, 100)
+  //   }, 100)
+  // }
 
   // this replaces the handleDeleteProject above
   const handleDeleteProject = async (projectId) => {

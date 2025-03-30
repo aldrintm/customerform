@@ -6,9 +6,9 @@ import User from '@/models/User'
 import Schedule from '@/models/Schedule'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
-import CustomerDetails from '@/components/CustomerDetails'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 import { notFound } from 'next/navigation'
+import CustomerDetails from '@/components/CustomerDetails'
 
 const CustomerPage = async ({ params }) => {
   const awaitedParams = await params // await params object

@@ -28,7 +28,7 @@ import { NoPrint, PrintVisibility } from '@/utils/printWrapper'
 
 function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const router = useRouter()
-  const { enablePrintMode: originalEnablePrintMode } = usePrint()
+  const { enablePrintMode: originalEnablePrintMode, printTarget } = usePrint()
 
   // initialCustomer is now a plain object that includes a populated projects array.
   const [customer, setCustomers] = useState(initialCustomer)
@@ -55,6 +55,57 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
       router.prefetch(`/dashboard/customers/${customer._id}/schedule`)
     }
   }, [customer._id, router])
+
+  // Print header component if needed
+  // const PrintHeader = () => {
+  //   const { printTarget } = usePrint()
+
+  //   // Only show in print mode
+  //   if (!printTarget) return null
+
+  //   // Determine the title based on what's being printed
+  //   let title = 'Complete Customer File'
+  //   if (printTarget === 'customer') title = 'Customer Information'
+  //   if (printTarget === 'project') title = 'Project Details'
+
+  //   return (
+  //     <div className='hidden print:block mb-6 text-center'>
+  //       <div className='border-b border-gray-300 pb-4'>
+  //         <h1 className='text-xl font-bold text-blue-600'>{title}</h1>
+  //         <p className='text-sm text-gray-600'>
+  //           {customerWithCapitalizedNames(customer.firstName)}{' '}
+  //           {customerWithCapitalizedNames(customer.lastName)} -{' '}
+  //           {formatPhoneNumber(customer.phone)}
+  //         </p>
+  //         <p className='text-sm text-gray-500 mt-1'>
+  //           Printed on {new Date().toLocaleDateString()}
+  //         </p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
+
+  // Enhanced print function for customer info only
+  const printCustomerInfo = () => {
+    setShowPrintAnimation(true)
+    setTimeout(() => {
+      originalEnablePrintMode('customer') // Pass 'customer' as the target
+      setTimeout(() => {
+        setShowPrintAnimation(false)
+      }, 500)
+    }, 500)
+  }
+
+  // Enhanced print function for customer info only
+  const printProjectInfo = () => {
+    setShowPrintAnimation(true)
+    setTimeout(() => {
+      originalEnablePrintMode('project') // Pass 'project' as the target
+      setTimeout(() => {
+        setShowPrintAnimation(false)
+      }, 500)
+    }, 500)
+  }
 
   // Enhanced print function to include animation
   const enhancedPrintMode = () => {
@@ -287,7 +338,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   return (
     <>
       {/* Page Title */}
-
+      {/* Print Header - will only show in print mode */}
+      {/* <PrintHeader /> */}
       <div className='hidden container mx-auto md:grid md:grid-cols-2 print:hidden'>
         <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
           Customer Details Page
@@ -327,10 +379,9 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           )}
         </div>
       </div>
-
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Quick Top Contact Details*/}
-        <PrintVisibility printVisible={true}>
+        <PrintVisibility printVisible={true} printTarget='project'>
           <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0'>
             <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
               <div className='grid grid-cols gap-2 align-middle'>
@@ -452,36 +503,41 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
         <div className='flex flex-col pt-2 sm:px-4 md:p-0 md:grid md:grid-row gap-0 md:gap-8 mx-4 md:mx-0'>
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* 1st - Customer Profile Details */}
-            <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
-              <div className='pb-4 sm:p-4'>
-                <div className='px-4 sm:px-0 flex justify-between'>
-                  <h3 className='text-base font-semibold text-gray-700'>
-                    Customer Profile Details
-                  </h3>
+            <PrintVisibility printVisible={true} printTarget='project'>
+              <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
+                <div className='pb-4 sm:p-4'>
+                  <div className='px-4 sm:px-0 flex justify-between'>
+                    <h3 className='text-base font-semibold text-gray-700'>
+                      Customer Profile Details
+                    </h3>
 
-                  <div className='flex gap-4 print:hidden'>
-                    {/* <Button onClick={() => printFile()}>Print File</Button> */}
+                    <div className='flex gap-4 print:hidden'>
+                      {/* <Button onClick={() => printFile()}>Print File</Button> */}
+                      {/* <Button onClick={printCustomerInfo}>
+                        Print Client Info
+                      </Button> */}
+                      <Button
+                        onClick={() => handleEditCustomerClick(customer._id)}
+                        disabled={isPending || isNavigating}
+                      >
+                        {' '}
+                        {isNavigating || isPending ? (
+                          <span className='text-sm px-2'>Loading ...</span>
+                        ) : (
+                          'Edit'
+                        )}
+                      </Button>
 
-                    <Button
-                      onClick={() => handleEditCustomerClick(customer._id)}
-                      disabled={isPending || isNavigating}
-                    >
-                      {' '}
-                      {isNavigating || isPending ? (
-                        <span className='text-sm px-2'>Loading ...</span>
-                      ) : (
-                        'Edit'
-                      )}
-                    </Button>
-
-                    <Button onClick={() => handleDeleteCustomer(customer._id)}>
-                      Delete
-                    </Button>
+                      <Button
+                        onClick={() => handleDeleteCustomer(customer._id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className='mt-4 border-t border-gray-100'>
-                  <dl className=''>
-                    {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                  <div className='mt-4 border-t border-gray-100'>
+                    <dl className=''>
+                      {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Purchase Order Number:
                       </dt>
@@ -489,7 +545,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         {customer.purchaseOrderNumber}
                       </dd>
                     </div> */}
-                    {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                      {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>
                         Puchase Order Date:
                       </dt>
@@ -497,68 +553,69 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         {formattedDate}
                       </dd>
                     </div> */}
-                    <div className='px-4 py-1 mt-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Customer Name:
-                      </dt>
-                      <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                        {customerWithCapitalizedNames(customer.firstName)}{' '}
-                        {customerWithCapitalizedNames(customer.lastName)}
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Address:
-                      </dt>
-                      <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                        {customer.address.street}, {customer.address.city}{' '}
-                        {customer.address.state} {customer.address.zipcode}
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Phone:
-                      </dt>
-                      <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                        {formatPhoneNumber(customer.phone)}
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Email:
-                      </dt>
-                      <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                        {customer.email}
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Contractor:
-                      </dt>
-                      <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                        {customer.contractorName}{' '}
-                        {formatPhoneNumber(customer.contractorPhone)}
-                      </dd>
-                    </div>
-                    <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
-                      <dt className='text-sm font-medium text-gray-900 pr-2'>
-                        Order Notes:
-                      </dt>
-                      <dd className='text-sm font-medium text-gray-700 sm:col-span-2'>
-                        {customer.notes}
-                      </dd>
-                    </div>
+                      <div className='px-4 py-1 mt-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Customer Name:
+                        </dt>
+                        <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
+                          {customerWithCapitalizedNames(customer.firstName)}{' '}
+                          {customerWithCapitalizedNames(customer.lastName)}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Address:
+                        </dt>
+                        <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
+                          {customer.address.street}, {customer.address.city}{' '}
+                          {customer.address.state} {customer.address.zipcode}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Phone:
+                        </dt>
+                        <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
+                          {formatPhoneNumber(customer.phone)}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Email:
+                        </dt>
+                        <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
+                          {customer.email}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Contractor:
+                        </dt>
+                        <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
+                          {customer.contractorName}{' '}
+                          {formatPhoneNumber(customer.contractorPhone)}
+                        </dd>
+                      </div>
+                      <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
+                        <dt className='text-sm font-medium text-gray-900 pr-2'>
+                          Order Notes:
+                        </dt>
+                        <dd className='text-sm font-medium text-gray-700 sm:col-span-2'>
+                          {customer.notes}
+                        </dd>
+                      </div>
 
-                    {/* Order Summary - Just a Divider */}
-                    {/* <span className='flex items-center py-6'>
+                      {/* Order Summary - Just a Divider */}
+                      {/* <span className='flex items-center py-6'>
                     <span className='h-px flex-1 bg-gray-300'></span>
                     <span className='shrink-0 px-0 text-base font-semibold text-gray-700'></span>
                     <span className='h-px flex-1 bg-gray-300'></span>
                   </span> */}
-                  </dl>
+                    </dl>
+                  </div>
                 </div>
               </div>
-            </div>
+            </PrintVisibility>
 
             {/* 2nd - Internal Office Staff Notes */}
             <div className='invisible sm:visible md:grid md:grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg sm:p-4 print:hidden transition-all duration-300 hover:shadow-md'>
@@ -718,7 +775,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           {/* 2nd Main Box - Project + Mapbox */}
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* Project Order Details Box */}
-            <PrintVisibility printVisible={true}>
+            <PrintVisibility printVisible={true} printTarget='project'>
               <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg sm:p-4 print:mb-8 print:border-b-2 transition-all duration-300 hover:md:shadow-md'>
                 {customer.projects && customer.projects.length > 0 ? (
                   customer.projects.map((project, index) => (
@@ -730,8 +787,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         </h3>
                         <NoPrint>
                           <div className='flex gap-4'>
-                            <Button onClick={enhancedPrintMode}>
-                              Print Info
+                            <Button onClick={printProjectInfo}>
+                              Print Project Info
                             </Button>
                             {showPrintAnimation && <PrintAnimation />}
                             <Button
@@ -1098,7 +1155,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
         {/* Break */}
         {/* Template and Install Dates + Signature */}
         {customer.projects && customer.projects.length > 0 ? (
-          <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block print:block'>
+          <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block'>
             {customer?.projects[0]?.status === 'will call' ? (
               <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 transition-all duration-300 hover:shadow-md'>
                 <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
@@ -1152,6 +1209,38 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           </div>
         )}
       </div>
+
+      {/* Test Print Element */}
+      <PrintVisibility printVisible={false} printTarget='test'>
+        <div className='invisible border-4 from:border-green-500 to:border-blue-500 p-4 m-4'>
+          <h2 className='text-xl font-bold'>This is a test</h2>
+          <p>If you can see this, the print visibility is working.</p>
+        </div>
+      </PrintVisibility>
+
+      {/* Body class controller for global print targets */}
+      <style jsx global>{`
+        @media print {
+          body[data-print-target='customer'] .print-customer-visible {
+            display: block !important;
+          }
+          body[data-print-target='customer'] .print-project-visible {
+            display: none !important;
+          }
+
+          body[data-print-target='project'] .print-project-visible {
+            display: block !important;
+          }
+          body[data-print-target='project'] .print-customer-visible {
+            display: none !important;
+          }
+
+          body[data-print-target='all'] .print-customer-visible,
+          body[data-print-target='all'] .print-project-visible {
+            display: block !important;
+          }
+        }
+      `}</style>
     </>
   )
 }

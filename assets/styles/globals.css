@@ -81,10 +81,6 @@
     height: auto !important;
   }
 
-  .print\:hidden {
-    display: none !important;
-  }
-
   .print\:break-before-page {
     break-before: page;
   }
@@ -96,6 +92,27 @@
   /* Prevent page breaks inside important elements */
   .no-break {
     page-break-inside: avoid;
+  }
+
+  /* Force print color adjustments */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide everything by default when printing */
+  .print-hide-all {
+    display: none !important;
+  }
+
+  /* Show only customer content when printing customer */
+  .print-customer-visible {
+    display: block !important;
+  }
+
+  /* Show only project content when printing project */
+  .print-project-visible {
+    display: block !important;
   }
 }
 /* Add a class for faster spin */

@@ -3,7 +3,7 @@ import TableComponentPage from './TableComponent'
 import DashboardTable from './DashboardTable'
 import { Calendar, Users } from 'lucide-react'
 import WeatherNow from './WeatherNow'
-import DashboardTemplateSchedule from './DashboardTemplateSchedule.jsx'
+import DashboardTemplateSchedule from './DashboardOLDOLDOLDTemplateSchedule.jsx'
 import DashboardBookmarkPage from './DashboardBookmarkPage'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
 import DashboardInstallScheduleDisplay from './DashboardInstallScheduleDisplay'
@@ -182,6 +182,9 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           <div className='container xl:col-span-5 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
+            <DashboardInstallScheduleDisplay
+              schedules={todayMeasureSchedules}
+            />
           </div>
         </div>
       </div>

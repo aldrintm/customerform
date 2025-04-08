@@ -27,7 +27,7 @@ const DashboardTemplateSchedule = ({ customers }) => {
               <thead className='text-left'>
                 <tr>
                   <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
-                    Anildfdr
+                    Anilber
                   </th>
                   <th className='whitespace-nowrap py-3 text-sm text-center text-gray-600 font-semibold'>
                     Javier

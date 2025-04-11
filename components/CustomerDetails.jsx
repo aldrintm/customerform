@@ -25,6 +25,7 @@ import BookmarkButton from './BookmarkButton'
 import { formatDate } from '@/utils/formatDate'
 import { PrintProvider, usePrint } from '@/utils/printContext'
 import { NoPrint, PrintVisibility } from '@/utils/printWrapper'
+import { sendSmsAction } from '@/app/actions/sendSmsAction'
 
 function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const router = useRouter()
@@ -251,6 +252,20 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     )
     setCustomers(updatedCustomers)
     toast.success(`${customerId} is DELETED!`)
+  }
+
+  const handleSendSms = async (to, body) => {
+    const confirmed = window.confirm('Are you sure you want to send SMS?')
+    if (!confirmed) return // User canceled the action
+
+    try {
+      const formattedTo = to.startsWith('+1') ? to : `+1${to}`
+      await sendSmsAction(formattedTo, body)
+      toast.success(`SMS sent to ${formattedTo}`)
+    } catch (error) {
+      console.error('Error sending SMS:', error)
+      toast.error('Failed to send SMS. Please try again')
+    }
   }
 
   // this replaces the handleDeleteProject above
@@ -804,6 +819,17 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                               ) : (
                                 'Edit Project'
                               )}
+                            </Button>
+
+                            <Button
+                              onClick={() =>
+                                handleSendSms(
+                                  customer.phone,
+                                  project.description
+                                )
+                              }
+                            >
+                              Send Text
                             </Button>
 
                             <Button

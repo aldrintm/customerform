@@ -36,3 +36,6 @@ export async function sendSms(phoneNumber: string, message: string) {
     throw new Error('Failed to send SMS')
   }
 }
+
+
+const twilioPhone = +18332933513

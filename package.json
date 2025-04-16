@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sendgrid/mail": "^8.1.5",
     "cloudinary": "^2.5.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",

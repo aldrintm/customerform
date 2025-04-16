@@ -26,6 +26,7 @@ import { formatDate } from '@/utils/formatDate'
 import { PrintProvider, usePrint } from '@/utils/printContext'
 import { NoPrint, PrintVisibility } from '@/utils/printWrapper'
 import { sendSmsAction } from '@/app/actions/sendSmsAction'
+import { sendEmailAction } from '@/app/actions/sendEmailAction'
 
 function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const router = useRouter()
@@ -265,6 +266,19 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     } catch (error) {
       console.error('Error sending SMS:', error)
       toast.error('Failed to send SMS. Please try again')
+    }
+  }
+
+  const handleSendEmail = async (to) => {
+    const confirmed = window.confirm('Are you sure you want to send Email?')
+    if (!confirmed) return // User canceled the action
+
+    try {
+      await sendEmailAction(to)
+      toast.success(`Email sent to ${to}`)
+    } catch (error) {
+      console.error('Error sending Email:', error)
+      toast.error('Failed to send Email. Please try again')
     }
   }
 
@@ -822,14 +836,9 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                             </Button>
 
                             <Button
-                              onClick={() =>
-                                handleSendSms(
-                                  customer.phone,
-                                  project.description
-                                )
-                              }
+                              onClick={() => handleSendEmail(customer.email)}
                             >
-                              Send Text
+                              Send Email
                             </Button>
 
                             <Button

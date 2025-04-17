@@ -27,6 +27,7 @@ import { PrintProvider, usePrint } from '@/utils/printContext'
 import { NoPrint, PrintVisibility } from '@/utils/printWrapper'
 import { sendSmsAction } from '@/app/actions/sendSmsAction'
 import { sendEmailAction } from '@/app/actions/sendEmailAction'
+import ConfirmDialog from './ConfirmDialog'
 
 function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const router = useRouter()
@@ -40,6 +41,9 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const [isNavigating, setIsNavigating] = useState(false) //navigation loading
   const [isPending, startTransition] = useTransition() //for smooth navigation
   const [showPrintAnimation, setShowPrintAnimation] = useState(false) // for printing animation
+  const [showEmailConfirm, setShowEmailConfirm] = useState(false)
+  const [showSmsConfirm, setShowSmsConfirm] = useState(false)
+  const [pendingAction, setPendingAction] = useState(null)
   // const [isPrinting, setIsPrinting] = useState(false) // for printing
 
   // Sync local state with prop changes
@@ -256,30 +260,38 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   }
 
   const handleSendSms = async (to, body) => {
-    const confirmed = window.confirm('Are you sure you want to send SMS?')
-    if (!confirmed) return // User canceled the action
-
-    try {
-      const formattedTo = to.startsWith('+1') ? to : `+1${to}`
-      await sendSmsAction(formattedTo, body)
-      toast.success(`SMS sent to ${formattedTo}`)
-    } catch (error) {
-      console.error('Error sending SMS:', error)
-      toast.error('Failed to send SMS. Please try again')
-    }
+    setPendingAction(() => async () => {
+      try {
+        const formattedTo = to.startsWith('+1') ? to : `+1${to}`
+        await sendSmsAction(formattedTo, body)
+        toast.success(`SMS sent to ${formattedTo}`)
+      } catch (error) {
+        console.error('Error sending SMS:', error)
+        toast.error('Failed to send SMS. Please try again')
+      }
+    })
+    setShowSmsConfirm(true)
   }
 
   const handleSendEmail = async (to) => {
-    const confirmed = window.confirm('Are you sure you want to send Email?')
-    if (!confirmed) return // User canceled the action
-
-    try {
-      await sendEmailAction(to)
-      toast.success(`Email sent to ${to}`)
-    } catch (error) {
-      console.error('Error sending Email:', error)
-      toast.error('Failed to send Email. Please try again')
-    }
+    setPendingAction(() => async () => {
+      try {
+        const result = await sendEmailAction(
+          to,
+          'Project Update Notification',
+          'Your project has been updated. Please check your customer portal for details.'
+        )
+        if (result.success) {
+          toast.success(`Email sent to ${to}`)
+        } else {
+          throw new Error(result.error)
+        }
+      } catch (error) {
+        console.error('Error sending Email:', error)
+        toast.error(error.message || 'Failed to send Email. Please try again')
+      }
+    })
+    setShowEmailConfirm(true)
   }
 
   // this replaces the handleDeleteProject above
@@ -1276,6 +1288,28 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           }
         }
       `}</style>
+
+      <ConfirmDialog
+        isOpen={showEmailConfirm}
+        onClose={() => setShowEmailConfirm(false)}
+        onConfirm={async () => {
+          await pendingAction?.()
+          setPendingAction(null)
+        }}
+        title='Send Email'
+        message='Are you sure you want to send this email?'
+      />
+
+      <ConfirmDialog
+        isOpen={showSmsConfirm}
+        onClose={() => setShowSmsConfirm(false)}
+        onConfirm={async () => {
+          await pendingAction?.()
+          setPendingAction(null)
+        }}
+        title='Send SMS'
+        message='Are you sure you want to send this SMS?'
+      />
     </>
   )
 }

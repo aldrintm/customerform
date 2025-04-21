@@ -276,11 +276,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const handleSendEmail = async (to) => {
     setPendingAction(() => async () => {
       try {
-        const result = await sendEmailAction(
-          to,
-          'Project Update Notification',
-          'Your project has been updated. Please check your customer portal for details.'
-        )
+        const result = await sendEmailAction(to)
         if (result.success) {
           toast.success(`Email sent to ${to}`)
         } else {
@@ -293,6 +289,21 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     })
     setShowEmailConfirm(true)
   }
+
+  // const handleSendEmail = async (to) => {
+  //   try {
+  //     if (!to) {
+  //       throw new Error('Email address is required')
+  //     }
+
+  //     await sendEmailAction(to)
+
+  //     toast.success(`Email sent to ${to}`)
+  //   } catch (error) {
+  //     console.error('Error sending Email:', error)
+  //     toast.error(error.message || 'Failed to send Email. Please try again')
+  //   }
+  // }
 
   // this replaces the handleDeleteProject above
   const handleDeleteProject = async (projectId) => {

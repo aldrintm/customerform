@@ -47,8 +47,8 @@ const CustomerPage = async ({ params }) => {
     ? customer.projects.flatMap((project) => project.schedules || [])
     : []
 
-  console.log('Customer:', customer)
-  console.log('Schedules:', schedules)
+  // console.log('Customer:', customer)
+  // console.log('Schedules:', schedules)
 
   if (!customer) {
     notFound() // Returns a 404 page if no customer is found

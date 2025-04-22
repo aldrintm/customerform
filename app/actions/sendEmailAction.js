@@ -1,4 +1,5 @@
 'use server'
+import mail from '@sendgrid/mail'
 import sgMail from '@sendgrid/mail'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
@@ -40,11 +41,14 @@ export async function sendEmailAction(to) {
   }
 
   // Check if the recipient email is valid
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  // this regex is more strict and checks for common TLDs + international domains
+  const emailRegex = /^[^\s@]+@[^\s@]+\.(com|net|org|edu|gov|mil|info|biz|co)$/i
+
   if (!emailRegex.test(to)) {
     return {
       success: false,
-      error: 'Invalid recipient email address',
+      error: 'Invalid recipient email address; Check email input/format',
     }
   }
 
@@ -73,16 +77,118 @@ export async function sendEmailAction(to) {
       subject: 'Schedule Notification from Plamar USA',
       text: 'This is a text default message - not sure if it will be used',
       html: '<h1>This note is from Marblesoft</h1>',
+      mailSettings: {
+        // Enable tracking settings for the email
+        sandboxMode: {
+          enable: false, // Set to true for testing without sending emails
+        },
+        bypassListManagement: {
+          enable: false, // Set to true to bypass list management
+        },
+      },
+      trackingSettings: {
+        // Enable click and open tracking for the email
+        clickTracking: {
+          enable: true,
+          enableText: true,
+        },
+        openTracking: {
+          enable: true,
+        },
+        subscriptionTracking: {
+          enable: false,
+        },
+      },
     }
 
-    sgMail.send(msg)
+    const response = await sgMail.send(msg)
 
-    return { success: true }
+    // Log the response for debugging purposes
+    console.log('Email sent successfully:', response[0].statusCode)
+    console.log('Response body:', response[0].body)
+    console.log('Response headers:', response[0].headers)
+    console.log('Response message:', response[0].headers['x-message-id'])
+    console.log('Response message:', response[0].headers['x-queue-id'])
+    console.log(
+      'Response message:',
+      response[0].headers['x-ratelimit-remaining']
+    )
+    console.log('Response message:', response[0].headers['x-ratelimit-reset'])
+
+    // Check the response status code
+    if (response[0]?.statusCode === 202) {
+      return {
+        success: true,
+        messageId: response[0]?.headers['x-message-id'],
+      }
+    } else if (response[0]?.statusCode === 400) {
+      return {
+        success: false,
+        error: 'Bad Request - Invalid email address or other parameters',
+      }
+    } else if (response[0]?.statusCode === 401) {
+      return {
+        success: false,
+        error: 'Unauthorized - Invalid API key',
+      }
+    } else if (response[0]?.statusCode === 403) {
+      return {
+        success: false,
+        error: 'Forbidden - Access denied to the requested resource',
+      }
+    } else if (response[0]?.statusCode === 429) {
+      return {
+        success: false,
+        error: 'Too Many Requests - Rate limit exceeded',
+      }
+    }
   } catch (error) {
     console.error('SendGrid Error:', error)
+
+    // Handle specific SendGrid errors
+    if (error.response?.body?.errors) {
+      const sgError = error.response.body.errors[0]
+      console.error('SendGrid Error:', sgError.message)
+
+      // Check for common delivery related errors
+      switch (sgError.message) {
+        case 'Invalid email address':
+          return {
+            success: false,
+            error: 'Invalid email address',
+            code: 'INVALID_EMAIL',
+          }
+        case 'Email address is not verified':
+          return {
+            success: false,
+            error: 'Email address is not verified',
+            code: 'UNVERIFIED_EMAIL',
+          }
+        case 'Recipient email address is invalid':
+          return {
+            success: false,
+            error: 'Recipient email address is invalid',
+            code: 'INVALID_RECIPIENT',
+          }
+        case 'Blocked email address':
+        case 'Bounced email address':
+          return {
+            success: false,
+            error: 'Email rejected by recipient server',
+            code: 'DELIVERY_FAILED',
+          }
+        default:
+          return {
+            success: false,
+            error: sgError.message,
+            code: 'OTHER_ERROR',
+          }
+      }
+    }
     return {
       success: false,
-      error: error.response?.body?.errors?.[0]?.message || error.message,
+      error: 'An error occurred while sending the email',
+      code: 'UNKNOWN_ERROR',
     }
   }
 }

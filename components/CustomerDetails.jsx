@@ -276,7 +276,31 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const handleSendEmail = async (to) => {
     setPendingAction(() => async () => {
       try {
-        const result = await sendEmailAction(to)
+        // Get schedule data from customer's projects
+        const schedule = customer.projects?.[0]?.schedules?.[0]
+        const measureDate = schedule?.measureDate
+          ? formatDate(schedule.measureDate)
+          : 'TBD'
+        const measureTime = schedule?.measureTime || 'TBD'
+
+        const emailData = {
+          customerName: `${customerWithCapitalizedNames(
+            customer.firstName
+          )} ${customerWithCapitalizedNames(customer.lastName)}`,
+          subject: `Countertop Appointment Confirmation for ${customerWithCapitalizedNames(
+            customer.firstName
+          )} ${customerWithCapitalizedNames(customer.lastName)}`,
+          message: `Dear ${customerWithCapitalizedNames(
+            customer.firstName
+          )},<br>Thank you for scheduling with us. We look forward to serving you.`,
+          appointmentDetails: {
+            date: measureDate ? measureDate : ' n/a ',
+            time: measureTime ? measureTime : ' n/a ',
+            service: 'Countertop Appointment Confirmation',
+          },
+        }
+
+        const result = await sendEmailAction(to, emailData)
         if (result.success) {
           toast.success(`Email sent to ${to}`)
         } else {
@@ -859,7 +883,12 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                             </Button>
 
                             <Button
-                              onClick={() => handleSendEmail(customer.email)}
+                              onClick={() =>
+                                handleSendEmail(
+                                  customer.email,
+                                  project.formattedMeasureDate
+                                )
+                              }
                             >
                               Send Email
                             </Button>

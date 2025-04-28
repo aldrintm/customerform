@@ -1,6 +1,7 @@
 'use server'
 import mail from '@sendgrid/mail'
 import sgMail from '@sendgrid/mail'
+import { createEmailTemplate } from '@/utils/emailTemplate'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -22,7 +23,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 //     })
 // }
 
-export async function sendEmailAction(to) {
+export async function sendEmailAction(to, emailData) {
   // Check if SendGrid API key and sender email are set
   // This is important for security and to avoid sending emails without proper configuration
   if (!process.env.SENDGRID_API_KEY || !process.env.SENDGRID_FROM_EMAIL) {
@@ -74,9 +75,15 @@ export async function sendEmailAction(to) {
     const msg = {
       to,
       from: process.env.SENDGRID_FROM_EMAIL, // Use verified sender
-      subject: 'Schedule Notification from Plamar USA',
-      text: 'This is a text default message - not sure if it will be used',
-      html: '<h1>This note is from Marblesoft</h1>',
+      subject: emailData.subject || 'Schedule Notification from Plamar USA',
+      text:
+        emailData.message ||
+        'This is a text default message - not sure if it will be used',
+      html: createEmailTemplate({
+        customerName: emailData.customerName,
+        message: emailData.message,
+        appointmentDetails: emailData.appointmentDetails,
+      }),
       mailSettings: {
         // Enable tracking settings for the email
         sandboxMode: {

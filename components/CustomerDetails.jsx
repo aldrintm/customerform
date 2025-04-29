@@ -292,11 +292,11 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           )} ${customerWithCapitalizedNames(customer.lastName)}`,
           message: `Dear ${customerWithCapitalizedNames(
             customer.firstName
-          )},<br>Thank you for scheduling with us. We look forward to serving you.`,
+          )},<br><br>Thank you for scheduling with us. We look forward to serving you.`,
           appointmentDetails: {
             date: measureDate ? measureDate : ' n/a ',
             time: measureTime ? measureTime : ' n/a ',
-            service: 'Countertop Appointment Confirmation',
+            service: 'Measure Countertops',
           },
         }
 

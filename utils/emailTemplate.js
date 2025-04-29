@@ -36,7 +36,7 @@ export function createEmailTemplate(data) {
       <body>
         <div class="email-container">
           <div class="header">
-            <h1 style="color: #333;">Schedule Notification</h1>
+            <h1 style="color: #333;">Plamar USA - Schedule Notification</h1>
           </div>
           <div class="content">
             

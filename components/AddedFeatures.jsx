@@ -17,4 +17,5 @@ Pagination
 in CustomerList - hover:showCard 
 
 SMS notification
+Email notification
 

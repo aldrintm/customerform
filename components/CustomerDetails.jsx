@@ -545,7 +545,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       <span>
                         {schedules.map((schedule) => (
                           <span key={schedule._id}>
-                            {formatDate(schedule.measureDate)}
+                            {formatDate(schedule.measureDate)} @{' '}
+                            {schedule.measureTime}
                           </span>
                         ))}
                       </span>

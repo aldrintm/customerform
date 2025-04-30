@@ -44,7 +44,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const [showEmailConfirm, setShowEmailConfirm] = useState(false)
   const [showSmsConfirm, setShowSmsConfirm] = useState(false)
   const [pendingAction, setPendingAction] = useState(null)
-  // const [isPrinting, setIsPrinting] = useState(false) // for printing
+  cocnst 
 
   // Sync local state with prop changes
   useEffect(() => {

@@ -44,7 +44,6 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const [showEmailConfirm, setShowEmailConfirm] = useState(false)
   const [showSmsConfirm, setShowSmsConfirm] = useState(false)
   const [pendingAction, setPendingAction] = useState(null)
-  cocnst 
 
   // Sync local state with prop changes
   useEffect(() => {
@@ -904,6 +903,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                           </div>
                         </NoPrint>
                       </div>
+                      {/* Added Project Tabs header */}
+
                       <div className='mt-4 border-t border-gray-100'>
                         <dl className='mt-1'>
                           {project.purchaseOrders &&
@@ -1244,24 +1245,33 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
         {/* Template and Install Dates + Signature */}
         {customer.projects && customer.projects.length > 0 ? (
           <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block'>
-            {customer?.projects[0]?.status === 'will call' ? (
-              <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 transition-all duration-300 hover:shadow-md'>
-                <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                  <span className=''>Template Date: Jan 3, 2025</span>
-                  <span>Measured By: Anilber Pena</span>
-                </div>
+            {customer?.projects[0]?.status === 'for template' ? (
+              <>
+                {schedules.map((schedule) => (
+                  <div
+                    key={schedule._id}
+                    className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 transition-all duration-300 hover:shadow-md'
+                  >
+                    <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                      <span className=''>
+                        Template Date: {formatDate(schedule.measureDate)} @{' '}
+                        {schedule.measureTime}
+                      </span>
+                      <span>Measured By: {schedule.measureBy}</span>
+                    </div>
 
-                <div className='sm:p-4 md:col-span-2'>
-                  Template Notes: There's no sink on site, I only took the sink
-                  template. Contractor present and approved all overhangs
-                </div>
-              </div>
+                    <div className='sm:p-4 md:col-span-2'>
+                      Template Notes: {schedule.measureNotes || ' '}
+                    </div>
+                  </div>
+                ))}
+              </>
             ) : customer?.projects[0]?.status === 'for install' ? (
               <>
                 <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden transition-all duration-300 hover:shadow-md'>
                   <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                    <span className=''>Template Date: Jan 3, 2025</span>
-                    <span>Measured By: Anilber Pena</span>
+                    <span className=''>Measure Date: January 12, 2025</span>
+                    <span>Measured By: schedule.measureBy</span>
                   </div>
                   <div className='sm:p-4 md:col-span-2'>
                     Template Notes: There's no sink on site, I only took the
@@ -1369,9 +1379,7 @@ export default function CustomerDetails({
   )
 }
 
-
-
-export default function ProjectTabs({ children, project, customer }) {
+export function ProjectTabs({ children, project, customer }) {
   const [activeTab, setActiveTab] = useState('details')
 
   const tabs = [

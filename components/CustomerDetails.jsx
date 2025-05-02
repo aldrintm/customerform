@@ -1244,7 +1244,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
         {/* Break */}
         {/* Template and Install Dates + Signature */}
         {customer.projects && customer.projects.length > 0 ? (
-          <div className='hidden md:grid md:grid-cols-2 text-sm md:gap-8 mx-4 md:mx-0 sm:block'>
+          <div className='hidden text-sm md:gap-8 mx-4 md:mx-0 sm:block'>
             {customer?.projects[0]?.status === 'for template' ? (
               <>
                 {schedules.map((schedule) => (
@@ -1267,36 +1267,51 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 ))}
               </>
             ) : customer?.projects[0]?.status === 'for install' ? (
-              <>
-                <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden transition-all duration-300 hover:shadow-md'>
-                  <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                    <span className=''>Measure Date: January 12, 2025</span>
-                    <span>Measured By: schedule.measureBy</span>
-                  </div>
-                  <div className='sm:p-4 md:col-span-2'>
-                    Template Notes: There's no sink on site, I only took the
-                    sink template. Contractor present and approved all overhangs
-                  </div>
-                </div>
-                <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'>
-                  <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                    <span className=''>Install Date: Jan 25, 2025</span>
-                    <span>Installed By: Ruben Oronia</span>
-                  </div>
+              <div className=''>
+                {schedules.map((schedule) => (
+                  <div
+                    key={schedule._id}
+                    className='md:grid md:grid-cols-2 md:gap-8'
+                  >
+                    {/* Template Info */}
+                    <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden transition-all duration-300 hover:shadow-md'>
+                      <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                        <span className=''>
+                          Template Date: {formatDate(schedule.measureDate)} @{' '}
+                          {schedule.measureTime}
+                        </span>
+                        <span>Measured By: {schedule.measureBy}</span>
+                      </div>
+                      <div className='sm:p-4 md:col-span-2'>
+                        Template Notes: {schedule.measureNotes || ' '}
+                      </div>
+                    </div>
 
-                  <div className='sm:p-4 md:col-span-2'>
-                    Installation Notes: Contractor want to preserve the tiles,
-                    please protect the floor as much as you can. They will keep
-                    the sink so try to save it.
+                    {/* Install Info */}
+                    <div
+                      key={schedule.id}
+                      className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'
+                    >
+                      <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                        <span className=''>
+                          Install Date: {formatDate(schedule.installDate)}
+                        </span>
+                        <span>Installer: {schedule.installBy}</span>
+                      </div>
+
+                      <div className='sm:p-4 md:col-span-2'>
+                        Install Notes: {schedule.installNotes || ' '}
+                      </div>
+                      <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                        <span className=''>
+                          Sign On Install: ________________________
+                        </span>
+                        <span>Name: ________________________</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
-                    <span className=''>
-                      Sign On Install: ________________________
-                    </span>
-                    <span>Name: ________________________</span>
-                  </div>
-                </div>
-              </>
+                ))}
+              </div>
             ) : null}
           </div>
         ) : (

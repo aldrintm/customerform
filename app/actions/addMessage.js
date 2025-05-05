@@ -34,6 +34,12 @@ async function addMessage(formData) {
   await newMessage.save()
 
   return { submitted: true }
+
+  // lets check if the recipient exists
+  // const recipientExists = await Customer.findById(recipient)
+  // if (!recipientExists) {
+  //   return { error: 'Recipient does not exist' }
+  // }
 }
 
 export default addMessage

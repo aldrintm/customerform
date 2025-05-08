@@ -25,6 +25,11 @@ const ProjectSchema = new Schema(
       enum: [
         'will call',
         'for template',
+        'material order',
+        'need additional',
+        'seam diagram',
+        'in fabrication',
+        'hold',
         'pending',
         'for install',
         'completed',

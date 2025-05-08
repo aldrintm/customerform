@@ -107,9 +107,29 @@ const TableComponentPage = ({ customers }) => {
                           <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                             for template
                           </div>
-                        ) : customer.projects?.[0]?.status === 'pending' ? (
+                        ) : customer.projects?.[0]?.status ===
+                          'material order' ? (
+                          <div className='px-0 py-1 text-center md:text-sm bg-amber-100 text-amber-500 rounded-full'>
+                            material order
+                          </div>
+                        ) : customer.projects?.[0]?.status ===
+                          'need additional' ? (
+                          <div className='px-0 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                            need additional
+                          </div>
+                        ) : customer.projects?.[0]?.status ===
+                          'seam diagram' ? (
                           <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
-                            pending
+                            seam diagram
+                          </div>
+                        ) : customer.projects?.[0]?.status ===
+                          'in fabrication' ? (
+                          <div className='px-0 py-1 text-center md:text-sm bg-teal-100 text-teal-500 rounded-full'>
+                            in fabrication
+                          </div>
+                        ) : customer.projects?.[0]?.status === 'hold' ? (
+                          <div className='px-0 py-1 text-center md:text-sm bg-slate-100 text-slate-500 rounded-full'>
+                            hold
                           </div>
                         ) : customer.projects?.[0]?.status === 'for install' ? (
                           <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>

@@ -127,7 +127,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       <option value='need additional'>need additional</option>
                       <option value='seam diagram'>seam diagram</option>
                       <option value='in fabrication'>in fabrication</option>
-                      <option value='other items'>other items</option>
+                      <option value='hold'>hold</option>
                       <option value='for install'>for install</option>
                       <option value='completed'>completed</option>
                       <option value='service'>service</option>

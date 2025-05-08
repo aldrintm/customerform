@@ -47,7 +47,10 @@ const ProjectSchema = new Schema(
         },
         purchaseOrderAmount: {
           type: Number,
-          trim: true,
+          get: (v) => Number(v).toFixed(2),
+          set: (v) => Number(Number(v).toFixed(2)),
+          min: 0,
+          default: 0.0,
         },
       },
     ],

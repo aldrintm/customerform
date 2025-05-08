@@ -194,7 +194,9 @@ export default function ProjectForm({ customer }) {
                       type='number'
                       name='purchaseOrderAmount1'
                       id='purchaseOrderAmount1'
-                      placeholder='PO cost ...'
+                      placeholder='0.00'
+                      min='0'
+                      step='0.01'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -237,7 +239,9 @@ export default function ProjectForm({ customer }) {
                       type='number'
                       name='purchaseOrderAmount2'
                       id='purchaseOrderAmount2'
-                      placeholder='PO cost ...'
+                      placeholder='0.00'
+                      min='0'
+                      step='0.01'
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
@@ -280,7 +284,9 @@ export default function ProjectForm({ customer }) {
                       type='number'
                       name='purchaseOrderAmount3'
                       id='purchaseOrderAmount3'
-                      placeholder='PO cost ...'
+                      placeholder='0.00'
+                      min='0'
+                      step='0.01'
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>

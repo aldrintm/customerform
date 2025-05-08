@@ -120,12 +120,14 @@ const CustomerEditProjectForm = ({ customer }) => {
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm text-gray-500 bg-sky-50 border-gray-200 focus-bg-white'
                       defaultValue={project.status}
                     >
-                      <option value='DEFAULT' disabled>
-                        Choose ...
-                      </option>
+                      <option value=''>Choose ...</option>
                       <option value='will call'>will call</option>
                       <option value='for template'>for template</option>
-                      <option value='pending'>pending</option>
+                      <option value='material order'>material order</option>
+                      <option value='need additional'>need additional</option>
+                      <option value='seam diagram'>seam diagram</option>
+                      <option value='in fabrication'>in fabrication</option>
+                      <option value='other items'>other items</option>
                       <option value='for install'>for install</option>
                       <option value='completed'>completed</option>
                       <option value='service'>service</option>

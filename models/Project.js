@@ -120,6 +120,8 @@ const ProjectSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: { getters: true }, // Enable getters when converting to JSON
+    toObject: { getters: true }, // Enable getters when converting to object
   }
 )
 

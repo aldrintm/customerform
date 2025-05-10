@@ -29,7 +29,7 @@ const CustomerPage = async ({ params }) => {
   const customerDoc = await Customer.findById(id)
     .populate({
       path: 'projects',
-      populate: { path: 'schedules' },
+      populate: { path: 'schedules', model: 'Schedule' },
     })
     .populate({
       path: 'officeNotes',

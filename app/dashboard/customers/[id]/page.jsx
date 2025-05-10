@@ -30,6 +30,7 @@ const CustomerPage = async ({ params }) => {
     .populate({
       path: 'projects',
       populate: { path: 'schedules', model: 'Schedule' },
+      strictPopulate: false, // Add this line to disable strict populate
     })
     .populate({
       path: 'officeNotes',

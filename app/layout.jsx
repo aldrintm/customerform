@@ -2,6 +2,7 @@ import '@/assets/styles/globals.css'
 import AuthProvider from '@/components/AuthProvider'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata = {
   title: 'MarbleSoft CRM',

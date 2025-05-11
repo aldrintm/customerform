@@ -121,6 +121,10 @@ const DashboardTablePage = ({ customers }) => {
                           <div className='px-2 py-1 text-center md:text-sm bg-slate-100 text-slate-500 rounded-full'>
                             hold
                           </div>
+                        ) : customer.projects?.[0]?.status === 'pending' ? (
+                          <div className='px-2 py-1 text-center md:text-sm bg-stone-100 text-stone-500 rounded-full'>
+                            pending
+                          </div>
                         ) : customer.projects?.[0]?.status === 'for install' ? (
                           <div className='px-2 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                             for install

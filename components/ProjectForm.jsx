@@ -124,6 +124,7 @@ export default function ProjectForm({ customer }) {
                       <option value='seam diagram'>seam diagram</option>
                       <option value='in fabrication'>in fabrication</option>
                       <option value='hold'>hold</option>
+                      <option value='pending'>pending</option>
                       <option value='for install'>for install</option>
                       <option value='completed'>completed</option>
                       <option value='service'>service</option>

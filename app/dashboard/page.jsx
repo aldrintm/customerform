@@ -26,6 +26,7 @@ const DashboardPage = async () => {
         path: 'schedules',
         model: 'Schedule',
       },
+      strictPopulate: false, // Add this line
     })
     .lean()
 

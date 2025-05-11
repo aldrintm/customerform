@@ -25,17 +25,16 @@ async function addInternalNotes(formData) {
   const user = await User.findOne({ email: sessionUser.user.email })
   const userId = user._id
 
-  console.log('user:', user)
-  console.log('userId:', userId)
-
   // gather formData
   const customerId = formData.get('customerId')
+  const noteDate = formData.get('noteDate') || ''
+  const noteText = formData.get('note') || ''
 
   const internalNotesData = {
     staff: userId,
     customer: customerId,
-    noteDate: formData.get('noteDate') || '',
-    note: formData.get('note') || '',
+    noteDate: noteDate,
+    note: noteText,
   }
 
   // lets plug all the date using the Note model
@@ -47,7 +46,7 @@ async function addInternalNotes(formData) {
   await Customer.findByIdAndUpdate(
     customerId,
     { $push: { officeNotes: newInternalNote._id } },
-    { new: true } // optional: returns the updated doc if you need it
+    { new: false } // optional: returns the updated doc if you need it
   )
 
   revalidatePath('/dashboard/customers/${customerId}')

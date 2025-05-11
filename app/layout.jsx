@@ -18,6 +18,7 @@ const MainLayout = ({ children }) => {
         <body className='flex min-h-screen w-full flex-col'>
           <main>{children}</main>
           <ToastContainer />
+          <SpeedInsights />
         </body>
       </html>
     </AuthProvider>

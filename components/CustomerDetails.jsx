@@ -245,6 +245,23 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     })
   }
 
+  // Old handleDeleteCustomer function
+  // const handleDeleteCustomer = async (customerId) => {
+  //   const confirmed = window.confirm(
+  //     'Are you sure you want to delete this customer?'
+  //   )
+
+  //   if (!confirmed) return
+
+  //   await deleteCustomer(customerId)
+  //   const updatedCustomers = customer.filter(
+  //     (customer) => customerId !== customer._id
+  //   )
+  //   setCustomers(updatedCustomers)
+  //   toast.success(`${customerId} is DELETED!`)
+  // }
+
+  // Handle Delete Customer navigation with loading state
   const handleDeleteCustomer = async (customerId) => {
     setShowDeleteCustomerConfirm(true)
     setPendingAction(() => async () => {

@@ -2,14 +2,43 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useFormStatus } from 'react-dom'
 import Button from './Button'
 import Skater from '@/assets/images/skate-skateboard.gif'
 import editSchedule from '@/app/actions/editSchedule'
 import { RefreshCw, Dot, Undo2 } from 'lucide-react'
+import { ClipLoader } from 'react-spinners'
 import { useTransition } from 'react'
 import deleteSchedule from '@/app/actions/deleteSchedule'
 
-const ScheduleEditForm = ({ customer, projects, schedule }) => {
+// Button component to access form status
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      className='w-full hover:bg-gray rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+      type='submit'
+      disabled={pending}
+    >
+      {pending ? (
+        <ClipLoader
+          color='#2fa8f6'
+          size={23}
+          loading={true}
+          speedMultiplier={1}
+        />
+      ) : (
+        <div className='flex justify-center items-center gap-2'>
+          <RefreshCw className='w-5 h-5 flex items-center text-center' />
+          Update Schedule
+        </div>
+      )}
+    </button>
+  )
+}
+
+export default function ScheduleEditForm({ customer, projects, schedule }) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -349,13 +378,7 @@ const ScheduleEditForm = ({ customer, projects, schedule }) => {
                     {/* Submit Button */}
                     <div className='md:col-span-1'>
                       <span>
-                        <button
-                          className='w-full hover:bg-gray flex justify-center items-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-8 py-2 text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
-                          type='submit'
-                        >
-                          <RefreshCw className='w-5 h-5 mr-2 flex items-center text-center' />
-                          Update Schedule
-                        </button>
+                        <SubmitButton />
                       </span>
                     </div>
                   </div>
@@ -398,4 +421,3 @@ const ScheduleEditForm = ({ customer, projects, schedule }) => {
     </>
   )
 }
-export default ScheduleEditForm

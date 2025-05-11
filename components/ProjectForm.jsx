@@ -34,7 +34,6 @@ function SubmitButton() {
 }
 
 export default function ProjectForm({ customer }) {
-  console.log(customer)
   return (
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>

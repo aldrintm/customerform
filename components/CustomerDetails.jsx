@@ -41,8 +41,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const [isNavigating, setIsNavigating] = useState(false) //navigation loading
   const [isPending, startTransition] = useTransition() //for smooth navigation
   const [showPrintAnimation, setShowPrintAnimation] = useState(false) // for printing animation
-  const [showEmailConfirm, setShowEmailConfirm] = useState(false)
-  const [showSmsConfirm, setShowSmsConfirm] = useState(false)
+  const [showEmailConfirm, setShowEmailConfirm] = useState(false) // for email confirmation
+  const [showSmsConfirm, setShowSmsConfirm] = useState(false) // for SMS confirmation
+  const [showDeleteCustomerConfirm, setShowDeleteCustomerConfirm] =
+    useState(false) // for customer delete confirmation
   const [pendingAction, setPendingAction] = useState(null)
 
   // Sync local state with prop changes
@@ -244,18 +246,46 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   }
 
   const handleDeleteCustomer = async (customerId) => {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this customer?'
-    )
+    setShowDeleteCustomerConfirm(true)
+    setPendingAction(() => async () => {
+      try {
+        const result = await deleteCustomer(customerId)
 
-    if (!confirmed) return
+        // Check if the deletion was successful
+        // If successful, show a success message
+        // If not, throw an error
+        if (!result) {
+          throw new Error('CustomerId is missing')
+        }
 
-    await deleteCustomer(customerId)
-    const updatedCustomers = customer.filter(
-      (customer) => customerId !== customer._id
-    )
-    setCustomers(updatedCustomers)
-    toast.success(`${customerId} is DELETED!`)
+        if (result.success) {
+          setShowDeleteCustomerConfirm(false) // Hide dialog on success
+          // Update local state to remove the deleted customer
+          toast.success(
+            `${customer.firstName} ${customer.lastName} was deleted succesfully!`
+          )
+
+          // Add a small delay before navigation to allow toast to show
+          setTimeout(() => {
+            router.push('/dashboard/customers')
+            router.refresh()
+          }, 1000)
+          // const updatedCustomers = customer.filter(
+          //   (customer) => customerId !== customer._id
+          // )
+          // setCustomers(updatedCustomers)
+          // If the deletion was not successful, show an error message
+        } else if (result.error) {
+          throw new Error(result.error || 'Failed to delete customer')
+        }
+      } catch (error) {
+        console.error('Error Deleting Customer:', error)
+        toast.error(
+          error.message || 'Failed to delete customer. Please try again'
+        )
+        setShowDeleteCustomerConfirm(false) // Hide dialog on error
+      }
+    })
   }
 
   const handleSendSms = async (to, body) => {
@@ -1375,6 +1405,17 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
         }}
         title='Send SMS'
         message='Are you sure you want to send this SMS?'
+      />
+
+      <ConfirmDialog
+        isOpen={showDeleteCustomerConfirm}
+        onClose={() => setShowDeleteCustomerConfirm(false)}
+        onConfirm={async () => {
+          await pendingAction?.()
+          setPendingAction(null)
+        }}
+        title='Delete Customer'
+        message='Are you sure you want to delete this customer from the database?'
       />
     </>
   )

@@ -163,7 +163,7 @@ const CustomerMap = ({ customer }) => {
         </Map>
 
         {/* Button in top right to toggle directions */}
-        <button
+        {/* <button
           onClick={toggleDirections}
           className='absolute top-6 right-6 z-50 border border-blue-400 rounded-full text-xs text-blue-500 p-2 hover:text-blue-400 hover:border-blue-500 hover:bg-white active:scale-90 transition ease-in-out'
         >
@@ -186,7 +186,7 @@ const CustomerMap = ({ customer }) => {
               <path d='M4 20v-7a4 4 0 0 1 4-4h12' />
             </svg>
           )}
-        </button>
+        </button> */}
 
         {/* Render driving directions below the map when toggled on */}
         {showDirections && directions.length > 0 && (

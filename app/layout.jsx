@@ -3,6 +3,7 @@ import AuthProvider from '@/components/AuthProvider'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata = {
   title: 'MarbleSoft CRM',
@@ -19,6 +20,7 @@ const MainLayout = ({ children }) => {
           <main>{children}</main>
           <ToastContainer />
           <SpeedInsights />
+          <Analytics />
         </body>
       </html>
     </AuthProvider>

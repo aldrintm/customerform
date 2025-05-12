@@ -26,7 +26,7 @@ function SubmitButton() {
       ) : (
         <div className='flex justify-center items-center gap-2'>
           <MessageCircleMore className='w-5 h-5 flex items-center text-center' />
-          Send Note
+          Create Note
         </div>
       )}
     </button>

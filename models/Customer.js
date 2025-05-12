@@ -69,8 +69,7 @@ const CustomerSchema = new Schema(
 )
 
 // Add single field indexes for frequent lookups
-CustomerSchema.index({ firstName: 1 })
-CustomerSchema.index({ lastName: 1 })
+
 CustomerSchema.index({ phone: 1 })
 CustomerSchema.index({ email: 1 }, { unique: true })
 

@@ -65,19 +65,19 @@ const CustomerMap = ({ customer }) => {
   }, [customer])
 
   // Get the user's current location using the browser's Geolocation API
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords
-          setUserLocation({ latitude, longitude })
-        },
-        (error) => {
-          console.error('Error getting user location:', error)
-        }
-      )
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords
+  //         setUserLocation({ latitude, longitude })
+  //       },
+  //       (error) => {
+  //         console.error('Error getting user location:', error)
+  //       }
+  //     )
+  //   }
+  // }, [])
 
   // Once we have both userLocation and the destination, fetch directions from Mapbox Directions API
   useEffect(() => {

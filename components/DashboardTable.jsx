@@ -97,6 +97,10 @@ const DashboardTablePage = ({ customers }) => {
                           <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                             for template
                           </div>
+                        ) : customer.projects?.[0]?.status === 'templated' ? (
+                          <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-emerald-400 to-green-400 text-white rounded-full'>
+                            templated
+                          </div>
                         ) : customer.projects?.[0]?.status ===
                           'material order' ? (
                           <div className='px-2 py-1 text-center md:text-sm bg-amber-100 text-amber-500 rounded-full'>
@@ -136,6 +140,10 @@ const DashboardTablePage = ({ customers }) => {
                         ) : customer.projects?.[0]?.status === 'completed' ? (
                           <div className='px-2 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                             completed
+                          </div>
+                        ) : customer.projects?.[0]?.status === 'cancelled' ? (
+                          <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-rose-400 to-red-300 text-white rounded-full'>
+                            cancelled
                           </div>
                         ) : customer.projects?.[0]?.status === '' ? (
                           <div className='px-2 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'></div>

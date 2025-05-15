@@ -123,6 +123,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       <option value=''>Choose ...</option>
                       <option value='will call'>will call</option>
                       <option value='for template'>for template</option>
+                      <option value='templated'>templated</option>
                       <option value='material order'>material order</option>
                       <option value='need additional'>need additional</option>
                       <option value='seam diagram'>seam diagram</option>
@@ -132,6 +133,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       <option value='for install'>for install</option>
                       <option value='completed'>completed</option>
                       <option value='service'>service</option>
+                      <option value='cancelled'>cancelled</option>
                     </select>
                   </div>
                 </div>

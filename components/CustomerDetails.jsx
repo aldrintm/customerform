@@ -767,15 +767,28 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 {sortedNotes && sortedNotes.length > 0 ? (
                   <div className='mt-4 border-t border-gray-100'>
                     <dl className=' mt-1'>
-                      {sortedNotes.map((note) => {
-                        // Format each purchase order date
-                        const date = new Date(note.createdAt)
-                        const day = date.getDate().toString().padStart(2, '0')
-                        const month = date.toLocaleString('en-US', {
-                          month: 'long',
-                        })
-                        const year = date.getFullYear()
-                        const formattedDate = `${month} ${day}, ${year}`
+                      {sortedNotes.map((note, index) => {
+                        // Format each note date with error handling
+                        let formattedDate = `Note ${index + 1}`
+
+                        try {
+                          if (note.updatedAt) {
+                            // Check if createdAt is a valid date
+                            const date = new Date(note.updatedAt)
+                            // Check if date is valid before formatting
+                            if (!isNaN(date.getTime())) {
+                              // Format the date
+                              formattedDate = date.toLocaleDateString('en-US', {
+                                month: 'long',
+                                day: '2-digit',
+                                year: 'numeric',
+                              })
+                            }
+                          }
+                        } catch (error) {
+                          console.error('Error formatting date:', error)
+                          // Keep the default 'Note ${index + 1}'
+                        }
 
                         return (
                           <div

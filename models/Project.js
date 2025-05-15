@@ -25,6 +25,7 @@ const ProjectSchema = new Schema(
       enum: [
         'will call',
         'for template',
+        'templated',
         'material order',
         'need additional',
         'seam diagram',
@@ -34,6 +35,7 @@ const ProjectSchema = new Schema(
         'for install',
         'completed',
         'service',
+        'cancelled',
       ], // 🔥 Example Statuses
       trim: true,
     },

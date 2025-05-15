@@ -50,7 +50,6 @@ const CustomerPage = async ({ params }) => {
       })
       .populate({
         path: 'officeNotes',
-        select: 'note noteDate',
         populate: {
           path: 'staff',
           select: 'username',

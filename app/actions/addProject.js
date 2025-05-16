@@ -86,6 +86,8 @@ async function addProject(formData) {
     stove: formData.has('stove'),
     splash: formData.getAll('splash').map((splash) => splash?.trim() || ''),
     cooktop: formData.has('cooktop'),
+    demo: formData.has('demo'),
+    plumbing: formData.has('plumbing'),
     notes: formData.get('notes')?.trim() || '',
   }
 

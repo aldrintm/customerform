@@ -120,6 +120,14 @@ const ProjectSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    demo: {
+      type: Boolean,
+      default: false,
+    },
+    plumbing: {
+      type: Boolean,
+      default: false,
+    },
     notes: {
       type: String,
       trim: true,

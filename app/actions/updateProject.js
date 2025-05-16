@@ -72,6 +72,8 @@ async function updateProject(customerId, projectId, formData) {
     sinkInfo: formData.get('sinkInfo'),
     stove: formData.get('stove') ? true : false,
     cooktop: formData.get('cooktop') ? true : false,
+    demo: Boolean(formData.get('demo')),
+    plumbing: Boolean(formData.get('plumbing')),
     splash: formData.get('splash'),
     notes: formData.get('notes'),
   }
@@ -80,6 +82,9 @@ async function updateProject(customerId, projectId, formData) {
   const updatedProject = await Project.findByIdAndUpdate(projectId, projectData)
 
   console.log(updatedProject)
+
+  console.log('formData.has("demo"):', formData.has('demo'))
+  console.log('formData.has("plumbing"):', formData.has('plumbing'))
 
   // this will clear cached data in our form/memory
   revalidatePath('/', 'layout')

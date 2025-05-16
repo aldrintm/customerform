@@ -92,14 +92,14 @@ const CustomerEditProjectForm = ({ customer }) => {
                       htmlFor='storeId'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
-                      Store ID:
+                      Store No/Contractor/Builder:
                     </label>
 
                     <input
                       type='text'
                       id='storeId'
                       name='storeId'
-                      placeholder='Store Id'
+                      placeholder='Store No or Contractor or Builder'
                       defaultValue={project.storeId}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
@@ -647,14 +647,12 @@ const CustomerEditProjectForm = ({ customer }) => {
                           className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
                           defaultChecked={project?.stove || false}
                         />
-                        <span className='ml-2 items-center'>
-                          Slide-in Range
-                        </span>
+                        <span className='ml-2 items-center'>Slide-in</span>
                       </label>
                     </div>
 
                     {/* Cooktop Checkbox */}
-                    <div className='flex items-center'>
+                    <div className='flex items-center mr-4'>
                       <label
                         htmlFor='cooktop'
                         className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -667,6 +665,40 @@ const CustomerEditProjectForm = ({ customer }) => {
                           defaultChecked={project?.cooktop || false}
                         />
                         <span className='ml-2 items-center'>Cooktop</span>
+                      </label>
+                    </div>
+
+                    {/* Demo Checkbox */}
+                    <div className='flex items-center mr-4'>
+                      <label
+                        htmlFor='demo'
+                        className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                      >
+                        <input
+                          type='checkbox'
+                          id='demo'
+                          name='demo'
+                          className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                          defaultChecked={project?.demo || false}
+                        />
+                        <span className='ml-2 items-center'>Demo</span>
+                      </label>
+                    </div>
+
+                    {/* Plumbing Checkbox */}
+                    <div className='flex items-center mr-4'>
+                      <label
+                        htmlFor='plumbing'
+                        className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                      >
+                        <input
+                          type='checkbox'
+                          id='plumbing'
+                          name='plumbing'
+                          className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                          defaultChecked={project?.plumbing || false}
+                        />
+                        <span className='ml-2 items-center'>Plumbing</span>
                       </label>
                     </div>
                   </div>

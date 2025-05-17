@@ -1108,9 +1108,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                               Plumbing:
                             </dt>
                             <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                              {project.plumbing
-                                ? 'Plumbing Included ✓'
-                                : 'Not Included'}
+                              {project.plumbing ? 'Plumbing Included ✓' : 'Not Included'}
                             </dd>
                           </div>
                           <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>

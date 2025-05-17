@@ -40,7 +40,7 @@ const CustomerPage = async ({ params }) => {
       .populate({
         path: 'projects',
         select:
-          'status customerType storeId description materialType materialThickness materialBrand materialColor materialFinish edge sinkQuantity sinkType sinkLocation sinkInfo stove splash cooktop notes schedules purchaseOrders',
+          'status customerType storeId description materialType materialThickness materialBrand materialColor materialFinish edge sinkQuantity sinkType sinkLocation sinkInfo stove splash cooktop demo plumbing notes schedules purchaseOrders',
         populate: {
           path: 'schedules',
           model: 'Schedule',

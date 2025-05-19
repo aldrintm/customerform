@@ -35,6 +35,7 @@ import { NoPrint, PrintVisibility } from '@/utils/printWrapper'
 import { sendSmsAction } from '@/app/actions/sendSmsAction'
 import { sendEmailAction } from '@/app/actions/sendEmailAction'
 import ConfirmDialog from './ConfirmDialog'
+import CustomerMap from './CustomerMap'
 
 function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
   const router = useRouter()
@@ -1357,7 +1358,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
             {/* Mapbox Div */}
             <PrintVisibility printVisible={false}>
               <div className='invisible sm:visible md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative transition-all duration-300 hover:shadow-md'>
-                {/* <CustomerMap customer={customer} /> */}
+                <CustomerMap customer={customer} />
               </div>
             </PrintVisibility>
           </div>

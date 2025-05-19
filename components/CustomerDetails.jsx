@@ -26,7 +26,6 @@ import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedN
 import deleteCustomer from '@/app/actions/deleteCustomer'
 import { deleteProject } from '@/app/actions/deleteProject'
 import { toast } from 'react-toastify'
-import CustomerMap from './CustomerMap'
 import updateNote from '@/app/actions/updateNote' // this server action for updating a note
 import deleteNote from '@/app/actions/deleteNote'
 import BookmarkButton from './BookmarkButton'
@@ -953,7 +952,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         <NoPrint>
                           <div className='flex gap-4'>
                             <Button onClick={printProjectInfo}>
-                              <Printer className='h-4 w-4 text-xs hover:text-white' />
+                              <Printer className='h-4 w-4 text-xs hover:text-white' />{' '}
+                              <span>Print</span>
                             </Button>
                             {showPrintAnimation && <PrintAnimation />}
                             <Button
@@ -1344,7 +1344,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
             {/* Mapbox Div */}
             <PrintVisibility printVisible={false}>
               <div className='invisible sm:visible md:grid md:grid-cols-1 h-auto md:border md:border-gray-300 md:rounded-lg p-4 relative transition-all duration-300 hover:shadow-md'>
-                <CustomerMap customer={customer} />
+                {/* <CustomerMap customer={customer} /> */}
               </div>
             </PrintVisibility>
           </div>

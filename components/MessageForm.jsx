@@ -1,3 +1,9 @@
+'use client'
+
+import { useEffect } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
+import { useSession } from 'next-auth/react'
+import { toast } from 'react-toastify'
 import addMessage from '@/app/actions/addMessage'
 import Link from 'next/link'
 import { Send } from 'lucide-react'
@@ -107,7 +113,7 @@ const MessageForm = () => {
                       type='submit'
                     >
                       <Send className='w-5 h-5 mr-2 flex items-center text-center' />
-                      Send Message
+                      Send Message nOW
                     </button>
                   </span>
                 </div>

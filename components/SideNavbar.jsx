@@ -219,7 +219,8 @@ const SideNavbar = () => {
                 Calendar
               </span>
             </Link>
-            <Link
+            {/* This is the old Clipboard Icon for tasks - we will retire this for now and come back to it later */}
+            {/* <Link
               className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/tasks'
                   ? 'bg-blue-500 text-white'
@@ -233,7 +234,7 @@ const SideNavbar = () => {
               <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Tasks to do
               </span>
-            </Link>
+            </Link> */}
             {/* <Link
               className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
               data-state='closed'
@@ -258,10 +259,13 @@ const SideNavbar = () => {
             </Link> */}
           </nav>
           <nav className='mt-auto flex flex-col items-center gap-4 px-2 sm:py-5'>
-            {/* <Link
-              className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
-              data-state='closed'
-              href='#'
+            <Link
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+                pathname === '/settings'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-blue-500 hover:text-foreground'
+              }`}
+              href='/settings'
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -279,7 +283,10 @@ const SideNavbar = () => {
                 <circle cx='12' cy='12' r='3'></circle>
               </svg>
               <span className='sr-only'>Settings</span>
-            </Link> */}
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
+                Settings
+              </span>
+            </Link>
           </nav>
         </aside>
       </section>

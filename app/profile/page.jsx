@@ -6,6 +6,7 @@ import { getSessionUser } from '@/utils/getSession'
 import Image from 'next/image'
 import { connect } from 'mongoose'
 import profile from '@/app/profile.png'
+import MessageCard from '@/components/MessageCard'
 
 const ProfilePage = async () => {
   await connectDB()
@@ -48,37 +49,15 @@ const ProfilePage = async () => {
                   {sessionUser.user.name}
                 </div>
               </div>
-              {/* <div className='border rounded-xl p-4'>
-                <div>
-                  <p className='font-semibold text-gray-500 underline text-lg'>
-                    Saved Customers
-                  </p>
-                  <p className='py-4'>
-                    This is the space for user saved customers or maybe their
-                    main dashboard, let's put them here first and I will sort
-                    out how to place them in each individual dashboard based on
-                    user session, a bit hard but I will have to manage later on.
-                  </p>
-                </div>
-              </div> */}
+
               <div className='text-left border rounded-xl p-4 col-span-2'>
                 <div>
                   <p className='font-semibold text-gray-500 underline text-lg'>
                     Private Messages
                   </p>
-                  <p className='py-4'>Messages here ...</p>
-                  <p className='py-4'>
-                    Now, this is the space for every personal message between
-                    users, private gossip chart, one that can be deleted and
-                    also they can send each other a message - not reply.
-                  </p>
-                  <p className='py-4'>
-                    I'm also thinking that each message will be automatically
-                    deleted every 15 or 30 days so its not saved in the database
-                    for optimal space savings. But this might be too much logic
-                    to think about.
-                  </p>
                 </div>
+
+                <MessageCard />
               </div>
             </div>
           </div>

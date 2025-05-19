@@ -7,7 +7,7 @@ const MessageForm = () => {
     <section className='bg-white'>
       <div className='container mx-auto max-w-2xl px-15'>
         <div className='text-center pt-6 pl-10 sm:text-left md:py-2 md:pl-1 text-sm md:text-md text-blue-500 font-bold'>
-          Send a Message to an Office Mate
+          Send a Message to an Office Team Member
         </div>
 
         <div className=''>

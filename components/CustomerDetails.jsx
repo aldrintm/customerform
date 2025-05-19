@@ -11,6 +11,14 @@ import {
   Plus,
   Trash2,
   Minus,
+  SquarePen,
+  Trash,
+  Printer,
+  Mail,
+  NotepadText,
+  NotepadTextDashed,
+  MessageCircleMore,
+  Lock,
 } from 'lucide-react'
 import Button from './Button'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
@@ -214,6 +222,14 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     setIsNavigating(true)
     startTransition(() => {
       router.push(`/dashboard/customers/${customer._id}/schedule`)
+    })
+  }
+
+  // Handle Add Message navigation with loading state
+  const handleSendAMessageClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push(`/dashboard/message`)
     })
   }
 
@@ -467,7 +483,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           Customer Details Page
         </div>
 
-        <div className='pr-1 py-2 text-right print:hidden'>
+        {/* <div className='pr-1 py-2 text-right print:hidden'>
           {schedules && schedules.length > 0 ? (
             <div className='flex flex-col items-end'>
               {schedules.map((schedule) => (
@@ -499,6 +515,19 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
               )}
             </Button>
           )}
+        </div> */}
+        <div className='pr-1 py-2 text-right print:hidden'>
+          <Button
+            icon={<Lock className='h-4 w-4 text-xs hover:text-white' />}
+            onClick={handleSendAMessageClick}
+            disabled={isPending || isNavigating}
+          >
+            {isNavigating || isPending ? (
+              <span className='text-sm px-2'>...</span>
+            ) : (
+              'Send Private Message'
+            )}
+          </Button>
         </div>
       </div>
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
@@ -645,16 +674,16 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       >
                         {' '}
                         {isNavigating || isPending ? (
-                          <span className='text-sm px-2'>Loading ...</span>
+                          <span className='text-sm'>...</span>
                         ) : (
-                          'Edit'
+                          <SquarePen className='h-4 w-4 text-xs hover:text-white' />
                         )}
                       </Button>
 
                       <Button
                         onClick={() => handleDeleteCustomer(customer._id)}
                       >
-                        Delete
+                        <Trash className='h-4 w-4 text-xs hover:text-white' />
                       </Button>
                     </div>
                   </div>
@@ -758,7 +787,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       {isNavigating || isPending ? (
                         <span className='text-xs'>Loading ...</span>
                       ) : (
-                        'Add Notes'
+                        <NotepadText className='h-4 w-4 text-xs hover:text-white' />
                       )}
                     </Button>
                   </div>
@@ -924,7 +953,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         <NoPrint>
                           <div className='flex gap-4'>
                             <Button onClick={printProjectInfo}>
-                              Print Project Info
+                              <Printer className='h-4 w-4 text-xs hover:text-white' />
                             </Button>
                             {showPrintAnimation && <PrintAnimation />}
                             <Button
@@ -938,7 +967,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                   Loading ...
                                 </span>
                               ) : (
-                                'Edit Project'
+                                <SquarePen className='h-4 w-4 text-xs hover:text-white' />
                               )}
                             </Button>
 
@@ -950,7 +979,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                 )
                               }
                             >
-                              Send Email
+                              <Mail className='h-4 w-4 text-xs hover:text-white' />{' '}
                             </Button>
 
                             <Button
@@ -958,7 +987,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                 handleDeleteProject(project._id, customer)
                               }
                             >
-                              Delete Project
+                              <Trash className='h-4 w-4 text-xs hover:text-white' />
                             </Button>
                           </div>
                         </NoPrint>
@@ -1108,7 +1137,9 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                               Plumbing:
                             </dt>
                             <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
-                              {project.plumbing ? 'Plumbing Included ✓' : 'Not Included'}
+                              {project.plumbing
+                                ? 'Plumbing Included ✓'
+                                : 'Not Included'}
                             </dd>
                           </div>
                           <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>

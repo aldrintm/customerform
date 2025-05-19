@@ -19,6 +19,7 @@ const MessageSchema = new Schema(
     },
     message: {
       type: String,
+      trim: true,
     },
     read: {
       type: Boolean,

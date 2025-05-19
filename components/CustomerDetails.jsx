@@ -675,14 +675,20 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         {isNavigating || isPending ? (
                           <span className='text-sm'>...</span>
                         ) : (
-                          <SquarePen className='h-4 w-4 text-xs hover:text-white' />
+                          <div className='flex items-center gap-1'>
+                            <SquarePen className='h-4 w-4 text-xs hover:text-white' />
+                            <span>Edit</span>
+                          </div>
                         )}
                       </Button>
 
                       <Button
                         onClick={() => handleDeleteCustomer(customer._id)}
                       >
-                        <Trash className='h-4 w-4 text-xs hover:text-white' />
+                        <div className='flex items-center gap-0 text-red-400 hover:scale-110 transition-transform duration-200'>
+                          <Trash2 className='h-5 w-5 text-xs' />
+                          <span></span>
+                        </div>
                       </Button>
                     </div>
                   </div>
@@ -853,11 +859,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                 e.stopPropagation() // Prevent any parent onClick events
                                 handleDeleteNote(note._id, customer._id)
                               }}
-                              className='absolute top-2 right-0 text-sm text-red-400 font-nomral'
+                              className='absolute top-2 right-0 text-sm text-red-400 font-normal hover:text-red-500 hover:scale-110 transition-transform duration-200'
                               aria-label='Delete note'
                             >
-                              x
-                              {/* <Trash2 className='w-5 h-5 flex items-center text-center' /> */}
+                              <Trash2 className='w-5 h-5 flex items-center text-center' />
                             </button>
                           </div>
                         )
@@ -952,8 +957,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                         <NoPrint>
                           <div className='flex gap-4'>
                             <Button onClick={printProjectInfo}>
-                              <Printer className='h-4 w-4 text-xs hover:text-white' />{' '}
-                              <span>Print</span>
+                              <div className='flex items-center gap-1'>
+                                <Printer className='h-4 w-4 text-xs hover:text-white' />
+                                <span>Print</span>
+                              </div>
                             </Button>
                             {showPrintAnimation && <PrintAnimation />}
                             <Button
@@ -967,7 +974,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                   Loading ...
                                 </span>
                               ) : (
-                                <SquarePen className='h-4 w-4 text-xs hover:text-white' />
+                                <div className='flex items-center gap-1'>
+                                  <SquarePen className='h-4 w-4 text-xs hover:text-white' />
+                                  <span>Edit</span>
+                                </div>
                               )}
                             </Button>
 
@@ -987,7 +997,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                 handleDeleteProject(project._id, customer)
                               }
                             >
-                              <Trash className='h-4 w-4 text-xs hover:text-white' />
+                              <div className='flex items-center gap-0 text-red-400 hover:scale-110 transition-transform duration-200'>
+                                <Trash2 className='h-5 w-5 text-xs' />
+                                <span></span>
+                              </div>
                             </Button>
                           </div>
                         </NoPrint>

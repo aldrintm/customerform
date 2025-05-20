@@ -1156,7 +1156,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                 : 'Not Included'}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Order Notes:
                             </dt>

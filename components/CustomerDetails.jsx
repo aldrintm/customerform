@@ -1425,6 +1425,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       <div className='sm:p-4 md:col-span-2'>
                         Install Notes: {schedule.installNotes || ' '}
                       </div>
+
+                      <div className='sm:p-4 md:col-span-2'>
+                        I hereby confirm that the materials and installation provided have been completed in accordance with the installation proposal. I have inspected the work performed and find it to be complete and satisfactory.
+                      </div>
                       <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                         <span className=''>
                           Sign On Install: ________________________

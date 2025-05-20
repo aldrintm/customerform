@@ -219,6 +219,44 @@ const SideNavbar = () => {
                 Calendar
               </span>
             </Link>
+            <Link
+              className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
+                pathname === '/dashboard/calendar'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white text-blue-500 hover:text-foreground'
+              }`}
+              href='/dashboard/company'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                className='lucide lucide-building-icon lucide-building'
+              >
+                <rect width='16' height='20' x='4' y='2' rx='2' ry='2' />
+                <path d='M9 22v-4h6v4' />
+                <path d='M8 6h.01' />
+                <path d='M16 6h.01' />
+                <path d='M12 6h.01' />
+                <path d='M12 10h.01' />
+                <path d='M12 14h.01' />
+                <path d='M16 10h.01' />
+                <path d='M16 14h.01' />
+                <path d='M8 10h.01' />
+                <path d='M8 14h.01' />
+              </svg>
+              {/* <Calendar1 className='h-5 w-5 text-blue-500' /> */}
+              <span className='sr-only'>Admin</span>
+              <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
+                Admin
+              </span>
+            </Link>
             {/* This is the old Clipboard Icon for tasks - we will retire this for now and come back to it later */}
             {/* <Link
               className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${

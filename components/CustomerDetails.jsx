@@ -1431,7 +1431,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       </div>
                       <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                         <span className=''>
-                          Sign On Install: ________________________
+                          Customer Signature On Install: __________________
                         </span>
                         <span>Name: ________________________</span>
                       </div>

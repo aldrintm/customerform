@@ -9,19 +9,45 @@ import { formatDate } from '@/utils/formatDate'
 import { toast } from 'react-toastify'
 import Button from './Button'
 import { getSession } from 'next-auth/react'
-import { Plus } from 'lucide-react'
+import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
+import deleteFleet from '@/app/actions/deleteFleet'
 
-const TableFleetPage = ({ vehicles }) => {
+const TableFleetPage = ({ vehicles: initial }) => {
   const router = useRouter()
   const [isNavigating, setIsNavigating] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const [vehicles, setVehicles] = useState(initial)
+
+   // Sync local state with prop changes
+  useEffect(() => {
+    setVehicles(initial) // updates the state when prop changes
+  }, [initial])
 
   const handleAddVehicleClick = () => {
     setIsNavigating(true)
     startTransition(() => {
       router.push('/dashboard/company/fleet/add')
     })
+  }
+
+  // Handler to delete a vehicle.
+  const handleDeleteVehicle = async (vehicleId) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this vehicle?'
+    )
+    if (!confirmed) return
+
+    try {
+      await deleteFleet(vehicleId)
+      // Update local state by filtering out the deleted vehicle.
+      const updatedVehicles = vehicles.filter((vehicle) => vehicle._id !== vehicleId)
+      setVehicles({ ...vehicle, vehicles: updatedVehicles })
+      toast.success('Vehicle deleted successfully.')
+    } catch (error) {
+      console.error('Error deleting vehicle:', error)
+      toast.error('Failed to delete vehicle.')
+    }
   }
 
   return !vehicles.length === 0 ? (
@@ -86,6 +112,9 @@ const TableFleetPage = ({ vehicles }) => {
                   </th>
                   <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Status
+                  </th>
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -181,6 +210,24 @@ const TableFleetPage = ({ vehicles }) => {
                         {vehicle.status}
                       </Link>
                     </td>
+
+
+                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                      <Button
+                    icon={<Trash2 className='w-5 h-5 flex items-center text-center' />}
+            onClick={() => handleDeleteVehicle(vehicle._id)}
+            disabled={isPending || isNavigating}
+          >
+            {isNavigating || isPending ? (
+              <span className='animate-pulse'>Loading...</span>
+            ) : (
+              '...'
+            )}
+          </Button>
+                    </td>
+
+                    
+                    
                   </tr>
                 ))}
               </tbody>

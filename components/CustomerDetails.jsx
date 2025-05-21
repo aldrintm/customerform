@@ -533,7 +533,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
       <div className='container mx-auto grid grid-flow-row gap-4 md:gap-8 pb-10'>
         {/* Customer Quick Top Contact Details*/}
         <PrintVisibility printVisible={true} printTarget='project'>
-          <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0'>
+          <div className='md:grid md:grid-cols-1 gap-2 md:gap-8 mx-4 md:mx-0 print:sm:py-0'>
             <div className='grid grid-cols-2 md:grid-cols-3 md:border border-gray-300 rounded-lg p-1 px-4 md:p-4'>
               <div className='grid grid-cols gap-2 align-middle'>
                 <div className='text-md md:text-2xl font-semibold text-blue-500 underline flex items-center'>
@@ -656,7 +656,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* 1st - Customer Profile Details */}
             <PrintVisibility printVisible={true} printTarget='project'>
-              <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
+              <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 print:sm:py-0 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
                 <div className='pb-4 sm:p-4'>
                   <div className='px-4 sm:px-0 flex justify-between'>
                     <h3 className='text-base font-semibold text-gray-700'>
@@ -943,10 +943,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
             )}
           </div>
           {/* 2nd Main Box - Project + Mapbox */}
-          <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
+          <div className='grid lg:grid-cols-2 sm:gap-2 md:gap-8'>
             {/* Project Order Details Box */}
             <PrintVisibility printVisible={true} printTarget='project'>
-              <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg sm:p-4 print:mb-8 print:border-b-2 transition-all duration-300 hover:md:shadow-md'>
+              <div className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg sm:p-4 print:border-b-2 transition-all duration-300 hover:md:shadow-md print:sm:py-0'>
                 {customer.projects && customer.projects.length > 0 ? (
                   customer.projects.map((project, index) => (
                     <div key={project._id} className='pb-4 sm:p-4'>
@@ -1047,11 +1047,11 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                       `${po.purchaseOrderNumber}-${po.purchaseOrderDate}`
                                     }
                                   >
-                                    <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                                    <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                                       <dt className='text-sm font-medium text-gray-900 pr-2'>
-                                        PO Number:
+                                        PO No:
                                       </dt>
-                                      <dd className='text-sm text-gray-700 sm:col-span-3 md:mt-0 flex justify-between'>
+                                      <dd className='text-sm text-gray-700 sm:col-span-5 md:mt-0 flex justify-between'>
                                         {po.purchaseOrderNumber && (
                                           <span>{po.purchaseOrderNumber}</span>
                                         )}
@@ -1071,19 +1071,19 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                               No Purchase Orders Found
                             </p>
                           )}
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Description:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.description}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Material:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-3 sm:mt-0 md:flex md:justify-between'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0 md:flex md:justify-between'>
                               <span className='pr-2'>
                                 {project.materialThickness}{' '}
                                 {project.materialColor}
@@ -1099,28 +1099,28 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                               </span>
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Edge:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.edge}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Sink:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.sinkQuantity} {project.sinkType}{' '}
                               {project.sinkLocation} ({project.sinkInfo})
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Stove:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.stove
                                 ? 'Slide In Range'
                                 : project.cooktop
@@ -1128,39 +1128,39 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                                 : 'n/a'}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Splash:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.splash}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Demo:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.demo
                                 ? 'Demo Included ✓'
                                 : 'Not Included'}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Plumbing:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.plumbing
                                 ? 'Plumbing Included ✓'
                                 : 'Not Included'}
                             </dd>
                           </div>
-                          <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
-                              Order Notes:
+                              PO Notes:
                             </dt>
-                            <dd className='text-sm text-gray-700 sm:col-span-2 sm:mt-0'>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.notes}
                             </dd>
                           </div>
@@ -1390,44 +1390,73 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 ))}
               </>
             ) : customer?.projects[0]?.status === 'for install' ? (
-              <div className=''>
+              <div className='print:sm:py-0'>
                 {schedules.map((schedule) => (
                   <div
                     key={schedule._id}
                     className='md:grid md:grid-cols-2 md:gap-8'
                   >
                     {/* Template Info */}
-                    <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden transition-all duration-300 hover:shadow-md'>
+                    <div className='sm:grid sm:grid-cols-1 md:border md:border-gray-300 md:block md:rounded-lg p-0 md:p-2 print:hidden transition-all duration-300 hover:shadow-md print:sm:py-0'>
                       <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                         <span className=''>
-                          Template Date: {formatDate(schedule.measureDate)} @{' '}
+                          <span className='font-semibold mr-3 text-gray-700'>
+                            Template Date:
+                          </span>{' '}
+                          {formatDate(schedule.measureDate)} @{' '}
                           {schedule.measureTime}
                         </span>
-                        <span>Measured By: {schedule.measureBy}</span>
+                        <span>
+                          {' '}
+                          <span className='font-semibold mr-3 text-gray-700'>
+                            Measure By:
+                          </span>{' '}
+                          {schedule.measureBy}
+                        </span>
                       </div>
                       <div className='sm:p-4 md:col-span-2'>
-                        Template Notes: {schedule.measureNotes || ' '}
+                        <span className='font-semibold mr-3 text-gray-700'>
+                          Measure Notes:
+                        </span>{' '}
+                        {schedule.measureNotes || ' '}
                       </div>
                     </div>
 
                     {/* Install Info */}
                     <div
                       key={schedule.id}
-                      className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg p-0 md:p-2'
+                      className='grid grid-cols-1 md:border md:border-gray-300 md:rounded-lg sm:pt-0 sm:p-0 md:p-2'
                     >
-                      <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
+                      <div className='sm:flex sm:justify-between sm:px-4 sm:p-2 md:p-4'>
                         <span className=''>
-                          Install Date: {formatDate(schedule.installDate)}
+                          <span className='font-semibold mr-3 text-gray-700'>
+                            Install Date:
+                          </span>{' '}
+                          {formatDate(schedule.installDate)}
                         </span>
-                        <span>Installer: {schedule.installBy}</span>
+                        <span>
+                          <span className='font-semibold mr-3 text-gray-700'>
+                            Installer:
+                          </span>{' '}
+                          {schedule.installBy}
+                        </span>
                       </div>
 
-                      <div className='sm:p-4 md:col-span-2'>
-                        Install Notes: {schedule.installNotes || ' '}
+                      <div className='sm:px-4 md:col-span-2'>
+                        <span className='font-semibold mr-3 text-gray-700'>
+                          Install Notes:
+                        </span>{' '}
+                        {schedule.installNotes || ' '}
                       </div>
 
-                      <div className='sm:p-4 md:col-span-2'>
-                        I hereby confirm that the materials and installation provided have been completed in accordance with the installation proposal. I have inspected the work performed and find it to be complete and satisfactory.
+                      <div className='sm:px-4 sm:p-2 md:col-span-2'>
+                        <span className='font-semibold mr-3 text-gray-700'>
+                          Please read before signing:
+                        </span>{' '}
+                        I hereby confirm that the materials and installation
+                        provided have been completed in accordance with the
+                        installation proposal. I have inspected the work
+                        performed and find it to be complete and satisfactory.
                       </div>
                       <div className='sm:flex sm:justify-between sm:px-4 md:p-4'>
                         <span className=''>

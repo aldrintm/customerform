@@ -182,9 +182,9 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           <div className='container xl:col-span-5 space-y-6'>
             {/* <DashboardTemplateSchedule customers={customers} /> */}
             <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
-            <DashboardInstallScheduleDisplay
+            {/* <DashboardInstallScheduleDisplay
               schedules={todayMeasureSchedules}
-            />
+            /> */}
           </div>
         </div>
       </div>

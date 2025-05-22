@@ -473,6 +473,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     }
   }
 
+  console.log('Customer Details:', customer.projects[0]?.status)
+
   return (
     <>
       {/* Page Title */}
@@ -613,39 +615,49 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 </div>
               </div>
               <div className='grid grid-cols-1 gap-2 text-right'>
-                <div className='text-sm md:text-md font-semibold text-gray-500'>
-                  <span className='text-gray-500 pr-2'>Template:</span>
-                  <span className='inline-flex'>
-                    {schedules && schedules.length > 0 ? (
-                      <span>
-                        {schedules.map((schedule) => (
-                          <span key={schedule._id}>
-                            {formatDate(schedule.measureDate)} @{' '}
-                            {schedule.measureTime}
-                          </span>
-                        ))}
-                      </span>
-                    ) : (
-                      <p>no schedule</p>
-                    )}
-                  </span>
-                </div>
-                <div className='text-sm md:text-md font-semibold text-gray-500'>
-                  <span className='text-gray-500 pr-2'>Install:</span>
-                  <span className='inline-flex'>
-                    {schedules && schedules.length > 0 ? (
-                      <span>
-                        {schedules.map((schedule) => (
-                          <span key={schedule._id}>
-                            {formatDate(schedule.installDate)}
-                          </span>
-                        ))}
-                      </span>
-                    ) : (
-                      <p>no schedule</p>
-                    )}
-                  </span>
-                </div>
+                {customer.projects[0]?.status === 'for template' ? (
+                  <div className='text-sm md:text-md font-semibold text-gray-500'>
+                    <span className='text-gray-500 pr-2'>Template:</span>
+
+                    <span className='inline-flex'>
+                      {schedules && schedules.length > 0 ? (
+                        <span>
+                          {schedules.map((schedule) => (
+                            <span key={schedule._id}>
+                              {formatDate(schedule.measureDate)} @{' '}
+                              {schedule.measureTime}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <p>no schedule</p>
+                      )}
+                    </span>
+                  </div>
+                ) : (
+                  ''
+                )}
+
+                {customer.projects[0]?.status === 'for install' ? (
+                  <div className='text-sm md:text-md font-semibold text-gray-500'>
+                    <span className='text-gray-500 pr-2'>Install:</span>
+                    <span className='inline-flex'>
+                      {schedules && schedules.length > 0 ? (
+                        <span>
+                          {schedules.map((schedule) => (
+                            <span key={schedule._id}>
+                              {formatDate(schedule.installDate)}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <p>no schedule</p>
+                      )}
+                    </span>
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </div>

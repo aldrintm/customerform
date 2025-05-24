@@ -1113,6 +1113,14 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                           </div>
                           <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
                             <dt className='text-sm font-medium text-gray-900 pr-2'>
+                              Slab Note:
+                            </dt>
+                            <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
+                              {project.materialNote}
+                            </dd>
+                          </div>
+                          <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
+                            <dt className='text-sm font-medium text-gray-900 pr-2'>
                               Edge:
                             </dt>
                             <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
@@ -1155,7 +1163,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                             <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.demo
                                 ? 'Demo Included ✓'
-                                : 'Not Included'}
+                                : 'Not Included'}{' '}
+                              {project.demoNote}
                             </dd>
                           </div>
                           <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch'>
@@ -1165,7 +1174,8 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                             <dd className='text-sm text-gray-700 sm:col-span-5 sm:mt-0'>
                               {project.plumbing
                                 ? 'Plumbing Included ✓'
-                                : 'Not Included'}
+                                : 'Not Included'}{' '}
+                              {project.plumbingNote}
                             </dd>
                           </div>
                           <div className='px-4 py-1 sm:grid sm:grid-cols-6 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>

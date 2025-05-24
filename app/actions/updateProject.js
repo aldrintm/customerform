@@ -56,10 +56,11 @@ async function updateProject(customerId, projectId, formData) {
 
   const projectData = {
     purchaseOrders,
-    description: formData.get('description'),
     customerType: formData.get('storeName')?.trim() || '',
     storeId: formData.get('storeId'),
     status: formData.get('status'),
+    description: formData.get('description')?.trim() || '',
+    materialNote: formData.get('materialNote')?.trim() || '',
     materialType: formData.get('materialType'),
     materialThickness: formData.get('materialThickness'),
     materialBrand: formData.get('materialBrand'),
@@ -69,13 +70,15 @@ async function updateProject(customerId, projectId, formData) {
     sinkQuantity: formData.get('sinkQuantity'),
     sinkType: formData.get('sinkType'),
     sinkLocation: formData.get('sinkLocation'),
-    sinkInfo: formData.get('sinkInfo'),
+    sinkInfo: formData.get('sinkInfo')?.trim() || '',
     stove: formData.get('stove') ? true : false,
     cooktop: formData.get('cooktop') ? true : false,
-    demo: Boolean(formData.get('demo')),
-    plumbing: Boolean(formData.get('plumbing')),
+    demo: formData.has('demo'),
+    demoNote: formData.get('demoNote')?.trim() || '',
+    plumbing: formData.has('plumbing'),
+    plumbingNote: formData.get('plumbingNote')?.trim() || '',
     splash: formData.get('splash'),
-    notes: formData.get('notes'),
+    notes: formData.get('notes')?.trim() || '',
   }
 
   // lets allocate the data above to the customerId in this profile and update it.

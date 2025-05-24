@@ -74,6 +74,7 @@ async function addProject(formData) {
     ],
     description: formData.get('description')?.trim() || '',
     materialType: formData.get('materialType')?.trim() || '',
+    materialNote: formData.get('materialNote')?.trim() || '',
     materialThickness: formData.get('materialThickness')?.trim() || '',
     materialBrand: formData.get('materialBrand')?.trim() || '',
     materialColor: formData.get('materialColor')?.trim() || '',
@@ -87,7 +88,9 @@ async function addProject(formData) {
     splash: formData.getAll('splash').map((splash) => splash?.trim() || ''),
     cooktop: formData.has('cooktop'),
     demo: formData.has('demo'),
+    demoNote: formData.get('demoNote')?.trim() || '',
     plumbing: formData.has('plumbing'),
+    plumbingNote: formData.get('plumbingNote')?.trim() || '',
     notes: formData.get('notes')?.trim() || '',
   }
 

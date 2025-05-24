@@ -314,6 +314,23 @@ export default function ProjectForm({ customer }) {
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
+                  {/* Material Note */}
+                  <div className='col-span-6'>
+                    <label
+                      htmlFor='materialNote'
+                      className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                    >
+                      Any Material Notes:
+                    </label>
+
+                    <input
+                      type='text'
+                      id='materialNote'
+                      name='materialNote'
+                      placeholder='Qty of Slabs? Location? Other notes?'
+                      className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
+                    />
+                  </div>
                 </div>
 
                 {/* Project Info Material Brand + Thickness + Color */}
@@ -602,7 +619,7 @@ export default function ProjectForm({ customer }) {
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Checkbox Container */}
+                  {/* Stove Type Checkbox Container */}
                   <div className='col-span-6 flex items-center'>
                     {/* Slide-in Range Checkbox */}
                     <div className='flex items-center mr-4'>
@@ -616,7 +633,9 @@ export default function ProjectForm({ customer }) {
                           name='stove'
                           className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
                         />
-                        <span className='ml-2 items-center'>Slide-in</span>
+                        <span className='ml-2 items-center'>
+                          Slide-in Range
+                        </span>
                       </label>
                     </div>
 
@@ -632,44 +651,89 @@ export default function ProjectForm({ customer }) {
                           name='cooktop'
                           className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
                         />
-                        <span className='ml-2 items-center'>Cooktop</span>
-                      </label>
-                    </div>
-
-                    {/* Demo Checkbox */}
-                    <div className='flex items-center mr-4'>
-                      <label
-                        htmlFor='demo'
-                        className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                      >
-                        <input
-                          type='checkbox'
-                          id='demo'
-                          name='demo'
-                          className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
-                        />
-                        <span className='ml-2 items-center'>Demo</span>
-                      </label>
-                    </div>
-
-                    {/* Plumbing Checkbox */}
-                    <div className='flex items-center mr-4'>
-                      <label
-                        htmlFor='plumbing'
-                        className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
-                      >
-                        <input
-                          type='checkbox'
-                          id='plumbing'
-                          name='plumbing'
-                          className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
-                        />
-                        <span className='ml-2 items-center'>Plumbing</span>
+                        <span className='ml-2 items-center'>
+                          Cooktop Cutout
+                        </span>
                       </label>
                     </div>
                   </div>
                 </div>
 
+                {/* Demo and Plumbing + Notes*/}
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:pt-2 px-4 py-0 lg:gap-x-6'>
+                  {/* Demo Checkbox + Demo Notes */}
+                  <div className='col-span-6'>
+                    <div className='flex items-center gap-4 lg:gap-x-6'>
+                      {/* Demo Checkbox */}
+                      <div className='flex items-center mr-4'>
+                        <label
+                          htmlFor='demo'
+                          className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          <input
+                            type='checkbox'
+                            id='demo'
+                            name='demo'
+                            className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                          />
+                          <span className='ml-2 items-center'>Demo</span>
+                        </label>
+                      </div>
+                      <div className='w-full'>
+                        <label
+                          htmlFor='demoNote'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          Demo Notes:
+                        </label>
+
+                        <input
+                          type='text'
+                          id='demoNote'
+                          name='demoNote'
+                          placeholder='What are we tearing out? What else?'
+                          className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* Plumbing Checkbox + Note */}
+                  <div className='col-span-6'>
+                    <div className='flex items-center gap-4 lg:gap-x-6'>
+                      {/* Plumbing Checkbox */}
+                      <div className='flex items-center mr-4'>
+                        <label
+                          htmlFor='plumbing'
+                          className='inline-flex items-center text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          <input
+                            type='checkbox'
+                            id='plumbing'
+                            name='plumbing'
+                            className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                          />
+                          <span className='ml-2 items-center'>Plumbing</span>
+                        </label>
+                      </div>
+                      <div className='w-full'>
+                        <label
+                          htmlFor='plumbingNote'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          Plumbing Notes:
+                        </label>
+
+                        <input
+                          type='text'
+                          id='plumbingNote'
+                          name='plumbingNote'
+                          placeholder='Disconnect? or Reconnect? or Full On?'
+                          className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 {/* Textarea for Notes */}
                 <div className='grid grid-cols-1 lg:grid-cols-1 px-4 py-2'>
                   {/* Text Area for Special Notes with Customer */}
@@ -685,7 +749,7 @@ export default function ProjectForm({ customer }) {
                     <textarea
                       id='notes'
                       name='notes'
-                      rows='3'
+                      rows='1'
                       className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                       placeholder='Enter any additional order notes...'
                     ></textarea>

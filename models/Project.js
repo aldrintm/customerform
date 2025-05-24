@@ -65,6 +65,10 @@ const ProjectSchema = new Schema(
       type: String,
       trim: true,
     },
+    materialNote: {
+      type: String,
+      trim: true,
+    },
     materialType: {
       type: String,
       trim: true,
@@ -124,9 +128,17 @@ const ProjectSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    demoNote: {
+      type: String,
+      trim: true,
+    },
     plumbing: {
       type: Boolean,
       default: false,
+    },
+    plumbingNote: {
+      type: String,
+      trim: true,
     },
     notes: {
       type: String,

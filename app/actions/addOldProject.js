@@ -29,65 +29,49 @@ async function addProject(formData) {
 
   console.log('Customer ID:', customerId)
 
-  // Dynamic Purchase Orders Processing
-  const purchaseOrders = []
-  let poIndex = 1
+  // Extract the date string from the form
+  const poDate1Str = formData.get('purchaseOrderDate1')
+  const poDate2Str = formData.get('purchaseOrderDate2')
+  const poDate3Str = formData.get('purchaseOrderDate3')
+  console.log('Raw purchaseOrderDate1:', poDate1Str)
+  console.log('Raw purchaseOrderDate1:', poDate2Str)
+  console.log('Raw purchaseOrderDate1:', poDate3Str)
 
-  // Keep checking for purchase orders until we don't find any more
-  while (true) {
-    const poNumber = formData.get(`purchaseOrderNumber${poIndex}`)
-    const poDateStr = formData.get(`purchaseOrderDate${poIndex}`)
-    const squareFeet = formData.get(`squareFeet${poIndex}`)
-    const poAmount = formData.get(`purchaseOrderAmount${poIndex}`)
-
-    // If we don't find a PO number for this index, break the loop
-    if (!poNumber && !poDateStr && !squareFeet && !poAmount) {
-      break
-    }
-
-    // Only add the PO if at least one field has data
-    if (poNumber || poDateStr || squareFeet || poAmount) {
-      console.log(`Processing PO ${poIndex}:`, {
-        poNumber,
-        poDateStr,
-        squareFeet,
-        poAmount,
-      })
-
-      // Convert date string to Date object and validate
-      let poDate = null
-      if (poDateStr) {
-        const dateObj = new Date(poDateStr)
-        if (!isNaN(dateObj.getTime())) {
-          poDate = dateObj
-        } else {
-          console.error(
-            `Invalid date for purchaseOrderDate${poIndex}:`,
-            poDateStr
-          )
-        }
-      }
-
-      // Add the purchase order to our array
-      purchaseOrders.push({
-        purchaseOrderNumber: poNumber?.trim() || '',
-        purchaseOrderDate: poDate,
-        squareFeet: squareFeet ? Number(squareFeet) : 0,
-        purchaseOrderAmount: poAmount ? Number(poAmount) : 0,
-      })
-    }
-
-    poIndex++
+  // Convert to a Date object and validate
+  const poDate1 = new Date(poDate1Str)
+  if (!poDate1Str || isNaN(poDate1.getTime())) {
+    console.error('Invalid date for purchaseOrderDate1:', poDate1Str)
+    // Optionally, set it to null or throw an error
   }
 
-  console.log('All Purchase Orders:', purchaseOrders)
+  const poDate2 = new Date(poDate2Str)
+  if (!poDate2Str || isNaN(poDate2.getTime())) {
+    console.error('Invalid date for purchaseOrderDate2:', poDate2Str)
+    // Optionally, set it to null or throw an error
+  }
+
+  const poDate3 = new Date(poDate3Str)
+  if (!poDate3Str || isNaN(poDate3.getTime())) {
+    console.error('Invalid date for purchaseOrderDate3:', poDate3Str)
+    // Optionally, set it to null or throw an error
+  }
 
   const projectData = {
     customer: customerId,
     customerType: formData.get('storeName')?.trim() || '',
     storeId: formData.get('storeId')?.trim() || '',
-    status: formData.get('status')?.trim() || 'pending',
-    purchaseOrders: purchaseOrders, // Use our dynamic array
+    status: formData.get('status')?.trim() || '',
+    purchaseOrders: [
+      {
+        purchaseOrderNumber: formData.get('purchaseOrderNumber1')?.trim() || '',
+        purchaseOrderDate:
+          poDate1Str && !isNaN(poDate1.getTime()) ? poDate1 : null,
+        squareFeet: formData.get('squareFeet1')?.trim() || '0',
+        purchaseOrderAmount:
+          formData.get('purchaseOrderAmount1')?.trim() || '0',
+      },
+      // ... repeat for purchaseOrders 2 and 3
+    ],
     description: formData.get('description')?.trim() || '',
     materialType: formData.get('materialType')?.trim() || '',
     materialNote: formData.get('materialNote')?.trim() || '',
@@ -97,9 +81,7 @@ async function addProject(formData) {
     materialFinish: formData.get('materialFinish')?.trim() || '',
     edge: formData.getAll('edge').map((edge) => edge?.trim() || ''),
     sinkType: formData.get('sinkType')?.trim() || '',
-    sinkQuantity: formData.get('sinkQuantity')
-      ? Number(formData.get('sinkQuantity'))
-      : 0,
+    sinkQuantity: formData.get('sinkQuantity')?.trim() || '0',
     sinkLocation: formData.get('sinkLocation')?.trim() || '',
     sinkInfo: formData.get('sinkInfo')?.trim() || '',
     stove: formData.has('stove'),
@@ -113,13 +95,40 @@ async function addProject(formData) {
   }
 
   // lets check the server to see all items uploaded to the DB
-  console.log('Final Project Data:', projectData)
+  console.log(projectData)
 
-  // lets plug all the data using the property model
+  // lets plug all the date using the property model
   const newProject = new Project(projectData)
   // save it in our DB
   await newProject.save()
   console.log('New Project Saved:', newProject)
+
+  // update the customer with the new project’s _id into the projects array
+  // const updatedCustomer = await Customer.findByIdAndUpdate(
+  //   customerId,
+  //   {
+  //     $push: { projects: newProject._id },
+  //   },
+  //   { new: true }
+  // ) // return the updated document for loggin)
+
+  // if (!updatedCustomer) {
+  //   console.error('Customer update failed. Customer not found or invalid ID.')
+  // } else {
+  //   console.log('Customer updated:', updatedCustomer)
+  // }
+
+  // Update the customer document by pushing the new project's _id
+  // try {
+  //   const updatedCustomer = await Customer.findByIdAndUpdate(
+  //     customerId,
+  //     { $push: { projects: newProject._id } },
+  //     { new: true }
+  //   )
+  //   console.log('Customer updated:', updatedCustomer)
+  // } catch (error) {
+  //   console.error('Error updating customer:', error)
+  // }
 
   // Update the customer document using updateOne
   try {
@@ -136,9 +145,9 @@ async function addProject(formData) {
     console.error('Error updating customer:', error)
   }
 
-  // Optionally, revalidate the customer's page and redirect
+  // Optionally, revalidate the customer’s page and redirect
   // this will clear cached data in our form/memory
-  revalidatePath(`/dashboard/customers/${customerId}`)
+  revalidatePath('/dashboard/customers/${customerId}')
 
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)

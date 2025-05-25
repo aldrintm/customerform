@@ -32,59 +32,98 @@ async function updateProject(customerId, projectId, formData) {
   //   throw new Error('Current user is not allowed to edit this customer')
   // }
 
-  // Extracting the form data and structuring the purchaseOrder as an array of objects
-  const purchaseOrders = [
-    {
-      purchaseOrderNumber: formData.get('purchaseOrderNumber1'),
-      purchaseOrderDate: formData.get('purchaseOrderDate1'),
-      squareFeet: formData.get('squareFeet1'),
-      purchaseOrderAmount: formData.get('purchaseOrderAmount1'),
-    },
-    {
-      purchaseOrderNumber: formData.get('purchaseOrderNumber2'),
-      purchaseOrderDate: formData.get('purchaseOrderDate2'),
-      squareFeet: formData.get('squareFeet2'),
-      purchaseOrderAmount: formData.get('purchaseOrderAmount2'),
-    },
-    {
-      purchaseOrderNumber: formData.get('purchaseOrderNumber3'),
-      purchaseOrderDate: formData.get('purchaseOrderDate3'),
-      squareFeet: formData.get('squareFeet3'),
-      purchaseOrderAmount: formData.get('purchaseOrderAmount3'),
-    },
-  ]
+  // Dynamic Purchase Orders Processing (same logic as addProject)
+  const purchaseOrders = []
+  let poIndex = 1
+
+  // Keep checking for purchase orders until we don't find any more
+  while (true) {
+    const poNumber = formData.get(`purchaseOrderNumber${poIndex}`)
+    const poDateStr = formData.get(`purchaseOrderDate${poIndex}`)
+    const squareFeet = formData.get(`squareFeet${poIndex}`)
+    const poAmount = formData.get(`purchaseOrderAmount${poIndex}`)
+
+    // If we don't find a PO number for this index, break the loop
+    if (!poNumber && !poDateStr && !squareFeet && !poAmount) {
+      break
+    }
+
+    // Only add the PO if at least one field has data
+    if (poNumber || poDateStr || squareFeet || poAmount) {
+      console.log(`Processing PO ${poIndex}:`, {
+        poNumber,
+        poDateStr,
+        squareFeet,
+        poAmount,
+      })
+
+      // Convert date string to Date object and validate
+      let poDate = null
+      if (poDateStr) {
+        const dateObj = new Date(poDateStr)
+        if (!isNaN(dateObj.getTime())) {
+          poDate = dateObj
+        } else {
+          console.error(
+            `Invalid date for purchaseOrderDate${poIndex}:`,
+            poDateStr
+          )
+        }
+      }
+
+      // Add the purchase order to our array
+      purchaseOrders.push({
+        purchaseOrderNumber: poNumber?.trim() || '',
+        purchaseOrderDate: poDate,
+        squareFeet: squareFeet ? Number(squareFeet) : 0,
+        purchaseOrderAmount: poAmount ? Number(poAmount) : 0,
+      })
+    }
+
+    poIndex++
+  }
+
+  console.log('All Purchase Orders for Update:', purchaseOrders)
 
   const projectData = {
-    purchaseOrders,
+    purchaseOrders: purchaseOrders, // Use our dynamic array
     customerType: formData.get('storeName')?.trim() || '',
-    storeId: formData.get('storeId'),
-    status: formData.get('status'),
+    storeId: formData.get('storeId')?.trim() || '',
+    status: formData.get('status')?.trim() || '',
     description: formData.get('description')?.trim() || '',
     materialNote: formData.get('materialNote')?.trim() || '',
-    materialType: formData.get('materialType'),
-    materialThickness: formData.get('materialThickness'),
-    materialBrand: formData.get('materialBrand'),
-    materialColor: formData.get('materialColor'),
-    materialFinish: formData.get('materialFinish'),
-    edge: formData.get('edge'),
-    sinkQuantity: formData.get('sinkQuantity'),
-    sinkType: formData.get('sinkType'),
-    sinkLocation: formData.get('sinkLocation'),
+    materialType: formData.get('materialType')?.trim() || '',
+    materialThickness: formData.get('materialThickness')?.trim() || '',
+    materialBrand: formData.get('materialBrand')?.trim() || '',
+    materialColor: formData.get('materialColor')?.trim() || '',
+    materialFinish: formData.get('materialFinish')?.trim() || '',
+    edge: formData.getAll('edge').map((edge) => edge?.trim() || ''),
+    sinkQuantity: formData.get('sinkQuantity')
+      ? Number(formData.get('sinkQuantity'))
+      : 0,
+    sinkType: formData.get('sinkType')?.trim() || '',
+    sinkLocation: formData.get('sinkLocation')?.trim() || '',
     sinkInfo: formData.get('sinkInfo')?.trim() || '',
-    stove: formData.get('stove') ? true : false,
-    cooktop: formData.get('cooktop') ? true : false,
+    stove: formData.has('stove'),
+    cooktop: formData.has('cooktop'),
     demo: formData.has('demo'),
     demoNote: formData.get('demoNote')?.trim() || '',
     plumbing: formData.has('plumbing'),
     plumbingNote: formData.get('plumbingNote')?.trim() || '',
-    splash: formData.get('splash'),
+    splash: formData.getAll('splash').map((splash) => splash?.trim() || ''),
     notes: formData.get('notes')?.trim() || '',
   }
 
-  // lets allocate the data above to the customerId in this profile and update it.
-  const updatedProject = await Project.findByIdAndUpdate(projectId, projectData)
+  console.log('Final Project Update Data:', projectData)
 
-  console.log(updatedProject)
+  // lets allocate the data above to the customerId in this profile and update it.
+  const updatedProject = await Project.findByIdAndUpdate(
+    projectId,
+    projectData,
+    { new: true }
+  )
+
+  console.log('Updated Project:', updatedProject)
 
   console.log('formData.has("demo"):', formData.has('demo'))
   console.log('formData.has("plumbing"):', formData.has('plumbing'))

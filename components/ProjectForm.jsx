@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import addProject from '@/app/actions/addProject'
-import { UserRound, UserRoundPlus } from 'lucide-react'
+import { UserRound, UserRoundPlus, Plus, X } from 'lucide-react'
 import Link from 'next/link'
 import { ClipLoader } from 'react-spinners'
 
@@ -34,6 +35,19 @@ function SubmitButton() {
 }
 
 export default function ProjectForm({ customer }) {
+  const [additionalPOs, setAdditionalPOs] = useState([])
+
+  const addPORow = () => {
+    // tracks how many additional PO rows are added
+    setAdditionalPOs([...additionalPOs, additionalPOs.length + 2])
+  }
+
+  const removePORow = (indexToRemove) => {
+    setAdditionalPOs(
+      additionalPOs.filter((_, index) => index !== indexToRemove)
+    )
+  }
+
   return (
     <section className='bg-white'>
       <div className='container max-w-4xl mx-auto px-15 md:rounded-2xl'>
@@ -133,9 +147,9 @@ export default function ProjectForm({ customer }) {
                   </div>
                 </div>
 
-                {/* PO Numbers, PO Date, PO Cost etc */}
+                {/* First PO Row - Always Visible - PO Numbers, PO Date, PO Cost etc */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 pt-2 lg:gap-x-6'>
-                  {/* Purchase Order */}
+                  {/* Purchase Order Number */}
                   <div className='col-span-3'>
                     <label
                       htmlFor='purchaseOrderNumber1'
@@ -169,7 +183,7 @@ export default function ProjectForm({ customer }) {
                     />
                   </div>
                   {/* Square Feet */}
-                  <div className='col-span-3'>
+                  <div className='col-span-2'>
                     <label
                       htmlFor='squareFeet1'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
@@ -181,7 +195,7 @@ export default function ProjectForm({ customer }) {
                       type='number'
                       id='squareFeet1'
                       name='squareFeet1'
-                      placeholder='How many sqft?'
+                      placeholder='PO Sq Ft?'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
@@ -198,17 +212,104 @@ export default function ProjectForm({ customer }) {
                       type='number'
                       name='purchaseOrderAmount1'
                       id='purchaseOrderAmount1'
-                      placeholder='0.00'
+                      placeholder='$ 0.00'
                       min='0'
                       step='0.01'
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
+
+                  {/* Adjusted column span to accommodate the button */}
+                  <div className='col-span-1 flex flex-col items-center justify-center'>
+                    <label
+                      htmlFor='purchaseOrderAmount1'
+                      className='block text-xs md:text-sm font-semibold text-gray-500 justify-center'
+                    >
+                      Action
+                    </label>
+
+                    {/* Add PO Button */}
+                    <button
+                      type='button'
+                      onClick={addPORow}
+                      className='p-2 rounded-md bg-sky-400 hover:bg-sky-500 text-white transition-colors duration-200 flex items-center justify-center mt-1'
+                      title='Add another Purchase Order'
+                    >
+                      <Plus className='w-4 h-4' />
+                    </button>
+                  </div>
                 </div>
 
+                {/* Dynamic Additional PO Rows */}
+                {additionalPOs.map((poNumber, index) => (
+                  <div
+                    key={index}
+                    className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 pt-2 lg:gap-x-6'
+                  >
+                    {/* Purchase Order */}
+                    <div className='col-span-3'>
+                      <input
+                        type='text'
+                        id={`purchaseOrderNumber${poNumber}`}
+                        name={`purchaseOrderNumber${poNumber}`}
+                        placeholder='Purchase Order #'
+                        className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      />
+                    </div>
+                    {/* Purchase Order Date */}
+                    <div className='col-span-3'>
+                      <input
+                        type='date'
+                        id={`purchaseOrderDate${poNumber}`}
+                        name={`purchaseOrderDate${poNumber}`}
+                        className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                      />
+                    </div>
+                    {/* Square Feet */}
+                    <div className='col-span-2'>
+                      <input
+                        type='number'
+                        id={`squareFeet${poNumber}`}
+                        name={`squareFeet${poNumber}`}
+                        placeholder='PO Sq Ft?'
+                        className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                      />
+                    </div>
+                    {/* Purchase Order Amount */}
+                    <div className='col-span-3'>
+                      <div className='flex items-center gap-2'>
+                        <input
+                          type='number'
+                          name={`purchaseOrderAmount${poNumber}`}
+                          id={`purchaseOrderAmount${poNumber}`}
+                          placeholder='$ 0.00'
+                          min='0'
+                          step='0.01'
+                          className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                        />
+                        {/* Remove PO Button */}
+                      </div>
+                    </div>
+                    <div className='col-span-1'>
+                      {/* Adjusted column span to accommodate the button */}
+                      <div className='col-span-1 flex flex-col items-center justify-center'>
+                        {/* Add PO Button */}
+                        <button
+                          type='button'
+                          onClick={() => removePORow(index)}
+                          className='p-2 rounded-md bg-rose-400 hover:bg-rose-500 text-white transition-colors duration-200 flex items-center justify-center mt-1'
+                          title='Remove this Purchase Order'
+                        >
+                          <X className='w-4 h-4' />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
                 {/* Repeat --- PO Numbers, PO Date, PO Cost etc */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-0 lg:gap-x-6'>
-                  {/* Purchase Order */}
+                {/* <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-0 lg:gap-x-6'>
+                  
                   <div className='col-span-3'>
                     <input
                       type='text'
@@ -218,7 +319,7 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Purchase Order Date */}
+                 
                   <div className='col-span-3'>
                     <input
                       type='date'
@@ -227,7 +328,7 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Square Feet */}
+                  
                   <div className='col-span-3'>
                     <input
                       type='number'
@@ -237,7 +338,7 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Purchase Order Amount */}
+                  
                   <div className='col-span-3'>
                     <input
                       type='number'
@@ -249,11 +350,10 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* Repeat --- PO Numbers, PO Date, PO Cost etc */}
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-0 lg:gap-x-6'>
-                  {/* Purchase Order */}
+                {/* <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-0 lg:gap-x-6'>
                   <div className='col-span-3'>
                     <input
                       type='text'
@@ -263,7 +363,7 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Purchase Order Date */}
+
                   <div className='col-span-3'>
                     <input
                       type='date'
@@ -272,7 +372,7 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Square Feet */}
+
                   <div className='col-span-3'>
                     <input
                       type='number'
@@ -282,7 +382,7 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-                  {/* Purchase Order Amount */}
+
                   <div className='col-span-3'>
                     <input
                       type='number'
@@ -294,7 +394,10 @@ export default function ProjectForm({ customer }) {
                       className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
-                </div>
+                </div> */}
+
+                {/* break here */}
+
                 {/* Project Info - Description */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:pt-2 px-4 py-0 lg:gap-x-6'>
                   {/* Description */}

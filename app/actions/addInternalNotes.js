@@ -49,7 +49,7 @@ async function addInternalNotes(formData) {
     { new: false } // optional: returns the updated doc if you need it
   )
 
-  revalidatePath('/dashboard/customers/${customerId}')
+  revalidatePath(`/dashboard/customers/${customerId}`)
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)
 

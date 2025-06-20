@@ -29,13 +29,19 @@ async function addInternalNotes(formData) {
   const noteDate = formData.get('noteDate') || ''
   const noteText = formData.get('note') || ''
 
+  // guard clauses to check noteText is empty or no customer ID
+  if (!noteText.trim()) {
+  throw new Error('Note content cannot be empty')
+  }
+  if (!customerId) {
+    throw new Error('Customer ID is missing')
+  }
   const internalNotesData = {
     staff: userId,
     customer: customerId,
     noteDate: noteDate,
     note: noteText,
   }
-
   // lets plug all the date using the Note model
   const newInternalNote = new Note(internalNotesData)
   // save a new note in our DB

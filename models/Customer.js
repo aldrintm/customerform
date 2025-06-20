@@ -73,18 +73,14 @@ const CustomerSchema = new Schema(
 CustomerSchema.index({ phone: 1 })
 CustomerSchema.index({ email: 1 }, { unique: true })
 
-// Add compound index for customer lookup with project and note population
-CustomerSchema.index({ _id: 1})
-
 // Add index for projects array to improve population performance
-CustomerSchema.index({ projects: 1 })
+// CustomerSchema.index({ projects: 1 })
 
 // Add index for office notes to improve population performance
-CustomerSchema.index({ officeNotes: 1 })
+// CustomerSchema.index({ officeNotes: 1 })
 
 // Add index for frequently accessed fields together
 CustomerSchema.index({
-  _id: 1,
   firstName: 1,
   lastName: 1,
   createdAt: -1,

@@ -37,7 +37,7 @@ async function addCustomer(formData) {
   }
 
   // lets check the server to see all items uploaded to the DB
-  console.log(customerData)
+  console.log('This is the new data:', customerData)
 
   // lets plug all the date using the property model
   const newCustomer = new Customer(customerData)

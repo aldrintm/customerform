@@ -96,7 +96,7 @@ const SideNavbar = () => {
                 Customer List
               </span>
             </Link>
-            <Link
+            {/* <Link
               className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/files'
                   ? 'bg-blue-500 text-white'
@@ -125,7 +125,7 @@ const SideNavbar = () => {
               <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Office Files
               </span>
-            </Link>
+            </Link> */}
             <Link
               className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
                 pathname === '/dashboard/inventory'

@@ -78,7 +78,7 @@ export default function NotesForm({ customer }) {
                       type='date'
                       id='noteDate'
                       name='noteDate'
-                      disabled
+                      readOnly
                       defaultValue={new Date().toISOString().split('T')[0]}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />

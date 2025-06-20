@@ -99,6 +99,7 @@ export default function NotesForm({ customer }) {
                       type='text'
                       id='note'
                       name='note'
+                      required
                       rows={6}
                       placeholder='Share Notes or Customer Calls ....'
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'

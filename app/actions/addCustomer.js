@@ -20,24 +20,34 @@ async function addCustomer(formData) {
   // lets get the userId then
   const { userId } = sessionUser
 
+  const sanitizeInput = (value) => {
+  if (typeof value === 'string') {
+    const trimmed = value.trim()
+    return trimmed.length > 0 ? trimmed : undefined
+  }
+  return undefined
+}
+
   const customerData = {
-    firstName: formData.get('firstName')?.toLowerCase() || '',
-    lastName: formData.get('lastName')?.toLowerCase() || '',
-    phone: formData.get('phone') || '',
-    email: formData.get('email') || '',
+    firstName: sanitizeInput(formData.get('firstName')?.toLowerCase()),
+    lastName: sanitizeInput(formData.get('lastName')?.toLowerCase()),
+    phone: sanitizeInput(formData.get('phone')),
+    email: sanitizeInput(formData.get('email')),
     address: {
-      street: formData.get('street') || '',
-      city: formData.get('city') || '',
-      state: formData.get('state') || '',
-      zipcode: formData.get('zipcode') || '',
+      street: sanitizeInput(formData.get('street')),
+      city: sanitizeInput(formData.get('city')),
+      state: sanitizeInput(formData.get('state')),
+      zipcode: sanitizeInput(formData.get('zipcode')),
     },
-    contractorName: formData.get('contractorName') || '',
-    contractorPhone: formData.get('contractorPhone') || '',
-    notes: formData.get('notes') || '',
+    contractorName: sanitizeInput(formData.get('contractorName')),
+    contractorPhone: sanitizeInput(formData.get('contractorPhone')),
+    notes: sanitizeInput(formData.get('notes')),
   }
 
   // lets check the server to see all items uploaded to the DB
-  console.log('This is the new data:', customerData)
+  console.log('contractorPhone raw:', formData.get('contractorPhone'))
+  console.log('Final customer data:', customerData)
+
 
   // lets plug all the date using the property model
   const newCustomer = new Customer(customerData)

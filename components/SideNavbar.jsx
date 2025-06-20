@@ -103,7 +103,7 @@ const SideNavbar = () => {
                   : 'bg-white text-blue-500 hover:text-foreground'
               }`}
               href='/dashboard/files'
-            >
+            > */}
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='24'
@@ -120,7 +120,7 @@ const SideNavbar = () => {
                 <circle cx='19' cy='21' r='1'></circle>
                 <path d='M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12'></path>
               </svg> */}
-              <ArrowDownToLine className='h-5 w-5' />
+             {/* <ArrowDownToLine className='h-5 w-5' />
               <span className='sr-only'>Files</span>
               <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Office Files

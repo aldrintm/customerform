@@ -90,7 +90,7 @@ const SideNavbar = () => {
               }`}
               href='/dashboard/customers'
             >
-              <Files className='h-5 w-5' />
+              <Files className='h-5 w-5 underline' />
               <span className='sr-only'>Customers</span>
               <span className='invisible group-hover:visible absolute ms-1 start-full top-1/2 -translate-y-1/2 z-20 scale-0 px-2 py-1.5 rounded-md border border-gray-200 bg-white text-blue-500 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100 whitespace-nowrap before:absolute before:top-1/2 before:left-0 before:w-3 before:h-3 before:-translate-x-1/2 before:border-l before:border-gray-200 before:-translate-y-1/2 before:rotate-45 before:bg-white before:shadow-md'>
                 Customer List

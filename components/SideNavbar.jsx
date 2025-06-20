@@ -221,7 +221,7 @@ const SideNavbar = () => {
             </Link>
             <Link
               className={`group relative flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8 ${
-                pathname === '/dashboard/calendar'
+                pathname === '/dashboard/company'
                   ? 'bg-blue-500 text-white'
                   : 'bg-white text-blue-500 hover:text-foreground'
               }`}

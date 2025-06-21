@@ -139,6 +139,10 @@ const TableComponentPage = ({ customers }) => {
                           <div className='px-0 py-1 text-center md:text-sm bg-stone-100 text-stone-500 rounded-full'>
                             pending
                           </div>
+                        ) : customer.projects?.[0]?.status === 'for demo' ? (
+                          <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                            for demo
+                          </div>
                         ) : customer.projects?.[0]?.status === 'for install' ? (
                           <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                             for install

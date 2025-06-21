@@ -1,63 +1,38 @@
-'use client'
-import { useState, useEffect } from 'react'
 import updateProject from '@/app/actions/updateProject'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
-import { UserRound, UserRoundPlus, Plus, X } from 'lucide-react'
 import Link from 'next/link'
 
 const CustomerEditProjectForm = ({ customer }) => {
   const project = customer.projects[0]
   const updateProjectById = updateProject.bind(null, customer._id, project._id)
 
-  // State for additional PO rows
-  const [additionalPOs, setAdditionalPOs] = useState([])
+  const formattedDates = project?.purchaseOrders?.map((po) => {
+    if (!po.purchaseOrderDate) return ''
+    const date = new Date(po.purchaseOrderDate)
+    return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0]
+  })
 
-  // Initialize additional POs based on existing project data
-  useEffect(() => {
-    if (project?.purchaseOrders && project.purchaseOrders.length > 1) {
-      // Create additional PO numbers starting from 2
-      const additionalPONumbers = []
-      for (let i = 2; i <= project.purchaseOrders.length; i++) {
-        additionalPONumbers.push(i)
-      }
-      setAdditionalPOs(additionalPONumbers)
-    }
-  }, [project])
+  const formattedDate1 = formattedDates[0] || ''
+  const formattedDate2 = formattedDates[1] || ''
+  const formattedDate3 = formattedDates[2] || ''
 
-  const addPORow = () => {
-    // Add new PO number (existing length + 2 because we start from index 1)
-    const nextPONumber =
-      (project?.purchaseOrders?.length || 1) + additionalPOs.length + 1
-    setAdditionalPOs([...additionalPOs, nextPONumber])
-  }
+  const singlePo = project?.purchaseOrders?.map((po) => po.purchaseOrderNumber)
+  const singlePo1 = singlePo[0] || ''
+  const singlePo2 = singlePo[1] || ''
+  const singlePo3 = singlePo[2] || ''
 
-  const removePORow = (indexToRemove) => {
-    setAdditionalPOs(
-      additionalPOs.filter((_, index) => index !== indexToRemove)
-    )
-  }
+  const squareFeet = project?.purchaseOrders?.map((po) => po.squareFeet)
+  const sqft1 = squareFeet[0] || ''
+  const sqft2 = squareFeet[1] || ''
+  const sqft3 = squareFeet[2] || ''
 
-  // Helper function to get PO data safely
-  const getPOData = (index, field) => {
-    if (!project?.purchaseOrders || !project.purchaseOrders[index]) {
-      return ''
-    }
-
-    const po = project.purchaseOrders[index]
-
-    if (field === 'date') {
-      if (!po.purchaseOrderDate) return ''
-      const date = new Date(po.purchaseOrderDate)
-      return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0]
-    }
-
-    return po[field] || ''
-  }
+  const poAmount = project?.purchaseOrders?.map((po) => po.purchaseOrderAmount)
+  const poAmount1 = poAmount[0] || ''
+  const poAmount2 = poAmount[1] || ''
+  const poAmount3 = poAmount[2] || ''
 
   console.log('Project ID:', project._id)
   console.log('Customer ID:', customer._id)
-  console.log('Existing POs:', project?.purchaseOrders?.length || 0)
-  console.log('Additional POs:', additionalPOs)
 
   return (
     <section className='bg-white'>
@@ -155,7 +130,6 @@ const CustomerEditProjectForm = ({ customer }) => {
                       <option value='in fabrication'>in fabrication</option>
                       <option value='hold'>hold</option>
                       <option value='pending'>pending</option>
-                      <option value='for demo'>for demo</option>
                       <option value='for install'>for install</option>
                       <option value='completed'>completed</option>
                       <option value='service'>service</option>
@@ -169,7 +143,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                   {/* Purchase Order 1 */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderNumber1'
+                      htmlFor='purchaseOrderNumber'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Purchase Order No:
@@ -180,14 +154,14 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderNumber1'
                       name='purchaseOrderNumber1'
                       placeholder='Purchase Order #'
-                      defaultValue={getPOData(0, 'purchaseOrderNumber')}
+                      defaultValue={singlePo1}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
                   {/* Purchase Order Date */}
                   <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderDate1'
+                      htmlFor='purchaseOrderDate'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Date paid:
@@ -198,15 +172,33 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='purchaseOrderDate1'
                       name='purchaseOrderDate1'
                       placeholder='Purchase order date'
-                      defaultValue={getPOData(0, 'date')}
+                      defaultValue={formattedDate1}
                       className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
-
+                  {/* {project?.purchaseOrders?.map((po, index) => {
+                    const formattedDate = new Date(po.purchaseOrderDate)
+                      .toISOString()
+                      .split('T')[0] // "yyyy-MM-dd"
+                    return (
+                      <div key={index}>
+                        <label htmlFor={`purchaseOrderDate-${index}`}>
+                          Purchase Order Date {index + 1}:
+                        </label>
+                        <input
+                          type='date'
+                          id={`purchaseOrderDate-${index}`}
+                          name={`purchaseOrderDate-${index}`}
+                          defaultValue={formattedDate}
+                          className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                        />
+                      </div>
+                    )
+                  })} */}
                   {/* Square Feet */}
-                  <div className='col-span-2'>
+                  <div className='col-span-3'>
                     <label
-                      htmlFor='squareFeet1'
+                      htmlFor='squareFeet'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Paid sq ft.
@@ -217,14 +209,14 @@ const CustomerEditProjectForm = ({ customer }) => {
                       id='squareFeet1'
                       name='squareFeet1'
                       placeholder='How many sqft?'
-                      defaultValue={getPOData(0, 'squareFeet')}
+                      defaultValue={sqft1}
                       className='mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
                     />
                   </div>
                   {/* Purchase Order Amount */}
-                  <div className='col-span-2'>
+                  <div className='col-span-3'>
                     <label
-                      htmlFor='purchaseOrderAmount1'
+                      htmlFor='purchaseOrderAmount'
                       className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                     >
                       Purchase amount
@@ -237,109 +229,111 @@ const CustomerEditProjectForm = ({ customer }) => {
                       placeholder='0.00'
                       min='0'
                       step='0.01'
-                      defaultValue={getPOData(0, 'purchaseOrderAmount')}
+                      defaultValue={poAmount1}
                       className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                     />
                   </div>
+                </div>
 
-                  {/* Adjusted column span to accommodate the button */}
-                  <div className='col-span-2 flex flex-col items-center justify-center'>
-                    <label
-                      htmlFor='purchaseOrderAmount1'
-                      className='block text-xs md:text-sm font-semibold text-gray-500'
-                    >
-                      Add / Delete
-                    </label>
-
-                    {/* Add PO Button */}
-                    <button
-                      type='button'
-                      onClick={addPORow}
-                      className='p-2 rounded-md bg-sky-400 hover:bg-sky-500 text-white transition-colors duration-200 flex items-center justify-center mt-1'
-                      title='Add another Purchase Order'
-                    >
-                      <Plus className='w-4 h-4' />
-                    </button>
+                {/* Repeat --- PO Numbers, PO Date, PO Cost etc */}
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-0 lg:gap-x-6'>
+                  {/* Purchase Order */}
+                  <div className='col-span-3'>
+                    <input
+                      type='text'
+                      id='purchaseOrderNumber2'
+                      name='purchaseOrderNumber2'
+                      placeholder='Purchase Order #'
+                      defaultValue={singlePo2}
+                      className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                    />
+                  </div>
+                  {/* Purchase Order Date */}
+                  <div className='col-span-3'>
+                    <input
+                      type='date'
+                      id='purchaseOrderDate2'
+                      name='purchaseOrderDate2'
+                      placeholder='Purchase order date'
+                      defaultValue={formattedDate2}
+                      className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                    />
+                  </div>
+                  {/* Square Feet */}
+                  <div className='col-span-3'>
+                    <input
+                      type='number'
+                      id='squareFeet2'
+                      name='squareFeet2'
+                      placeholder='How many sqft?'
+                      defaultValue={sqft2}
+                      className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                    />
+                  </div>
+                  {/* Purchase Order Amount */}
+                  <div className='col-span-3'>
+                    <input
+                      type='number'
+                      name='purchaseOrderAmount2'
+                      id='purchaseOrderAmount2'
+                      placeholder='0.00'
+                      min='0'
+                      step='0.01'
+                      defaultValue={poAmount2}
+                      className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                    />
                   </div>
                 </div>
 
-                {/* Dynamic Additional PO Rows */}
-                {additionalPOs.map((poNumber, index) => (
-                  <div
-                    key={index}
-                    className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 pt-2 lg:gap-x-6'
-                  >
-                    {/* Purchase Order */}
-                    <div className='col-span-3'>
-                      <input
-                        type='text'
-                        id={`purchaseOrderNumber${poNumber}`}
-                        name={`purchaseOrderNumber${poNumber}`}
-                        placeholder='Purchase Order #'
-                        defaultValue={getPOData(
-                          poNumber - 1,
-                          'purchaseOrderNumber'
-                        )}
-                        className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                      />
-                    </div>
-                    {/* Purchase Order Date */}
-                    <div className='col-span-3'>
-                      <input
-                        type='date'
-                        id={`purchaseOrderDate${poNumber}`}
-                        name={`purchaseOrderDate${poNumber}`}
-                        defaultValue={getPOData(poNumber - 1, 'date')}
-                        className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
-                      />
-                    </div>
-                    {/* Square Feet */}
-                    <div className='col-span-2'>
-                      <input
-                        type='number'
-                        id={`squareFeet${poNumber}`}
-                        name={`squareFeet${poNumber}`}
-                        placeholder='PO Sq Ft?'
-                        defaultValue={getPOData(poNumber - 1, 'squareFeet')}
-                        className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
-                      />
-                    </div>
-                    {/* Purchase Order Amount */}
-                    <div className='col-span-2'>
-                      <div className='flex items-center gap-2'>
-                        <input
-                          type='number'
-                          name={`purchaseOrderAmount${poNumber}`}
-                          id={`purchaseOrderAmount${poNumber}`}
-                          placeholder='$ 0.00'
-                          min='0'
-                          step='0.01'
-                          defaultValue={getPOData(
-                            poNumber - 1,
-                            'purchaseOrderAmount'
-                          )}
-                          className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                        />
-                        {/* Remove PO Button */}
-                      </div>
-                    </div>
-                    <div className='col-span-2'>
-                      {/* Adjusted column span to accommodate the button */}
-                      <div className='col-span-2 flex flex-col items-center justify-center'>
-                        {/* Add PO Button */}
-                        <button
-                          type='button'
-                          onClick={() => removePORow(index)}
-                          className='p-2 rounded-md bg-rose-400 hover:bg-rose-500 text-white transition-colors duration-200 flex items-center justify-center mt-1'
-                          title='Remove this Purchase Order'
-                        >
-                          <X className='w-4 h-4' />
-                        </button>
-                      </div>
-                    </div>
+                {/* Repeat --- PO Numbers, PO Date, PO Cost etc */}
+                <div className='grid grid-cols-1 gap-4 md:grid-cols-12 px-4 py-0 lg:gap-x-6'>
+                  {/* Purchase Order */}
+                  <div className='col-span-3'>
+                    <input
+                      type='text'
+                      id='purchaseOrderNumber3'
+                      name='purchaseOrderNumber3'
+                      placeholder='Purchase Order #'
+                      defaultValue={singlePo3}
+                      className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                    />
                   </div>
-                ))}
-
+                  {/* Purchase Order Date */}
+                  <div className='col-span-3'>
+                    <input
+                      type='date'
+                      id='purchaseOrderDate3'
+                      name='purchaseOrderDate3'
+                      placeholder='Purchase order date'
+                      defaultValue={formattedDate3}
+                      className='mt-0 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                    />
+                  </div>
+                  {/* Square Feet */}
+                  <div className='col-span-3'>
+                    <input
+                      type='number'
+                      id='squareFeet3'
+                      name='squareFeet3'
+                      placeholder='How many sqft?'
+                      defaultValue={sqft3}
+                      className='mt-0 w-full rounded-md border-gray-200 shadow-sm sm:text-sm bg-sky-50'
+                    />
+                  </div>
+                  {/* Purchase Order Amount */}
+                  <div className='col-span-3'>
+                    <input
+                      type='number'
+                      name='purchaseOrderAmount3'
+                      id='purchaseOrderAmount3'
+                      placeholder='0.00'
+                      min='0'
+                      step='0.01'
+                      defaultValue={poAmount3}
+                      className='mt-0 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                    />
+                  </div>
+                </div>
                 {/* Project Info - Description */}
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-12 md:pt-2 px-4 py-0 lg:gap-x-6'>
                   {/* Description */}

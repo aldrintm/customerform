@@ -34,10 +34,17 @@ async function addCustomer(formData) {
     phone: sanitizeInput(formData.get('phone')),
     email: sanitizeInput(formData.get('email')),
     address: {
+<<<<<<< Updated upstream
       street: sanitizeInput(formData.get('street')),
       city: sanitizeInput(formData.get('city')),
       state: sanitizeInput(formData.get('state')),
       zipcode: sanitizeInput(formData.get('zipcode')),
+=======
+      street: formData.get('street')?.toLowerCase() || '',
+      city: formData.get('city')?.toLowerCase() || '',
+      state: formData.get('state') || '',
+      zipcode: formData.get('zipcode') || '',
+>>>>>>> Stashed changes
     },
     contractorName: sanitizeInput(formData.get('contractorName')),
     contractorPhone: sanitizeInput(formData.get('contractorPhone')),
@@ -56,6 +63,7 @@ async function addCustomer(formData) {
 
   // this will clear cached data in the memory
   revalidatePath('/dashboard')
+  revalidatePath('/dashboard/customers')
 
   // redirect to newly created thank you page details
   // redirect(`/customers/${newCustomer._id}`)

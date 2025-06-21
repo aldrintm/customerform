@@ -10,7 +10,7 @@ import { getSession } from 'next-auth/react'
 import { Plus } from 'lucide-react'
 
 const DashboardTablePage = ({ customers }) => {
-  const limitedCustomers = customers.slice(0, 8)
+  const limitedCustomers = customers.slice(0, 10)
 
   return (
     <section className=''>
@@ -129,6 +129,10 @@ const DashboardTablePage = ({ customers }) => {
                           <div className='px-2 py-1 text-center md:text-sm bg-stone-100 text-stone-500 rounded-full'>
                             pending
                           </div>
+                        ) : customer.projects?.[0]?.status === 'for demo' ? (
+                          <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                            for demo
+                          </div>
                         ) : customer.projects?.[0]?.status === 'for install' ? (
                           <div className='px-2 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                             for install
@@ -157,10 +161,16 @@ const DashboardTablePage = ({ customers }) => {
                         className='block'
                       >
                         <div className='grid grid-rows-2'>
-                          <p>{customer.address.street}</p>
                           <p>
-                            {customer.address.city} {customer.address.state}{' '}
-                            {customer.address.zipcode}
+                            {customerWithCapitalizedNames(
+                              customer.address.street
+                            )}
+                          </p>
+                          <p>
+                            {customerWithCapitalizedNames(
+                              customer.address.city
+                            )}{' '}
+                            {customer.address.state} {customer.address.zipcode}
                           </p>
                         </div>
                       </Link>

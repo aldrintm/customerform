@@ -53,6 +53,25 @@ const ScheduleSchema = new Schema(
       type: String,
       trim: true,
     },
+    demoDescription: {
+      type: String,
+      trim: true,
+    },
+    demoDate: {
+      type: Date,
+    },
+    demoTime: {
+      type: String,
+      trim: true,
+    },
+    demoBy: {
+      type: String,
+      trim: true,
+    },
+    demoNotes: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,

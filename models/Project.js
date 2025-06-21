@@ -32,6 +32,7 @@ const ProjectSchema = new Schema(
         'in fabrication',
         'hold',
         'pending',
+        'for demo',
         'for install',
         'completed',
         'service',

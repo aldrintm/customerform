@@ -35,6 +35,7 @@ function SubmitButton() {
 }
 
 export default function ProjectForm({ customer }) {
+  // State for additional PO rows
   const [additionalPOs, setAdditionalPOs] = useState([])
 
   const addPORow = () => {
@@ -139,6 +140,7 @@ export default function ProjectForm({ customer }) {
                       <option value='in fabrication'>in fabrication</option>
                       <option value='hold'>hold</option>
                       <option value='pending'>pending</option>
+                      <option value='for demo'>for demo</option>
                       <option value='for install'>for install</option>
                       <option value='completed'>completed</option>
                       <option value='service'>service</option>

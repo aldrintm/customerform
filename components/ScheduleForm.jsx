@@ -86,7 +86,7 @@ export default function ScheduleForm({ customer, projects }) {
                     </select>
                   </div>
 
-                  <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-4'>
+                  <div className='grid grid-cols-1 gap-3 md:grid-cols-3 lg:gap-3'>
                     {/* Left Side Column Box */}
                     <div className='grid grid-cols-1 '>
                       {/* Measure Description */}
@@ -103,7 +103,7 @@ export default function ScheduleForm({ customer, projects }) {
                           id='measureDescription'
                           name='measureDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
-                          placeholder='What are we measuring for this trip?'
+                          placeholder='What are we measuring?'
                         />
                       </div>
 
@@ -130,18 +130,15 @@ export default function ScheduleForm({ customer, projects }) {
                           htmlFor='measureTime'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
-                          Measure Time Window
+                          Measure Time
                         </label>
 
                         <select
                           name='measureTime'
                           id='measureTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
                         >
-                          <option value='default'>
-                            Select Time (required)
-                          </option>
+                          <option value=''>Select Time (required)</option>
                           <option value='8-10'>8-10</option>
                           <option value='10-12'>10-12</option>
                           <option value='12-2'>12-2</option>
@@ -160,18 +157,15 @@ export default function ScheduleForm({ customer, projects }) {
                           htmlFor='measureBy'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
-                          Template Technician
+                          Measure Technician
                         </label>
 
                         <select
                           name='measureBy'
                           id='measureBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
                         >
-                          <option value='default' disabled>
-                            Select Name (required)
-                          </option>
+                          <option value=''>Select Name (required)</option>
                           <option value='Anilber'>Anilber</option>
                           <option value='Javier'>Javier</option>
                           <option value='Jeff'>Jeff</option>
@@ -188,7 +182,7 @@ export default function ScheduleForm({ customer, projects }) {
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           {' '}
-                          Customer Instructions or Notes for Technician
+                          Measure Notes:
                         </label>
 
                         <textarea
@@ -196,18 +190,121 @@ export default function ScheduleForm({ customer, projects }) {
                           name='measureNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Enter any additional order notes...'
+                          placeholder='Type some notes...'
                         ></textarea>
                       </div>
                     </div>
 
-                    <span className='flex items-center md:hidden'>
-                      <span className='h-px flex-1 bg-gray-500'></span>
-                      <span className='shrink-0 px-2'>
-                        <Dot className='text-gray-500' />
-                      </span>
-                      <span className='h-px flex-1 bg-gray-500'></span>
-                    </span>
+                    {/* Middle Column Box */}
+                    <div className='grid grid-cols-1 '>
+                      {/* Demo Description */}
+                      <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
+                        <label
+                          htmlFor='demoDescription'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          Demo Description:
+                        </label>
+
+                        <input
+                          type='text'
+                          id='demoDescription'
+                          name='demoDescription'
+                          className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                          placeholder='What are we tearing out?'
+                        />
+                      </div>
+
+                      {/* Demo Date */}
+                      <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
+                        <label
+                          htmlFor='demoDate'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          Demo Date:
+                        </label>
+
+                        <input
+                          type='date'
+                          id='demoDate'
+                          name='demoDate'
+                          className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                        />
+                      </div>
+
+                      {/* Demo Time */}
+                      <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
+                        <label
+                          htmlFor='demoTime'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          Demo Time
+                        </label>
+
+                        <select
+                          name='demoTime'
+                          id='demoTime'
+                          className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                        >
+                          <option value=''>Select Time (required)</option>
+                          <option value='9-12'>9-12</option>
+                          <option value='1-4'>1-4</option>
+                          <option disabled>or</option>
+                          <option value='ask office'>ask office</option>
+                          <option value='allday'>all day</option>
+                        </select>
+                      </div>
+
+                      {/* Measured By: */}
+                      <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
+                        <label
+                          htmlFor='demoBy'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          Demo By
+                        </label>
+
+                        <select
+                          name='demoBy'
+                          id='demoBy'
+                          className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                        >
+                          <option value=''>Select Name (required)</option>
+                          <option value='Francisco'>Francisco</option>
+                          <option value='Chico'>Chico Meza</option>
+                          <option value='Mario Torres'>Mario Torres</option>
+                          <option value='Ruben'>Ruben</option>
+                          <option value='Martin'>Martin</option>
+                          <option value='Cholo'>Cholo</option>
+                          <option value='Ernesto'>Ernesto</option>
+                          <option value='Efren'>Efren</option>
+                          <option value='Vlad'>Vlad</option>
+                          <option value='Mario Gamez'>Mario Gamez</option>
+                          <option value='Other'>Other</option>
+                        </select>
+                      </div>
+
+                      {/* Textarea for Notes */}
+
+                      {/* Text Area for Special Notes with Customer */}
+                      <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
+                        <label
+                          htmlFor='demoNotes'
+                          className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
+                        >
+                          {' '}
+                          Demo Notes:
+                        </label>
+
+                        <textarea
+                          id='demoNotes'
+                          name='demoNotes'
+                          rows={4}
+                          className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
+                          placeholder='Type some notes...'
+                        ></textarea>
+                      </div>
+                    </div>
 
                     {/* Right Side Column Box */}
                     <div className='grid grid-cols-1'>
@@ -225,7 +322,7 @@ export default function ScheduleForm({ customer, projects }) {
                           id='installDescription'
                           name='installDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
-                          placeholder='What are we installing for this trip?'
+                          placeholder='What are we installing?'
                           disabled
                         />
                       </div>
@@ -260,11 +357,8 @@ export default function ScheduleForm({ customer, projects }) {
                           name='installTime'
                           id='installTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
                         >
-                          <option value='default' disabled>
-                            Select Time (required)
-                          </option>
+                          <option value=''>Select Time (required)</option>
                           <option value='9-12'>9-12</option>
                           <option value='1-4'>1-4</option>
                           <option disabled>or</option>
@@ -286,11 +380,8 @@ export default function ScheduleForm({ customer, projects }) {
                           name='installBy'
                           id='installBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
                         >
-                          <option value='default' disabled>
-                            Select Name (required)
-                          </option>
+                          <option value=''>Select Name (required)</option>
                           <option value='Francisco'>Francisco</option>
                           <option value='Chico'>Chico Meza</option>
                           <option value='Mario Torres'>Mario Torres</option>
@@ -312,7 +403,7 @@ export default function ScheduleForm({ customer, projects }) {
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           {' '}
-                          Special Notes for Installers
+                          Install Notes:
                         </label>
 
                         <textarea
@@ -320,7 +411,7 @@ export default function ScheduleForm({ customer, projects }) {
                           name='installNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Enter any additional order notes...'
+                          placeholder='Type some notes...'
                         ></textarea>
                       </div>
                     </div>

@@ -473,8 +473,6 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
     }
   }
 
-  console.log('Customer Details:', customer.projects[0]?.status)
-
   return (
     <>
       {/* Page Title */}
@@ -520,7 +518,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
         </div> */}
         <div className='pr-1 py-2 text-right print:hidden'>
           <Button
-            icon={<Lock className='h-4 w-4 text-xs hover:text-white' />}
+            icon={<Lock className='h-4 w-4 mr-2 text-xs hover:text-white' />}
             onClick={handleSendAMessageClick}
             disabled={isPending || isNavigating}
           >
@@ -546,8 +544,9 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                   </span>
                 </div>
                 <div className='flex text-sm md:text-base font-normal text-gray-600'>
-                  <span className='items-center justify-center align-middle'>
-                    {customer.address.street} {customer.address.city}{' '}
+                  <span className=''>
+                    {customerWithCapitalizedNames(customer.address.street)}{' '}
+                    {customerWithCapitalizedNames(customer.address.city)}{' '}
                     {customer.address.state} {customer.address.zipcode}
                   </span>
                 </div>
@@ -603,14 +602,12 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 )}
                 <div className='flex md:gap-6'>
                   <div className='flex text-sm md:text-base font-normal text-gray-600'>
-                    <span className='items-center justify-center align-middle'>
+                    <span className=''>
                       {formatPhoneNumber(customer.phone)}
                     </span>
                   </div>
                   <div className='flex text-sm md:text-base font-normal text-gray-600'>
-                    <span className='items-center justify-center align-middle'>
-                      {customer.email}
-                    </span>
+                    <span className=''>{customer.email}</span>
                   </div>
                 </div>
               </div>
@@ -737,7 +734,10 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                           Address:
                         </dt>
                         <dd className='text-sm font-medium text-gray-700 sm:col-span-2 underline'>
-                          {customer.address.street}, {customer.address.city}{' '}
+                          {customerWithCapitalizedNames(
+                            customer.address.street
+                          )}{' '}
+                          {customerWithCapitalizedNames(customer.address.city)}{' '}
                           {customer.address.state} {customer.address.zipcode}
                         </dd>
                       </div>
@@ -797,7 +797,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                   <div className='flex gap-4'>
                     <Button
                       icon={
-                        <Plus className='h-4 w-4 text-xs hover:text-white' />
+                        <Plus className='h-4 w-4 mr-1 text-xs hover:text-white' />
                       }
                       onClick={handleAddNoteClick}
                       disabled={isPending || isNavigating}
@@ -964,11 +964,25 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                     <div key={project._id} className='pb-4 sm:p-4'>
                       <div className='px-4 sm:px-0 flex justify-between'>
                         <h3 className='text-base font-semibold text-gray-700'>
-                          Project Order Details{' '}
+                          Project Details{' '}
                           {customer.projects.length > 1 ? `#${index + 1}` : ''}
                         </h3>
                         <NoPrint>
                           <div className='flex gap-4'>
+                            <Button
+                              icon={
+                                <Plus className='h-4 w-4 text-xs hover:text-white' />
+                              }
+                              onClick={handleAddProjectClick}
+                              disabled={isPending || isNavigating}
+                            >
+                              {isNavigating || isPending ? (
+                                <span className='text-sm'>...</span>
+                              ) : (
+                                ''
+                              )}
+                            </Button>
+
                             <Button onClick={printProjectInfo}>
                               <div className='flex items-center gap-1'>
                                 <Printer className='h-4 w-4 text-xs hover:text-white' />
@@ -1318,7 +1332,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                               })}
                             </div>
                           ) : (
-                            <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch'>
+                            <div className='px-4 py-1 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-0 flex items-stretch print:hidden'>
                               <dt className='text-sm font-medium text-gray-900 pr-2'>
                                 Schedules:
                               </dt>
@@ -1354,7 +1368,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       <div className='flex gap-4 print:hidden'>
                         <Button
                           icon={
-                            <Plus className='h-4 w-4 text-xs hover:text-white' />
+                            <Plus className='h-4 w-4 mr-2 text-xs hover:text-white' />
                           }
                           onClick={handleAddProjectClick}
                           disabled={isPending || isNavigating}
@@ -1362,7 +1376,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                           {isNavigating || isPending ? (
                             <span className='text-sm'>Loading ...</span>
                           ) : (
-                            'Add Project Details'
+                            'Add Project'
                           )}
                         </Button>
                       </div>

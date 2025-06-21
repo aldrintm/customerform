@@ -21,12 +21,12 @@ async function addCustomer(formData) {
   const { userId } = sessionUser
 
   const sanitizeInput = (value) => {
-  if (typeof value === 'string') {
-    const trimmed = value.trim()
-    return trimmed.length > 0 ? trimmed : undefined
+    if (typeof value === 'string') {
+      const trimmed = value.trim()
+      return trimmed.length > 0 ? trimmed : undefined
+    }
+    return undefined
   }
-  return undefined
-}
 
   const customerData = {
     firstName: sanitizeInput(formData.get('firstName')?.toLowerCase()),
@@ -34,20 +34,10 @@ async function addCustomer(formData) {
     phone: sanitizeInput(formData.get('phone')),
     email: sanitizeInput(formData.get('email')),
     address: {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
       street: sanitizeInput(formData.get('street')),
       city: sanitizeInput(formData.get('city')),
       state: sanitizeInput(formData.get('state')),
       zipcode: sanitizeInput(formData.get('zipcode')),
-=======
-=======
->>>>>>> Stashed changes
-      street: formData.get('street')?.toLowerCase() || '',
-      city: formData.get('city')?.toLowerCase() || '',
-      state: formData.get('state') || '',
-      zipcode: formData.get('zipcode') || '',
->>>>>>> Stashed changes
     },
     contractorName: sanitizeInput(formData.get('contractorName')),
     contractorPhone: sanitizeInput(formData.get('contractorPhone')),
@@ -57,7 +47,6 @@ async function addCustomer(formData) {
   // lets check the server to see all items uploaded to the DB
   console.log('contractorPhone raw:', formData.get('contractorPhone'))
   console.log('Final customer data:', customerData)
-
 
   // lets plug all the date using the property model
   const newCustomer = new Customer(customerData)

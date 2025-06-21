@@ -73,20 +73,11 @@ const CustomerSchema = new Schema(
 CustomerSchema.index({ phone: 1 })
 CustomerSchema.index({ email: 1 }, { unique: true })
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-// Add index for customer lookup
-CustomerSchema.index({ _id: 1 })
-
->>>>>>> Stashed changes
 // Add index for projects array to improve population performance
-// CustomerSchema.index({ projects: 1 })
+CustomerSchema.index({ projects: 1 })
 
 // Add index for office notes to improve population performance
-// CustomerSchema.index({ officeNotes: 1 })
+CustomerSchema.index({ officeNotes: 1 })
 
 // Add index for frequently accessed fields together
 CustomerSchema.index({

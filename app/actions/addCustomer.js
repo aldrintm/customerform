@@ -35,11 +35,14 @@ async function addCustomer(formData) {
     email: sanitizeInput(formData.get('email')),
     address: {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       street: sanitizeInput(formData.get('street')),
       city: sanitizeInput(formData.get('city')),
       state: sanitizeInput(formData.get('state')),
       zipcode: sanitizeInput(formData.get('zipcode')),
 =======
+=======
+>>>>>>> Stashed changes
       street: formData.get('street')?.toLowerCase() || '',
       city: formData.get('city')?.toLowerCase() || '',
       state: formData.get('state') || '',

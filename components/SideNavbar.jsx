@@ -104,6 +104,7 @@ const SideNavbar = () => {
               }`}
               href='/dashboard/files'
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             > */}
               {/* <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -123,6 +124,8 @@ const SideNavbar = () => {
               </svg> */}
              {/* <ArrowDownToLine className='h-5 w-5' />
 =======
+=======
+>>>>>>> Stashed changes
             >
               <ArrowDownToLine className='h-5 w-5' />
 >>>>>>> Stashed changes

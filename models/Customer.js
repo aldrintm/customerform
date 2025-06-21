@@ -74,7 +74,10 @@ CustomerSchema.index({ phone: 1 })
 CustomerSchema.index({ email: 1 }, { unique: true })
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 // Add index for customer lookup
 CustomerSchema.index({ _id: 1 })
 

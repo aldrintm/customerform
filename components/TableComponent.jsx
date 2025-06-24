@@ -71,6 +71,10 @@ const TableComponentPage = ({ customers }) => {
                   <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Store
                   </th>
+
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                    Action
+                  </th>
                 </tr>
               </thead>
 

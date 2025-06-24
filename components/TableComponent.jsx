@@ -213,16 +213,7 @@ const TableComponentPage = ({ customers }) => {
                       </Link>
                     </td>
 
-                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
-                      <Button
-                        onClick={() => handleDeleteCustomer(customer._id)}
-                      >
-                        <div className='flex items-center gap-0 text-red-400 hover:scale-110 transition-transform duration-200'>
-                        <Trash2 className='h-5 w-5 text-xs' />
-                        <span></span>
-                        </div>
-                      </Button>
-                    </td>
+                    
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}
@@ -231,6 +222,17 @@ const TableComponentPage = ({ customers }) => {
                         {customer.projects?.[0]?.customerType}{' '}
                         {customer.projects?.[0]?.storeId}
                       </Link>
+                    </td>
+
+                     <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
+                      <Button
+                        onClick={() => handleDeleteCustomer(customer._id)}
+                      >
+                        <div className='flex items-center gap-0 text-red-400 hover:scale-110 transition-transform duration-200'>
+                        <Trash2 className='h-5 w-5 text-xs' />
+                        <span></span>
+                        </div>
+                      </Button>
                     </td>
                   </tr>
                 ))}

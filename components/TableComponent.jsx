@@ -13,7 +13,7 @@ import { getSession } from 'next-auth/react'
 import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
 
-const handleDeleteCustomer function
+
    const handleDeleteCustomer = async (customerId) => {
      const confirmed = window.confirm(
        'Are you sure you want to delete this customer?'

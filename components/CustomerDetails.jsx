@@ -635,7 +635,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                   ''
                 )}
 
-                {customer.projects[0]?.status === 'for install' || customer.projects[0]?.status === 'service' ? (
+                {customer.projects[0]?.status === 'for install' ? (
                   <div className='text-sm md:text-md font-semibold text-gray-500'>
                     <span className='text-gray-500 pr-2'>Install:</span>
                     <span className='inline-flex'>
@@ -655,6 +655,28 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 ) : (
                   ''
                 )}
+
+                {customer.projects[0]?.status === 'for service' ? (
+                  <div className='text-sm md:text-md font-semibold text-gray-500'>
+                    <span className='text-gray-500 pr-2'>Service Date:</span>
+                    <span className='inline-flex'>
+                      {schedules && schedules.length > 0 ? (
+                        <span>
+                          {schedules.map((schedule) => (
+                            <span key={schedule._id}>
+                              {formatDate(schedule.installDate)}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <p>no schedule</p>
+                      )}
+                    </span>
+                  </div>
+                ) : (
+                  ''
+                )}
+                
               </div>
             </div>
           </div>

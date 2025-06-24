@@ -4,13 +4,31 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
+import deleteCustomer from '@/app/actions/deleteCustomer'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
 import { toast } from 'react-toastify'
 import Button from './Button'
 import { getSession } from 'next-auth/react'
-import { Plus } from 'lucide-react'
+import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
+
+const handleDeleteCustomer function
+   const handleDeleteCustomer = async (customerId) => {
+     const confirmed = window.confirm(
+       'Are you sure you want to delete this customer?'
+     )
+
+     if (!confirmed) return
+
+     await deleteCustomer(customerId)
+     const updatedCustomers = customer.filter(
+      (customer) => customerId !== customer._id
+   )
+     setCustomers(updatedCustomers)
+     toast.success(`${customerId} is DELETED!`)
+  }
+
 
 const TableComponentPage = ({ customers }) => {
   const router = useRouter()
@@ -195,9 +213,16 @@ const TableComponentPage = ({ customers }) => {
                       </Link>
                     </td>
 
-                    {/* <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
-                      {customer.email}
-                    </td> */}
+                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
+                      <Button
+                        onClick={() => handleDeleteCustomer(customer._id)}
+                      >
+                        <div className='flex items-center gap-0 text-red-400 hover:scale-110 transition-transform duration-200'>
+                        <Trash2 className='h-5 w-5 text-xs' />
+                        <span></span>
+                        </div>
+                      </Button>
+                    </td>
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}

@@ -50,7 +50,7 @@ async function deleteCustomer(customerId, email) {
   // redirect(`/customers/${newCustomer._id}`)
 
   // redirect to the main table
-  // redirect(`/dashboard/customers`)
+   redirect('/dashboard/', 'page')
 }
 
 export default deleteCustomer

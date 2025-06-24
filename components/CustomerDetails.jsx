@@ -635,7 +635,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                   ''
                 )}
 
-                {customer.projects[0]?.status === 'for install' ? (
+                {customer.projects[0]?.status === 'for install' || customer.projects[0]?.status === 'service' ? (
                   <div className='text-sm md:text-md font-semibold text-gray-500'>
                     <span className='text-gray-500 pr-2'>Install:</span>
                     <span className='inline-flex'>

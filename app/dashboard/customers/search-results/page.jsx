@@ -140,8 +140,13 @@ const SearchResults = async ({ searchParams }) => {
                         <tr key={customer._id}>
                           {/* Populate customer data */}
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            {customerWithCapitalizedNames(customer.lastName)}{' '}
-                            {customerWithCapitalizedNames(customer.firstName)}
+                            <Link
+                              href={`/dashboard/customers/${customer._id}`}
+                              className='block'
+                            >
+                              {customerWithCapitalizedNames(customer.lastName)}{' '}
+                              {customerWithCapitalizedNames(customer.firstName)}
+                            </Link>
                           </td>
                           <td className='whitespace-nowrap px-0 py-0 text-sm'>
                             {customer.projects?.[0]?.status === 'will call' ? (
@@ -175,7 +180,7 @@ const SearchResults = async ({ searchParams }) => {
                               </div>
                             ) : customer.projects?.[0]?.status ===
                               'in fabrication' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-teal-100 text-teal-500 rounded-full'>
+                              <div className='px-2 py-1 text-center md:text-sm bg-teal-100 text-teal-500 rounded-full'>
                                 in fabrication
                               </div>
                             ) : customer.projects?.[0]?.status === 'hold' ? (
@@ -215,19 +220,30 @@ const SearchResults = async ({ searchParams }) => {
                             ) : null}
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
-                            <div className='grid grid-rows-2'>
-                              <p>{customer.address.street}</p>
-                              <p>
-                                {customer.address.city} {customer.address.state}{' '}
-                                {customer.address.zipcode}
-                              </p>
-                            </div>
+                            <Link
+                              href={`/dashboard/customers/${customer._id}`}
+                              className='block'
+                            >
+                              <div className='grid grid-rows-2'>
+                                <p>{customer.address.street}</p>
+                                <p>
+                                  {customer.address.city}{' '}
+                                  {customer.address.state}{' '}
+                                  {customer.address.zipcode}
+                                </p>
+                              </div>
+                            </Link>
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
-                            <div className='grid grid-rows-2'>
-                              <p>{customer.email}</p>
-                              <p>{formatPhoneNumber(customer.phone)}</p>
-                            </div>
+                            <Link
+                              href={`/dashboard/customers/${customer._id}`}
+                              className='block'
+                            >
+                              <div className='grid grid-rows-2'>
+                                <p>{customer.email}</p>
+                                <p>{formatPhoneNumber(customer.phone)}</p>
+                              </div>
+                            </Link>
                           </td>
 
                           <td className='whitespace-nowrap px-4 py-2 text-sm'>
@@ -304,6 +320,9 @@ const SearchResults = async ({ searchParams }) => {
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                           View
                         </th>
+                        <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                          View
+                        </th>
                       </tr>
                     </thead>
                     <tbody className='divide-y divide-gray-200'>
@@ -323,6 +342,14 @@ const SearchResults = async ({ searchParams }) => {
                               <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                                 for template
                               </div>
+                            ) : project.status === 'templated' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
+                                templated
+                              </div>
+                            ) : project.status === 'in fabrication' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-teal-100 text-teal-500 rounded-full'>
+                                in fabrication
+                              </div>
                             ) : project.status === 'pending' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
                                 pending
@@ -331,6 +358,10 @@ const SearchResults = async ({ searchParams }) => {
                               <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                                 for install
                               </div>
+                            ) : project.status === 'for demo' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                                for demo
+                              </div>
                             ) : project.status === 'service' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
                                 service
@@ -338,6 +369,10 @@ const SearchResults = async ({ searchParams }) => {
                             ) : project.status === 'completed' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                                 completed
+                              </div>
+                            ) : project.status === 'cancelled' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-rose-400 to-red-300 text-white rounded-full'>
+                                cancelled
                               </div>
                             ) : null}
                           </td>
@@ -397,7 +432,7 @@ const SearchResults = async ({ searchParams }) => {
                             </Link>
                           </td>
 
-                          {/* <td className='whitespace-nowrap px-4 py-2 text-sm'>
+                          <td className='whitespace-nowrap px-4 py-2 text-sm'>
                             <div className='flex gap-3'>
                               <Link
                                 href={`/dashboard/customers/${project.customer?._id}/editProject`}
@@ -405,7 +440,7 @@ const SearchResults = async ({ searchParams }) => {
                                 <Button>Edit</Button>
                               </Link>
                             </div>
-                          </td> */}
+                          </td>
                         </tr>
                       ))}
                     </tbody>

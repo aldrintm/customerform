@@ -13,22 +13,20 @@ import { getSession } from 'next-auth/react'
 import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
 
+const handleDeleteCustomer = async (customerId) => {
+  const confirmed = window.confirm(
+    'Are you sure you want to delete this customer?'
+  )
 
-   const handleDeleteCustomer = async (customerId) => {
-     const confirmed = window.confirm(
-       'Are you sure you want to delete this customer?'
-     )
+  if (!confirmed) return
 
-     if (!confirmed) return
-
-     await deleteCustomer(customerId)
-     const updatedCustomers = customer.filter(
-      (customer) => customerId !== customer._id
-   )
-     setCustomers(updatedCustomers)
-     toast.success(`${customerId} is DELETED!`)
-  }
-
+  await deleteCustomer(customerId)
+  const updatedCustomers = customer.filter(
+    (customer) => customerId !== customer._id
+  )
+  setCustomers(updatedCustomers)
+  toast.success(`${customerId} is DELETED!`)
+}
 
 const TableComponentPage = ({ customers }) => {
   const router = useRouter()
@@ -213,7 +211,6 @@ const TableComponentPage = ({ customers }) => {
                       </Link>
                     </td>
 
-                    
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}
@@ -224,15 +221,15 @@ const TableComponentPage = ({ customers }) => {
                       </Link>
                     </td>
 
-                     <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700'>
-                      <Button
+                    <td className='whitespace-nowrap px-4 py-2 text-xs font-sm text-gray-700 text-center'>
+                      <button
                         onClick={() => handleDeleteCustomer(customer._id)}
+                        className='inline-flex items-center justify-center'
                       >
-                        <div className='flex items-center gap-0 text-red-400 hover:scale-110 transition-transform duration-200'>
-                        <Trash2 className='h-5 w-5 text-xs' />
-                        <span></span>
+                        <div className='flex justify-center items-center text-center text-red-400 hover:scale-110 transition-transform duration-200'>
+                          <Trash2 className='h-5 w-5' />
                         </div>
-                      </Button>
+                      </button>
                     </td>
                   </tr>
                 ))}

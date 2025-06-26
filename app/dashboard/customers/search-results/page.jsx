@@ -33,7 +33,9 @@ const SearchResults = async ({ searchParams }) => {
     ],
   }
 
-  const customerQueryResults = await Customer.find(customerQuery).lean()
+  const customerQueryResults = await Customer.find(customerQuery)
+    .populate('projects')
+    .lean()
   const customers = customerQueryResults.map(convertToSerializeableObject)
 
   // Query for Product collection
@@ -142,34 +144,74 @@ const SearchResults = async ({ searchParams }) => {
                             {customerWithCapitalizedNames(customer.firstName)}
                           </td>
                           <td className='whitespace-nowrap px-0 py-0 text-sm'>
-                            {customer.status === 'will call' ? (
+                            {customer.projects?.[0]?.status === 'will call' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                                 will call
                               </div>
-                            ) : customer.status === 'for template' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
+                            ) : customer.projects?.[0]?.status ===
+                              'for template' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
                                 for template
                               </div>
-                            ) : customer.status === 'pending' ? (
+                            ) : customer.projects?.[0]?.status ===
+                              'templated' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-emerald-400 to-green-400 text-white rounded-full'>
+                                templated
+                              </div>
+                            ) : customer.projects?.[0]?.status ===
+                              'material order' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-amber-100 text-amber-500 rounded-full'>
+                                material order
+                              </div>
+                            ) : customer.projects?.[0]?.status ===
+                              'need additional' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                                need additional
+                              </div>
+                            ) : customer.projects?.[0]?.status ===
+                              'seam diagram' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
+                                seam diagram
+                              </div>
+                            ) : customer.projects?.[0]?.status ===
+                              'in fabrication' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-teal-100 text-teal-500 rounded-full'>
+                                in fabrication
+                              </div>
+                            ) : customer.projects?.[0]?.status === 'hold' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-slate-100 text-slate-500 rounded-full'>
+                                hold
+                              </div>
+                            ) : customer.projects?.[0]?.status === 'pending' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-stone-100 text-stone-500 rounded-full'>
                                 pending
                               </div>
-                            ) : customer.status === 'for install' ? (
+                            ) : customer.projects?.[0]?.status ===
+                              'for demo' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                                for demo
+                              </div>
+                            ) : customer.projects?.[0]?.status ===
+                              'for install' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
                                 for install
                               </div>
-                            ) : customer.status === 'service' ? (
+                            ) : customer.projects?.[0]?.status === 'service' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
                                 service
                               </div>
-                            ) : customer.status === 'completed' ? (
+                            ) : customer.projects?.[0]?.status ===
+                              'completed' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
                                 completed
                               </div>
-                            ) : customer.status === '' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
-                                n/a
+                            ) : customer.projects?.[0]?.status ===
+                              'cancelled' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-rose-400 to-red-300 text-white rounded-full'>
+                                cancelled
                               </div>
+                            ) : customer.projects?.[0]?.status === '' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'></div>
                             ) : null}
                           </td>
                           <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>

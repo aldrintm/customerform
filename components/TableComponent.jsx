@@ -14,18 +14,29 @@ import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
 
 const handleDeleteCustomer = async (customerId) => {
+  
+  const router = useRouter()
   const confirmed = window.confirm(
     'Are you sure you want to delete this customer?'
   )
 
   if (!confirmed) return
+  
+  try {
+    await deleteCustomer(customerId)
+    router.refresh()
+    toast.success(`${customerId} is DELETED!`)
+  } catch (error) {
+    toast.error('Failed to delete customer')
+    console.error(error)
+  }
 
-  await deleteCustomer(customerId)
-  const updatedCustomers = customer.filter(
-    (customer) => customerId !== customer._id
-  )
-  setCustomers(updatedCustomers)
-  toast.success(`${customerId} is DELETED!`)
+  // await deleteCustomer(customerId)
+  // const updatedCustomers = customer.filter(
+  // (customer) => customerId !== customer._id
+  // )
+  //setCustomers(updatedCustomers)
+  //toast.success(`${customerId} is DELETED!`)
 }
 
 const TableComponentPage = ({ customers }) => {

@@ -13,9 +13,23 @@ import { getSession } from 'next-auth/react'
 import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
 
-const handleDeleteCustomer = async (customerId) => {
-  
+
+
+const TableComponentPage = ({ customers }) => {
   const router = useRouter()
+  const [isNavigating, setIsNavigating] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
+  const handleAddCustomerClick = () => {
+    setIsNavigating(true)
+    startTransition(() => {
+      router.push('/dashboard/customers/add')
+    })
+  }
+  
+  const handleDeleteCustomer = async (customerId) => {
+  
+  
   const confirmed = window.confirm(
     'Are you sure you want to delete this customer?'
   )
@@ -38,18 +52,6 @@ const handleDeleteCustomer = async (customerId) => {
   //setCustomers(updatedCustomers)
   //toast.success(`${customerId} is DELETED!`)
 }
-
-const TableComponentPage = ({ customers }) => {
-  const router = useRouter()
-  const [isNavigating, setIsNavigating] = useState(false)
-  const [isPending, startTransition] = useTransition()
-
-  const handleAddCustomerClick = () => {
-    setIsNavigating(true)
-    startTransition(() => {
-      router.push('/dashboard/customers/add')
-    })
-  }
 
   return (
     <>

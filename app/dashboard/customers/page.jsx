@@ -1,6 +1,6 @@
-'use server'
-
 export const dynamic = 'force-dynamic' // 👈👈 ensures fresh fetch every page load. this disables static rendering/caching
+
+'use server'
 
 import TableComponentPage from '@/components/TableComponent'
 import SideNavbar from '@/components/SideNavbar'

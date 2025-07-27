@@ -165,17 +165,17 @@ const SearchResults = async ({ searchParams }) => {
                               </div>
                             ) : customer.projects?.[0]?.status ===
                               'material order' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-amber-100 text-amber-500 rounded-full'>
+                              <div className='px-2 py-1 text-center md:text-sm bg-amber-100 text-amber-500 rounded-full'>
                                 material order
                               </div>
                             ) : customer.projects?.[0]?.status ===
                               'need additional' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                              <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
                                 need additional
                               </div>
                             ) : customer.projects?.[0]?.status ===
                               'seam diagram' ? (
-                              <div className='px-0 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
+                              <div className='px-2 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
                                 seam diagram
                               </div>
                             ) : customer.projects?.[0]?.status ===
@@ -321,7 +321,7 @@ const SearchResults = async ({ searchParams }) => {
                           View
                         </th>
                         <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
-                          View
+                          Action
                         </th>
                       </tr>
                     </thead>
@@ -334,6 +334,67 @@ const SearchResults = async ({ searchParams }) => {
                             {project?.customer?.lastName}
                           </td>
                           <td className='whitespace-nowrap px-0 py-0 text-sm'>
+                            {project?.status === 'will call' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
+                                will call
+                              </div>
+                            ) : project?.status === 'for template' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-blue-100 text-blue-500 rounded-full'>
+                                for template
+                              </div>
+                            ) : project?.status === 'templated' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-emerald-400 to-green-400 text-white rounded-full'>
+                                templated
+                              </div>
+                            ) : project?.status === 'material order' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-amber-100 text-amber-500 rounded-full'>
+                                material order
+                              </div>
+                            ) : project?.status === 'need additional' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                                need additional
+                              </div>
+                            ) : project?.status === 'seam diagram' ? (
+                              <div className='px-1 py-1 text-center md:text-sm bg-rose-100 text-rose-500 rounded-full'>
+                                seam diagram
+                              </div>
+                            ) : project?.status === 'in fabrication' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-teal-100 text-teal-500 rounded-full'>
+                                in fabrication
+                              </div>
+                            ) : project?.status === 'hold' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-slate-100 text-slate-500 rounded-full'>
+                                hold
+                              </div>
+                            ) : project?.status === 'pending' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-stone-100 text-stone-500 rounded-full'>
+                                pending
+                              </div>
+                            ) : project?.status === 'for demo' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-fuchsia-100 text-fuchsia-500 rounded-full'>
+                                for demo
+                              </div>
+                            ) : project?.status === 'for install' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-orange-100 text-orange-500 rounded-full'>
+                                for install
+                              </div>
+                            ) : project?.status === 'service' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-indigo-100 text-indigo-500 rounded-full'>
+                                service
+                              </div>
+                            ) : project?.status === 'completed' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'>
+                                completed
+                              </div>
+                            ) : project?.status === 'cancelled' ? (
+                              <div className='px-2 py-1 text-center md:text-sm bg-gradient-to-r from-rose-400 to-red-300 text-white rounded-full'>
+                                cancelled
+                              </div>
+                            ) : project?.status === '' ? (
+                              <div className='px-0 py-1 text-center md:text-sm bg-cyan-100 text-cyan-500 rounded-full'></div>
+                            ) : null}
+                          </td>
+                          {/* <td className='whitespace-nowrap px-0 py-0 text-sm'>
                             {project.status === 'will call' ? (
                               <div className='px-0 py-1 text-center md:text-sm bg-green-100 text-green-500 rounded-full'>
                                 will call
@@ -375,7 +436,7 @@ const SearchResults = async ({ searchParams }) => {
                                 cancelled
                               </div>
                             ) : null}
-                          </td>
+                          </td> */}
                           <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
                             <div className='grid grid-rows-2'>
                               <p>{project.customer?.address?.street}</p>

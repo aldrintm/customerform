@@ -13,21 +13,6 @@ import { getSession } from 'next-auth/react'
 import { Plus, Trash2 } from 'lucide-react'
 import { set } from 'mongoose'
 
-const handleDeleteCustomer = async (customerId) => {
-  const confirmed = window.confirm(
-    'Are you sure you want to delete this customer?'
-  )
-
-  if (!confirmed) return
-
-  await deleteCustomer(customerId)
-  const updatedCustomers = customer.filter(
-    (customer) => customerId !== customer._id
-  )
-  setCustomers(updatedCustomers)
-  toast.success(`${customerId} is DELETED!`)
-}
-
 const TableComponentPage = ({ customers }) => {
   const router = useRouter()
   const [isNavigating, setIsNavigating] = useState(false)
@@ -38,6 +23,43 @@ const TableComponentPage = ({ customers }) => {
     startTransition(() => {
       router.push('/dashboard/customers/add')
     })
+  }
+
+  const handleDeleteCustomer = async (customerId) => {
+    // Find the customer before deleting to get their name for the toast
+    const customerToDelete = customers.find(
+      (customer) => customer._id === customerId
+    )
+    if (!customerToDelete) {
+      toast.error('Customer not found')
+      return
+    }
+
+    const customerName = customerWithCapitalizedNames(
+      customerToDelete.firstName + ' ' + customerToDelete.lastName
+    )
+
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this customer?'
+    )
+
+    if (!confirmed) return
+
+    try {
+      await deleteCustomer(customerId)
+      router.refresh()
+      toast.success(`${customerName} has been deleted successfully!`)
+    } catch (error) {
+      toast.error(`Failed to delete customer ${customerName}`)
+      console.error(error)
+    }
+
+    // await deleteCustomer(customerId)
+    // const updatedCustomers = customer.filter(
+    //   (customer) => customerId !== customer._id
+    // )
+    // setCustomers(updatedCustomers)
+    // toast.success(`${customerId} is DELETED!`)
   }
 
   return (

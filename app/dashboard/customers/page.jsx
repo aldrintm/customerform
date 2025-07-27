@@ -1,4 +1,5 @@
-'use server'
+export const dynamic = 'force-dynamic' // 👈👈 ensures fresh fetch every page load. this disables static rendering/caching
+
 import TableComponentPage from '@/components/TableComponent'
 import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
@@ -7,13 +8,25 @@ import Customer from '@/models/Customer'
 import Project from '@/models/Project'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
-const CustomerList = async () => {
+const CustomerList = async ({ searchParams: { page = 1, pageSize = 450 } }) => {
   await connectDB()
 
+  const skip = (page - 1) * pageSize
+  const limit = parseInt(pageSize, 10)
+  if (isNaN(limit) || limit <= 0) {
+    throw new Error('Invalid pageSize parameter')
+  }
+  if (isNaN(page) || page <= 0) {
+    throw new Error('Invalid page parameter')
+  }
+  const totalCustomers = await Customer.countDocuments({})
+  const totalPages = Math.ceil(totalCustomers / limit)
+
   const customerDocs = await Customer.find({})
+    .skip(skip)
     .sort({ createdAt: -1 })
     .populate('projects')
-    .limit(40)
+    .limit(pageSize)
     .lean()
 
   const customers = customerDocs.map(convertToSerializeableObject)

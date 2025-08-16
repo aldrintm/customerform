@@ -1,3 +1,4 @@
+import DashboardMobile from './DashboardMobile'
 import TotalCustomer from './TotalCustomer'
 import TableComponentPage from './TableComponent'
 import DashboardTable from './DashboardTable'
@@ -129,62 +130,74 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
 
   return (
     <>
-      <div className='md:container w-full mx-auto grid grid-flow-row'>
-        <div className='md:container w-full text-left px-15 pl-2'>
-          <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
-            {/* <span className='text-md inline-flex mr-2'>
+      {/* Mobile-only */}
+      <div className='sm:hidden'>
+        <DashboardMobile
+          customers={customers}
+          sessionUser={sessionUser}
+          bookmarks={bookmarks}
+        />
+      </div>
+
+      {/* Desktop (unchanged) */}
+      <div className='hidden sm:block'>
+        <div className='md:container w-full mx-auto grid grid-flow-row'>
+          <div className='md:container w-full text-left px-15 pl-2'>
+            <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
+              {/* <span className='text-md inline-flex mr-2'>
               <Greeting /> <span className='ml-2'>{sessionUser.user.name}</span>
             </span> */}
-            <h1>Welcome to Plamar USA</h1>
-          </div>
-        </div>
-        {/* Main Components Starts Here */}
-        <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-6'>
-          <div className='container xl:col-span-7 md:gap-4 space-y-6'>
-            {/* Date + Weather + Total Customers */}
-            <div className='hidden container sm:grid gap-4 sm:grid-cols-3 lg:gap-6'>
-              <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
-                <Calendar className='w-4 h-4 lg:w-5 lg:h-5 text-blue-500' />
-                <span className='text-xs lg:text-sm font-semibold text-gray-700'>
-                  {currentDate}
-                </span>
-              </div>
-              <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
-                <WeatherNow />
-              </div>
-              <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
-                <Users className='w-4 h-4 lg:w-5 lg:h-5 text-blue-500' />
-                <TotalCustomer customers={customers} />
-              </div>
+              <h1>Welcome to Plamar USA</h1>
             </div>
-
-            {/* Feature Box Here - Problem Customers */}
-            <div className='container grid grid-cols-1 md:gap-1 '>
-              <div className='md:container w-full text-left px-15 pl-2'>
-                <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
-                  Bookmarks
+          </div>
+          {/* Main Components Starts Here */}
+          <div className='grid lg:grid-cols-1 xl:grid-cols-12 lg:gap-6'>
+            <div className='container xl:col-span-7 md:gap-4 space-y-6'>
+              {/* Date + Weather + Total Customers */}
+              <div className='hidden container sm:grid gap-4 sm:grid-cols-3 lg:gap-6'>
+                <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
+                  <Calendar className='w-4 h-4 lg:w-5 lg:h-5 text-blue-500' />
+                  <span className='text-xs lg:text-sm font-semibold text-gray-700'>
+                    {currentDate}
+                  </span>
+                </div>
+                <div className='flex justify-center items-center gap-2 bg-white border border-gray-300 rounded-lg'>
+                  <WeatherNow />
+                </div>
+                <div className='flex justify-center items-center gap-2 px-2 bg-white border border-gray-300 rounded-lg'>
+                  <Users className='w-4 h-4 lg:w-5 lg:h-5 text-blue-500' />
+                  <TotalCustomer customers={customers} />
                 </div>
               </div>
-              <div className='flex justify-center items-center gap-2 md:gap-4'>
-                <DashboardBookmarkPage
-                  bookmarks={bookmarks}
-                  sessionUser={sessionUser}
-                />
+
+              {/* Feature Box Here - Problem Customers */}
+              <div className='container grid grid-cols-1 md:gap-1 '>
+                <div className='md:container w-full text-left px-15 pl-2'>
+                  <div className='container text-left pl-1 py-2 text-md md:text-md text-blue-500 font-semibold'>
+                    Bookmarks
+                  </div>
+                </div>
+                <div className='flex justify-center items-center gap-2 md:gap-4'>
+                  <DashboardBookmarkPage
+                    bookmarks={bookmarks}
+                    sessionUser={sessionUser}
+                  />
+                </div>
+              </div>
+              {/* Customer Dashboard Table Here - Snapshot */}
+              <div className='lg:gap-4'>
+                <div className='container col-span-8'>
+                  <DashboardTable customers={customers} />
+                </div>
               </div>
             </div>
-            {/* Customer Dashboard Table Here - Snapshot */}
-            <div className='lg:gap-4'>
-              <div className='container col-span-8'>
-                <DashboardTable customers={customers} />
-              </div>
-            </div>
-          </div>
-          <div className='container xl:col-span-5 space-y-6'>
-            {/* <DashboardTemplateSchedule customers={customers} /> */}
-            <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
-            {/* <DashboardInstallScheduleDisplay
+            <div className='container xl:col-span-5 space-y-6'>
+              {/* <DashboardTemplateSchedule customers={customers} /> */}
+              <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
+              {/* <DashboardInstallScheduleDisplay
               schedules={todayMeasureSchedules}
             /> */}
+            </div>
           </div>
         </div>
       </div>

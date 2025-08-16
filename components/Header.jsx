@@ -69,8 +69,8 @@ const Header = () => {
     <nav>
       {/* Header Page */}
       <div className='flex flex-col sm:gap-4 sm:py-4 sm:ml-14'>
-        <header className='sticky top-0 z-30 bg-blue-400 flex items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 print:hidden'>
-          <button
+        <header className='sticky top-0 z-30 bg-blue-400 flex flex-wrap items-center gap-4 sm:gap-4 border-b px-4 py-1 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 print:hidden'>
+          {/* <button
             className='inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 sm:hidden'
             type='button'
             aria-haspopup='dialog'
@@ -94,12 +94,16 @@ const Header = () => {
               <path d='M9 3v18'></path>
             </svg>
             <span className='sr-only'>Toggle Menu</span>
-          </button>
+          </button> */}
           {/* I created this breadcrumb to see what dynamic breadcrumbing looks like */}
           {session && <Breadcrumb />}
 
           {/* Search Form Here */}
-          {session && <CustomerSearchForm />}
+          {session && (
+            <div className='ml-auto'>
+              <CustomerSearchForm />
+            </div>
+          )}
 
           {/* Right Side Menu - LOGGED OUT + Google Button */}
           {!session && (
@@ -186,7 +190,7 @@ const Header = () => {
 
           {/* Right Side Menu - LOGGED IN */}
           {session && (
-            <div className='absolute right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 md:pr-0'>
+            <div className='hidden absolute right-0 lg:flex items-center pr-2 sm:static md:inset-auto md:ml-6 md:pr-0 py-2'>
               {/* <Link href='/messages' className='relative group'>
                 <button
                   type='button'
@@ -214,7 +218,7 @@ const Header = () => {
                 </span>
               </Link> */}
               {/* Profile Login Avatar Drop Down Button */}
-              <div className='inline-flex items-center'>
+              <div className='hidden sm:inline-flex items-center'>
                 <button
                   className='group relative inline-flex items-center gap-2 justify-center whitespace-nowrap md:rounded-full md:border md:border-blue-400 h-10 w-10 text-blue-400 transition-all duration-400 ease-in-out hover:bg-blue-400 hover:text-white hover:shadow-md focus:outline-none focus:ring-1 focus:ring-blue-200 focus:ring-opacity-100 active:bg-blue-500 active:scale-90 active:shadow-inner'
                   type='button'

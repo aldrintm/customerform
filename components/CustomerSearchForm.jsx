@@ -21,7 +21,7 @@ const CustomerSearchForm = () => {
 
   return (
     <form
-      className='hidden sm:block relative ml-auto flex-1 md:grow-0'
+      className='sm:block relative ml-auto flex-1 md:grow-0'
       onSubmit={handleSubmit}
     >
       <svg
@@ -44,7 +44,7 @@ const CustomerSearchForm = () => {
         type='search'
         name='q'
         placeholder='Search for customers...'
-        className='flex h-10 mt-1 w-full rounded-md border border-input border-gray-300 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 bg-background pl-8 md:w-[250px] lg:w-[250px]'
+        className='flex h-10 mt-1 w-md rounded-md border border-input border-gray-300 px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 bg-background pl-8 md:w-[250px] lg:w-[250px]'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

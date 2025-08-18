@@ -8,7 +8,7 @@ import Customer from '@/models/Customer'
 import Project from '@/models/Project'
 import { convertToSerializeableObject } from '@/utils/convertToObject'
 
-const CustomerList = async ({ searchParams: { page = 1, pageSize = 450 } }) => {
+const CustomerList = async ({ searchParams: { page = 1, pageSize = 50 } }) => {
   await connectDB()
 
   const skip = (page - 1) * pageSize

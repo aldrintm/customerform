@@ -236,7 +236,7 @@ const DashboardScheduleDisplay = ({ schedules }) => {
                                 className='p-2 my-2 mx-1 hover:bg-blue-50 cursor-pointer border border-slate-300 rounded-md hover:shadow-md'
                               >
                                 <Link
-                                  href={`/dashboard/customers/${schedule.customer}`}
+                                  href={`/dashboard/customers/${schedule.customer.toString()}`}
                                 >
                                   <div className='grid grid-flow-row gap-1'>
                                     {/* <span className='text-sm font-light text-gray-700'>

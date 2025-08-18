@@ -676,7 +676,6 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                 ) : (
                   ''
                 )}
-                
               </div>
             </div>
           </div>

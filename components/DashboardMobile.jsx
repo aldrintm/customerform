@@ -1,100 +1,201 @@
-// DashboardMobile.jsx
-// Mobile-first dashboard shell. Desktop UI remains untouched — simply render this
-// component only on small screens from your existing Dashboard.jsx.
+// DashboardMobile.jsx — Minimal, clean mobile dashboard
+// Render on small screens only (keep desktop UI untouched in Dashboard.jsx)
 
-import { Calendar, Users, Bookmark, Plus, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { Calendar, Users, Plus } from 'lucide-react'
 import WeatherNow from './WeatherNow'
-import TotalCustomer from './TotalCustomer'
-import DashboardBookmarkPage from './DashboardBookmarkPage'
+import DashboardTable from './DashboardTable'
 import DashboardScheduleDisplay from './DashboardScheduleDisplay'
 import { format, isSameDay, parseISO, startOfDay } from 'date-fns'
+import CustomerSearchForm from './CustomerSearchForm'
+import Customer from '@/models/Customer'
 
-export default function DashboardMobile({
-  customers = [],
-  sessionUser,
-  bookmarks = [],
-}) {
+export default function DashboardMobile({ customers, sessionUser }) {
+  // // Flatten today's measure schedules from customers -> projects -> schedules
+  // const todayMeasureSchedules = []
+  // try {
+  //   for (const c of customers || []) {
+  //     for (const p of c.projects || []) {
+  //       for (const s of p.schedules || []) {
+  //         const d =
+  //           typeof s.measureDate === 'string'
+  //             ? parseISO(s.measureDate)
+  //             : new Date(s.measureDate)
+  //         if (d && !isNaN(d) && isSameDay(startOfDay(d), today)) {
+  //           todayMeasureSchedules.push({ ...s, customer: c_id, project: p })
+  //         }
+  //       }
+  //     }
+  //   }
+  // } catch {
+  //   // ignore — still render UI
+  // }
+
+  const currentDate = format(new Date(), 'EEEE, MMMM dd, yyyy')
+
+  // Get all schedules with customer information
+  const processedSchedules = customers.flatMap(
+    (customer) =>
+      customer.projects
+        ?.filter((project) => project.schedules?.length > 0)
+        ?.flatMap((project) =>
+          project.schedules.map((schedule) => {
+            // Parse MongoDB UTC date and keep it as UTC
+            const measureDate = new Date(schedule.measureDate)
+
+            return {
+              ...schedule,
+              customerName: `${customer.firstName} ${customer.lastName}`,
+              customerAddress: customer.address,
+              customerPhone: customer.phone,
+              customerEmail: customer.email,
+              customerType: project.customerType,
+              measureDate: measureDate, // Keep as UTC Date object
+              measureBy: schedule.measureBy || 'Unassigned',
+              measureTime: schedule.measureTime || 'Unassigned',
+              // installDate: schedule.installDate
+              //   ? new Date(schedule.installDate)
+              //   : null,
+              // installBy: schedule.installBy || 'Unassigned',
+              // installTime: schedule.installTime || 'No time set',
+            }
+          })
+        ) || []
+  )
+
+  // Format it to a string that shows your local time
+  const localTimeString = new Date().toLocaleString()
+
+  // console.log(`Local California time: ${localTimeString}`)
+
+  // Get today's date in local timezone
   const today = startOfDay(new Date())
   const todayLabel = format(today, 'EEEE, MMMM dd, yyyy')
 
-  // --- Flatten today's measure schedules from nested customers -> projects -> schedules
-  const todayMeasureSchedules = []
-  try {
-    for (const c of customers || []) {
-      for (const p of c.projects || []) {
-        for (const s of p.schedules || []) {
-          // Prefer ISO parsing; handle Date objects too
-          const d =
-            typeof s.measureDate === 'string'
-              ? parseISO(s.measureDate)
-              : new Date(s.measureDate)
-          if (d && !isNaN(d) && isSameDay(startOfDay(d), today)) {
-            todayMeasureSchedules.push({
-              ...s,
-              customer: c,
-              project: p,
-            })
-          }
-        }
-      }
-    }
-  } catch (e) {
-    // Fail silently — mobile UI should still render
-  }
+  // Get today's date normalized to UTC midnight
+  const todayUTC = new Date(
+    Date.UTC(
+      new Date().getUTCFullYear(),
+      new Date().getUTCMonth(),
+      new Date().getUTCDate()
+    )
+  )
 
-  // --- Recent customers (simple slice)
-  const recentCustomers = (customers || []).slice(0, 5)
+  const currentDateTodayUTC = format(todayUTC, 'EEEE, MMMM dd, yyyy')
+
+  // Get today localtime to UTC for comparison
+  const localTime = new Date()
+
+  const localTimeInUTC = new Date(localTime.getTime())
+
+  // console.log(
+  //   `Local time: ${localTime.toLocaleString('en-US', {
+  //     timeZone: 'America/Los_Angeles',
+  //   })}`
+  // )
+  // console.log(`Same time in UTC format: ${localTimeInUTC.toISOString()}`)
+
+  // console.log('Today:', today.toISOString())
+  // console.log('Today UTC:', todayUTC.toISOString())
+  // console.log('Current Date:', currentDate)
+
+  const todayMeasureSchedules = processedSchedules.filter((schedule) => {
+    try {
+      // Get schedule date as UTC midnight
+      const scheduleDayUTC = new Date(
+        Date.UTC(
+          schedule.measureDate.getUTCFullYear(),
+          schedule.measureDate.getUTCMonth(),
+          schedule.measureDate.getUTCDate()
+        )
+      )
+      // const scheduleDay = startOfDay(schedule.measureDate)
+      // const isToday = isSameDay(scheduleDayUTC, todayUTC)
+
+      // Avoid using startOfDay as it might apply local timezone
+      const isToday =
+        scheduleDayUTC.toISOString().split('T')[0] ===
+        todayUTC.toISOString().split('T')[0]
+
+      // Debug logging with UTC formatting
+      // console.log('Comparing dates:', {
+      //   scheduleDay: format(scheduleDayUTC, 'yyyy-MM-dd'),
+      //   today: format(todayUTC, 'yyyy-MM-dd'),
+      //   isToday,
+      //   originalDate: format(schedule.measureDate, 'yyyy-MM-dd'),
+      //   rawMongoMeasureDate: schedule.measureDate.toISOString(),
+      //   systemDate: new Date().toISOString(),
+      // })
+
+      // Debug logging with explicit UTC formatting
+      // console.log('Comparing dates:', {
+      //   scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
+      //   // today: todayUTC.toISOString(), // Extract date in UTC
+      //   today: todayUTC.toISOString().split('T')[0], // Extract date in local time
+      //   isToday,
+      //   originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
+      //   rawMongoMeasureDate: schedule.measureDate.toISOString(),
+      //   systemDate: new Date().toISOString(),
+      // })
+
+      return isToday
+    } catch (error) {
+      console.error('Date comparison error:', error)
+      return false
+    }
+  })
+
+  // console.log("Today's Schedules:", todayMeasureSchedules)
 
   return (
     <div className='sm:hidden block'>
-      {/* Safe-area padded wrapper */}
-      <div className='mx-auto max-w-sm min-h-[100dvh] bg-gradient-to-b from-background to-muted/30'>
+      {/* Page wrapper */}
+      <div className='mx-auto max-w-sm min-h-[100dvh] bg-background'>
         {/* Header */}
-        <header className='sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/80 bg-white/95 border-b'>
-          <div className='px-4 py-3 flex items-center justify-between'>
-            <div>
-              <div className='text-xs text-muted-foreground'>{todayLabel}</div>
-              <div className='font-semibold'>
-                {sessionUser?.user?.name
-                  ? `Hi, ${sessionUser.user.name.split(' ')[0]}`
-                  : 'Welcome back'}
+        {/* <header className='sticky top-0 z-20 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80'>
+          <div className='px-4 py-3 flex items-center justify-between gap-3'>
+            <Link href='/dashboard'>
+              <div className='flex-1 min-w-0'>
+                <div className='font-semibold truncate'>
+                  {sessionUser?.user?.name
+                    ? 'Hi, ' + sessionUser.user.name.split(' ')[0]
+                    : 'Welcome back'}
+                </div>
+                <div className='text-xs text-muted-foreground truncate'>
+                  {todayLabel}
+                </div>
               </div>
-            </div>
-            <div className='rounded-2xl border px-3 py-1 text-xs text-muted-foreground'>
-              Dashboard
+            </Link>
+
+            <div className='flex-shrink-0 w-2/5'>
+              <CustomerSearchForm />
             </div>
           </div>
-        </header>
+        </header> */}
 
         {/* Content */}
-        <main className='p-4 pb-24 space-y-4'>
-          {/* Weather + Totals */}
-          <div className='grid grid-cols-2 gap-3'>
-            <div className='col-span-2'>
+        <main className='p-0 space-y-2 pb-5'>
+          {/* Weather */}
+          <section className='rounded-2xl bg-background'>
+            <div className='flex justify-center'>
               <WeatherNow />
             </div>
-            <div className='rounded-2xl border bg-background p-4 shadow-sm'>
-              <div className='text-2xl font-semibold leading-none'>
-                {customers?.length ?? 0}
-              </div>
-              <div className='text-xs text-muted-foreground mt-1 flex items-center gap-1'>
-                <Users className='h-3.5 w-3.5' /> Customers
-              </div>
-            </div>
-            <div className='rounded-2xl border bg-background p-4 shadow-sm'>
-              <div className='text-2xl font-semibold leading-none'>
-                {bookmarks?.length ?? 0}
-              </div>
-              <div className='text-xs text-muted-foreground mt-1 flex items-center gap-1'>
-                <Bookmark className='h-3.5 w-3.5' /> Bookmarks
-              </div>
-            </div>
-          </div>
+          </section>
 
-          {/* Today’s Measures (compact) */}
+          {/* Total Customers in Database */}
+          {/* <section className='rounded-2xl border bg-background p-4 shadow-sm'>
+            <div className='text-2xl font-semibold leading-none'>
+              {customers?.length ?? 0}
+            </div>
+            <div className='text-xs text-muted-foreground mt-1 inline-flex items-center gap-1'>
+              <Users className='h-3.5 w-3.5' /> Customers
+            </div>
+          </section> */}
+
+          {/* Today’s Measures */}
           <section className='rounded-2xl border bg-background p-4 shadow-sm'>
             <div className='flex items-center justify-between mb-2'>
-              <h2 className='text-sm font-medium flex items-center gap-2'>
+              <h2 className='text-sm font-medium inline-flex items-center gap-2'>
                 <Calendar className='h-4 w-4' /> Today’s Measures
               </h2>
               <span className='text-xs text-muted-foreground'>
@@ -104,94 +205,20 @@ export default function DashboardMobile({
             <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
           </section>
 
-          {/* Bookmarks (compact) */}
-          {Array.isArray(bookmarks) && bookmarks.length > 0 && (
-            <section className='rounded-2xl border bg-background p-2 shadow-sm'>
-              <DashboardBookmarkPage bookmarks={bookmarks} />
-            </section>
-          )}
-
-          {/* Recent customers list */}
-          <section className='rounded-2xl border bg-background p-2 shadow-sm'>
-            <div className='px-2 py-2 text-sm font-medium'>
-              Recent Customers
+          {/* Dashboard Table — placed directly below Today's Measures */}
+          <section className='rounded-2xl border bg-background shadow-sm'>
+            <div className='px-4 pt-3 pb-2 text-sm font-medium'>Customers</div>
+            {/* Make wide tables usable on small screens via horizontal scroll, without squishing columns */}
+            <div className='-mx-4 overflow-x-auto'>
+              <div className='min-w-[560px] px-4 pb-3'>
+                <DashboardTable
+                  customers={customers}
+                  sessionUser={sessionUser}
+                />
+              </div>
             </div>
-            <ul className='divide-y'>
-              {recentCustomers.map((c) => (
-                <li
-                  key={c._id || c.id}
-                  className='px-3 py-3 flex items-center justify-between'
-                >
-                  <div>
-                    <div className='text-sm font-medium line-clamp-1'>
-                      {c?.customerName || c?.name || 'Unnamed Customer'}
-                    </div>
-                    <div className='text-xs text-muted-foreground line-clamp-1'>
-                      {c?.email || c?.phone || '—'}
-                    </div>
-                  </div>
-                  <ChevronRight className='h-4 w-4 text-muted-foreground' />
-                </li>
-              ))}
-              {recentCustomers.length === 0 && (
-                <li className='px-3 py-6 text-center text-sm text-muted-foreground'>
-                  No customers yet
-                </li>
-              )}
-            </ul>
           </section>
         </main>
-
-        {/* Floating CTA */}
-        <a
-          href='/dashboard/customers/add'
-          className='fixed bottom-20 right-4 z-30 grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-lg active:scale-95'
-          aria-label='Create customer'
-        >
-          <Plus className='h-5 w-5' />
-        </a>
-
-        {/* Bottom nav */}
-        <nav className='fixed bottom-0 inset-x-0 z-30 border-t bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/70'>
-          <div className='mx-auto max-w-sm grid grid-cols-4 text-muted-foreground'>
-            <a
-              href='/dashboard'
-              className='flex flex-col items-center justify-center py-2 text-foreground'
-            >
-              <svg viewBox='0 0 24 24' className='h-5 w-5'>
-                <path d='M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-6v-6H10v6H4a1 1 0 0 1-1-1z' />
-              </svg>
-              <span className='text-[11px] mt-0.5'>Home</span>
-            </a>
-            <a
-              href='/dashboard/customers'
-              className='flex flex-col items-center justify-center py-2'
-            >
-              <svg viewBox='0 0 24 24' className='h-5 w-5'>
-                <path d='M3 5h18M3 12h18M3 19h18' />
-              </svg>
-              <span className='text-[11px] mt-0.5'>Customers</span>
-            </a>
-            <a
-              href='/dashboard/calendar'
-              className='flex flex-col items-center justify-center py-2'
-            >
-              <svg viewBox='0 0 24 24' className='h-5 w-5'>
-                <path d='M7 2v4M17 2v4M3 10h18M4 8h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z' />
-              </svg>
-              <span className='text-[11px] mt-0.5'>Calendar</span>
-            </a>
-            <a
-              href='/dashboard/company'
-              className='flex flex-col items-center justify-center py-2'
-            >
-              <svg viewBox='0 0 24 24' className='h-5 w-5'>
-                <path d='M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z' />
-              </svg>
-              <span className='text-[11px] mt-0.5'>Admin</span>
-            </a>
-          </div>
-        </nav>
       </div>
     </div>
   )

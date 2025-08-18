@@ -48,7 +48,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
   // Format it to a string that shows your local time
   const localTimeString = new Date().toLocaleString()
 
-  console.log(`Local California time: ${localTimeString}`)
+  // console.log(`Local California time: ${localTimeString}`)
 
   // Get today's date in local timezone
   const today = startOfDay(new Date())
@@ -69,16 +69,16 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
 
   const localTimeInUTC = new Date(localTime.getTime())
 
-  console.log(
-    `Local time: ${localTime.toLocaleString('en-US', {
-      timeZone: 'America/Los_Angeles',
-    })}`
-  )
-  console.log(`Same time in UTC format: ${localTimeInUTC.toISOString()}`)
+  // console.log(
+  //   `Local time: ${localTime.toLocaleString('en-US', {
+  //     timeZone: 'America/Los_Angeles',
+  //   })}`
+  // )
+  // console.log(`Same time in UTC format: ${localTimeInUTC.toISOString()}`)
 
-  console.log('Today:', today.toISOString())
-  console.log('Today UTC:', todayUTC.toISOString())
-  console.log('Current Date:', currentDate)
+  // console.log('Today:', today.toISOString())
+  // console.log('Today UTC:', todayUTC.toISOString())
+  // console.log('Current Date:', currentDate)
 
   const todayMeasureSchedules = processedSchedules.filter((schedule) => {
     try {
@@ -109,15 +109,15 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
       // })
 
       // Debug logging with explicit UTC formatting
-      console.log('Comparing dates:', {
-        scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
-        // today: todayUTC.toISOString(), // Extract date in UTC
-        today: todayUTC.toISOString().split('T')[0], // Extract date in local time
-        isToday,
-        originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
-        rawMongoMeasureDate: schedule.measureDate.toISOString(),
-        systemDate: new Date().toISOString(),
-      })
+      // console.log('Comparing dates:', {
+      //   scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
+      //   // today: todayUTC.toISOString(), // Extract date in UTC
+      //   today: todayUTC.toISOString().split('T')[0], // Extract date in local time
+      //   isToday,
+      //   originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
+      //   rawMongoMeasureDate: schedule.measureDate.toISOString(),
+      //   systemDate: new Date().toISOString(),
+      // })
 
       return isToday
     } catch (error) {

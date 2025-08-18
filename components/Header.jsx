@@ -11,9 +11,14 @@ import Breadcrumb from './BreadCrumb'
 import { RefreshCw } from 'lucide-react'
 import CustomerSearchForm from './CustomerSearchForm'
 import Greeting from './Greeting'
+import { format, startOfDay } from 'date-fns'
 
-const Header = () => {
+const Header = ({ sessionUser }) => {
   const router = useRouter()
+
+  // Get today's date in local timezone
+  const today = startOfDay(new Date())
+  const todayLabel = format(today, 'EEEE, MMMM dd, yyyy')
 
   // Lets create a ref for both menu and button
   const menuRef = useRef(null)
@@ -67,8 +72,36 @@ const Header = () => {
 
   return (
     <nav>
-      {/* Header Page */}
-      <div className='flex flex-col sm:gap-4 sm:py-4 sm:ml-14'>
+      {/* Header Page for Mobile Only */}
+      <header className='sm:hidden sticky top-0 z-20 border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80'>
+        <div className='px-4 py-3 flex items-center justify-between gap-3'>
+          <Link href='/dashboard'>
+            <div className='flex-1 min-w-0'>
+              <div className='font-semibold truncate'>
+                {sessionUser?.user?.name
+                  ? 'Hi, ' + sessionUser.user.name.split(' ')[0]
+                  : 'Welcome back'}
+              </div>
+              <div className='text-xs text-muted-foreground truncate'>
+                {todayLabel}
+              </div>
+            </div>
+          </Link>
+          {/* <Link
+              href='/dashboard/customers/add'
+              className='inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs hover:bg-accent/50'
+            >
+              <Plus className='h-4 w-4' /> Add
+            </Link> */}
+
+          <div className='flex-shrink-0 w-2/5'>
+            <CustomerSearchForm />
+          </div>
+        </div>
+      </header>
+
+      {/* Header Page for Desktop */}
+      <div className='hidden sm:flex flex-col sm:gap-4 sm:py-4 sm:ml-14'>
         <header className='sticky top-0 z-30 bg-blue-400 flex flex-wrap items-center gap-4 sm:gap-4 border-b px-4 py-1 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 print:hidden'>
           {/* <button
             className='inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10 sm:hidden'

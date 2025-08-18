@@ -33,11 +33,11 @@ const DashboardTablePage = ({ customers }) => {
               <thead className='text-left'>
                 <tr>
                   <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
-                    First Name
+                    Customer
                   </th>
-                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                  {/* <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Last Name
-                  </th>
+                  </th> */}
                   <th className='whitespace-nowrap px-4 py-3 text-center font-sm text-gray-600'>
                     Status
                   </th>
@@ -67,21 +67,22 @@ const DashboardTablePage = ({ customers }) => {
                   >
                     <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <Link
-                        href={`/dashboard/customers/${customer._id}`}
+                        href={`/dashboard/customers/${customer._id.toString()}`}
                         className='block'
                       >
+                        {customerWithCapitalizedNames(customer.lastName)},{' '}
                         {customerWithCapitalizedNames(customer.firstName)}
                       </Link>
                     </td>
 
-                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                    {/* <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}
                         className='block'
                       >
                         {customerWithCapitalizedNames(customer.lastName)}
                       </Link>
-                    </td>
+                    </td> */}
 
                     <td className='whitespace-nowrap px-0 py-0 text-sm'>
                       <Link
@@ -157,7 +158,7 @@ const DashboardTablePage = ({ customers }) => {
 
                     <td className='whitespace-nowrap px-4 py-2 pl-8 text-sm text-gray-700'>
                       <Link
-                        href={`/dashboard/customers/${customer._id}`}
+                        href={`/dashboard/customers/${customer._id.toString()}`}
                         className='block'
                       >
                         <div className='grid grid-rows-2'>

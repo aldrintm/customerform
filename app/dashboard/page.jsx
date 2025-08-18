@@ -56,7 +56,7 @@ const DashboardPage = async () => {
   return (
     <div className='flex min-h-screen w-full flex-col'>
       <SideNavbar />
-      <Header />
+      <Header sessionUser={sessionUser} />
       <main className='flex flex-col sm:gap-4 sm:py-0 sm:ml-14 sm:px-2 md:px-4 lg:px-6 xl:px-8'>
         <Dashboard
           customers={customers}

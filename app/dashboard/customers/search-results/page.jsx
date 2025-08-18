@@ -11,13 +11,16 @@ import { convertToSerializeableObject } from '@/utils/convertToObject'
 import { CircleArrowLeft, Undo2 } from 'lucide-react'
 import Card from '@/components/Card'
 import Project from '@/models/Project'
-
+import { getSessionUser } from '@/utils/getSession'
 import formatPhoneNumber from '@/app/actions/formatPhoneNumber'
 import customerWithCapitalizedNames from '@/app/actions/customerWithCapitalizedNames'
 
 const SearchResults = async ({ searchParams }) => {
   const { search } = await searchParams
   await connectDB()
+
+  // Get current user session
+  const sessionUser = await getSessionUser()
 
   const customerPattern = new RegExp(search, 'i')
   const projectPattern = new RegExp(search, 'i')
@@ -61,14 +64,14 @@ const SearchResults = async ({ searchParams }) => {
 
   return (
     <div className='flex min-h-screen w-full flex-col'>
-      <Header />
+      <Header sessionUser={sessionUser} />
       <SideNavbar />
       <main className='flex flex-col sm:gap-4 sm:py-0 sm:px-0 sm:pl-14'>
         <div className='max-w-full px-4 flex flex-col items-start sm:px-6 lg:px-8'>
           <Link href='/dashboard/customers' className='p-4'>
             <Button
               icon={
-                <CircleArrowLeft className='h-4 w-4 text-xs hover:text-white' />
+                <CircleArrowLeft className='h-4 w-4 text-xs hover:text-white mr-1' />
               }
             >
               Back

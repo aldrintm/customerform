@@ -229,9 +229,10 @@ const Homepage = () => {
               {[
                 'San Francisco',
                 'San Jose',
-                'Oakland',
+                'Los Altos',
                 'Fremont',
-                'Palo Alto',
+                'Santa Cruz',
+                'Salinas'
               ].map((city) => (
                 <div key={city} className='text-center'>
                   <div className='h-8 flex items-center justify-center'>

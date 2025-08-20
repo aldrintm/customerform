@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import {
   ChevronRight,
@@ -29,7 +30,7 @@ const Homepage = () => {
   // Animate numbers on mount
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAnimatedNumbers({ years: 35, projects: 5000, satisfaction: 98 })
+      setAnimatedNumbers({ years: 36, projects: 26000, satisfaction: 98 })
     }, 500)
     return () => clearTimeout(timer)
   }, [])
@@ -39,7 +40,7 @@ const Homepage = () => {
   }
 
   return (
-    <div className='min-h-screen bg-white'>
+    <div className='min-h-screen bg-white font-open-sans'>
       {/* Navigation */}
       <nav className='bg-white/95 backdrop-blur-sm border-b border-gray-100 fixed w-full z-50'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -52,42 +53,42 @@ const Homepage = () => {
                 <div className='text-xl font-bold text-gray-900'>
                   Plamar USA
                 </div>
-                <div className='text-xs text-gray-600'>Since 1989</div>
+                <div className='text-xs text-gray-600'>Installing Counters Since 1989</div>
               </div>
             </div>
 
             {/* Desktop Menu */}
             <div className='hidden md:flex items-center space-x-8'>
-              <a
+              {/* <a
                 href='#'
                 className='text-gray-700 hover:text-amber-600 font-medium transition-colors'
               >
-                Quartz
-              </a>
-              <a
-                href='#'
-                className='text-gray-700 hover:text-amber-600 font-medium transition-colors'
-              >
-                Granite
-              </a>
-              <a
+               Sale Items
+              </a> */}
+              <Link
                 href='#'
                 className='text-gray-700 hover:text-amber-600 font-medium transition-colors'
               >
                 Services
-              </a>
-              <a
+              </Link>
+              <Link
                 href='#'
                 className='text-gray-700 hover:text-amber-600 font-medium transition-colors'
               >
                 Gallery
-              </a>
-              <a
+              </Link>
+              <Link
+                href='#'
+                className='text-gray-700 hover:text-amber-600 font-medium transition-colors'
+              >
+                Facility
+              </Link>
+              <Link
                 href='#'
                 className='text-gray-700 hover:text-amber-600 font-medium transition-colors'
               >
                 About
-              </a>
+              </Link>
               <button className='bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5'>
                 Get a Quote
               </button>
@@ -110,21 +111,19 @@ const Homepage = () => {
         {isMenuOpen && (
           <div className='md:hidden bg-white border-t border-gray-100'>
             <div className='px-4 py-2 space-y-4'>
-              <a href='#' className='block text-gray-700 font-medium py-2'>
-                Quartz
-              </a>
-              <a href='#' className='block text-gray-700 font-medium py-2'>
-                Granite
-              </a>
-              <a href='#' className='block text-gray-700 font-medium py-2'>
+              <Link href='#' className='block text-gray-700 font-medium py-2'>
                 Services
-              </a>
-              <a href='#' className='block text-gray-700 font-medium py-2'>
+              </Link>
+              <Link href='#' className='block text-gray-700 font-medium py-2'>
                 Gallery
-              </a>
-              <a href='#' className='block text-gray-700 font-medium py-2'>
+              </Link>
+              <Link href='#' className='block text-gray-700 font-medium py-2'>
+                Facility
+              </Link>
+             
+              <Link href='#' className='block text-gray-700 font-medium py-2'>
                 About
-              </a>
+              </Link>
               <button className='w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-3 rounded-lg font-semibold'>
                 Get a Quote
               </button>
@@ -154,7 +153,7 @@ const Homepage = () => {
               <p className='text-xl text-gray-600 mb-8 leading-relaxed'>
                 Transform your kitchen with premium quartz and granite
                 countertops. Full-service fabrication and installation by Bay
-                Area craftsmen with over 35 years of expertise.
+                Area craftsmen with over 36 years of expertise.
               </p>
 
               <div className='flex flex-col sm:flex-row gap-4 mb-8'>
@@ -187,9 +186,9 @@ const Homepage = () => {
             <div className='order-1 lg:order-2'>
               <div className='relative'>
                 <div className='absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl blur-3xl opacity-20'></div>
-                <div className='relative bg-white p-8 rounded-2xl shadow-2xl border border-gray-100'>
-                  <div className='w-full h-64 bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden'>
-                    {/* Marble texture pattern */}
+                <div className='relative bg-white p-4 rounded-2xl shadow-2xl border border-gray-100'>
+                  {/* <div className='w-full h-64 bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg mb-4 flex items-center justify-center relative overflow-hidden'>
+                    
                     <div className='absolute inset-0 opacity-30'>
                       <div className='w-full h-full bg-gradient-to-br from-gray-200 via-white to-gray-300'></div>
                       <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-amber-100 to-transparent'></div>
@@ -199,18 +198,42 @@ const Homepage = () => {
                         <Home className='w-8 h-8 text-white' />
                       </div>
                       <p className='text-gray-600 font-medium'>
-                        Premium Countertops
+                        Premium Countertops (Add a Video Here)
                       </p>
                     </div>
+                  </div> */}
+
+                  <div className='w-full h-64 rounded-lg mb-4 overflow-hidden relative'>
+                    <video
+                      className='w-full h-full object-cover rounded-lg'
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload='auto'
+                      poster='' // You can add a poster image if needed
+                    >
+                      <source src='/images/IMG_0036.mp4' type='video/mp4' />
+                      Your browser does not support the video tag.
+                    </video>
+                    {/* Optional overlay for branding */}
+                    {/* <div className='absolute bottom-4 left-4 right-4'>
+                      <div className='bg-black/50 text-white px-3 py-2 rounded-lg text-sm backdrop-blur-sm'>
+                        Premium Countertop Fabrication
+                      </div>
+                    </div> */}
                   </div>
-                  <div className='flex items-center justify-between'>
+
+
+
+                  {/* <div className='flex items-center justify-between'>
                     <div className='text-2xl font-bold text-gray-900'>
                       {animatedNumbers.years}+ Years
                     </div>
                     <div className='text-amber-600 text-sm font-medium'>
                       Experience
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -223,9 +246,9 @@ const Homepage = () => {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-8'>
             <p className='text-gray-600 mb-6'>
-              Serving the entire Bay Area with premium stone fabrication
+              Serving the entire Bay Area with <strong>Premium Quart and Stone Countertop Installation.</strong>
             </p>
-            <div className='grid grid-cols-2 md:grid-cols-5 gap-8 items-center opacity-60'>
+            <div className='grid grid-cols-2 md:grid-cols-6 gap-8 items-center opacity-60'>
               {[
                 'San Francisco',
                 'San Jose',
@@ -236,7 +259,7 @@ const Homepage = () => {
               ].map((city) => (
                 <div key={city} className='text-center'>
                   <div className='h-8 flex items-center justify-center'>
-                    <span className='text-gray-600 font-medium text-sm'>
+                    <span className='text-gray-800 font-bold text-sm sm:text-base'>
                       {city}
                     </span>
                   </div>
@@ -302,10 +325,10 @@ const Homepage = () => {
                 <Award className='w-8 h-8 text-orange-600' />
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                High-End Fabrication
+                Superior Shop Fabrication
               </h3>
               <p className='text-gray-600'>
-                State-of-the-art machinery ensures unmatched precision cuts,
+                Our state-of-the-art machinery ensures unmatched precision cuts,
                 fabrication speed, product quality, consistency, and durability
                 for your countertops.
               </p>
@@ -316,10 +339,10 @@ const Homepage = () => {
                 <Hammer className='w-8 h-8 text-green-600' />
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                True Craftsmanship Installation
+                Expertise in Installation
               </h3>
               <p className='text-gray-600'>
-                Experienced installers bring expertise, attention to detail,
+                You get experienced installers with decades of experience, attention to detail,
                 problem-solving skills, and unwavering commitment to quality
                 workmanship on every project.
               </p>
@@ -335,25 +358,25 @@ const Homepage = () => {
             {/* Service 1 */}
             <div className='grid lg:grid-cols-2 gap-12 items-center'>
               <div>
-                <h3 className='text-3xl font-bold text-gray-900 mb-6'>
+                <h3 className='text-xl md:text-3xl font-bold text-gray-900 mb-6'>
                   Kitchen Countertops
                 </h3>
                 <ul className='space-y-4 mb-6'>
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
-                    <span className='text-gray-600'>
+                    <span className='text-gray-600 text-base sm:text-xl'>
                       Premium quartz and granite slab materials
                     </span>
                   </li>
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
-                    <span className='text-gray-600'>
+                    <span className='text-gray-600 text-base sm:text-xl'>
                       Custom fabrication to match your kitchen design
                     </span>
                   </li>
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
-                    <span className='text-gray-600'>
+                    <span className='text-gray-600 text-base sm:text-xl'>
                       Professional installation by experienced craftsmen
                     </span>
                   </li>
@@ -388,26 +411,26 @@ const Homepage = () => {
                 </div>
               </div>
               <div className='order-1 lg:order-2'>
-                <h3 className='text-3xl font-bold text-gray-900 mb-6'>
+                <h3 className='text-xl md:text-3xl font-bold text-gray-900 mb-6'>
                   Full Service Solutions
                 </h3>
                 <ul className='space-y-4 mb-6'>
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
-                    <span className='text-gray-600'>
-                      Bath vanities and shower walls
+                    <span className='text-gray-600 text-base sm:text-xl'>
+                      Stone and Quartz Kitchen Countertops, Island, Full Splashes, Window Sills
                     </span>
                   </li>
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
-                    <span className='text-gray-600'>
-                      Fireplaces and outdoor BBQ counters
+                    <span className='text-gray-600 text-base sm:text-xl'>
+                      Bath Vanities, Shower Walls, Fireplace
                     </span>
                   </li>
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
-                    <span className='text-gray-600'>
-                      Stairs and flooring applications
+                    <span className='text-gray-600 text-base sm:text-xl'>
+                      Outdoor BBQ Counters, Stairs, Floors etc.
                     </span>
                   </li>
                 </ul>
@@ -426,7 +449,7 @@ const Homepage = () => {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
-              Our 3-Step Process
+              Our Simple Step Process
             </h2>
             <p className='text-xl text-gray-600'>
               From consultation to installation - we handle everything
@@ -442,7 +465,7 @@ const Homepage = () => {
                 01
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                In-Stock Slab Materials
+                Select Your Materials
               </h3>
               <p className='text-gray-600'>
                 Our in-stock quartz slab selection offers the ultimate
@@ -458,7 +481,7 @@ const Homepage = () => {
                 02
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                High-End Fabrication
+                 On Site Measure
               </h3>
               <p className='text-gray-600'>
                 Our utilization of state-of-the-art machinery sets us apart and
@@ -474,7 +497,7 @@ const Homepage = () => {
                 03
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                True Craftsmanship in Installation
+                Fabricate and Install 
               </h3>
               <p className='text-gray-600'>
                 Discover the difference of having a truly experienced installer
@@ -533,9 +556,9 @@ const Homepage = () => {
                 ))}
               </div>
               <p className='text-gray-700 mb-6'>
-                "35 years of experience really shows. Professional service from
+                "Received professional service from
                 start to finish, beautiful granite countertops, and completed on
-                schedule. Thank you Plamar!"
+                schedule. Thank you Plamar USA team!"
               </p>
               <div className='flex items-center'>
                 <div className='w-12 h-12 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center text-white font-bold mr-4'>
@@ -583,7 +606,7 @@ const Homepage = () => {
             Ready for Your Dream Countertops?
           </h2>
           <p className='text-xl mb-8 opacity-90'>
-            Join thousands of satisfied Bay Area homeowners who trust Plamar USA
+            Join thousands of satisfied Bay Area homeowners who trusts Plamar USA
           </p>
 
           <div className='flex flex-col sm:flex-row gap-4 justify-center mb-8'>
@@ -603,7 +626,7 @@ const Homepage = () => {
             </div>
             <div className='flex items-center'>
               <Check className='w-4 h-4 mr-2' />
-              Licensed & insured
+              Licensed & Insured
             </div>
           </div>
         </div>
@@ -702,7 +725,7 @@ const Homepage = () => {
             </div>
             <div className='flex items-center'>
               <Users className='w-4 h-4 mr-2' />
-              5000+ Projects
+              24,000+ Projects
             </div>
             <div className='flex items-center'>
               <Star className='w-4 h-4 mr-2' />

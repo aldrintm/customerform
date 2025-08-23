@@ -53,7 +53,9 @@ const Homepage = () => {
                 <div className='text-xl font-bold text-gray-900'>
                   Plamar USA
                 </div>
-                <div className='text-xs text-gray-600'>Installing Counters Since 1989</div>
+                <div className='text-xs text-gray-600'>
+                  Installing Counters Since 1989
+                </div>
               </div>
             </div>
 
@@ -120,7 +122,7 @@ const Homepage = () => {
               <Link href='#' className='block text-gray-700 font-medium py-2'>
                 Facility
               </Link>
-             
+
               <Link href='#' className='block text-gray-700 font-medium py-2'>
                 About
               </Link>
@@ -224,8 +226,6 @@ const Homepage = () => {
                     </div> */}
                   </div>
 
-
-
                   {/* <div className='flex items-center justify-between'>
                     <div className='text-2xl font-bold text-gray-900'>
                       {animatedNumbers.years}+ Years
@@ -246,7 +246,8 @@ const Homepage = () => {
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-8'>
             <p className='text-gray-600 mb-6'>
-              Serving the entire Bay Area with <strong>Premium Quart and Stone Countertop Installation.</strong>
+              Serving the entire Bay Area with{' '}
+              <strong>Premium Quart and Stone Countertop Installation.</strong>
             </p>
             <div className='grid grid-cols-2 md:grid-cols-6 gap-8 items-center opacity-60'>
               {[
@@ -255,7 +256,7 @@ const Homepage = () => {
                 'Los Altos',
                 'Fremont',
                 'Santa Cruz',
-                'Salinas'
+                'Salinas',
               ].map((city) => (
                 <div key={city} className='text-center'>
                   <div className='h-8 flex items-center justify-center'>
@@ -342,9 +343,9 @@ const Homepage = () => {
                 Expertise in Installation
               </h3>
               <p className='text-gray-600'>
-                You get experienced installers with decades of experience, attention to detail,
-                problem-solving skills, and unwavering commitment to quality
-                workmanship on every project.
+                You get experienced installers with decades of experience,
+                attention to detail, problem-solving skills, and unwavering
+                commitment to quality workmanship on every project.
               </p>
             </div>
           </div>
@@ -418,7 +419,8 @@ const Homepage = () => {
                   <li className='flex items-start'>
                     <Check className='w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0' />
                     <span className='text-gray-600 text-base sm:text-xl'>
-                      Stone and Quartz Kitchen Countertops, Island, Full Splashes, Window Sills
+                      Stone and Quartz Kitchen Countertops, Island, Full
+                      Splashes, Window Sills
                     </span>
                   </li>
                   <li className='flex items-start'>
@@ -481,7 +483,7 @@ const Homepage = () => {
                 02
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                 On Site Measure
+                On Site Measure
               </h3>
               <p className='text-gray-600'>
                 Our utilization of state-of-the-art machinery sets us apart and
@@ -497,7 +499,7 @@ const Homepage = () => {
                 03
               </div>
               <h3 className='text-xl font-bold text-gray-900 mb-4'>
-                Fabricate and Install 
+                Fabricate and Install
               </h3>
               <p className='text-gray-600'>
                 Discover the difference of having a truly experienced installer
@@ -556,9 +558,9 @@ const Homepage = () => {
                 ))}
               </div>
               <p className='text-gray-700 mb-6'>
-                "Received professional service from
-                start to finish, beautiful granite countertops, and completed on
-                schedule. Thank you Plamar USA team!"
+                "Received professional service from start to finish, beautiful
+                granite countertops, and completed on schedule. Thank you Plamar
+                USA team!"
               </p>
               <div className='flex items-center'>
                 <div className='w-12 h-12 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center text-white font-bold mr-4'>
@@ -606,7 +608,8 @@ const Homepage = () => {
             Ready for Your Dream Countertops?
           </h2>
           <p className='text-xl mb-8 opacity-90'>
-            Join thousands of satisfied Bay Area homeowners who trusts Plamar USA
+            Join thousands of satisfied Bay Area homeowners who trusts Plamar
+            USA
           </p>
 
           <div className='flex flex-col sm:flex-row gap-4 justify-center mb-8'>
@@ -634,48 +637,74 @@ const Homepage = () => {
 
       {/* FAQ Section */}
       <section className='py-20 bg-gray-50'>
-        <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
           <div className='text-center mb-16'>
             <h2 className='text-3xl lg:text-4xl font-bold text-gray-900 mb-6'>
               Frequently Asked Questions
             </h2>
           </div>
 
-          <div className='space-y-4'>
+          <div className='md:grid md:grid-cols-2 md:gap-6'>
             {[
               {
                 question:
                   'How long does a typical countertop installation take?',
                 answer:
-                  'Most installations are completed in 1-2 days, depending on the size and complexity of your project. We provide a detailed timeline during your consultation.',
+                  'Most installations are completed in 1-2 days, depending on the size and complexity of your project. Just call us in the office if you have a deadline.',
               },
               {
-                question: 'Do you offer free estimates?',
+                question: 'Do you offer free estimates or onsite visit?',
                 answer:
                   'Yes! We provide free, no-obligation estimates for all countertop projects. Our team will visit your home to measure and discuss your options.',
               },
               {
                 question: 'What materials do you work with?',
                 answer:
-                  'We specialize in premium quartz and granite slabs for kitchen countertops, bath vanities, shower walls, fireplaces, outdoor BBQ counters, stairs, and flooring applications.',
+                  'We specialize in Premium Quartz like Cambria, Silestone, Caesarstone, Vadara, Dekton, Neolith and All Natural Stone Granite or Marble slabs for kitchen countertops, bath vanities, shower walls, fireplaces, outdoor BBQ counters, stairs, and flooring applications.',
               },
               {
                 question: 'Are you licensed and insured?',
                 answer:
-                  'Absolutely. Plamar USA is fully licensed and insured with over 35 years of experience serving the Bay Area. Your project is protected from start to finish.',
+                  'Absolutely. Plamar USA is fully licensed and insured with over 36 years of experience serving the Bay Area. Your project is protected from start to finish.',
               },
               {
                 question: 'Do you have slabs in stock?',
                 answer:
                   'Yes! Our extensive in-stock slab selection allows for faster project completion and gives you a wider range of options to choose from.',
               },
+              {
+                question: 'Do you have remnant/partial slabs?',
+                answer:
+                  'Oh Yes! For the affordable projects, we offer remnant slabs at a discounted price. These are perfect for smaller projects or unique applications.',
+              },
+              {
+                question: 'Do you offer installation services?',
+                answer:
+                  'Yes! We provide professional installation services for all the products we sell. Our team of experts will ensure your countertops are installed perfectly.',
+              },
+              {
+                question: 'Do you offer a warranty on your products?',
+                answer:
+                  'Yes! We offer a warranty on all of our countertops, ensuring your investment is protected upon install.',
+              },
+              {
+                question: 'How do I maintain and care for my countertops?',
+                answer:
+                  'To maintain your countertops, clean them regularly with a mild soap and water solution. Avoid harsh chemicals and abrasive cleaners. For natural stone surfaces, consider using a pH-balanced stone cleaner and resealing periodically.',
+              },
+              {
+                question:
+                  'Can I see samples of the materials before making a decision?',
+                answer:
+                  'Yes! We encourage our customers to view samples of our materials in person. This allows you to see the colors, textures, and patterns up close before making a final decision.',
+              },
             ].map((faq, index) => (
-              <div key={index} className='bg-white rounded-lg shadow-sm'>
+              <div key={index} className='bg-white rounded-md shadow-sm'>
                 <button
-                  className='w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors'
+                  className='w-full px-6 p-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors'
                   onClick={() => toggleFaq(index)}
                 >
-                  <span className='font-semibold text-gray-900'>
+                  <span className='font-semibold text-gray-700'>
                     {faq.question}
                   </span>
                   <ChevronRight

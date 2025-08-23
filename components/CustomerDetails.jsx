@@ -686,9 +686,9 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
           <div className='grid lg:grid-cols-2 gap-4 md:gap-8'>
             {/* 1st - Customer Profile Details */}
             <PrintVisibility printVisible={true} printTarget='project'>
-              <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 print:sm:py-0 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
-                <div className='pb-4 sm:p-4'>
-                  <div className='px-4 sm:px-0 flex justify-between'>
+              <div className='grid grid-cols-1 sm:border sm:border-gray-300 sm:rounded-lg p-0 sm:p-4 print:py-0 border-b-slate-300 border-b transition-all duration-300 hover:shadow-md'>
+                <div className='md:pb-4 sm:p-4 print:p-4'>
+                  <div className='px-4 sm:px-0 flex justify-between print:hidden'>
                     <h3 className='text-base font-semibold text-gray-700'>
                       Customer Profile Details
                     </h3>
@@ -723,7 +723,7 @@ function CustomerDetailsContent({ customer: initialCustomer, schedules }) {
                       </Button>
                     </div>
                   </div>
-                  <div className='mt-4 border-t border-gray-100'>
+                  <div className='mt-4 md:border-t md:border-gray-100'>
                     <dl className=''>
                       {/* <div className='px-4 py-1 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
                       <dt className='text-sm font-medium text-gray-900'>

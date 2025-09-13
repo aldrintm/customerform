@@ -71,7 +71,7 @@ const CustomerSchema = new Schema(
 // Add single field indexes for frequent lookups
 
 CustomerSchema.index({ phone: 1 })
-CustomerSchema.index({ email: 1 }
+CustomerSchema.index({ email: 1 })
 
 // Add index for projects array to improve population performance
 CustomerSchema.index({ projects: 1 })

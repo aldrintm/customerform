@@ -2,7 +2,7 @@ import SideNavbar from '@/components/SideNavbar'
 import Header from '@/components/Header'
 import Card from '@/components/Card'
 import connectDB from '@/config/db'
-import Customer from '@/models/OldCustomer'
+import Customer from '@/models/Customer'
 
 const InventoryPage = async () => {
   await connectDB()

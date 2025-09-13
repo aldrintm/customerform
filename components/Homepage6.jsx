@@ -30,7 +30,7 @@ const Homepage = () => {
   // Animate numbers on mount
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAnimatedNumbers({ years: 36, projects: 26000, satisfaction: 98 })
+      setAnimatedNumbers({ years: 36, projects: 59000, satisfaction: 98 })
     }, 500)
     return () => clearTimeout(timer)
   }, [])

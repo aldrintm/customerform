@@ -55,7 +55,7 @@ const TableComponentPage = ({ customers }) => {
 
       if (result && result.success === true) {
         router.refresh()
-        toast.success(`Customer ${customerName} is DELETED!`)
+        toast.success(`Customer ${customerName} successfully deleted!`)
       } else if (result && result.success === false) {
         // Handle the error response from the server action
         console.log('Server returned error:', result.error)

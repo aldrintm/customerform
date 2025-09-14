@@ -89,7 +89,7 @@ const TableComponentPage = ({ customers }) => {
             {isNavigating || isPending ? (
               <span className='animate-pulse'>Loading...</span>
             ) : (
-              'Create New'
+              <span className='pl-2'>Create New</span>
             )}
           </Button>
         </div>
@@ -99,11 +99,14 @@ const TableComponentPage = ({ customers }) => {
             <table className='min-w-full divide-y-2 divide-gray-200 bg-white text-sm'>
               <thead className='text-left'>
                 <tr>
-                  <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
+                  {/* <th className='whitespace-nowrap px-4 py-3 text-sm text-gray-600 font-semibold'>
                     First Name
                   </th>
                   <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Last Name
+                  </th> */}
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                    Customer
                   </th>
                   <th className='whitespace-nowrap px-4 py-3 text-center font-sm text-gray-600'>
                     Status
@@ -124,6 +127,10 @@ const TableComponentPage = ({ customers }) => {
                   </th>
 
                   <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
+                    Created By
+                  </th>
+
+                  <th className='whitespace-nowrap px-4 py-3 font-sm text-gray-600'>
                     Action
                   </th>
                 </tr>
@@ -132,7 +139,7 @@ const TableComponentPage = ({ customers }) => {
               <tbody className='divide-y divide-gray-200'>
                 {customers.map((customer) => (
                   <tr key={customer._id}>
-                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                    {/* <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}
                         className='block'
@@ -147,7 +154,18 @@ const TableComponentPage = ({ customers }) => {
                       >
                         {customerWithCapitalizedNames(customer.lastName)}
                       </Link>
+                    </td> */}
+
+                    <td className='whitespace-nowrap px-4 py-2 text-sm text-gray-700'>
+                      <Link
+                        href={`/dashboard/customers/${customer._id.toString()}`}
+                        className='block'
+                      >
+                        {customerWithCapitalizedNames(customer.lastName)},{' '}
+                        {customerWithCapitalizedNames(customer.firstName)}
+                      </Link>
                     </td>
+
                     <td className='whitespace-nowrap px-0 py-0 text-sm'>
                       <Link
                         href={`/dashboard/customers/${customer._id}`}

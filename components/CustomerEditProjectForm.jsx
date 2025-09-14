@@ -375,6 +375,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                       name='materialNote'
                       placeholder='Qty of Slabs? Location? Other notes?'
                       className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
+                      defaultValue={project?.materialNote || ' '}
                     />
                   </div>
                 </div>
@@ -713,6 +714,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                             id='demo'
                             name='demo'
                             className='rounded border-gray-200 shadow-sm bg-sky-50 text-blue-600 focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50'
+                            defaultChecked={project?.demo || false}
                           />
                           <span className='ml-2 items-center'>Demo</span>
                         </label>
@@ -731,7 +733,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                           name='demoNote'
                           placeholder='What is the existing material? What else is needed?'
                           className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
-                          defaultChecked={project?.demoNote || ' '}
+                          defaultValue={project?.demoNote || ' '}
                         />
                       </div>
                     </div>
@@ -769,7 +771,7 @@ const CustomerEditProjectForm = ({ customer }) => {
                           name='plumbingNote'
                           placeholder='Disconnect? Reconnect? Or Full On?'
                           className='block mt-1 w-full rounded-md border-gray-200 focus-bg-white shadow-sm sm:text-sm bg-sky-50'
-                          defaultChecked={project?.plumbingNote || ' '}
+                          defaultValue={project?.plumbingNote || ' '}
                         />
                       </div>
                     </div>

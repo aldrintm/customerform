@@ -46,20 +46,33 @@ const TableComponentPage = ({ customers }) => {
     if (!confirmed) return
 
     try {
-      await deleteCustomer(customerId)
-      router.refresh()
-      toast.success(`${customerName} has been deleted successfully!`)
-    } catch (error) {
-      toast.error(`Failed to delete customer ${customerName}`)
-      console.error(error)
-    }
+      // Call the deleteCustomer function (only pass customerId)
+      console.log('Calling deleteCustomer with ID:', customerId)
 
-    // await deleteCustomer(customerId)
-    // const updatedCustomers = customer.filter(
-    //   (customer) => customerId !== customer._id
-    // )
-    // setCustomers(updatedCustomers)
-    // toast.success(`${customerId} is DELETED!`)
+      const result = await deleteCustomer(customerId)
+
+      console.log('Result from deleteCustomer:', result)
+
+      if (result && result.success === true) {
+        router.refresh()
+        toast.success(`Customer ${customerName} is DELETED!`)
+      } else if (result && result.success === false) {
+        // Handle the error response from the server action
+        console.log('Server returned error:', result.error)
+
+        toast.error(result.error || `Failed to delete customer ${customerName}`)
+      } else {
+        // Handle unexpected result format
+        console.log('Unexpected result format:', result)
+        toast.error(`Failed to delete customer ${customerName}`)
+      }
+    } catch (error) {
+      console.error('Delete customer error:', error)
+      // Handle any other errors that might occur
+      toast.error(
+        'You are not authorized to delete this customer. Admin access required.'
+      )
+    }
   }
 
   return (

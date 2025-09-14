@@ -45,11 +45,11 @@ async function addCustomer(formData) {
       throw new Error('First name, last name, phone, and email are required')
     }
 
-    // Check if email already exists (since it has unique index)
-    const existingCustomer = await Customer.findOne({ email })
-    if (existingCustomer) {
-      throw new Error(`Customer with email ${email} already exists`)
-    }
+    // // Check if email already exists (since it has unique index)
+    // const existingCustomer = await Customer.findOne({ email })
+    // if (existingCustomer) {
+    //   throw new Error(`Customer with email ${email} already exists`)
+    // }
 
     const customerData = {
       firstName,
@@ -71,7 +71,7 @@ async function addCustomer(formData) {
     console.log('contractorPhone raw:', formData.get('contractorPhone'))
     console.log('Final customer data:', customerData)
 
-    // lets plug all the data using the property model
+    // Create and save new customer - lets plug all the data using the property model
     newCustomer = new Customer(customerData)
 
     // save it in our DB
@@ -81,12 +81,12 @@ async function addCustomer(formData) {
   } catch (error) {
     console.error('Error saving customer:', error)
 
-    // Handle specific MongoDB duplicate key error
-    if (error.code === 11000) {
-      if (error.keyPattern?.email) {
-        throw new Error('A customer with this email address already exists')
-      }
-    }
+    // // Handle specific MongoDB duplicate key error - this is for unique fields like email
+    // if (error.code === 11000) {
+    //   if (error.keyPattern?.email) {
+    //     throw new Error('A customer with this email address already exists')
+    //   }
+    // }
 
     // Handle Mongoose validation errors
     if (error.name === 'ValidationError') {

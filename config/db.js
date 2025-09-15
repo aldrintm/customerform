@@ -26,7 +26,6 @@ export default async function connectDB() {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
       connectTimeoutMS: 10000,
-      bufferMaxEntries: 0,
       retryWrites: true,
       w: 'majority',
       // Add these for better connection handling

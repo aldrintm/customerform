@@ -79,6 +79,11 @@ async function addSchedule(formData) {
     installTime: formData.get('installTime'),
     installBy: formData.get('installBy'),
     installNotes: formData.get('installNotes'),
+    serviceDescription: formData.get('serviceDescription'),
+    serviceDate: formData.get('serviceDate'),
+    serviceTime: formData.get('serviceTime'),
+    serviceBy: formData.get('serviceBy'),
+    serviceNotes: formData.get('serviceNotes'),
   }
 
   // lets check the server to see all items uploaded to the DB

@@ -177,9 +177,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                           defaultValue={schedule.measureTime || 'default'}
                         >
-                          <option value='default'>
-                            Select Time (required)
-                          </option>
+                          <option value=''>Select Time (required)</option>
                           <option value='8-10'>8-10</option>
                           <option value='10-12'>10-12</option>
                           <option value='12-2'>12-2</option>
@@ -189,6 +187,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           <option value='9-11'>9-11</option>
                           <option value='11-1'>11-1</option>
                           <option value='1-3'>1-3</option>
+                          <option disabled>or</option>
                         </select>
                       </div>
 
@@ -207,12 +206,9 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                           defaultValue={schedule.measureBy || 'default'}
                         >
-                          <option value='default' disabled>
-                            Select Name (required)
-                          </option>
+                          <option value=''>Select Name (required)</option>
                           <option value='Anilber'>Anilber</option>
                           <option value='Javier'>Javier</option>
-                          <option value='Jeff'>Jeff</option>
                           <option value='Other'>Other</option>
                         </select>
                       </div>
@@ -234,7 +230,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           name='measureNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Enter any additional order notes...'
+                          placeholder='What are we measuring?'
                           defaultValue={schedule.measureNotes || ''}
                         ></textarea>
                       </div>
@@ -257,6 +253,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           name='demoDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                           placeholder='What are we tearing out?'
+                          defaultValue={schedule.demoDescription}
                         />
                       </div>
 
@@ -274,6 +271,13 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           id='demoDate'
                           name='demoDate'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                          defaultValue={
+                            schedule.demoDate
+                              ? new Date(schedule.demoDate)
+                                  .toISOString()
+                                  .split('T')[0]
+                              : ''
+                          }
                         />
                       </div>
 
@@ -290,11 +294,9 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           name='demoTime'
                           id='demoTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
+                          defaultValue={schedule.demoTime || 'default'}
                         >
-                          <option value='default'>
-                            Select Time (required)
-                          </option>
+                          <option value=''>Select Time (required)</option>
                           <option value='9-12'>9-12</option>
                           <option value='1-4'>1-4</option>
                           <option disabled>or</option>
@@ -316,14 +318,9 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           name='demoBy'
                           id='demoBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
-                          defaultValue={'default'}
+                          defaultValue={schedule.demoBy || 'default'}
                         >
-                          <option value='default' disabled>
-                            Select Name (required)
-                          </option>
-                          <option value='default' disabled>
-                            Select Name (required)
-                          </option>
+                          <option value=''>Select Name (required)</option>
                           <option value='Francisco'>Francisco</option>
                           <option value='Chico'>Chico Meza</option>
                           <option value='Mario Torres'>Mario Torres</option>
@@ -355,7 +352,8 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           name='demoNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Type some notes...'
+                          placeholder='What exactly are we demolishing?'
+                          defaultValue={schedule.demoNotes || ''}
                         ></textarea>
                       </div>
                     </div>
@@ -421,9 +419,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                           defaultValue={schedule.installTime || 'default'}
                         >
-                          <option value='default' disabled>
-                            Select Time (required)
-                          </option>
+                          <option value=''>Select Time (required)</option>
                           <option value='9-12'>9-12</option>
                           <option value='1-4'>1-4</option>
                           <option disabled>or</option>
@@ -447,9 +443,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                           defaultValue={schedule.installBy || 'default'}
                         >
-                          <option value='default' disabled>
-                            Select Name (required)
-                          </option>
+                          <option value=''>Select Time (required)</option>
                           <option value='Francisco'>Francisco</option>
                           <option value='Chico'>Chico Meza</option>
                           <option value='Mario Torres'>Mario Torres</option>
@@ -490,7 +484,7 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                       {/* Service Description */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoDescription'
+                          htmlFor='serviceDescription'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service Description:
@@ -498,17 +492,18 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
 
                         <input
                           type='text'
-                          id='demoDescription'
-                          name='demoDescription'
+                          id='serviceDescription'
+                          name='serviceDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                           placeholder='What are we doing on site?'
+                          defaultValue={schedule.serviceDescription}
                         />
                       </div>
 
                       {/* Service Date */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoDate'
+                          htmlFor='serviceDate'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service Date:
@@ -516,25 +511,33 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
 
                         <input
                           type='date'
-                          id='demoDate'
-                          name='demoDate'
+                          id='serviceDate'
+                          name='serviceDate'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
+                          defaultValue={
+                            schedule.serviceDate
+                              ? new Date(schedule.serviceDate)
+                                  .toISOString()
+                                  .split('T')[0]
+                              : ''
+                          }
                         />
                       </div>
 
                       {/* Service Time */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoTime'
+                          htmlFor='serviceTime'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service Time
                         </label>
 
                         <select
-                          name='demoTime'
-                          id='demoTime'
+                          name='serviceTime'
+                          id='serviceTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                          defaultValue={schedule.serviceTime || 'default'}
                         >
                           <option value=''>Select Time (required)</option>
                           <option value='9-12'>9-12</option>
@@ -545,19 +548,20 @@ export default function ScheduleEditForm({ customer, projects, schedule }) {
                         </select>
                       </div>
 
-                      {/* Measured By: */}
+                      {/* Service By: */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoBy'
+                          htmlFor='serviceBy'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service By
                         </label>
 
                         <select
-                          name='demoBy'
-                          id='demoBy'
+                          name='serviceBy'
+                          id='serviceBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
+                          defaultValue={schedule.serviceBy || 'default'}
                         >
                           <option value=''>Select Name (required)</option>
                           <option value='Francisco'>Francisco</option>

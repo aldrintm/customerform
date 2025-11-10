@@ -72,6 +72,25 @@ const ScheduleSchema = new Schema(
       type: String,
       trim: true,
     },
+    serviceDescription: {
+      type: String,
+      trim: true,
+    },
+    serviceDate: {
+      type: Date,
+    },
+    serviceTime: {
+      type: String,
+      trim: true,
+    },
+    serviceBy: {
+      type: String,
+      trim: true,
+    },
+    serviceNotes: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,

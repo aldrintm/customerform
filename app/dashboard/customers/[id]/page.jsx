@@ -45,7 +45,7 @@ const CustomerPage = async ({ params }) => {
           path: 'schedules',
           model: 'Schedule',
           select:
-            'measureDescription measureDate measureTime measureBy measureNotes installDate installBy installNotes',
+            'measureDescription measureDate measureTime measureBy measureNotes installDate installBy installNotes demoDescription demoDate demoTime demoBy demoNotes serviceDescription serviceDate serviceTime serviceBy serviceNotes',
         },
       })
       .populate({

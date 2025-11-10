@@ -168,7 +168,6 @@ export default function ScheduleForm({ customer, projects }) {
                           <option value=''>Select Name (required)</option>
                           <option value='Anilber'>Anilber</option>
                           <option value='Javier'>Javier</option>
-                          <option value='Jeff'>Jeff</option>
                           <option value='Other'>Other</option>
                         </select>
                       </div>
@@ -190,7 +189,7 @@ export default function ScheduleForm({ customer, projects }) {
                           name='measureNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Type some notes...'
+                          placeholder='What are we measuring?'
                         ></textarea>
                       </div>
                     </div>
@@ -301,7 +300,7 @@ export default function ScheduleForm({ customer, projects }) {
                           name='demoNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Type some notes...'
+                          placeholder='What exactly are we demolishing?'
                         ></textarea>
                       </div>
                     </div>
@@ -411,7 +410,7 @@ export default function ScheduleForm({ customer, projects }) {
                           name='installNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
-                          placeholder='Type some notes...'
+                          placeholder='Type a note for the installers...'
                         ></textarea>
                       </div>
                     </div>
@@ -421,7 +420,7 @@ export default function ScheduleForm({ customer, projects }) {
                       {/* Service Description */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoDescription'
+                          htmlFor='serviceDescription'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service Description:
@@ -429,8 +428,8 @@ export default function ScheduleForm({ customer, projects }) {
 
                         <input
                           type='text'
-                          id='demoDescription'
-                          name='demoDescription'
+                          id='serviceDescription'
+                          name='serviceDescription'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                           placeholder='What are we doing on site?'
                         />
@@ -439,7 +438,7 @@ export default function ScheduleForm({ customer, projects }) {
                       {/* Service Date */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoDate'
+                          htmlFor='serviceDate'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service Date:
@@ -447,8 +446,8 @@ export default function ScheduleForm({ customer, projects }) {
 
                         <input
                           type='date'
-                          id='demoDate'
-                          name='demoDate'
+                          id='serviceDate'
+                          name='serviceDate'
                           className='mt-1 w-full rounded-md border-gray-200 text-gray-500 shadow-sm sm:text-sm bg-sky-50'
                         />
                       </div>
@@ -456,15 +455,15 @@ export default function ScheduleForm({ customer, projects }) {
                       {/* Service Time */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoTime'
+                          htmlFor='serviceTime'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service Time
                         </label>
 
                         <select
-                          name='demoTime'
-                          id='demoTime'
+                          name='serviceTime'
+                          id='serviceTime'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                         >
                           <option value=''>Select Time (required)</option>
@@ -479,15 +478,15 @@ export default function ScheduleForm({ customer, projects }) {
                       {/* Measured By: */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoBy'
+                          htmlFor='serviceBy'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           Service By
                         </label>
 
                         <select
-                          name='demoBy'
-                          id='demoBy'
+                          name='serviceBy'
+                          id='serviceBy'
                           className='mt-1 w-full rounded-md shadow-sm sm:text-sm bg-sky-50 border-gray-200 focus-bg-white'
                         >
                           <option value=''>Select Name (required)</option>
@@ -510,7 +509,7 @@ export default function ScheduleForm({ customer, projects }) {
                       {/* Text Area for Special Notes with Customer */}
                       <div className='col-span-1 px-4 py-4 lg:gap-x-6'>
                         <label
-                          htmlFor='demoNotes'
+                          htmlFor='serviceNotes'
                           className='block text-xs md:text-sm pl-1 font-semibold text-gray-500'
                         >
                           {' '}
@@ -518,8 +517,8 @@ export default function ScheduleForm({ customer, projects }) {
                         </label>
 
                         <textarea
-                          id='demoNotes'
-                          name='demoNotes'
+                          id='serviceNotes'
+                          name='serviceNotes'
                           rows={4}
                           className='mt-1 w-full rounded-md py-4 border-gray-200 shadow-sm sm:text-sm'
                           placeholder='Explain what we need to do...'

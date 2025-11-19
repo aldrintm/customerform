@@ -24,6 +24,7 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           project.schedules.map((schedule) => {
             // Parse MongoDB UTC date and keep it as UTC
             const measureDate = new Date(schedule.measureDate)
+            const installDate = new Date(schedule.installDate)
 
             return {
               ...schedule,
@@ -35,6 +36,10 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
               measureDate: measureDate, // Keep as UTC Date object
               measureBy: schedule.measureBy || 'Unassigned',
               measureTime: schedule.measureTime || 'Unassigned',
+              installDate: installDate,
+              installBy: schedule.installBy || 'Unassigned',
+              installTime: schedule.installTime || 'No time set',
+
               // installDate: schedule.installDate
               //   ? new Date(schedule.installDate)
               //   : null,
@@ -88,6 +93,52 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
           schedule.measureDate.getUTCFullYear(),
           schedule.measureDate.getUTCMonth(),
           schedule.measureDate.getUTCDate()
+        )
+      )
+      // const scheduleDay = startOfDay(schedule.measureDate)
+      // const isToday = isSameDay(scheduleDayUTC, todayUTC)
+
+      // Avoid using startOfDay as it might apply local timezone
+      const isToday =
+        scheduleDayUTC.toISOString().split('T')[0] ===
+        todayUTC.toISOString().split('T')[0]
+
+      // Debug logging with UTC formatting
+      // console.log('Comparing dates:', {
+      //   scheduleDay: format(scheduleDayUTC, 'yyyy-MM-dd'),
+      //   today: format(todayUTC, 'yyyy-MM-dd'),
+      //   isToday,
+      //   originalDate: format(schedule.measureDate, 'yyyy-MM-dd'),
+      //   rawMongoMeasureDate: schedule.measureDate.toISOString(),
+      //   systemDate: new Date().toISOString(),
+      // })
+
+      // Debug logging with explicit UTC formatting
+      // console.log('Comparing dates:', {
+      //   scheduleDay: scheduleDayUTC.toISOString().split('T')[0], // Extract date in UTC
+      //   // today: todayUTC.toISOString(), // Extract date in UTC
+      //   today: todayUTC.toISOString().split('T')[0], // Extract date in local time
+      //   isToday,
+      //   originalDate: schedule.measureDate.toISOString().split('T')[0], // Extract date in UTC
+      //   rawMongoMeasureDate: schedule.measureDate.toISOString(),
+      //   systemDate: new Date().toISOString(),
+      // })
+
+      return isToday
+    } catch (error) {
+      console.error('Date comparison error:', error)
+      return false
+    }
+  })
+
+  const todayInstallSchedules = processedSchedules.filter((schedule) => {
+    try {
+      // Get schedule date as UTC midnight
+      const scheduleDayUTC = new Date(
+        Date.UTC(
+          schedule.installDate.getUTCFullYear(),
+          schedule.installDate.getUTCMonth(),
+          schedule.installDate.getUTCDate()
         )
       )
       // const scheduleDay = startOfDay(schedule.measureDate)
@@ -194,9 +245,9 @@ const Dashboard = ({ customers, sessionUser, bookmarks }) => {
             <div className='container xl:col-span-5 space-y-6'>
               {/* <DashboardTemplateSchedule customers={customers} /> */}
               <DashboardScheduleDisplay schedules={todayMeasureSchedules} />
-              {/* <DashboardInstallScheduleDisplay
-              schedules={todayMeasureSchedules}
-            /> */}
+              <DashboardInstallScheduleDisplay
+                schedules={todayInstallSchedules}
+              />
             </div>
           </div>
         </div>
